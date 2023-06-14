@@ -17,14 +17,14 @@ import { useReducer } from 'react';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
 const defaultValues = {
-  username: '',
+  telepon: '',
   password: '',
 };
 
 const schema = z
   .object({
-    username: z.string().nonempty({ message: 'Username belum diisi' }),
-    password: z.string().nonempty({ message: 'Password belum diisi' }),
+    telepon: z.string().nonempty({ message: 'Nomor telepon belum diisi' }),
+    password: z.string().nonempty({ message: 'Kata sandi belum diisi' }),
   })
   .required();
 
@@ -45,16 +45,16 @@ function SignInForm() {
     <Box width="xs" borderRadius="lg" padding={6}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing={4}>
-          <FormControl isInvalid={Boolean(errors.username)}>
-            <FormLabel color={'gray.600'}>Username</FormLabel>
+          <FormControl isInvalid={Boolean(errors.telepon)}>
+            <FormLabel color={'gray.600'}>Telepon</FormLabel>
             <Input
               type="text"
               color={'gray.600'}
-              placeholder="Username"
-              {...register('username')}
+              placeholder="Nomor Telepon"
+              {...register('telepon')}
             />
             <FormErrorMessage>
-              {errors.username && errors.username.message}
+              {errors.telepon && errors.telepon.message}
             </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={Boolean(errors.password)}>
@@ -63,7 +63,7 @@ function SignInForm() {
               <Input
                 type={show ? 'text' : 'password'}
                 color={'gray.600'}
-                placeholder="password"
+                placeholder="Password"
                 {...register('password')}
               />
               <InputRightElement>
@@ -87,7 +87,14 @@ function SignInForm() {
               {errors.password && errors.password.message}
             </FormErrorMessage>
           </FormControl>
-          <Button type="submit" bg="#548c31" color="#fff" size="md" width="full">
+          <Button
+            type="submit"
+            bg="brand.100"
+            color="white"
+            size="md"
+            width="full"
+            _hover={{ bg: 'brand.100', opacity: 0.9 }}
+          >
             Sign In
           </Button>
         </VStack>
