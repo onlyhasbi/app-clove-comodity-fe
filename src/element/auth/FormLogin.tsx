@@ -42,64 +42,62 @@ function SignInForm() {
   };
 
   return (
-    <Box width="xs" borderRadius="lg" padding={6}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <VStack spacing={4}>
-          <FormControl isInvalid={Boolean(errors.telepon)}>
-            <FormLabel color={'gray.600'}>Telepon</FormLabel>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <VStack spacing={4}>
+        <FormControl isInvalid={Boolean(errors.telepon)}>
+          <FormLabel color={'gray.600'}>Telepon</FormLabel>
+          <Input
+            type="text"
+            color={'gray.600'}
+            placeholder="Nomor Telepon"
+            {...register('telepon')}
+          />
+          <FormErrorMessage>
+            {errors.telepon && errors.telepon.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={Boolean(errors.password)}>
+          <FormLabel color={'gray.600'}>Kata sandi</FormLabel>
+          <InputGroup>
             <Input
-              type="text"
+              type={show ? 'text' : 'password'}
               color={'gray.600'}
-              placeholder="Nomor Telepon"
-              {...register('telepon')}
+              placeholder="Kata sandi"
+              {...register('password')}
             />
-            <FormErrorMessage>
-              {errors.telepon && errors.telepon.message}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isInvalid={Boolean(errors.password)}>
-            <FormLabel color={'gray.600'}>Password</FormLabel>
-            <InputGroup>
-              <Input
-                type={show ? 'text' : 'password'}
-                color={'gray.600'}
-                placeholder="Password"
-                {...register('password')}
+            <InputRightElement>
+              <IconButton
+                aria-label="password toggle"
+                color="gray.600"
+                variant="ghost"
+                _hover={{ bg: 'none' }}
+                _active={{
+                  bg: 'none',
+                }}
+                onClick={() => {
+                  console.log('clicked', show);
+                  toggle();
+                }}
+                icon={show ? <RiEyeFill /> : <RiEyeOffFill />}
               />
-              <InputRightElement>
-                <IconButton
-                  aria-label="password toggle"
-                  color="gray.600"
-                  variant="ghost"
-                  _hover={{ bg: 'none' }}
-                  _active={{
-                    bg: 'none',
-                  }}
-                  onClick={() => {
-                    console.log('clicked', show);
-                    toggle();
-                  }}
-                  icon={show ? <RiEyeFill /> : <RiEyeOffFill />}
-                />
-              </InputRightElement>
-            </InputGroup>
-            <FormErrorMessage>
-              {errors.password && errors.password.message}
-            </FormErrorMessage>
-          </FormControl>
-          <Button
-            type="submit"
-            bg="brand.100"
-            color="white"
-            size="md"
-            width="full"
-            _hover={{ bg: 'brand.100', opacity: 0.9 }}
-          >
-            Sign In
-          </Button>
-        </VStack>
-      </form>
-    </Box>
+            </InputRightElement>
+          </InputGroup>
+          <FormErrorMessage>
+            {errors.password && errors.password.message}
+          </FormErrorMessage>
+        </FormControl>
+        <Button
+          type="submit"
+          bg="brand.100"
+          color="white"
+          size="md"
+          width="full"
+          _hover={{ bg: 'brand.100', opacity: 0.9 }}
+        >
+          Masuk
+        </Button>
+      </VStack>
+    </form>
   );
 }
 
