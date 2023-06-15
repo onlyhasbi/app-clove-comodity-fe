@@ -2,8 +2,12 @@ import SignInForm from '../../element/auth/FormLogin';
 import logo from '../../assets/logo.svg';
 import { Box, Container, Text, Wrap } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth.hooks';
 
 function SignIn() {
+  const isAuthSuccess = useAuth();
+  if (isAuthSuccess) return null;
+
   return (
     <Container
       width="full"

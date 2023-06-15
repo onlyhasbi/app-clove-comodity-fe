@@ -1,6 +1,10 @@
-import { Center, Stack, Text } from "@chakra-ui/react";
+import { useAuth } from '../../hooks/useAuth.hooks';
+import { Center, Stack, Text } from '@chakra-ui/react';
 
 function Dashboard() {
+  const isAuthSuccess = useAuth();
+  if (!isAuthSuccess) return null;
+
   return (
     <Center w="full" h="100vh">
       <Stack direction="column">
