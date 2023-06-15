@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function useAuth() {
-  const isAuthSuccess = false;
+  const isAuthSuccess = false; //auth switch
   const navigate = useNavigate();
 
   useEffect(() => {
