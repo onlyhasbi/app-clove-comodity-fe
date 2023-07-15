@@ -1,3 +1,4 @@
+import SignUpForm from '../../element/register/FormRegister';
 import { Center, Stack, Text, Wrap } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
@@ -5,9 +6,7 @@ function SignUp() {
   return (
     <Center w="full" h="100vh">
       <Stack direction="column">
-        <Text fontSize="3xl" fontWeight="bold">
-          Register Form
-        </Text>
+        <SignUpForm />
         <Wrap direction="row" justify="center" color="gray.600">
           <Text>Sudah punya akun ?</Text>
           <Text

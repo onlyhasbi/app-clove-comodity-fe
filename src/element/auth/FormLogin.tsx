@@ -56,7 +56,7 @@ function SignInForm() {
           </FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={Boolean(errors.password)}>
-          <FormLabel color={'gray.600'}>Kata sandi</FormLabel>
+          <FormLabel color={'gray.600'}>Sandi</FormLabel>
           <InputGroup>
             <Input
               type={show ? 'text' : 'password'}
@@ -85,14 +85,7 @@ function SignInForm() {
             {errors.password && errors.password.message}
           </FormErrorMessage>
         </FormControl>
-        <Button
-          type="submit"
-          bg="brand.100"
-          color="white"
-          size="md"
-          width="full"
-          _hover={{ bg: 'brand.100', opacity: 0.9 }}
-        >
+        <Button type="submit" size="md" width="full" variant="primary">
           Masuk
         </Button>
       </VStack>

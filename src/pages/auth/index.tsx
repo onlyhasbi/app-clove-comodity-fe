@@ -24,7 +24,7 @@ function SignIn() {
           <SignInForm />
         </Box>
         <Wrap direction="row" justify="center" color="gray.600">
-          <Text>Belum memiliki akun ?</Text>
+          <Text>Belum punya akun ?</Text>
           <Text
             fontWeight="bold"
             cursor="pointer"

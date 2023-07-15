@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { configTheme } from './utils/config.utils.tsx';
 import { BrowserRouter } from 'react-router-dom';
 
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
