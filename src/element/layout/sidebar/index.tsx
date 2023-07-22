@@ -1,4 +1,4 @@
-import { Box, Circle, Divider, Flex, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Text } from '@chakra-ui/react';
 import { useLocation, Link } from 'react-router-dom';
 import logo from '../../../assets/logo.svg';
 
