@@ -1,6 +1,7 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import Lahan from './lahan';
 import Setoran from './setoran';
+import Hasil from './hasil';
 
 const TabsPanen = () => {
   return (
@@ -19,7 +20,7 @@ const TabsPanen = () => {
           <Setoran />
         </TabPanel>
         <TabPanel>
-          <p>hasil</p>
+          <Hasil />
         </TabPanel>
       </TabPanels>
     </Tabs>

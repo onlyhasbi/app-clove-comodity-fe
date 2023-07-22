@@ -32,7 +32,7 @@ const Setoran = () => {
         <ModalContent>
           <ModalHeader>Tambah Setoran</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody marginBottom={5}>
             <FormSetoran />
           </ModalBody>
         </ModalContent>

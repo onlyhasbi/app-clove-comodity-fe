@@ -7,6 +7,7 @@ import {
   Select,
   Button,
   VStack,
+  HStack,
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues } from 'react-hook-form';
@@ -103,9 +104,14 @@ const FormLahan = () => {
           </FormErrorMessage>
         </FormControl>
       </VStack>
-      <Button type="submit" marginTop={4} bg="brand.100" color="white">
-        Submit
-      </Button>
+      <HStack justify="end" gap={3} marginTop={4}>
+        <Button type="button" variant="ghost">
+          Batal
+        </Button>
+        <Button type="submit" bg="brand.100" color="white">
+          Simpan
+        </Button>
+      </HStack>
     </form>
   );
 };

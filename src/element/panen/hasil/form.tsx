@@ -4,24 +4,23 @@ import {
   FormLabel,
   Input,
   Textarea,
-  Select,
   Button,
   VStack,
   HStack,
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues } from 'react-hook-form';
-import { defaultValues, schemaSetoran } from './schema';
+import { defaultValues, schemaHasil } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const FormSetoran = () => {
+const FormHasil = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaSetoran),
+    resolver: zodResolver(schemaHasil),
   });
 
   const onSubmit = (data: FieldValues) => {
@@ -33,39 +32,17 @@ const FormSetoran = () => {
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.lahan)}>
           <FormLabel htmlFor="lahan">Lahan</FormLabel>
-          <Select id="lahan" placeholder="Pilih Lahan" {...register('lahan')}>
-            <option value="option1">Malino</option>
-          </Select>
+          <Input id="lahan" placeholder="Lahan" {...register('lahan')} />
           <FormErrorMessage>
             {errors.lahan && errors.lahan.message}
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={Boolean(errors.volume)}>
-          <FormLabel htmlFor="volume">Volume</FormLabel>
-          <Input id="volume" placeholder="Volume" {...register('volume')} />
+        <FormControl isInvalid={Boolean(errors.berat)}>
+          <FormLabel htmlFor="berat">Berat</FormLabel>
+          <Input id="berat" placeholder="Berat" {...register('berat')} />
           <FormErrorMessage>
-            {errors.volume && errors.volume.message}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={Boolean(errors.upah)}>
-          <FormLabel htmlFor="upah">Upah</FormLabel>
-          <Input id="upah" placeholder="Upah" {...register('upah')} />
-          <FormErrorMessage>
-            {errors.upah && errors.upah.message}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={Boolean(errors.id_buruh)}>
-          <FormLabel htmlFor="id_buruh">Kode Buruh</FormLabel>
-          <Input
-            id="id_buruh"
-            placeholder="Kode Buruh"
-            {...register('id_buruh')}
-          />
-          <FormErrorMessage>
-            {errors.id_buruh && errors.id_buruh.message}
+            {errors.berat && errors.berat.message}
           </FormErrorMessage>
         </FormControl>
 
@@ -102,4 +79,4 @@ const FormSetoran = () => {
   );
 };
 
-export default FormSetoran;
+export default FormHasil;

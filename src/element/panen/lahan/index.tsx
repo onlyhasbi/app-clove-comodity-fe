@@ -32,7 +32,7 @@ const Lahan = () => {
         <ModalContent>
           <ModalHeader>Tambah Lahan</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody marginBottom={5}>
             <FormLahan />
           </ModalBody>
         </ModalContent>
