@@ -1,13 +1,10 @@
-import { Box, Center, Text } from '@chakra-ui/react';
+import Overview from '../../element/overview';
+import { Box } from '@chakra-ui/react';
 
 function Dashboard() {
   return (
-    <Box w="full" minH="100vh">
-      <Center height="90vh">
-        <Text fontSize="3xl" fontWeight="bold">
-          Clove Comodity Dashboard
-        </Text>
-      </Center>
+    <Box w="full" minH="100vh" paddingX={7} paddingTop={7} paddingBottom={20}>
+      <Overview />
     </Box>
   );
 }
