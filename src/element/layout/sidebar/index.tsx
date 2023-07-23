@@ -4,9 +4,9 @@ import logo from '../../../assets/logo.svg';
 
 const sidebarMenu = [
   { label: 'Ikhtisar', path: '/' },
-  { label: 'Panen', path: '/panen' },
-  { label: 'Pengeringan', path: '/pengeringan' },
-  { label: 'Jual/beli', path: '/transaksi' },
+  { label: 'Panen', path: '/harvest' },
+  { label: 'Pengeringan', path: '/dry' },
+  { label: 'Jual/beli', path: '/transaction' },
 ];
 
 const Sidebar = () => {

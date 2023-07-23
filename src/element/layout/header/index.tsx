@@ -45,7 +45,11 @@ const Header = () => {
               {routes.map((item, index) => {
                 return (
                   <React.Fragment key={item.label}>
-                    <Text _hover={{ color: 'brand.100' }} w="full" paddingLeft={5}>
+                    <Text
+                      _hover={{ color: 'brand.100' }}
+                      w="full"
+                      paddingLeft={5}
+                    >
                       <Link to={item.path}>{item.label}</Link>
                     </Text>
                     {index !== routes.length - 1 && <Divider />}
