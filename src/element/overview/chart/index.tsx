@@ -28,9 +28,6 @@ function Chart() {
           >
             3.500.000
           </Text>
-          <Text as="sub" fontWeight={500} fontSize="2xl">
-            Jt
-          </Text>
         </Stack>
       </Stack>
 

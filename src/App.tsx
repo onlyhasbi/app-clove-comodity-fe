@@ -6,6 +6,7 @@ import Layout from './element/layout';
 import Panen from './pages/panen';
 import Pengeringan from './pages/pengeringan';
 import Transaksi from './pages/transaksi';
+import Profile from './pages/profile';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/panen" element={<Panen />} />
         <Route path="/pengeringan" element={<Pengeringan />} />
         <Route path="/transaksi" element={<Transaksi />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   );
