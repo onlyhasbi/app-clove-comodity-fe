@@ -22,10 +22,14 @@ const Sidebar = () => {
       borderRight="1px"
       borderColor="gray.100"
     >
-      <Box width="130px" marginX="auto">
+      <Box width={{ lg: '130px', base: '15rem' }} marginX="auto">
         <img src={logo} alt="clove-comodity-logo" />
       </Box>
-      <Box width="80%" marginX="auto">
+      <Box
+        width={{ base: 'full', lg: '80%' }}
+        paddingX={{ base: 6, lg: 0 }}
+        marginX="auto"
+      >
         {sidebarMenu.map((item, index) => {
           const isSelected = item.path === currentPath;
           return (

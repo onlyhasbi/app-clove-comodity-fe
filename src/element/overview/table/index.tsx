@@ -4,7 +4,7 @@ import TabelPenawaran from './offer/table';
 
 function TableInfo() {
   return (
-    <Grid gridTemplateColumns="380px 1fr" gap={7}>
+    <Grid gridTemplateColumns={{ lg: '380px 1fr' }} gap={7}>
       <TabelBuruh />
       <TabelPenawaran />
     </Grid>

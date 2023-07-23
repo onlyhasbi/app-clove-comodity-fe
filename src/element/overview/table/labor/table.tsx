@@ -1,6 +1,7 @@
 import Table from '../../../../components/table';
-import { Box, VStack, Text } from '@chakra-ui/react';
+import { Box, VStack, Text, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
+import { Check } from 'lucide-react';
 
 const dummy = [
   {
@@ -53,8 +54,12 @@ const TabelBuruh = () => {
 
     columnHelper.accessor('action', {
       id: 'action',
-      header: () => <Box>Action</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Box>Aksi</Box>,
+      cell: ({ getValue }) => (
+        <Center _hover={{ color: 'brand.100' }} cursor="pointer" title="terima">
+          <Check height={20} width={20} />
+        </Center>
+      ),
     }),
   ];
 
