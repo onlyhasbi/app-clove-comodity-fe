@@ -1,5 +1,5 @@
 import { data } from '../../../model/chart.model';
-import { Box, Stack, VStack } from '@chakra-ui/react';
+import { Box, Stack, VStack, Text } from '@chakra-ui/react';
 import {
   LineChart,
   Line,
@@ -12,13 +12,26 @@ import {
 function Chart() {
   return (
     <VStack gap={10}>
-      <Stack w="full">
-        <Box as="h4" fontSize="md">
+      <Stack w="full" lineHeight="2.2rem">
+        <Text as="h4" fontSize="md" letterSpacing="0.05rem">
           Earned
-        </Box>
-        <Box as="h1" fontSize="4xl" fontWeight={700}>
-          $ 3.5 M
-        </Box>
+        </Text>
+        <Stack direction="row" alignItems="center">
+          <Text as="sup" fontSize="2xl" fontWeight={700}>
+            Rp.
+          </Text>
+          <Text
+            as="h1"
+            fontSize="5xl"
+            fontWeight={700}
+            letterSpacing="-0.05rem"
+          >
+            3.500.000
+          </Text>
+          <Text as="sub" fontWeight={500} fontSize="2xl">
+            Jt
+          </Text>
+        </Stack>
       </Stack>
 
       <Box width="full" height={350}>
@@ -35,14 +48,14 @@ function Chart() {
             <XAxis
               dataKey="date"
               fontSize={10}
-              color="#2563eb"
+              color="#548c31"
               strokeOpacity={0}
             />
             <YAxis
               dataKey="download"
               type="number"
               fontSize={10}
-              color="#2563eb"
+              color="#548c31"
               strokeOpacity={0}
             />
 
@@ -50,7 +63,7 @@ function Chart() {
               dataKey="earn"
               type="monotone"
               strokeWidth={2.5}
-              stroke="#2563eb"
+              stroke="#548c31"
             />
           </LineChart>
         </ResponsiveContainer>
