@@ -55,7 +55,7 @@ const TabelBuruh = () => {
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Box>Aksi</Box>,
-      cell: ({ getValue }) => (
+      cell: () => (
         <Center _hover={{ color: 'brand.100' }} cursor="pointer" title="terima">
           <Check height={20} width={20} />
         </Center>
