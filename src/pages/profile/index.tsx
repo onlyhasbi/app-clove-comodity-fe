@@ -1,11 +1,19 @@
-import { Box } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import ProfileForm from '../../element/profile/form';
+import SocialMedia from '../../element/profile/social-media';
 
 const Profile = () => {
   return (
-    <Box paddingX={10} marginTop={5}>
+    <Stack
+      direction="column"
+      paddingX={10}
+      paddingBottom="5rem"
+      marginTop={5}
+      spacing="3.5rem"
+    >
       <ProfileForm />
-    </Box>
+      <SocialMedia />
+    </Stack>
   );
 };
 

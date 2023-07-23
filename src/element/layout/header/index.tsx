@@ -39,13 +39,13 @@ const Header = () => {
             </Circle>
           </Flex>
         </PopoverTrigger>
-        <PopoverContent w="10rem" paddingY={1} _focus={{ boxShadow: 'none' }}>
+        <PopoverContent w="10rem" paddingY={2} _focus={{ boxShadow: 'none' }}>
           <PopoverBody>
             <VStack gap={2}>
               {routes.map((item, index) => {
                 return (
                   <React.Fragment key={item.label}>
-                    <Text _hover={{ color: 'brand.100' }}>
+                    <Text _hover={{ color: 'brand.100' }} w="full" paddingLeft={5}>
                       <Link to={item.path}>{item.label}</Link>
                     </Text>
                     {index !== routes.length - 1 && <Divider />}
