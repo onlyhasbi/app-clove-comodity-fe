@@ -13,10 +13,10 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 
 const routes = [
-  { path: 'profile', label: 'Profile' },
-  { path: 'offer', label: 'Offer' },
-  { path: 'work', label: 'Work' },
-  { path: '/', label: 'Logout' },
+  { path: 'profile', label: 'Profil' },
+  { path: 'offer', label: 'Penawaran' },
+  { path: 'work', label: 'Pekerjaan' },
+  { path: '/', label: 'Keluar' },
 ];
 
 const Header = () => {
