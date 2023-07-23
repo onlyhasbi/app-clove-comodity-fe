@@ -15,9 +15,9 @@ export const configTheme = extendTheme({
           _hover: {
             bg: 'brand.100',
             opacity: 0.9,
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 });
