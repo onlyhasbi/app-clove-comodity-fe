@@ -1,7 +1,7 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import Lahan from './lahan';
-import Setoran from './setoran';
-import Hasil from './hasil';
+import Lahan from './land';
+import Setoran from './deposit';
+import Hasil from './results';
 
 const TabsPanen = () => {
   return (

@@ -13,8 +13,8 @@ function Chart() {
   return (
     <VStack gap={10}>
       <Stack w="full" lineHeight="2.2rem">
-        <Text as="h4" fontSize="md" letterSpacing="0.05rem">
-          Earned
+        <Text as="h4" fontSize="md" letterSpacing="0.04rem">
+          Penghasilan
         </Text>
         <Stack direction="row" alignItems="center">
           <Text as="sup" fontSize="2xl" fontWeight={700}>

@@ -3,9 +3,9 @@ import SignUp from './pages/register';
 import Dashboard from './pages/dashboard';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './element/layout';
-import Panen from './pages/panen';
-import Pengeringan from './pages/pengeringan';
-import Transaksi from './pages/transaksi';
+import Panen from './pages/harvest';
+import Pengeringan from './pages/drying';
+import Transaksi from './pages/transaction';
 import Profile from './pages/profile';
 
 function App() {

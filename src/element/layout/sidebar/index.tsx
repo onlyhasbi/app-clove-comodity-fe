@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import logo from '../../../assets/logo.svg';
 
 const sidebarMenu = [
-  { label: 'Overview', path: '/' },
+  { label: 'Ikhtisar', path: '/' },
   { label: 'Panen', path: '/panen' },
   { label: 'Pengeringan', path: '/pengeringan' },
   { label: 'Jual/beli', path: '/transaksi' },

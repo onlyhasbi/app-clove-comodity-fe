@@ -1,6 +1,6 @@
 import { Grid } from '@chakra-ui/react';
-import TabelBuruh from './labor/table';
-import TabelPenawaran from './offer/table';
+import TabelBuruh from './labor';
+import TabelPenawaran from './offer';
 
 function TableInfo() {
   return (
