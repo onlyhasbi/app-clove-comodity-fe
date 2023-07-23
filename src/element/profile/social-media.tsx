@@ -1,6 +1,5 @@
 import {
   Circle,
-  Divider,
   Grid,
   HStack,
   Heading,
