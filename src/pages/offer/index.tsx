@@ -6,7 +6,7 @@ const Penawaran = () => {
   return (
     <Stack
       direction="column"
-      gap="4rem"
+      gap="2.5rem"
       paddingX={10}
       paddingTop={10}
       paddingBottom="5rem"
