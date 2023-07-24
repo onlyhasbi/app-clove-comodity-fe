@@ -32,7 +32,7 @@ const FormHasilPengeringan = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.tim)}>
-          <FormLabel htmlFor="tim">Berat (Kg)</FormLabel>
+          <FormLabel htmlFor="tim">Tim</FormLabel>
           <Select id="tim" placeholder="Pilih Tim" {...register('tim')}>
             <option value="option1">Rakko 1</option>
           </Select>

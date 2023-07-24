@@ -1,6 +1,7 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import BahanPengeringan from './materials';
 import HasilPengeringan from './results';
+import Tim from './team';
 
 const TabsPengeringan = () => {
   return (
@@ -13,7 +14,7 @@ const TabsPengeringan = () => {
 
       <TabPanels>
         <TabPanel>
-          <>Tim</>
+          <Tim />
         </TabPanel>
         <TabPanel>
           <BahanPengeringan />

@@ -1,7 +1,8 @@
 import Table from '../../../components/table';
-import { Box } from '@chakra-ui/react';
+import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { TSchemaHasil } from './schema';
+import { Edit, Trash2 } from 'lucide-react';
 
 const dummy = [
   {
@@ -36,8 +37,10 @@ const dummy = [
   },
 ];
 
+type TTableHasil = TSchemaHasil & { action: string };
+
 const TableHasil = () => {
-  const columnHelper = createColumnHelper<TSchemaHasil>();
+  const columnHelper = createColumnHelper<TTableHasil>();
   const columns = [
     columnHelper.accessor('lahan', {
       id: 'lahan',
@@ -58,6 +61,24 @@ const TableHasil = () => {
       id: 'catatan',
       header: () => <Box>Catatan</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    }),
+    columnHelper.accessor('action', {
+      id: 'action',
+      header: () => <Center>Aksi</Center>,
+      cell: () => (
+        <HStack gap={3} justify="center">
+          <Box title="ubah" cursor="pointer" _hover={{ color: 'brand.100' }}>
+            <Edit height={15} width={15} />
+          </Box>
+          <Box
+            title="tidak aktif"
+            cursor="pointer"
+            _hover={{ color: 'brand.100' }}
+          >
+            <Trash2 height={15} width={15} />
+          </Box>
+        </HStack>
+      ),
     }),
   ];
 

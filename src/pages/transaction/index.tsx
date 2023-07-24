@@ -10,7 +10,7 @@ const Transaksi = () => {
           </Text>
           <Text fontSize="sm" color="gray.500" letterSpacing="0.03rem">
             Managemen hasil transaksi komoditas
-          </Text>
+          </Text> 
         </Box>
       </Box>
     </>

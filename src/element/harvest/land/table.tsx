@@ -1,14 +1,15 @@
 import Table from '../../../components/table';
-import { Box } from '@chakra-ui/react';
+import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { TSchemaLahan } from './schema';
+import { Edit, Trash2 } from 'lucide-react';
 
 const dummy = [
   {
     nama: 'Dulcia Guenther',
     provinsi: 'Anchorage',
     kabupaten: 'Alaska',
-    status_lahan: true,
+    status_lahan: 'Sewa',
     luas_lahan: 93,
     alamat: '99 Glendale Parkway',
   },
@@ -16,7 +17,7 @@ const dummy = [
     nama: 'Laurence Butterfill',
     provinsi: 'Anchorage',
     kabupaten: 'Alaska',
-    status_lahan: false,
+    status_lahan: 'Milik Sendiri',
     luas_lahan: 88,
     alamat: '91 Armistice Point',
   },
@@ -24,7 +25,7 @@ const dummy = [
     nama: 'Konstanze Matyashev',
     provinsi: 'Anchorage',
     kabupaten: 'Alaska',
-    status_lahan: true,
+    status_lahan: 'Sewa',
     luas_lahan: 30,
     alamat: '9276 Golf View Hill',
   },
@@ -32,7 +33,7 @@ const dummy = [
     nama: 'Lorita Staresmeare',
     provinsi: 'Juneau',
     kabupaten: 'Alaska',
-    status_lahan: false,
+    status_lahan: 'Sewa',
     luas_lahan: 33,
     alamat: '06 Harbort Center',
   },
@@ -40,14 +41,16 @@ const dummy = [
     nama: 'Elene Mapledoram',
     provinsi: 'Fairbanks',
     kabupaten: 'Alaska',
-    status_lahan: false,
+    status_lahan: 'Milik Sendiri',
     luas_lahan: 28,
     alamat: '22426 Badeau Lane',
   },
 ];
 
+type TTableLahan = TSchemaLahan & { action: string };
+
 const TableLahan = () => {
-  const columnHelper = createColumnHelper<TSchemaLahan>();
+  const columnHelper = createColumnHelper<TTableLahan>();
   const columns = [
     columnHelper.accessor('nama', {
       id: 'nama',
@@ -78,6 +81,24 @@ const TableLahan = () => {
       id: 'alamat',
       header: () => <Box>Alamat</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    }),
+    columnHelper.accessor('action', {
+      id: 'action',
+      header: () => <Center>Aksi</Center>,
+      cell: () => (
+        <HStack gap={3} justify="center">
+          <Box title="ubah" cursor="pointer" _hover={{ color: 'brand.100' }}>
+            <Edit height={15} width={15} />
+          </Box>
+          <Box
+            title="tidak aktif"
+            cursor="pointer"
+            _hover={{ color: 'brand.100' }}
+          >
+            <Trash2 height={15} width={15} />
+          </Box>
+        </HStack>
+      ),
     }),
   ];
 

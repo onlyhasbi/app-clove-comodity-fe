@@ -1,7 +1,8 @@
 import Table from '../../../components/table';
-import { Box } from '@chakra-ui/react';
+import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { TSchemaSetoran } from './schema';
+import { Edit, Trash2 } from 'lucide-react';
 
 const dummy = [
   {
@@ -46,8 +47,10 @@ const dummy = [
   },
 ];
 
-const TableLahan = () => {
-  const columnHelper = createColumnHelper<TSchemaSetoran>();
+type TTableSetoran = TSchemaSetoran & { action: string };
+
+const TableSetoran = () => {
+  const columnHelper = createColumnHelper<TTableSetoran>();
   const columns = [
     columnHelper.accessor('lahan', {
       id: 'lahan',
@@ -79,9 +82,27 @@ const TableLahan = () => {
       header: () => <Box>Catatan</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
+    columnHelper.accessor('action', {
+      id: 'action',
+      header: () => <Center>Aksi</Center>,
+      cell: () => (
+        <HStack gap={3} justify="center">
+          <Box title="ubah" cursor="pointer" _hover={{ color: 'brand.100' }}>
+            <Edit height={15} width={15} />
+          </Box>
+          <Box
+            title="tidak aktif"
+            cursor="pointer"
+            _hover={{ color: 'brand.100' }}
+          >
+            <Trash2 height={15} width={15} />
+          </Box>
+        </HStack>
+      ),
+    }),
   ];
 
   return <Table data={dummy} columns={columns} />;
 };
 
-export default TableLahan;
+export default TableSetoran;

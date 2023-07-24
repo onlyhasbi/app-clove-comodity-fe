@@ -1,17 +1,15 @@
 import { z } from 'zod';
 
-export const schemaBahanPengeringan = z.object({
-  buruh: z.string().nonempty({ message: 'Buruh tidak boleh kosong' }),
-  berat: z.string().nonempty({ message: 'Berat tidak boleh kosong' }),
-  volume: z.string().nonempty({ message: 'Volume tidak boleh kosong' }),
-  tanggal: z.date(),
+export const schemaTim = z.object({
+  nama: z.string().nonempty({ message: 'Nama tidak boleh kosong' }),
+  ketua: z.string().nonempty({ message: 'Ketua tidak boleh kosong' }),
+  anggota: z.string().nonempty({ message: 'Anggota tim tidak boleh kosong' }),
 });
 
-export type TSchemaBahanPengeringan = z.infer<typeof schemaBahanPengeringan>;
+export type TSchemaTim = z.infer<typeof schemaTim>;
 
 export const defaultValues = {
-  buruh: '',
-  berat: '',
-  volume: '',
-  tanggal: '',
+  nama: '',
+  ketua: '',
+  anggota: '',
 };
