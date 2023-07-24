@@ -31,7 +31,10 @@ const ProfileForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid gridTemplateColumns="repeat(2,1fr)" gap={6}>
+        <Grid
+          gridTemplateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }}
+          gap={{ lg: 5, base: 4 }}
+        >
           <FormControl isInvalid={Boolean(errors.jenis_pengguna)}>
             <FormLabel htmlFor="jenis_pengguna">Jenis Pengguna</FormLabel>
             <Input

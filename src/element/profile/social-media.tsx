@@ -1,11 +1,4 @@
-import {
-  Circle,
-  Grid,
-  HStack,
-  Heading,
-  Input,
-  VStack,
-} from '@chakra-ui/react';
+import { Circle, Grid, HStack, Heading, Input, VStack } from '@chakra-ui/react';
 
 const SocialMedia = () => {
   return (
@@ -13,7 +6,11 @@ const SocialMedia = () => {
       <Heading as="h2" size="lg" w="full" color="gray.700" marginY={2}>
         Social Media
       </Heading>
-      <Grid gridTemplateColumns="repeat(2,1fr)" w="full" gap={6}>
+      <Grid
+        gridTemplateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }}
+        w="full"
+        gap={6}
+      >
         <HStack gap={4}>
           <Circle size="40px" bgColor="purple.600" color="white">
             F

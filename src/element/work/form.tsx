@@ -29,7 +29,10 @@ const FormPenawaran = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid gridTemplateColumns="repeat(2,1fr)" gap={5}>
+      <Grid
+        gridTemplateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }}
+        gap={{ lg: 5, base: 4 }}
+      >
         <FormControl isInvalid={Boolean(errors.nama_pekerjaan)}>
           <FormLabel htmlFor="nama_pekerjaan">Nama Pekerjaan</FormLabel>
           <Input
