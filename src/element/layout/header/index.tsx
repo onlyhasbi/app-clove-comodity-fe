@@ -7,6 +7,7 @@ import {
   PopoverContent,
   PopoverBody,
   VStack,
+  Stack,
   Divider,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
@@ -23,21 +24,25 @@ const Header = () => {
   return (
     <Flex
       w="full"
-      justifyContent="end"
+      justifyContent={{ base: 'center', lg: 'end' }}
       marginTop={8}
-      paddingRight={12}
+      paddingRight={{ base: 0, lg: 12 }}
       cursor="pointer"
     >
       <Popover placement="top-start">
         <PopoverTrigger>
-          <Flex gap={4}>
-            <Text>User Guest</Text>
-            <Circle size={25} bg="brand.100">
+          <Stack
+            direction={{ lg: 'row', base: 'column' }}
+            alignItems={{ base: 'center' }}
+            gap={4}
+          >
+            <Text order={{ lg: '0', base: '1' }}>User Guest</Text>
+            <Circle size={{ lg: 25, base: 75 }} bg="brand.100">
               <Text fontSize={16} fontWeight="bold" color="white">
                 G
               </Text>
             </Circle>
-          </Flex>
+          </Stack>
         </PopoverTrigger>
         <PopoverContent w="10rem" paddingY={2} _focus={{ boxShadow: 'none' }}>
           <PopoverBody>

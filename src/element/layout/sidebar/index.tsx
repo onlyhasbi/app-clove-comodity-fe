@@ -1,6 +1,7 @@
-import { Box, Divider, Flex, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Show, Text } from '@chakra-ui/react';
 import { useLocation, Link } from 'react-router-dom';
 import logo from '../../../assets/logo.svg';
+import Header from '../header';
 
 const sidebarMenu = [
   { label: 'Ikhtisar', path: '/' },
@@ -25,6 +26,9 @@ const Sidebar = () => {
       <Box width={{ lg: '130px', base: '15rem' }} marginX="auto">
         <img src={logo} alt="clove-comodity-logo" />
       </Box>
+      <Show below="lg">
+        <Header />
+      </Show>
       <Box
         width={{ base: 'full', lg: '80%' }}
         paddingX={{ base: 6, lg: 0 }}
