@@ -1,19 +1,21 @@
 import { z } from 'zod';
 
-export const schemaBahanPengeringan = z.object({
+export const schemaHasilPengeringan = z.object({
+  tim: z.string().nonempty({ message: 'Tim tidak boleh kosong' }),
   berat_kg: z.string().nonempty({ message: 'Berat tidak boleh kosong' }),
   volume_liter: z.string().nonempty({ message: 'Volume tidak boleh kosong' }),
-  waktu_mulai: z
+  waktu_selesai: z
     .string()
-    .nonempty({ message: 'Waktu mulai tidak boleh kosong' }),
+    .nonempty({ message: 'Waktu selesai tidak boleh kosong' }),
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TSchemaBahanPengeringan = z.infer<typeof schemaBahanPengeringan>;
+export type TSchemaHasilPengeringan = z.infer<typeof schemaHasilPengeringan>;
 
 export const defaultValues = {
+  tim: '',
   berat_kg: '',
   volume_liter: '',
-  waktu_mulai: '',
+  waktu_selesai: '',
   catatan: '',
 };

@@ -10,10 +10,10 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { useReducer } from 'react';
-import FormBahan from './form';
-import TabelBahan from './table';
+import FormHasilPengeringan from './form';
+import TabelHasilPengeringan from './table';
 
-const BahanPengeringan = () => {
+const HasilPengeringan = () => {
   const [isShow, toggle] = useReducer((o) => !o, false);
 
   return (
@@ -24,16 +24,16 @@ const BahanPengeringan = () => {
             Tambah
           </Button>
         </Box>
-        <TabelBahan />
+        <TabelHasilPengeringan />
       </VStack>
 
       <Modal isOpen={isShow} onClose={toggle}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Bahan Pengeringan</ModalHeader>
+          <ModalHeader>Hasil Pengeringan</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormBahan />
+            <FormHasilPengeringan />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -41,4 +41,4 @@ const BahanPengeringan = () => {
   );
 };
 
-export default BahanPengeringan;
+export default HasilPengeringan;
