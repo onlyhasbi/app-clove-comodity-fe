@@ -8,7 +8,7 @@ const Penawaran = () => {
       direction="column"
       spacing="2rem"
       paddingX={10}
-      paddingTop={10}
+      marginTop={5}
       paddingBottom="5rem"
     >
       <Box w="full">
