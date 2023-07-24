@@ -102,12 +102,12 @@ const FormPenawaran = () => {
           </FormErrorMessage>
         </FormControl>
       </Grid>
-      <HStack justify="end" gap={3} marginTop={4}>
+      <HStack gap={3} marginTop={6}>
+        <Button type="submit" variant="primary">
+          Tambahkan
+        </Button>
         <Button type="button" variant="ghost">
           Batal
-        </Button>
-        <Button type="submit" variant="primary">
-          Simpan
         </Button>
       </HStack>
     </form>

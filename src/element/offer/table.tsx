@@ -1,5 +1,5 @@
 import Table from '../../components/table';
-import { Box, VStack, Text, HStack, Center } from '@chakra-ui/react';
+import { Box, HStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { TSchemaPenawaran } from './schema';
 import { MinusSquare, Edit } from 'lucide-react';
@@ -110,34 +110,7 @@ const TablePenawaran = () => {
     }),
   ];
 
-  return (
-    <VStack gap={25}>
-      <Box w="full">
-        <Text
-          as="h2"
-          fontSize="xl"
-          w="full"
-          fontWeight={700}
-          letterSpacing="-0.01rem"
-          textAlign="left"
-          color="brand.100"
-        >
-          Penawaran Komoditas
-        </Text>
-        <Text
-          as="h2"
-          fontSize="sm"
-          w="full"
-          fontWeight={500}
-          letterSpacing="0.02rem"
-          textAlign="left"
-        >
-          Tingkatkan profit dengan menawarkan komoditasmu
-        </Text>
-      </Box>
-      <Table data={dummy} columns={columns} />
-    </VStack>
-  );
+  return <Table data={dummy} columns={columns} />;
 };
 
 export default TablePenawaran;

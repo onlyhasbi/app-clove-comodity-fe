@@ -2,8 +2,8 @@ import { Circle, Grid, HStack, Heading, Input, VStack } from '@chakra-ui/react';
 
 const SocialMedia = () => {
   return (
-    <VStack gap={5}>
-      <Heading as="h2" size="lg" w="full" color="gray.700" marginY={2}>
+    <VStack gap={5} marginTop={5}>
+      <Heading as="h3" fontSize="1.3rem" w="full" color="gray.700" >
         Social Media
       </Heading>
       <Grid
