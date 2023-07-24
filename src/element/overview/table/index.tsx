@@ -1,13 +1,21 @@
-import { Grid } from '@chakra-ui/react';
+import { Box, Stack } from '@chakra-ui/react';
 import TabelBuruh from './labor';
 import TabelPenawaran from './offer';
 
 function TableInfo() {
   return (
-    <Grid gridTemplateColumns={{ lg: '380px 1fr', base: '1fr' }} gap={7}>
-      <TabelBuruh />
-      <TabelPenawaran />
-    </Grid>
+    <Stack
+      direction={{ lg: 'row', base: 'column' }}
+      justify="space-between"
+      w="full"
+    >
+      <Box w={{ lg: '385px', base: 'full' }}>
+        <TabelBuruh />
+      </Box>
+      <Box w={{ lg: '650px', base: 'full' }}>
+        <TabelPenawaran />
+      </Box>
+    </Stack>
   );
 }
 
