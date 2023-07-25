@@ -14,7 +14,6 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  AlertDialogCloseButton,
 } from '@chakra-ui/react';
 import FormLahan from './form';
 import TableLahan from './table';
