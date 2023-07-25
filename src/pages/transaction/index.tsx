@@ -1,3 +1,4 @@
+import TabsTransaksi from '../../element/transaction/tabs';
 import { Box, Text } from '@chakra-ui/react';
 
 const Transaksi = () => {
@@ -10,8 +11,9 @@ const Transaksi = () => {
           </Text>
           <Text fontSize="sm" color="gray.500" letterSpacing="0.03rem">
             Managemen hasil transaksi komoditas
-          </Text> 
+          </Text>
         </Box>
+        <TabsTransaksi />
       </Box>
     </>
   );
