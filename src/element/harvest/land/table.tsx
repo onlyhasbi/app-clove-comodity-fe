@@ -2,7 +2,7 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TTableLahan, TUpdate } from './types';
+import { TDelete, TTableLahan, TUpdate } from './types';
 
 const dummy = [
   {
@@ -11,7 +11,7 @@ const dummy = [
     provinsi: 'Sulawesi Selatan',
     kabupaten: 'Makassar',
     status_lahan: 'Sewa',
-    luas_lahan: 93,
+    luas_lahan: '93',
     alamat: '99 Glendale Parkway',
     action: {
       update: {
@@ -20,16 +20,16 @@ const dummy = [
         provinsi: 'sulsel',
         kabupaten: 'makassar',
         status_lahan: 'Sewa',
-        luas_lahan: 93,
+        luas_lahan: '93',
         alamat: '99 Glendale Parkway',
       },
-      delete: { id: 'Kentang Malino' },
+      delete: { id: '1', nama: 'Kentang Malino' },
     },
   },
 ];
 
 type Props = {
-  onDelete: (data: string) => void;
+  onDelete: (data: TDelete) => void;
   onUpdate: (data: TUpdate) => void;
 };
 
@@ -87,7 +87,7 @@ const TableLahan = ({
               title="tidak aktif"
               cursor="pointer"
               _hover={{ color: 'brand.100' }}
-              onClick={() => handleDelete(getValue().delete.id)}
+              onClick={() => handleDelete(getValue().delete)}
             >
               <Trash2 height={15} width={15} />
             </Box>

@@ -46,7 +46,12 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
   }, []);
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    if (initialValues) {
+      console.log('update', data);
+      handleCloseModal();
+    } else {
+      console.log('add', data);
+    }
   };
 
   return (
@@ -130,7 +135,7 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
           Batal
         </Button>
         <Button type="submit" bg="brand.100" color="white">
-          Simpan
+          {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>
     </form>

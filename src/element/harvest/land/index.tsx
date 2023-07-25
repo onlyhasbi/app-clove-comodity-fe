@@ -17,13 +17,13 @@ import {
 } from '@chakra-ui/react';
 import FormLahan from './form';
 import TableLahan from './table';
-import { TUpdate } from './types';
+import { TDelete, TUpdate } from './types';
 import { useState, useCallback, useRef } from 'react';
 
 type TAction = {
   add?: boolean;
   update?: TUpdate | boolean;
-  delete?: string | boolean;
+  delete?: TDelete | boolean;
 };
 
 const Lahan = () => {
@@ -43,7 +43,7 @@ const Lahan = () => {
     []
   );
   const handleOpenModalDelete = useCallback(
-    (data: string) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleCloseModalDelete = useCallback(
@@ -94,7 +94,7 @@ const Lahan = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${action?.delete}`}
+              {`Delete ${(action?.delete as TDelete)?.nama}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -108,7 +108,7 @@ const Lahan = () => {
               <Button
                 colorScheme="red"
                 onClick={() => {
-                  console.log(action?.delete);
+                  console.log((action?.delete as TDelete)?.id);
                   handleCloseModalDelete();
                 }}
                 ml={3}
