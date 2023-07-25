@@ -1,55 +1,42 @@
 import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { TSchemaLahan } from './schema';
 import { Edit, Trash2 } from 'lucide-react';
+import { TTableLahan, TUpdate } from './types';
 
 const dummy = [
   {
-    nama: 'Dulcia Guenther',
-    provinsi: 'Anchorage',
-    kabupaten: 'Alaska',
+    id: '1',
+    nama: 'Kentang Malino',
+    provinsi: 'Sulawesi Selatan',
+    kabupaten: 'Makassar',
     status_lahan: 'Sewa',
     luas_lahan: 93,
     alamat: '99 Glendale Parkway',
-  },
-  {
-    nama: 'Laurence Butterfill',
-    provinsi: 'Anchorage',
-    kabupaten: 'Alaska',
-    status_lahan: 'Milik Sendiri',
-    luas_lahan: 88,
-    alamat: '91 Armistice Point',
-  },
-  {
-    nama: 'Konstanze Matyashev',
-    provinsi: 'Anchorage',
-    kabupaten: 'Alaska',
-    status_lahan: 'Sewa',
-    luas_lahan: 30,
-    alamat: '9276 Golf View Hill',
-  },
-  {
-    nama: 'Lorita Staresmeare',
-    provinsi: 'Juneau',
-    kabupaten: 'Alaska',
-    status_lahan: 'Sewa',
-    luas_lahan: 33,
-    alamat: '06 Harbort Center',
-  },
-  {
-    nama: 'Elene Mapledoram',
-    provinsi: 'Fairbanks',
-    kabupaten: 'Alaska',
-    status_lahan: 'Milik Sendiri',
-    luas_lahan: 28,
-    alamat: '22426 Badeau Lane',
+    action: {
+      update: {
+        id: '1',
+        nama: 'Kentang Malino',
+        provinsi: 'sulsel',
+        kabupaten: 'makassar',
+        status_lahan: 'Sewa',
+        luas_lahan: 93,
+        alamat: '99 Glendale Parkway',
+      },
+      delete: { id: 'Kentang Malino' },
+    },
   },
 ];
 
-type TTableLahan = TSchemaLahan & { action: string };
+type Props = {
+  onDelete: (data: string) => void;
+  onUpdate: (data: TUpdate) => void;
+};
 
-const TableLahan = () => {
+const TableLahan = ({
+  onUpdate: handleUpdate,
+  onDelete: handleDelete,
+}: Props) => {
   const columnHelper = createColumnHelper<TTableLahan>();
   const columns = [
     columnHelper.accessor('nama', {
@@ -85,20 +72,28 @@ const TableLahan = () => {
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Center>Aksi</Center>,
-      cell: () => (
-        <HStack gap={3} justify="center">
-          <Box title="ubah" cursor="pointer" _hover={{ color: 'brand.100' }}>
-            <Edit height={15} width={15} />
-          </Box>
-          <Box
-            title="tidak aktif"
-            cursor="pointer"
-            _hover={{ color: 'brand.100' }}
-          >
-            <Trash2 height={15} width={15} />
-          </Box>
-        </HStack>
-      ),
+      cell: ({ getValue }) => {
+        return (
+          <HStack gap={3} justify="center">
+            <Box
+              title="ubah"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleUpdate(getValue().update)}
+            >
+              <Edit height={15} width={15} />
+            </Box>
+            <Box
+              title="tidak aktif"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleDelete(getValue().delete.id)}
+            >
+              <Trash2 height={15} width={15} />
+            </Box>
+          </HStack>
+        );
+      },
     }),
   ];
 
