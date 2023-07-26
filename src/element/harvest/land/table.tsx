@@ -84,7 +84,7 @@ const TableLahan = ({
               <Edit height={15} width={15} />
             </Box>
             <Box
-              title="tidak aktif"
+              title="hapus"
               cursor="pointer"
               _hover={{ color: 'brand.100' }}
               onClick={() => handleDelete(getValue().delete)}

@@ -12,19 +12,43 @@ import {
 import { useForm, FieldValues } from 'react-hook-form';
 import { defaultValues, schemaHasil } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { TUpdate } from './types';
 
-const FormHasil = () => {
+type Props = {
+  onClose: () => void;
+  initialValues: TUpdate | undefined | boolean;
+};
+
+const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaHasil),
   });
 
+  useEffect(() => {
+    if (initialValues && typeof initialValues === 'object') {
+      const { lahan, berat, tanggal, catatan } = initialValues;
+
+      setValue('lahan', lahan);
+      setValue('berat', berat);
+      setValue('tanggal', tanggal);
+      setValue('catatan', catatan);
+    }
+  }, []);
+
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    if (initialValues) {
+      console.log('update', data);
+      handleCloseModal();
+    } else {
+      console.log('add', data);
+    }
   };
 
   return (
@@ -68,11 +92,11 @@ const FormHasil = () => {
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button type="button" variant="ghost">
+        <Button onClick={handleCloseModal} type="button" variant="ghost">
           Batal
         </Button>
-        <Button type="submit" bg="brand.100" color="white">
-          Simpan
+        <Button type="submit" variant="primary">
+          {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>
     </form>

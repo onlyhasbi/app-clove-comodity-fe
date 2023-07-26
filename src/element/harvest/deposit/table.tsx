@@ -3,53 +3,41 @@ import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { TSchemaSetoran } from './schema';
 import { Edit, Trash2 } from 'lucide-react';
+import { TDelete, TTableSetoran, TUpdate } from './types';
 
 const dummy = [
   {
-    lahan: 'Dulcia Guenther',
+    id: '1',
+    lahan: 'Kentang Malino',
     volume: '3 Ltr',
-    upah: 'Alaska',
+    upah: '25.000',
     id_buruh: 'B-72',
-    tanggal: 93,
+    tanggal: '93',
     catatan: '99 Glendale Parkway',
-  },
-  {
-    lahan: 'Bulukumba',
-    volume: '8 Ltr',
-    upah: '65.000',
-    id_buruh: 'B-98',
-    tanggal: '31/02/2009',
-    catatan: 'Catatan B-098',
-  },
-  {
-    lahan: 'Malili',
-    volume: '3 Ltr',
-    upah: '95.000',
-    id_buruh: 'B-98',
-    tanggal: '31/02/2009',
-    catatan: 'Catatan B-098',
-  },
-  {
-    lahan: 'Sengkang',
-    volume: '6 Ltr',
-    upah: '15.000',
-    id_buruh: 'B-98',
-    tanggal: '31/02/2009',
-    catatan: 'Catatan B-098',
-  },
-  {
-    lahan: 'Sinjai',
-    volume: '1 Ltr',
-    upah: '25.0000',
-    id_buruh: 'B-05',
-    tanggal: '28/02/2021',
-    catatan: 'Catatan B-05',
+    action: {
+      update: {
+        id: '1',
+        lahan: 'Kentang Malino',
+        volume: '3 Ltr',
+        upah: '25.000',
+        id_buruh: 'B-72',
+        tanggal: '24/07/2023',
+        catatan: '99 Glendale Parkway',
+      },
+      delete: { id: '1', lahan: 'Kentang Malino' },
+    },
   },
 ];
 
-type TTableSetoran = TSchemaSetoran & { action: string };
+type Props = {
+  onDelete: (data: TDelete) => void;
+  onUpdate: (data: TUpdate) => void;
+};
 
-const TableSetoran = () => {
+const TableSetoran = ({
+  onUpdate: handleUpdate,
+  onDelete: handleDelete,
+}: Props) => {
   const columnHelper = createColumnHelper<TTableSetoran>();
   const columns = [
     columnHelper.accessor('lahan', {
@@ -85,20 +73,28 @@ const TableSetoran = () => {
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Center>Aksi</Center>,
-      cell: () => (
-        <HStack gap={3} justify="center">
-          <Box title="ubah" cursor="pointer" _hover={{ color: 'brand.100' }}>
-            <Edit height={15} width={15} />
-          </Box>
-          <Box
-            title="tidak aktif"
-            cursor="pointer"
-            _hover={{ color: 'brand.100' }}
-          >
-            <Trash2 height={15} width={15} />
-          </Box>
-        </HStack>
-      ),
+      cell: ({ getValue }) => {
+        return (
+          <HStack gap={3} justify="center">
+            <Box
+              title="ubah"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleUpdate(getValue().update)}
+            >
+              <Edit height={15} width={15} />
+            </Box>
+            <Box
+              title="hapus"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleDelete(getValue().delete)}
+            >
+              <Trash2 height={15} width={15} />
+            </Box>
+          </HStack>
+        );
+      },
     }),
   ];
 

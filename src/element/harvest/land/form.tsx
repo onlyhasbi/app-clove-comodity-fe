@@ -134,7 +134,7 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         <Button type="button" variant="ghost" onClick={handleCloseModal}>
           Batal
         </Button>
-        <Button type="submit" bg="brand.100" color="white">
+        <Button type="submit" variant="primary">
           {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>

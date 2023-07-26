@@ -74,7 +74,7 @@ const Lahan = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{`${
-            action?.update ? 'Update' : 'Tambah'
+            action?.update ? 'Perbarui' : 'Tambah'
           } Lahan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
