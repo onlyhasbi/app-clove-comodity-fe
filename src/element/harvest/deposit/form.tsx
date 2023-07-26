@@ -60,7 +60,7 @@ const FormSetoran = ({ onClose: handleCloseModal, initialValues }: Props) => {
         <FormControl isInvalid={Boolean(errors.lahan)}>
           <FormLabel fontSize="sm" htmlFor="lahan">Lahan</FormLabel>
           <Select id="lahan" placeholder="Pilih Lahan" {...register('lahan')}>
-            <option value="Kentang Malino">Kentang Malino</option>
+            <option value="Cengkeh Malino">Cengkeh Malino</option>
           </Select>
           <FormErrorMessage>
             {errors.lahan && errors.lahan.message}

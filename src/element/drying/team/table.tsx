@@ -8,7 +8,7 @@ const dummy = [
   {
     nama: 'Rakko 1',
     ketua: 'Aso',
-    anggota: `andi, joko, erni`,
+    anggota: 'Ahmad',
     action: {
       update: {
         id: '1',
