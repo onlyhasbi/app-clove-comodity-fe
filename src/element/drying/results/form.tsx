@@ -13,28 +13,58 @@ import {
 import { useForm, FieldValues } from 'react-hook-form';
 import { defaultValues, schemaHasilPengeringan } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { TUpdate } from './types';
 
-const FormHasilPengeringan = () => {
+type Props = {
+  onClose: () => void;
+  initialValues: TUpdate | undefined | boolean;
+};
+
+const FormHasilPengeringan = ({
+  onClose: handleCloseModal,
+  initialValues,
+}: Props) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaHasilPengeringan),
   });
 
+  useEffect(() => {
+    if (initialValues && typeof initialValues === 'object') {
+      const { tim, berat_kg, volume_liter, waktu_selesai, catatan } =
+        initialValues;
+      setValue('tim', tim);
+      setValue('berat_kg', berat_kg);
+      setValue('volume_liter', volume_liter);
+      setValue('waktu_selesai', waktu_selesai);
+      setValue('catatan', catatan);
+    }
+  }, []);
+
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    if (initialValues) {
+      console.log('update', data);
+      handleCloseModal();
+    } else {
+      console.log('add', data);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.tim)}>
-          <FormLabel htmlFor="tim">Tim</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="tim">
+            Tim
+          </FormLabel>
           <Select id="tim" placeholder="Pilih Tim" {...register('tim')}>
-            <option value="option1">Rakko 1</option>
+            <option value="Rakko 1">Rakko 1</option>
           </Select>
           <FormErrorMessage>
             {errors.tim && errors.tim.message}
@@ -42,7 +72,9 @@ const FormHasilPengeringan = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.berat_kg)}>
-          <FormLabel htmlFor="berat_kg">Berat (Kg)</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="berat_kg">
+            Berat (Kg)
+          </FormLabel>
           <Input id="berat_kg" placeholder="Berat" {...register('berat_kg')} />
           <FormErrorMessage>
             {errors.berat_kg && errors.berat_kg.message}
@@ -50,7 +82,9 @@ const FormHasilPengeringan = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.volume_liter)}>
-          <FormLabel htmlFor="volume_liter">Volume (Ltr)</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="volume_liter">
+            Volume (Ltr)
+          </FormLabel>
           <Input
             id="volume_liter"
             placeholder="Volume"
@@ -62,7 +96,9 @@ const FormHasilPengeringan = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.waktu_selesai)}>
-          <FormLabel htmlFor="waktu_mulai">Waktu Selesai</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="waktu_mulai">
+            Waktu Selesai
+          </FormLabel>
           <Input
             id="waktu_selesai"
             placeholder="Waktu Selesai"
@@ -74,7 +110,9 @@ const FormHasilPengeringan = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.catatan)}>
-          <FormLabel htmlFor="catatan">Catatan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="catatan">
+            Catatan
+          </FormLabel>
           <Textarea
             id="catatan"
             rows={3}
@@ -87,11 +125,11 @@ const FormHasilPengeringan = () => {
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button type="button" variant="ghost">
+        <Button onClick={handleCloseModal} type="button" variant="ghost">
           Batal
         </Button>
-        <Button type="submit" bg="brand.100" color="white">
-          Simpan
+        <Button type="submit" variant="primary">
+          {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>
     </form>

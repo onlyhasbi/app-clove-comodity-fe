@@ -3,6 +3,7 @@ import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { TSchemaBahanPengeringan } from './schema';
 import { Edit, Trash2 } from 'lucide-react';
+import { TDelete, TTableBahanPengeringan, TUpdate } from './types';
 
 const dummy = [
   {
@@ -10,36 +11,28 @@ const dummy = [
     volume_liter: '15Ltr',
     waktu_mulai: '12/07/2023',
     catatan: 'Kembali 3 hari lagi',
-  },
-  {
-    berat_kg: '32Kg',
-    volume_liter: '20Ltr',
-    waktu_mulai: '11/09/2023',
-    catatan: 'Kembali 3 hari lagi',
-  },
-  {
-    berat_kg: '10Kg',
-    volume_liter: '5Ltr',
-    waktu_mulai: '12/07/2023',
-    catatan: 'Kembali 3 hari lagi',
-  },
-  {
-    berat_kg: '18Kg',
-    volume_liter: '10Ltr',
-    waktu_mulai: '02/08/2023',
-    catatan: 'Kembali 3 hari lagi',
-  },
-  {
-    berat_kg: '54Kg',
-    volume_liter: '35Ltr',
-    waktu_mulai: '18/07/2023',
-    catatan: 'Kembali 3 hari lagi',
+    action: {
+      update: {
+        id: '1',
+        berat_kg: '45Kg',
+        volume_liter: '15Ltr',
+        waktu_mulai: '12/07/2023',
+        catatan: 'Kembali 3 hari lagi',
+      },
+      delete: { id: '1', berat_kg: '45Kg' },
+    },
   },
 ];
 
-type TTableBahanPengeringan = TSchemaBahanPengeringan & { action: string };
+type Props = {
+  onDelete: (data: TDelete) => void;
+  onUpdate: (data: TUpdate) => void;
+};
 
-const TabelBahan = () => {
+const TabelBahan = ({
+  onUpdate: handleUpdate,
+  onDelete: handleDelete,
+}: Props) => {
   const columnHelper = createColumnHelper<TTableBahanPengeringan>();
   const columns = [
     columnHelper.accessor('berat_kg', {
@@ -65,20 +58,28 @@ const TabelBahan = () => {
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Center>Aksi</Center>,
-      cell: () => (
-        <HStack gap={3} justify="center">
-          <Box title="ubah" cursor="pointer" _hover={{ color: 'brand.100' }}>
-            <Edit height={15} width={15} />
-          </Box>
-          <Box
-            title="tidak aktif"
-            cursor="pointer"
-            _hover={{ color: 'brand.100' }}
-          >
-            <Trash2 height={15} width={15} />
-          </Box>
-        </HStack>
-      ),
+      cell: ({ getValue }) => {
+        return (
+          <HStack gap={3} justify="center">
+            <Box
+              title="ubah"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleUpdate(getValue().update)}
+            >
+              <Edit height={15} width={15} />
+            </Box>
+            <Box
+              title="hapus"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleDelete(getValue().delete)}
+            >
+              <Trash2 height={15} width={15} />
+            </Box>
+          </HStack>
+        );
+      },
     }),
   ];
 

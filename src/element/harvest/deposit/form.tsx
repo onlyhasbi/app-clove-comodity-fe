@@ -58,7 +58,7 @@ const FormSetoran = ({ onClose: handleCloseModal, initialValues }: Props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.lahan)}>
-          <FormLabel htmlFor="lahan">Lahan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="lahan">Lahan</FormLabel>
           <Select id="lahan" placeholder="Pilih Lahan" {...register('lahan')}>
             <option value="Kentang Malino">Kentang Malino</option>
           </Select>
@@ -68,7 +68,7 @@ const FormSetoran = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.volume)}>
-          <FormLabel htmlFor="volume">Volume</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="volume">Volume</FormLabel>
           <Input id="volume" placeholder="Volume" {...register('volume')} />
           <FormErrorMessage>
             {errors.volume && errors.volume.message}
@@ -76,7 +76,7 @@ const FormSetoran = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.upah)}>
-          <FormLabel htmlFor="upah">Upah</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="upah">Upah</FormLabel>
           <Input id="upah" placeholder="Upah" {...register('upah')} />
           <FormErrorMessage>
             {errors.upah && errors.upah.message}
@@ -84,7 +84,7 @@ const FormSetoran = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.id_buruh)}>
-          <FormLabel htmlFor="id_buruh">Kode Buruh</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="id_buruh">Kode Buruh</FormLabel>
           <Input
             id="id_buruh"
             placeholder="Kode Buruh"
@@ -96,7 +96,7 @@ const FormSetoran = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.tanggal)}>
-          <FormLabel htmlFor="tanggal">Tanggal</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="tanggal">Tanggal</FormLabel>
           <Input id="tanggal" placeholder="Tanggal" {...register('tanggal')} />
           <FormErrorMessage>
             {errors.tanggal && errors.tanggal.message}
@@ -104,7 +104,7 @@ const FormSetoran = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.catatan)}>
-          <FormLabel htmlFor="catatan">Catatan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="catatan">Catatan</FormLabel>
           <Textarea
             id="catatan"
             rows={3}

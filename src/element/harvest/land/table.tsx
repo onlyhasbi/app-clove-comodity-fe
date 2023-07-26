@@ -7,7 +7,7 @@ import { TDelete, TTableLahan, TUpdate } from './types';
 const dummy = [
   {
     id: '1',
-    nama: 'Kentang Malino',
+    nama: 'Cengkeh Malino',
     provinsi: 'Sulawesi Selatan',
     kabupaten: 'Makassar',
     status_lahan: 'Sewa',
@@ -16,14 +16,14 @@ const dummy = [
     action: {
       update: {
         id: '1',
-        nama: 'Kentang Malino',
+        nama: 'Cengkeh Malino',
         provinsi: 'sulsel',
         kabupaten: 'makassar',
         status_lahan: 'Sewa',
         luas_lahan: '93',
         alamat: '99 Glendale Parkway',
       },
-      delete: { id: '1', nama: 'Kentang Malino' },
+      delete: { id: '1', nama: 'Cengkeh Malino' },
     },
   },
 ];

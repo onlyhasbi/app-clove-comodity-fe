@@ -34,7 +34,6 @@ const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
       const { lahan, berat, tanggal, catatan } = initialValues;
-
       setValue('lahan', lahan);
       setValue('berat', berat);
       setValue('tanggal', tanggal);
@@ -55,7 +54,7 @@ const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.lahan)}>
-          <FormLabel htmlFor="lahan">Lahan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="lahan">Lahan</FormLabel>
           <Input id="lahan" placeholder="Lahan" {...register('lahan')} />
           <FormErrorMessage>
             {errors.lahan && errors.lahan.message}
@@ -63,7 +62,7 @@ const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.berat)}>
-          <FormLabel htmlFor="berat">Berat</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="berat">Berat</FormLabel>
           <Input id="berat" placeholder="Berat" {...register('berat')} />
           <FormErrorMessage>
             {errors.berat && errors.berat.message}
@@ -71,7 +70,7 @@ const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.tanggal)}>
-          <FormLabel htmlFor="tanggal">Tanggal</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="tanggal">Tanggal</FormLabel>
           <Input id="tanggal" placeholder="Tanggal" {...register('tanggal')} />
           <FormErrorMessage>
             {errors.tanggal && errors.tanggal.message}
@@ -79,7 +78,7 @@ const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.catatan)}>
-          <FormLabel htmlFor="catatan">Catatan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="catatan">Catatan</FormLabel>
           <Textarea
             id="catatan"
             rows={3}

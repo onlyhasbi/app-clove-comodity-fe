@@ -12,26 +12,50 @@ import {
 import { useForm, FieldValues } from 'react-hook-form';
 import { defaultValues, schemaTim } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { TUpdate } from './types';
 
-const FormTim = () => {
+type Props = {
+  onClose: () => void;
+  initialValues: TUpdate | undefined | boolean;
+};
+
+const FormTim = ({ onClose: handleCloseModal, initialValues }: Props) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaTim),
   });
 
+  useEffect(() => {
+    if (initialValues && typeof initialValues === 'object') {
+      const { nama, ketua, anggota } = initialValues;
+      setValue('nama', nama);
+      setValue('ketua', ketua);
+      setValue('anggota', anggota);
+    }
+  }, []);
+
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    if (initialValues) {
+      console.log('update', data);
+      handleCloseModal();
+    } else {
+      console.log('add', data);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.nama)}>
-          <FormLabel htmlFor="nama">Nama</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="nama">
+            Nama
+          </FormLabel>
           <Input id="nama" placeholder="Nama" {...register('nama')} />
           <FormErrorMessage>
             {errors.nama && errors.nama.message}
@@ -39,9 +63,12 @@ const FormTim = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.ketua)}>
-          <FormLabel htmlFor="ketua">Ketua</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="ketua">
+            Ketua
+          </FormLabel>
           <Select id="ketua" placeholder="Pilih Ketua" {...register('ketua')}>
-            <option value="option1">Antoni</option>
+            <option value="Aso">Aso</option>
+            <option value="Antoni">Antoni</option>
           </Select>
           <FormErrorMessage>
             {errors.ketua && errors.ketua.message}
@@ -49,13 +76,15 @@ const FormTim = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.anggota)}>
-          <FormLabel htmlFor="anggota">Anggota</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="anggota">
+            Anggota
+          </FormLabel>
           <Select
             id="anggota"
             placeholder="Pilih Anggota"
             {...register('anggota')}
           >
-            <option value="option1">Antoni</option>
+            <option value="Ahmad">Ahmad</option>
           </Select>
           <FormErrorMessage>
             {errors.anggota && errors.anggota.message}
@@ -63,11 +92,11 @@ const FormTim = () => {
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button type="button" variant="ghost">
+        <Button onClick={handleCloseModal} type="button" variant="ghost">
           Batal
         </Button>
-        <Button type="submit" bg="brand.100" color="white">
-          Simpan
+        <Button type="submit" variant="primary">
+          {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>
     </form>

@@ -7,7 +7,7 @@ import { TDelete, TTableSetoran, TUpdate } from './types';
 const dummy = [
   {
     id: '1',
-    lahan: 'Kentang Malino',
+    lahan: 'Cengkeh Malino',
     volume: '3 Ltr',
     upah: '25.000',
     id_buruh: 'B-72',
@@ -16,14 +16,14 @@ const dummy = [
     action: {
       update: {
         id: '1',
-        lahan: 'Kentang Malino',
+        lahan: 'Cengkeh Malino',
         volume: '3 Ltr',
         upah: '25.000',
         id_buruh: 'B-72',
         tanggal: '24/07/2023',
         catatan: '99 Glendale Parkway',
       },
-      delete: { id: '1', lahan: 'Kentang Malino' },
+      delete: { id: '1', lahan: 'Cengkeh Malino' },
     },
   },
 ];

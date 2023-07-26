@@ -58,7 +58,7 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.nama)}>
-          <FormLabel htmlFor="nama">Nama</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="nama">Nama</FormLabel>
           <Input id="nama" placeholder="Nama" {...register('nama')} />
           <FormErrorMessage>
             {errors.nama && errors.nama.message}
@@ -66,7 +66,7 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.provinsi)}>
-          <FormLabel htmlFor="provinsi">Provinsi</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="provinsi">Provinsi</FormLabel>
           <Select
             id="provinsi"
             placeholder="Pilih Provinsi"
@@ -80,7 +80,7 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.kabupaten)}>
-          <FormLabel htmlFor="kabupaten">Kabupaten</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="kabupaten">Kabupaten</FormLabel>
           <Select
             id="kabupaten"
             placeholder="Pilih Kabupaten"
@@ -94,7 +94,7 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.status_lahan)}>
-          <FormLabel htmlFor="status_lahan">Status lahan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="status_lahan">Status lahan</FormLabel>
           <Input
             id="status_lahan"
             placeholder="Status lahan"
@@ -106,7 +106,7 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.luas_lahan)}>
-          <FormLabel htmlFor="luas_lahan">Luas lahan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="luas_lahan">Luas lahan</FormLabel>
           <Input
             id="luas_lahan"
             placeholder="Luas lahan"
@@ -118,7 +118,7 @@ const FormLahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.alamat)}>
-          <FormLabel htmlFor="alamat">Alamat</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="alamat">Alamat</FormLabel>
           <Textarea
             id="alamat"
             rows={3}
