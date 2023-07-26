@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const schemaPembelian = z.object({
-  id_pembeli: z.string().nonempty({ message: 'Id penjual tidak boleh kosong' }),
+  id_pembeli: z.string().nonempty({ message: 'Id pembeli tidak boleh kosong' }),
   jenis_komoditas: z
     .string()
     .nonempty({ message: 'Jenis komoditas tidak boleh kosong' }),
@@ -14,7 +14,7 @@ export const schemaPembelian = z.object({
 export type TSchemaPembelian = z.infer<typeof schemaPembelian>;
 
 export const defaultValues = {
-  id_penjual: '',
+  id_pembeli: '',
   jenis_komoditas: '',
   berat_kg: '',
   harga_rp: '',

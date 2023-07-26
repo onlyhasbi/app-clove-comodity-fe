@@ -13,45 +13,82 @@ import {
 import { useForm, FieldValues } from 'react-hook-form';
 import { defaultValues, schemaPembelian } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { TUpdate } from './types';
+import { useEffect } from 'react';
 
-const FormPembeli = () => {
+type Props = {
+  onClose: () => void;
+  initialValues: TUpdate | undefined | boolean;
+};
+
+const FormPembeli = ({ onClose: handleCloseModal, initialValues }: Props) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaPembelian),
   });
 
+  useEffect(() => {
+    if (initialValues && typeof initialValues === 'object') {
+      const {
+        id_pembeli,
+        jenis_komoditas,
+        berat_kg,
+        harga_rp,
+        tanggal,
+        catatan,
+      } = initialValues;
+
+      setValue('id_pembeli', id_pembeli);
+      setValue('jenis_komoditas', jenis_komoditas);
+      setValue('berat_kg', berat_kg);
+      setValue('harga_rp', harga_rp);
+      setValue('tanggal', tanggal);
+      setValue('catatan', catatan);
+    }
+  }, []);
+
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    if (initialValues) {
+      console.log('update', data);
+      handleCloseModal();
+    } else {
+      console.log('add', data);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
-        <FormControl isInvalid={Boolean(errors.id_penjual)}>
-          <FormLabel fontSize="sm" htmlFor="id_penjual">ID Pembeli</FormLabel>
+        <FormControl isInvalid={Boolean(errors.id_pembeli)}>
+          <FormLabel fontSize="sm" htmlFor="id_pembeli">
+            ID Pembeli
+          </FormLabel>
           <Input
-            id="id_penjual"
+            id="id_pembeli"
             placeholder="ID Pembeli"
-            {...register('id_penjual')}
+            {...register('id_pembeli')}
           />
           <FormErrorMessage>
-            {errors.id_penjual && errors.id_penjual.message}
+            {errors.id_pembeli && errors.id_pembeli.message}
           </FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.jenis_komoditas)}>
-          <FormLabel fontSize="sm" htmlFor="jenis_komoditas">Komoditas</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="jenis_komoditas">
+            Komoditas
+          </FormLabel>
           <Select
             id="tim"
             placeholder="Pilih Jenis Komoditas"
             {...register('jenis_komoditas')}
           >
-            <option value="option1">Cengkeh basah</option>
-            <option value="option1">Cengkeh kering</option>
+            <option value="Cengkeh Basah">Cengkeh basah</option>
+            <option value="Cengkeh Kering">Cengkeh kering</option>
           </Select>
           <FormErrorMessage>
             {errors.jenis_komoditas && errors.jenis_komoditas.message}
@@ -59,7 +96,9 @@ const FormPembeli = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.berat_kg)}>
-          <FormLabel fontSize="sm" htmlFor="berat_kg">Berat (Kg)</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="berat_kg">
+            Berat (Kg)
+          </FormLabel>
           <Input id="berat_kg" placeholder="Berat" {...register('berat_kg')} />
           <FormErrorMessage>
             {errors.berat_kg && errors.berat_kg.message}
@@ -67,14 +106,18 @@ const FormPembeli = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.harga_rp)}>
-          <FormLabel fontSize="sm" htmlFor="harga_rp">Harga (Rp)</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="harga_rp">
+            Harga (Rp)
+          </FormLabel>
           <Input id="harga_rp" placeholder="Harga" {...register('harga_rp')} />
           <FormErrorMessage>
             {errors.harga_rp && errors.harga_rp.message}
           </FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={Boolean(errors.tanggal)}>
-          <FormLabel fontSize="sm" htmlFor="tanggal">Tanggal</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="tanggal">
+            Tanggal
+          </FormLabel>
           <Input id="tanggal" placeholder="Tanggal" {...register('tanggal')} />
           <FormErrorMessage>
             {errors.tanggal && errors.tanggal.message}
@@ -82,7 +125,9 @@ const FormPembeli = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.catatan)}>
-          <FormLabel fontSize="sm" htmlFor="catatan">Catatan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="catatan">
+            Catatan
+          </FormLabel>
           <Textarea
             id="catatan"
             rows={3}
@@ -95,11 +140,11 @@ const FormPembeli = () => {
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button type="button" variant="ghost">
+        <Button onClick={handleCloseModal} type="button" variant="ghost">
           Batal
         </Button>
-        <Button type="submit" bg="brand.100" color="white">
-          Simpan
+        <Button type="submit" variant="primary">
+          {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>
     </form>
