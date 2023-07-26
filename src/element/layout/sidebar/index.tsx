@@ -1,13 +1,14 @@
-import { Box, Divider, Flex, Show, Text } from '@chakra-ui/react';
+import { HStack, Box, Divider, Flex, Show, Text } from '@chakra-ui/react';
 import { useLocation, Link } from 'react-router-dom';
 import logo from '../../../assets/logo.svg';
 import Header from '../header';
+import { Wallet2, Wheat, SunMedium, LayoutPanelLeft } from 'lucide-react';
 
 const sidebarMenu = [
-  { label: 'Ikhtisar', path: '/' },
-  { label: 'Panen', path: '/harvest' },
-  { label: 'Pengeringan', path: '/dry' },
-  { label: 'Jual/beli', path: '/transaction' },
+  { label: 'Ikhtisar', path: '/', Icon: LayoutPanelLeft },
+  { label: 'Panen', path: '/harvest', Icon: Wheat },
+  { label: 'Pengeringan', path: '/dry', Icon: SunMedium },
+  { label: 'Transaksi', path: '/transaction', Icon: Wallet2 },
 ];
 
 const Sidebar = () => {
@@ -36,15 +37,21 @@ const Sidebar = () => {
       >
         {sidebarMenu.map((item, index) => {
           const isSelected = item.path === currentPath;
+          const { Icon } = item;
           return (
             <div key={item.path}>
-              <Box paddingX={5} paddingY={3}>
+              <HStack paddingX={5} paddingY={3} gap={3}>
+                <Icon
+                  width={16}
+                  height={16}
+                  color={isSelected ? '#548c31' : '#334155'}
+                />
                 <Link to={item.path}>
-                  <Text color={isSelected ? 'brand.100' : 'current'}>
+                  <Text color={isSelected ? '#64748B' : '#334155'}>
                     {item.label}
                   </Text>
                 </Link>
-              </Box>
+              </HStack>
               {index + 1 < sidebarMenu.length && (
                 <Divider borderBottomColor="gray.300" />
               )}

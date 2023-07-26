@@ -30,8 +30,8 @@ function CardSummary() {
             >
               83
             </Text>
-            <Box position="absolute" bottom={5} left="2rem" color="gray.100">
-              <Wheat width={100} height={100} />
+            <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
+              <Wheat width={80} height={80} />
             </Box>
           </CardBody>
         </Card>
@@ -54,8 +54,8 @@ function CardSummary() {
             >
               220
             </Text>
-            <Box position="absolute" bottom={5} left="2rem" color="gray.100">
-              <SunMedium width={100} height={100} />
+            <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
+              <SunMedium width={80} height={80} />
             </Box>
           </CardBody>
         </Card>
@@ -78,8 +78,8 @@ function CardSummary() {
             >
               44
             </Text>
-            <Box position="absolute" bottom={5} left="2rem" color="gray.100">
-              <Wallet2 width={100} height={100} />
+            <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
+              <Wallet2 width={80} height={80} />
             </Box>
           </CardBody>
         </Card>
