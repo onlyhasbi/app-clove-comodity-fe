@@ -32,7 +32,7 @@ const FormPembeli = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.id_penjual)}>
-          <FormLabel htmlFor="id_penjual">ID Pembeli</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="id_penjual">ID Pembeli</FormLabel>
           <Input
             id="id_penjual"
             placeholder="ID Pembeli"
@@ -44,7 +44,7 @@ const FormPembeli = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.jenis_komoditas)}>
-          <FormLabel htmlFor="jenis_komoditas">Komoditas</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="jenis_komoditas">Komoditas</FormLabel>
           <Select
             id="tim"
             placeholder="Pilih Jenis Komoditas"
@@ -59,7 +59,7 @@ const FormPembeli = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.berat_kg)}>
-          <FormLabel htmlFor="berat_kg">Berat (Kg)</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="berat_kg">Berat (Kg)</FormLabel>
           <Input id="berat_kg" placeholder="Berat" {...register('berat_kg')} />
           <FormErrorMessage>
             {errors.berat_kg && errors.berat_kg.message}
@@ -67,14 +67,14 @@ const FormPembeli = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.harga_rp)}>
-          <FormLabel htmlFor="harga_rp">Harga (Rp)</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="harga_rp">Harga (Rp)</FormLabel>
           <Input id="harga_rp" placeholder="Harga" {...register('harga_rp')} />
           <FormErrorMessage>
             {errors.harga_rp && errors.harga_rp.message}
           </FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={Boolean(errors.tanggal)}>
-          <FormLabel htmlFor="tanggal">Tanggal</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="tanggal">Tanggal</FormLabel>
           <Input id="tanggal" placeholder="Tanggal" {...register('tanggal')} />
           <FormErrorMessage>
             {errors.tanggal && errors.tanggal.message}
@@ -82,7 +82,7 @@ const FormPembeli = () => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.catatan)}>
-          <FormLabel htmlFor="catatan">Catatan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="catatan">Catatan</FormLabel>
           <Textarea
             id="catatan"
             rows={3}

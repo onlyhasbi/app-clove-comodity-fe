@@ -1,7 +1,6 @@
 import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { TSchemaBahanPengeringan } from './schema';
 import { Edit, Trash2 } from 'lucide-react';
 import { TDelete, TTableBahanPengeringan, TUpdate } from './types';
 
