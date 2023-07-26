@@ -19,6 +19,7 @@ const ProfileForm = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaProfile),
@@ -36,7 +37,9 @@ const ProfileForm = () => {
           gap={{ lg: 5, base: 4 }}
         >
           <FormControl isInvalid={Boolean(errors.jenis_pengguna)}>
-            <FormLabel htmlFor="jenis_pengguna">Jenis Pengguna</FormLabel>
+            <FormLabel fontSize="sm" htmlFor="jenis_pengguna">
+              Jenis Pengguna
+            </FormLabel>
             <Input
               id="jenis_pengguna"
               placeholder="Jenis Pengguna"
@@ -47,7 +50,9 @@ const ProfileForm = () => {
             </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={Boolean(errors.nama)}>
-            <FormLabel htmlFor="nama">Nama</FormLabel>
+            <FormLabel fontSize="sm" htmlFor="nama">
+              Nama
+            </FormLabel>
             <Input id="nama" placeholder="Nama" {...register('nama')} />
             <FormErrorMessage>
               {errors.nama && errors.nama.message}
@@ -55,7 +60,9 @@ const ProfileForm = () => {
           </FormControl>
 
           <FormControl isInvalid={Boolean(errors.provinsi)}>
-            <FormLabel htmlFor="provinsi">Provinsi</FormLabel>
+            <FormLabel fontSize="sm" htmlFor="provinsi">
+              Provinsi
+            </FormLabel>
             <Select
               id="provinsi"
               placeholder="Pilih Provinsi"
@@ -69,7 +76,9 @@ const ProfileForm = () => {
           </FormControl>
 
           <FormControl isInvalid={Boolean(errors.kabupaten)}>
-            <FormLabel htmlFor="kabupaten">Kabupaten</FormLabel>
+            <FormLabel fontSize="sm" htmlFor="kabupaten">
+              Kabupaten
+            </FormLabel>
             <Select
               id="kabupaten"
               placeholder="Pilih Kabupaten"
@@ -82,7 +91,9 @@ const ProfileForm = () => {
             </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={Boolean(errors.alamat)}>
-            <FormLabel htmlFor="alamat">Alamat</FormLabel>
+            <FormLabel fontSize="sm" htmlFor="alamat">
+              Alamat
+            </FormLabel>
             <Textarea
               id="alamat"
               rows={3}
@@ -94,7 +105,9 @@ const ProfileForm = () => {
             </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={Boolean(errors.phone)}>
-            <FormLabel htmlFor="phone">Phone</FormLabel>
+            <FormLabel fontSize="sm" htmlFor="phone">
+              Phone
+            </FormLabel>
             <Input id="phone" placeholder="Phone" {...register('phone')} />
             <FormErrorMessage>
               {errors.phone && errors.phone.message}
@@ -102,10 +115,10 @@ const ProfileForm = () => {
           </FormControl>
         </Grid>
         <HStack gap={3} marginTop={6}>
-          <Button type="submit" bg="brand.100" color="white">
+          <Button type="submit" variant="primary">
             Simpan
           </Button>
-          <Button type="button" variant="ghost">
+          <Button type="button" variant="ghost" onClick={() => reset()}>
             Batal
           </Button>
         </HStack>

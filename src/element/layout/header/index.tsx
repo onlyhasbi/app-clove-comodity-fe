@@ -55,7 +55,9 @@ const Header = () => {
                       w="full"
                       paddingLeft={5}
                     >
-                      <Link to={item.path}>{item.label}</Link>
+                      <Link to={item.path} style={{ display: 'flex' }}>
+                        {item.label}
+                      </Link>
                     </Text>
                     {index !== routes.length - 1 && <Divider />}
                   </React.Fragment>

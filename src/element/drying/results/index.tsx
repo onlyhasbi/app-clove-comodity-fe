@@ -22,8 +22,8 @@ import { TDelete, TUpdate } from './types';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate | boolean;
-  delete?: TDelete | boolean;
+  update?: TUpdate;
+  delete?: TDelete;
 };
 
 const HasilPengeringan = () => {
@@ -32,24 +32,17 @@ const HasilPengeringan = () => {
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
-  const handleCloseModalAdd = useCallback(() => setAction({ add: false }), []);
+
   const handleOpenModalUpdate = useCallback(
     (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
-  const handleCloseModalUpdate = useCallback(
-    () => setAction({ update: false }),
-    []
-  );
   const handleOpenModalDelete = useCallback(
     (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
-  const handleCloseModalDelete = useCallback(
-    () => setAction({ delete: false }),
-    []
-  );
+  const handleReset = useCallback(() => setAction(null), []);
 
   const cancelRef = useRef(null);
 
@@ -69,7 +62,7 @@ const HasilPengeringan = () => {
 
       <Modal
         isOpen={Boolean(action?.add) || Boolean(action?.update)}
-        onClose={handleCloseModalAdd || handleCloseModalUpdate}
+        onClose={handleReset}
       >
         <ModalOverlay />
         <ModalContent>
@@ -80,7 +73,7 @@ const HasilPengeringan = () => {
           <ModalBody marginBottom={5}>
             <FormHasilPengeringan
               initialValues={action?.update}
-              onClose={handleCloseModalAdd}
+              onClose={handleReset}
             />
           </ModalBody>
         </ModalContent>
@@ -89,7 +82,7 @@ const HasilPengeringan = () => {
       <AlertDialog
         isOpen={Boolean(action?.delete)}
         leastDestructiveRef={cancelRef}
-        onClose={handleCloseModalDelete}
+        onClose={handleReset}
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
@@ -102,14 +95,14 @@ const HasilPengeringan = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleCloseModalDelete}>
+              <Button ref={cancelRef} onClick={handleReset}>
                 Cancel
               </Button>
               <Button
                 colorScheme="red"
                 onClick={() => {
                   console.log((action?.delete as TDelete)?.id);
-                  handleCloseModalDelete();
+                  handleReset();
                 }}
                 ml={3}
               >

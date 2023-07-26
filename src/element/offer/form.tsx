@@ -149,7 +149,7 @@ const FormPenawaran = ({ onReset: handleReset, initialValues }: Props) => {
           </FormErrorMessage>
         </FormControl>
       </Grid>
-      <HStack justify="end" gap={3} marginTop={4}>
+      <HStack justify="end" gap={3} marginTop={6}>
         <Button
           onClick={() => {
             reset();

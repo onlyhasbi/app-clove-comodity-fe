@@ -16,8 +16,8 @@ import { useCallback, useRef, useState } from 'react';
 import { TDelete, TUpdate } from '../../element/offer/types';
 
 type TAction = {
-  update?: TUpdate | boolean;
-  delete?: TDelete | boolean;
+  update?: TUpdate;
+  delete?: TDelete;
 };
 
 const Penawaran = () => {
@@ -27,16 +27,12 @@ const Penawaran = () => {
     []
   );
 
-  const handleReset = useCallback(() => setAction(null), []);
-
   const handleOpenModalDelete = useCallback(
     (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
-  const handleCloseModalDelete = useCallback(
-    () => setAction({ delete: false }),
-    []
-  );
+
+  const handleReset = useCallback(() => setAction(null), []);
 
   const cancelRef = useRef(null);
 
@@ -83,7 +79,7 @@ const Penawaran = () => {
       <AlertDialog
         isOpen={Boolean(action?.delete)}
         leastDestructiveRef={cancelRef}
-        onClose={handleCloseModalDelete}
+        onClose={handleReset}
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
@@ -96,14 +92,14 @@ const Penawaran = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleCloseModalDelete}>
+              <Button ref={cancelRef} onClick={handleReset}>
                 Cancel
               </Button>
               <Button
                 colorScheme="red"
                 onClick={() => {
                   console.log((action?.delete as TDelete)?.id);
-                  handleCloseModalDelete();
+                  handleReset();
                 }}
                 ml={3}
               >

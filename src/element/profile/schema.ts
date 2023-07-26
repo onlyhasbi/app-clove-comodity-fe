@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const schemaProfile = z.object({
-  jenis_pengguna: z.string(),
+  jenis_pengguna: z.string().nonempty({ message: 'Jenis pengguna tidak boleh kosong' }),
   nama: z.string().nonempty({ message: 'Nama tidak boleh kosong' }),
   alamat: z.string().nonempty({ message: 'Alamat tidak boleh kosong' }),
   provinsi: z.string().nonempty({ message: 'Provinsi tidak boleh kosong' }),

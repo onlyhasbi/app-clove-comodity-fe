@@ -1,45 +1,38 @@
 import Table from '../../components/table';
 import { Box, HStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { TSchemaPekerjaan } from './schema';
-import { CheckCheck, Edit } from 'lucide-react';
+import { Trash2, Edit } from 'lucide-react';
+import { TDelete, TTablePekerjaan, TUpdate } from './types';
 
 const dummy = [
   {
+    id: '1',
     nama_pekerjaan: 'Pemetik',
     upah: '15.000',
     satuan: 'Harian',
     lokasi: 'Malino',
-  },
-  {
-    nama_pekerjaan: 'Pemetik',
-    upah: '15.000',
-    satuan: 'Harian',
-    lokasi: 'Sengkang',
-  },
-  {
-    nama_pekerjaan: 'Pengeringan',
-    upah: '25.000',
-    satuan: 'Kg',
-    lokasi: 'Malino',
-  },
-  {
-    nama_pekerjaan: 'Pemetik',
-    upah: '15.000',
-    satuan: 'Harian',
-    lokasi: 'Malino',
-  },
-  {
-    nama_pekerjaan: 'Pengeringan',
-    upah: '10.000',
-    satuan: 'Ltr',
-    lokasi: 'Sengkang',
+    action: {
+      update: {
+        id: '1',
+        nama_pekerjaan: 'Pemetik',
+        upah: '15.000',
+        satuan: 'Harian',
+        lokasi: 'Malino',
+      },
+      delete: { id: '1', nama: 'Pemetik' },
+    },
   },
 ];
 
-type TTablePekerjaan = TSchemaPekerjaan & { action: string };
+type Props = {
+  onDelete: (data: TDelete) => void;
+  onUpdate: (data: TUpdate) => void;
+};
 
-const TablePenawaran = () => {
+const TablePenawaran = ({
+  onUpdate: handleUpdate,
+  onDelete: handleDelete,
+}: Props) => {
   const columnHelper = createColumnHelper<TTablePekerjaan>();
   const columns = [
     columnHelper.accessor('nama_pekerjaan', {
@@ -65,20 +58,28 @@ const TablePenawaran = () => {
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Center>Aksi</Center>,
-      cell: () => (
-        <HStack gap={3} justify="center">
-          <Box title="ubah" cursor="pointer" _hover={{ color: 'brand.100' }}>
-            <Edit height={15} width={15} />
-          </Box>
-          <Box
-            title="tidak aktif"
-            cursor="pointer"
-            _hover={{ color: 'brand.100' }}
-          >
-            <CheckCheck height={15} width={15} />
-          </Box>
-        </HStack>
-      ),
+      cell: ({ getValue }) => {
+        return (
+          <HStack gap={3} justify="center">
+            <Box
+              title="ubah"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleUpdate(getValue().update)}
+            >
+              <Edit height={15} width={15} />
+            </Box>
+            <Box
+              title="hapus"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleDelete(getValue().delete)}
+            >
+              <Trash2 height={15} width={15} />
+            </Box>
+          </HStack>
+        );
+      },
     }),
   ];
 
