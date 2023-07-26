@@ -1,63 +1,42 @@
 import Table from '../../components/table';
 import { Box, HStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { TSchemaPenawaran } from './schema';
-import { MinusSquare, Edit } from 'lucide-react';
+import { Trash2, Edit } from 'lucide-react';
+import { TDelete, TTablePenawaran, TUpdate } from './types';
 
 const dummy = [
   {
+    id: 'TRX-24342',
     jenis_penawaran: 'Penjualan',
     komoditas: 'Cengkeh Basah',
     satuan: 'Kg',
     harga: '15.000',
     berat_min: '100',
     berat_max: '200',
-  },
-  {
-    jenis_penawaran: 'Penjualan',
-    komoditas: 'Cengkeh Basah',
-    satuan: 'Kg',
-    harga: '25.000',
-    berat_min: '50',
-    berat_max: '100',
-  },
-  {
-    jenis_penawaran: 'Pembelian',
-    komoditas: 'Cengkeh Kering',
-    satuan: 'Kg',
-    harga: '10.000',
-    berat_min: '1500',
-    berat_max: '1800',
-  },
-  {
-    jenis_penawaran: 'Penjualan',
-    komoditas: 'Cengkeh Basah',
-    satuan: 'Kg',
-    harga: '15.000',
-    berat_min: '100',
-    berat_max: '200',
-  },
-  {
-    jenis_penawaran: 'Penjualan',
-    komoditas: 'Cengkeh Basah',
-    satuan: 'Kg',
-    harga: '15.000',
-    berat_min: '100',
-    berat_max: '200',
-  },
-  {
-    jenis_penawaran: 'Penjualan',
-    komoditas: 'Cengkeh Basah',
-    satuan: 'Kg',
-    harga: '15.000',
-    berat_min: '100',
-    berat_max: '200',
+    action: {
+      update: {
+        id: 'TRX-24342',
+        jenis_penawaran: 'Penjualan',
+        komoditas: 'Cengkeh Basah',
+        satuan: 'Kg',
+        harga: '15.000',
+        berat_min: '100',
+        berat_max: '200',
+      },
+      delete: { id: 'TRX-24342' },
+    },
   },
 ];
 
-type TTablePenawaran = TSchemaPenawaran & { action: string };
+type Props = {
+  onDelete: (data: TDelete) => void;
+  onUpdate: (data: TUpdate) => void;
+};
 
-const TablePenawaran = () => {
+const TablePenawaran = ({
+  onUpdate: handleUpdate,
+  onDelete: handleDelete,
+}: Props) => {
   const columnHelper = createColumnHelper<TTablePenawaran>();
   const columns = [
     columnHelper.accessor('jenis_penawaran', {
@@ -93,20 +72,28 @@ const TablePenawaran = () => {
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Center>Aksi</Center>,
-      cell: () => (
-        <HStack gap={3} justify="center">
-          <Box title="ubah" cursor="pointer" _hover={{ color: 'brand.100' }}>
-            <Edit height={15} width={15} />
-          </Box>
-          <Box
-            title="tidak aktif"
-            cursor="pointer"
-            _hover={{ color: 'brand.100' }}
-          >
-            <MinusSquare height={15} width={15} />
-          </Box>
-        </HStack>
-      ),
+      cell: ({ getValue }) => {
+        return (
+          <HStack gap={3} justify="center">
+            <Box
+              title="ubah"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleUpdate(getValue().update)}
+            >
+              <Edit height={15} width={15} />
+            </Box>
+            <Box
+              title="hapus"
+              cursor="pointer"
+              _hover={{ color: 'brand.100' }}
+              onClick={() => handleDelete(getValue().delete)}
+            >
+              <Trash2 height={15} width={15} />
+            </Box>
+          </HStack>
+        );
+      },
     }),
   ];
 
