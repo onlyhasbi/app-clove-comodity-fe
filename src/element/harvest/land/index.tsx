@@ -17,13 +17,20 @@ import {
 } from '@chakra-ui/react';
 import FormLahan from './form';
 import TableLahan from './table';
-import { TDelete, TUpdate } from './types';
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { TSchemaLahan, TSchemaUpdateLahan, TSchemaDeleteLahan } from './schema';
+import {
+  useDeleteLahan,
+  useGetLahan,
+  usePostLahan,
+  useUpdateLahan,
+} from '../../../hooks/useLahan.hook';
+import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TSchemaUpdateLahan;
+  delete?: TSchemaDeleteLahan;
 };
 
 const Lahan = () => {
@@ -33,18 +40,67 @@ const Lahan = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TSchemaUpdateLahan) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TSchemaDeleteLahan) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
   const handleReset = useCallback(() => setAction(null), []);
 
+  const getLahan = useGetLahan();
+  const postLahan = usePostLahan();
+  const deleteLahan = useDeleteLahan();
+  const updateLahan = useUpdateLahan();
+
+  const handleSave = useCallback(
+    (payload: TSchemaLahan | TSchemaUpdateLahan) => {
+      const defaultPayload = {
+        nama: payload.nama,
+        lokasi: payload.kabupaten,
+        luas_m2: payload.luas_lahan,
+        status_hak_panen: payload.status_lahan,
+      };
+
+      if ('id' in payload) {
+        updateLahan.mutate({ id: payload.id, ...defaultPayload });
+      } else {
+        postLahan.mutate(defaultPayload);
+      }
+    },
+    []
+  );
+
+  const handleDelete = useCallback(() => {
+    if (action?.delete?.id) {
+      deleteLahan.mutate((action?.delete as TSchemaDeleteLahan)?.id);
+    }
+  }, [action?.delete?.id]);
+
   const cancelRef = useRef(null);
+
+  useEffect(() => {
+    if (postLahan.isSuccess || updateLahan.isSuccess || deleteLahan.isSuccess) {
+      getLahan.refetch();
+    }
+
+    if (updateLahan.isSuccess) {
+      handleReset();
+    }
+    if (deleteLahan.isSuccess) {
+      handleReset();
+    }
+  }, [
+    postLahan.isSuccess,
+    deleteLahan.isSuccess,
+    updateLahan.isSuccess,
+    handleReset,
+  ]);
 
   return (
     <>
@@ -55,6 +111,12 @@ const Lahan = () => {
           </Button>
         </Box>
         <TableLahan
+          isLoading={getLahan.isLoading}
+          data={
+            getLahan.isSuccess
+              ? tableAdapter(getLahan?.data?.data?.data?.lahan)
+              : []
+          }
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -71,7 +133,12 @@ const Lahan = () => {
           } Lahan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormLahan initialValues={action?.update} onClose={handleReset} />
+            <FormLahan
+              initialValues={action?.update}
+              isLoading={Boolean(postLahan?.isLoading || updateLahan.isLoading)}
+              onClose={handleReset}
+              onSave={handleSave}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -84,7 +151,7 @@ const Lahan = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.nama}`}
+              {`Delete ${(action?.delete as TSchemaDeleteLahan)?.nama}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -93,17 +160,17 @@ const Lahan = () => {
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={handleReset}>
-                Cancel
+                Batal
               </Button>
               <Button
+                isLoading={deleteLahan.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={handleDelete}
                 ml={3}
               >
-                Delete
+                Hapus
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

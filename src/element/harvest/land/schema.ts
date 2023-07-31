@@ -8,10 +8,12 @@ export const schemaLahan = z.object({
     .string()
     .nonempty({ message: 'Status lahan tidak boleh kosong' }),
   luas_lahan: z.string().nonempty({ message: 'Luas lahan tidak boleh kosong' }),
-  alamat: z.string().nonempty({ message: 'Alamat tidak boleh kosong' }),
 });
 
 export type TSchemaLahan = z.infer<typeof schemaLahan>;
+export type TSchemaUpdateLahan = TSchemaLahan & { id: string };
+export type TSchemaDeleteLahan = { id: string; nama: string };
+
 
 export const defaultValues = {
   nama: '',
@@ -19,5 +21,4 @@ export const defaultValues = {
   kabupaten: '',
   status_lahan: '',
   luas_lahan: '',
-  alamat: '',
 };

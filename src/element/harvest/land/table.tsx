@@ -1,39 +1,22 @@
 import Table from '../../../components/table';
-import { Box, Center, HStack } from '@chakra-ui/react';
+import { Box, Center, HStack, Text } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TDelete, TTableLahan, TUpdate } from './types';
-
-const dummy = [
-  {
-    id: '1',
-    nama: 'Cengkeh Malino',
-    provinsi: 'Sulawesi Selatan',
-    kabupaten: 'Makassar',
-    status_lahan: 'Sewa',
-    luas_lahan: '93',
-    alamat: '99 Glendale Parkway',
-    action: {
-      update: {
-        id: '1',
-        nama: 'Cengkeh Malino',
-        provinsi: 'sulsel',
-        kabupaten: 'makassar',
-        status_lahan: 'Sewa',
-        luas_lahan: '93',
-        alamat: '99 Glendale Parkway',
-      },
-      delete: { id: '1', nama: 'Cengkeh Malino' },
-    },
-  },
-];
+import StatusLahan from '../../../components/status-lahan';
+import Provinsi from '../../../components/provinsi';
+import Kabupaten from '../../../components/kabupaten';
 
 type Props = {
+  data: any[];
+  isLoading?: boolean;
   onDelete: (data: TDelete) => void;
   onUpdate: (data: TUpdate) => void;
 };
 
 const TableLahan = ({
+  data,
+  isLoading,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
@@ -46,29 +29,47 @@ const TableLahan = ({
     }),
     columnHelper.accessor('provinsi', {
       id: 'provinsi',
-      header: () => <Box>Provinsi</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Provinsi</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <Provinsi value={getValue()} />
+        </Center>
+      ),
     }),
     columnHelper.accessor('kabupaten', {
       id: 'kabupaten',
-      header: () => <Box>Kabupaten</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Kabupaten</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          {' '}
+          <Kabupaten value={getValue()} />
+        </Center>
+      ),
     }),
     columnHelper.accessor('status_lahan', {
       id: 'status_lahan',
-      header: () => <Box>Status</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Status</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <StatusLahan value={getValue()} />
+        </Center>
+      ),
     }),
     columnHelper.accessor('luas_lahan', {
       id: 'luas_lahan',
-      header: () => <Box>Luas</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => (
+        <Center>
+          Luas (M<Text as={'sup'}>2</Text>)
+        </Center>
+      ),
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
-    columnHelper.accessor('alamat', {
-      id: 'alamat',
-      header: () => <Box>Alamat</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    columnHelper.accessor('hasil_panen', {
+      id: 'hasil_panen',
+      header: () => <Center>Panen (Kg)</Center>,
+      cell: ({ getValue }) => <Center>{getValue() || '0'}</Center>,
     }),
+
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Center>Aksi</Center>,
@@ -97,7 +98,7 @@ const TableLahan = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
 export default TableLahan;

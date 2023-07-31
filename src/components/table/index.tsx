@@ -12,6 +12,8 @@ import {
   Th,
   Td,
   TableContainer,
+  Center,
+  Spinner,
 } from '@chakra-ui/react';
 
 type TProps = {
@@ -66,9 +68,13 @@ function Table({ data, columns, isLoading = false }: TProps) {
                     : columns.length
                 }
               >
-                {isLoading
-                  ? 'Load data from server...'
-                  : 'No Record to Display'}
+                <Center>
+                  {isLoading ? (
+                    <Spinner size="md" marginY={8} />
+                  ) : (
+                    'No Record to Display'
+                  )}
+                </Center>
               </Td>
             </Tr>
           )}
