@@ -2,16 +2,17 @@ import Table from '../../../components/table';
 import { Box, Center, HStack, Text } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TDelete, TTableLahan, TUpdate } from './types';
+import { TTableLahan } from './types';
 import StatusLahan from '../../../components/status-lahan';
 import Provinsi from '../../../components/provinsi';
 import Kabupaten from '../../../components/kabupaten';
+import { TSchemaDeleteLahan, TSchemaUpdateLahan } from './schema';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  onDelete: (data: TSchemaDeleteLahan) => void;
+  onUpdate: (data: TSchemaUpdateLahan) => void;
 };
 
 const TableLahan = ({
