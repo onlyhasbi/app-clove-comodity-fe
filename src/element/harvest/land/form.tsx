@@ -7,10 +7,12 @@ import {
   Button,
   VStack,
   HStack,
+  NumberInput,
+  NumberInputField,
 } from '@chakra-ui/react';
 
 import { useEffect } from 'react';
-import { useForm, FieldValues } from 'react-hook-form';
+import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
   TSchemaLahan,
   TSchemaUpdateLahan,
@@ -36,6 +38,7 @@ const FormLahan = ({
 }: Props) => {
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit,
     setValue,
@@ -76,8 +79,8 @@ const FormLahan = ({
       } as TSchemaUpdateLahan);
     } else {
       handleSave(data as TSchemaLahan);
+      reset();
     }
-    reset();
   };
 
   return (
@@ -169,11 +172,23 @@ const FormLahan = ({
           <FormLabel fontSize="sm" htmlFor="luas_lahan">
             Luas lahan
           </FormLabel>
-          <Input
-            id="luas_lahan"
-            placeholder="Luas lahan"
-            {...register('luas_lahan')}
-            disabled={isLoading}
+          <Controller
+            control={control}
+            name="luas_lahan"
+            render={({ field: { ref, ...restField } }) => (
+              <NumberInput
+                placeholder="Luas Lahan"
+                defaultValue={0}
+                {...restField}
+              >
+                <NumberInputField
+                  id="luas_lahan"
+                  ref={ref}
+                  name={restField.name}
+                  disabled={isLoading}
+                />
+              </NumberInput>
+            )}
           />
           <FormErrorMessage>
             {errors.luas_lahan && errors.luas_lahan.message}
@@ -193,7 +208,7 @@ const FormLahan = ({
           type="submit"
           variant="primary"
           isLoading={isLoading}
-          loadingText="Simpan..."
+          loadingText="Menyimpan..."
           spinnerPlacement="start"
         >
           {`${initialValues ? 'Perbarui' : 'Simpan'}`}

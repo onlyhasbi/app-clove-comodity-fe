@@ -14,11 +14,10 @@ export type TSchemaLahan = z.infer<typeof schemaLahan>;
 export type TSchemaUpdateLahan = TSchemaLahan & { id: string };
 export type TSchemaDeleteLahan = { id: string; nama: string };
 
-
 export const defaultValues = {
   nama: '',
   provinsi: '',
   kabupaten: '',
   status_lahan: '',
-  luas_lahan: '',
+  luas_lahan: '0',
 };

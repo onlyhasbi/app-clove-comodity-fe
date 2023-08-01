@@ -53,6 +53,8 @@ const Lahan = () => {
 
   const handleReset = useCallback(() => setAction(null), []);
 
+  const cancelRef = useRef(null);
+
   const getLahan = useGetLahan();
   const postLahan = usePostLahan();
   const deleteLahan = useDeleteLahan();
@@ -82,25 +84,17 @@ const Lahan = () => {
     }
   }, [action?.delete?.id]);
 
-  const cancelRef = useRef(null);
-
   useEffect(() => {
     if (postLahan.isSuccess || updateLahan.isSuccess || deleteLahan.isSuccess) {
       getLahan.refetch();
     }
+  }, [postLahan.isSuccess, deleteLahan.isSuccess, updateLahan.isSuccess]);
 
-    if (updateLahan.isSuccess) {
+  useEffect(() => {
+    if (updateLahan.isSuccess || deleteLahan.isSuccess) {
       handleReset();
     }
-    if (deleteLahan.isSuccess) {
-      handleReset();
-    }
-  }, [
-    postLahan.isSuccess,
-    deleteLahan.isSuccess,
-    updateLahan.isSuccess,
-    handleReset,
-  ]);
+  }, [deleteLahan.isSuccess, updateLahan.isSuccess, handleReset]);
 
   return (
     <>

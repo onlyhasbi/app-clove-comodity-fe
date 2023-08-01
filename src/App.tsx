@@ -9,6 +9,7 @@ import Transaksi from './pages/transaction';
 import Profile from './pages/profile';
 import Penawaran from './pages/offer';
 import Pekerjaan from './pages/work';
+import './app.style.css';
 
 function App() {
   return (

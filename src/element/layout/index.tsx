@@ -2,7 +2,7 @@ import { Grid, GridItem, Show } from '@chakra-ui/react';
 import Sidebar from './sidebar';
 import Header from './header';
 import { Outlet } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth.hooks';
+import { useAuth } from '../../hooks/useAuth.hook';
 
 const Layout = () => {
   const isAuthSuccess = useAuth();

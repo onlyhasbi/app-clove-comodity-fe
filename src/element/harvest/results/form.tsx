@@ -2,30 +2,48 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
   Textarea,
   Button,
   VStack,
   HStack,
+  Select,
+  NumberInput,
+  NumberInputField,
 } from '@chakra-ui/react';
-
-import { useForm, FieldValues } from 'react-hook-form';
-import { defaultValues, schemaHasil } from './schema';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useForm, FieldValues, Controller } from 'react-hook-form';
+import {
+  TSchemaHasil,
+  TSchemaUpdateHasil,
+  defaultValues,
+  schemaHasil,
+} from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { TUpdate } from './types';
+import { useGetLahan } from '../../../hooks/useLahan.hook';
+import { selectLahanAdapter } from './helper';
 
 type Props = {
   onClose: () => void;
-  initialValues: TUpdate | undefined | boolean;
+  isLoading?: boolean;
+  onSave: (payload: TSchemaHasil | TSchemaUpdateHasil) => void;
+  initialValues: TSchemaUpdateHasil | undefined | boolean;
 };
 
-const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
+const FormHasil = ({
+  onClose: handleCloseModal,
+  isLoading,
+  onSave: handleSave,
+  initialValues,
+}: Props) => {
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit,
     setValue,
+    reset,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaHasil),
@@ -33,20 +51,27 @@ const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
 
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
-      const { lahan, berat, tanggal, catatan } = initialValues;
+      const { lahan, berat, volume, tanggal, catatan } = initialValues;
       setValue('lahan', lahan);
       setValue('berat', berat);
-      setValue('tanggal', tanggal);
+      setValue('volume', volume);
+      setValue('tanggal', new Date(tanggal));
       setValue('catatan', catatan);
     }
   }, []);
 
+  const getLahan = useGetLahan();
+  const lahan = selectLahanAdapter(getLahan?.data?.data?.data?.lahan || []);
+
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
-      console.log('update', data);
-      handleCloseModal();
+      handleSave({
+        id: (initialValues as TSchemaUpdateHasil).id,
+        ...data,
+      } as TSchemaUpdateHasil);
     } else {
-      console.log('add', data);
+      handleSave(data as TSchemaHasil);
+      reset();
     }
   };
 
@@ -54,36 +79,112 @@ const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.lahan)}>
-          <FormLabel fontSize="sm" htmlFor="lahan">Lahan</FormLabel>
-          <Input id="lahan" placeholder="Lahan" {...register('lahan')} />
+          <FormLabel fontSize="sm" htmlFor="lahan">
+            Lahan
+          </FormLabel>
+          <Select
+            id="lahan"
+            placeholder="Pilih Lahan"
+            {...register('lahan')}
+            disabled={isLoading}
+          >
+            {lahan?.map((item: any) => {
+              return (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              );
+            })}
+          </Select>
           <FormErrorMessage>
             {errors.lahan && errors.lahan.message}
           </FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.berat)}>
-          <FormLabel fontSize="sm" htmlFor="berat">Berat</FormLabel>
-          <Input id="berat" placeholder="Berat" {...register('berat')} />
+          <FormLabel fontSize="sm" htmlFor="berat">
+            Berat
+          </FormLabel>
+          <NumberInput placeholder="Berat" defaultValue={0}>
+            <Controller
+              control={control}
+              name="berat"
+              render={({ field: { ref, ...restField } }) => (
+                <NumberInput
+                  placeholder="Berat"
+                  defaultValue={0}
+                  {...restField}
+                >
+                  <NumberInputField
+                    id="berat"
+                    ref={ref}
+                    name={restField.name}
+                    disabled={isLoading}
+                  />
+                </NumberInput>
+              )}
+            />
+          </NumberInput>
           <FormErrorMessage>
             {errors.berat && errors.berat.message}
           </FormErrorMessage>
         </FormControl>
 
+        <FormControl isInvalid={Boolean(errors.volume)}>
+          <FormLabel fontSize="sm" htmlFor="volume">
+            Volume
+          </FormLabel>
+          <Controller
+            control={control}
+            name="volume"
+            render={({ field: { ref, ...restField } }) => (
+              <NumberInput placeholder="Volume" defaultValue={0} {...restField}>
+                <NumberInputField
+                  id="volume"
+                  ref={ref}
+                  name={restField.name}
+                  disabled={isLoading}
+                />
+              </NumberInput>
+            )}
+          />
+          <FormErrorMessage>
+            {errors.volume && errors.volume.message}
+          </FormErrorMessage>
+        </FormControl>
+
         <FormControl isInvalid={Boolean(errors.tanggal)}>
-          <FormLabel fontSize="sm" htmlFor="tanggal">Tanggal</FormLabel>
-          <Input id="tanggal" placeholder="Tanggal" {...register('tanggal')} />
+          <FormLabel fontSize="sm" htmlFor="tanggal">
+            Tanggal
+          </FormLabel>
+          <Controller
+            control={control}
+            name="tanggal"
+            render={({ field: { onChange, value, onBlur } }) => (
+              <DatePicker
+                onChange={onChange}
+                onBlur={onBlur}
+                selected={value}
+                dateFormat="dd / MM / yyyy"
+                disabled={isLoading}
+              />
+            )}
+          />
           <FormErrorMessage>
             {errors.tanggal && errors.tanggal.message}
           </FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.catatan)}>
-          <FormLabel fontSize="sm" htmlFor="catatan">Catatan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="catatan">
+            Catatan
+          </FormLabel>
           <Textarea
             id="catatan"
             rows={3}
             placeholder="Catatan"
             {...register('catatan')}
+            disabled={isLoading}
           />
           <FormErrorMessage>
             {errors.catatan && errors.catatan.message}
@@ -91,10 +192,21 @@ const FormHasil = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button onClick={handleCloseModal} type="button" variant="ghost">
+        <Button
+          onClick={handleCloseModal}
+          type="button"
+          variant="ghost"
+          disabled={isLoading}
+        >
           Batal
         </Button>
-        <Button type="submit" variant="primary">
+        <Button
+          type="submit"
+          variant="primary"
+          isLoading={isLoading}
+          loadingText="Menyimpan..."
+          spinnerPlacement="start"
+        >
           {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>

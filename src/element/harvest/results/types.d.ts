@@ -1,11 +1,8 @@
-import { schemaHasil } from './schema';
-
-export type TUpdate = schemaHasil & { id: string };
-export type TDelete = { id: string; lahan: string };
+import { TSchemaDeleteHasil, TSchemaUpdateHasil, schemaHasil } from './schema';
 
 type TActionTable = {
-  update: TUpdate;
-  delete: TDelete;
+  update: TSchemaUpdateHasil;
+  delete: TSchemaDeleteHasil;
 };
 
 export type TTableHasil = schemaHasil & { action: TActionTable };

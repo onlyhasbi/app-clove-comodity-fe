@@ -8,8 +8,8 @@ const TabsPanen = () => {
     <Tabs colorScheme="green">
       <TabList>
         <Tab>Lahan</Tab>
-        <Tab>Setoran</Tab>
         <Tab>Hasil Panen</Tab>
+        <Tab>Setoran</Tab>
       </TabList>
 
       <TabPanels>
@@ -17,10 +17,10 @@ const TabsPanen = () => {
           <Lahan />
         </TabPanel>
         <TabPanel>
-          <Setoran />
+          <Hasil />
         </TabPanel>
         <TabPanel>
-          <Hasil />
+          <Setoran />
         </TabPanel>
       </TabPanels>
     </Tabs>

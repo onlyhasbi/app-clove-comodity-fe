@@ -1,73 +1,85 @@
 import Table from '../../../components/table';
-import { Box, Center, HStack } from '@chakra-ui/react';
+import { Box, Center, HStack, Text } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TDelete, TTableSetoran, TUpdate } from './types';
-
-const dummy = [
-  {
-    id: '1',
-    lahan: 'Cengkeh Malino',
-    volume: '3 Ltr',
-    upah: '25.000',
-    id_buruh: 'B-72',
-    tanggal: '93',
-    catatan: '99 Glendale Parkway',
-    action: {
-      update: {
-        id: '1',
-        lahan: 'Cengkeh Malino',
-        volume: '3 Ltr',
-        upah: '25.000',
-        id_buruh: 'B-72',
-        tanggal: '24/07/2023',
-        catatan: '99 Glendale Parkway',
-      },
-      delete: { id: '1', lahan: 'Cengkeh Malino' },
-    },
-  },
-];
+import { TTableSetoran } from './types';
+import { TSchemaDeleteSetoran, TSchemaUpdateSetoran } from './schema';
+import { formatValue } from '../../../utils';
+import { NumericFormat } from 'react-number-format';
+import dayjs from 'dayjs';
 
 type Props = {
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  onDelete: (data: TSchemaDeleteSetoran) => void;
+  onUpdate: (data: TSchemaUpdateSetoran) => void;
+  isLoading?: boolean;
+  data: any[];
 };
 
 const TableSetoran = ({
+  isLoading,
+  data,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
   const columnHelper = createColumnHelper<TTableSetoran>();
   const columns = [
-    columnHelper.accessor('lahan', {
-      id: 'lahan',
-      header: () => <Box>Lahan</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
-    }),
-    columnHelper.accessor('volume', {
-      id: 'volume',
-      header: () => <Box>Volume</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
-    }),
-    columnHelper.accessor('upah', {
-      id: 'upah',
-      header: () => <Box>Upah</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
-    }),
     columnHelper.accessor('id_buruh', {
       id: 'id_buruh',
       header: () => <Box>Buruh</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
+    columnHelper.accessor('lahan', {
+      id: 'lahan',
+      header: () => <Box>Lahan</Box>,
+      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    }),
+    columnHelper.accessor('berat', {
+      id: 'berat',
+      header: () => <Center>Berat</Center>,
+      cell: ({ getValue }) => <Center>{formatValue(getValue(), 'Kg')}</Center>,
+    }),
+    columnHelper.accessor('volume', {
+      id: 'volume',
+      header: () => <Center>Volume</Center>,
+      cell: ({ getValue }) => <Center>{formatValue(getValue(), 'Ltr')}</Center>,
+    }),
+    columnHelper.accessor('upah', {
+      id: 'upah',
+      header: () => <Center>Upah</Center>,
+      cell: ({ getValue }) => (
+        <Center w="5rem" overflow="hidden">
+          <Text
+            as={NumericFormat}
+            value={getValue()}
+            textAlign="center"
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
+    }),
+
     columnHelper.accessor('tanggal', {
       id: 'tanggal',
-      header: () => <Box>Tanggal</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Tgl. Setor</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
     columnHelper.accessor('catatan', {
       id: 'catatan',
       header: () => <Box>Catatan</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    }),
+    columnHelper.accessor('komplaint', {
+      id: 'komplaint',
+      header: () => <Center>Komplain</Center>,
+      cell: ({ getValue }) => <Center>{getValue() ?? '-'}</Center>,
+    }),
+    columnHelper.accessor('status_bayar', {
+      id: 'status_bayar',
+      header: () => <Box>Status Bayar</Box>,
+      cell: ({ getValue }) => (
+        <Box textAlign="center">{getValue() ? 'Belum' : 'Lunas'}</Box>
+      ),
     }),
     columnHelper.accessor('action', {
       id: 'action',
@@ -97,7 +109,7 @@ const TableSetoran = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
 export default TableSetoran;

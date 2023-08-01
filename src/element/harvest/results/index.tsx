@@ -15,15 +15,23 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import FormHasil from './form';
 import TableHasil from './table';
-import { TDelete, TUpdate } from './types';
+import { TSchemaHasil, TSchemaDeleteHasil, TSchemaUpdateHasil } from './schema';
+import {
+  useDeleteHasil,
+  useGetHasil,
+  usePostHasil,
+  useUpdateHasil,
+} from '../../../hooks/useHasilPanen.hook';
+import dayjs from 'dayjs';
+import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TSchemaUpdateHasil;
+  delete?: TSchemaDeleteHasil;
 };
 
 const Hasil = () => {
@@ -33,17 +41,64 @@ const Hasil = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TSchemaUpdateHasil) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TSchemaDeleteHasil) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
+
   const handleReset = useCallback(() => setAction(null), []);
 
   const cancelRef = useRef(null);
+
+  const getHasil = useGetHasil();
+  const postHasil = usePostHasil();
+  const deleteHasil = useDeleteHasil();
+  const updateHasil = useUpdateHasil();
+
+  const handleSave = useCallback(
+    (payload: TSchemaHasil | TSchemaUpdateHasil) => {
+      const formatDate = dayjs(payload.tanggal).format('YYYY/MM/DD');
+
+      const defaultPayload = {
+        id_lahan: payload.lahan,
+        berat_pengukuran_kg: +payload.berat,
+        volume_pengukuran_liter: +payload.volume,
+        waktu: formatDate,
+        catatan: payload.catatan,
+      };
+
+      if ('id' in payload) {
+        updateHasil.mutate({ id: payload.id, ...defaultPayload });
+      } else {
+        postHasil.mutate(defaultPayload);
+      }
+    },
+    []
+  );
+
+  const handleDelete = useCallback(() => {
+    if (action?.delete?.id) {
+      deleteHasil.mutate((action?.delete as TSchemaDeleteHasil)?.id);
+    }
+  }, [action?.delete?.id]);
+
+  useEffect(() => {
+    if (postHasil.isSuccess || updateHasil.isSuccess || deleteHasil.isSuccess) {
+      getHasil.refetch();
+    }
+  }, [postHasil.isSuccess, deleteHasil.isSuccess, updateHasil.isSuccess]);
+
+  useEffect(() => {
+    if (updateHasil.isSuccess || deleteHasil.isSuccess) {
+      handleReset();
+    }
+  }, [deleteHasil.isSuccess, updateHasil.isSuccess, handleReset]);
 
   return (
     <>
@@ -54,6 +109,12 @@ const Hasil = () => {
           </Button>
         </Box>
         <TableHasil
+          isLoading={getHasil.isLoading}
+          data={
+            getHasil.isSuccess
+              ? tableAdapter(getHasil?.data?.data?.data?.hasil_panen)
+              : []
+          }
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -70,7 +131,12 @@ const Hasil = () => {
           } Hasil Panen`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormHasil initialValues={action?.update} onClose={handleReset} />
+            <FormHasil
+              initialValues={action?.update}
+              onClose={handleReset}
+              isLoading={postHasil.isLoading || updateHasil.isLoading}
+              onSave={handleSave}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -83,7 +149,7 @@ const Hasil = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.lahan}`}
+              {`Delete ${(action?.delete as TSchemaDeleteHasil)?.nama}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -95,11 +161,11 @@ const Hasil = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deleteHasil.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={handleDelete}
                 ml={3}
               >
                 Delete

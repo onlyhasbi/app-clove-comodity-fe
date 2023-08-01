@@ -13,4 +13,12 @@ export const url = {
     key: 'lahan',
     dev: `${BASE_URL}/lahan`,
   },
+  hasil_panen: {
+    key: 'hasil-panen',
+    dev: `${BASE_URL}/hasil-panen`,
+  },
+  setoran: {
+    key: 'setoran',
+    dev: `${BASE_URL}/setoran`,
+  },
 };

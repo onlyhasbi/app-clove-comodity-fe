@@ -2,33 +2,20 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TDelete, TTableHasil, TUpdate } from './types';
-
-const dummy = [
-  {
-    lahan: 'Cengkeh Malino',
-    berat: '3Ltr',
-    tanggal: '24/07/2023',
-    catatan: '99 Glendale Parkway',
-    action: {
-      update: {
-        id: '1',
-        lahan: 'Cengkeh Malino',
-        berat: '3Ltr',
-        tanggal: '24/07/2023',
-        catatan: '99 Glendale Parkway',
-      },
-      delete: { id: '1', lahan: 'Cengkeh Malino' },
-    },
-  },
-];
+import { TTableHasil } from './types';
+import { TSchemaDeleteHasil, TSchemaUpdateHasil } from './schema';
+import { formatValue } from '../../../utils';
 
 type Props = {
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  data: any[];
+  isLoading?: boolean;
+  onDelete: (data: TSchemaDeleteHasil) => void;
+  onUpdate: (data: TSchemaUpdateHasil) => void;
 };
 
 const TableHasil = ({
+  data,
+  isLoading,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
@@ -41,13 +28,18 @@ const TableHasil = ({
     }),
     columnHelper.accessor('berat', {
       id: 'berat',
-      header: () => <Box>Berat</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Berat</Center>,
+      cell: ({ getValue }) => <Center>{formatValue(getValue(), 'Kg')}</Center>,
+    }),
+    columnHelper.accessor('volume', {
+      id: 'volume',
+      header: () => <Center>Volume</Center>,
+      cell: ({ getValue }) => <Center>{formatValue(getValue(), 'Ltr')}</Center>,
     }),
     columnHelper.accessor('tanggal', {
       id: 'tanggal',
-      header: () => <Box>Tanggal</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Tanggal</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
     columnHelper.accessor('catatan', {
       id: 'catatan',
@@ -82,7 +74,7 @@ const TableHasil = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
 export default TableHasil;

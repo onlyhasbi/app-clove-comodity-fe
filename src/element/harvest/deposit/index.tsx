@@ -15,15 +15,27 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import FormSetoran from './form';
 import TableSetoran from './table';
-import { TDelete, TUpdate } from './types';
+import {
+  useDeleteSetoran,
+  useGetSetoran,
+  usePostSetoran,
+  useUpdateSetoran,
+} from '../../../hooks/useSetoran.hook';
+import {
+  TSchemaDeleteSetoran,
+  TSchemaSetoran,
+  TSchemaUpdateSetoran,
+} from './schema';
+import dayjs from 'dayjs';
+import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TSchemaUpdateSetoran;
+  delete?: TSchemaDeleteSetoran;
 };
 
 const Setoran = () => {
@@ -33,17 +45,68 @@ const Setoran = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TSchemaUpdateSetoran) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TSchemaDeleteSetoran) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
   const cancelRef = useRef(null);
+
+  const getSetoran = useGetSetoran();
+  const postSetoran = usePostSetoran();
+  const deleteSetoran = useDeleteSetoran();
+  const updateSetoran = useUpdateSetoran();
+
+  const handleSave = useCallback(
+    (payload: TSchemaSetoran | TSchemaUpdateSetoran) => {
+      const defaultPayload = {
+        id_hasil_panen: payload.lahan,
+        id_buruh: payload.id_buruh,
+        volume_liter: payload.volume,
+        berat_kg: payload.berat,
+        upah_rp: Number(payload.upah.replace('.', '')),
+        waktu: dayjs(payload.tanggal).format('YYYY/MM/DD'),
+        catatan: payload.catatan,
+      };
+
+      if ('id' in payload) {
+        updateSetoran.mutate({ id: payload.id, ...defaultPayload });
+      } else {
+        postSetoran.mutate(defaultPayload);
+      }
+    },
+    []
+  );
+
+  const handleDelete = useCallback(() => {
+    if (action?.delete?.id) {
+      deleteSetoran.mutate((action?.delete as TSchemaDeleteSetoran)?.id);
+    }
+  }, [action?.delete?.id]);
+
+  useEffect(() => {
+    if (
+      postSetoran.isSuccess ||
+      updateSetoran.isSuccess ||
+      deleteSetoran.isSuccess
+    ) {
+      getSetoran.refetch();
+    }
+  }, [postSetoran.isSuccess, deleteSetoran.isSuccess, updateSetoran.isSuccess]);
+
+  useEffect(() => {
+    if (updateSetoran.isSuccess || deleteSetoran.isSuccess) {
+      handleReset();
+    }
+  }, [deleteSetoran.isSuccess, updateSetoran.isSuccess, handleReset]);
+
   return (
     <>
       <VStack direction="column">
@@ -53,6 +116,12 @@ const Setoran = () => {
           </Button>
         </Box>
         <TableSetoran
+          isLoading={getSetoran.isLoading}
+          data={
+            getSetoran.isSuccess
+              ? tableAdapter(getSetoran?.data?.data?.data?.setoran)
+              : []
+          }
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -61,6 +130,7 @@ const Setoran = () => {
       <Modal
         isOpen={Boolean(action?.add) || Boolean(action?.update)}
         onClose={handleReset}
+        size="xl"
       >
         <ModalOverlay />
         <ModalContent>
@@ -69,7 +139,14 @@ const Setoran = () => {
           } Setoran`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormSetoran initialValues={action?.update} onClose={handleReset} />
+            <FormSetoran
+              initialValues={action?.update}
+              isLoading={Boolean(
+                postSetoran?.isLoading || updateSetoran.isLoading
+              )}
+              onClose={handleReset}
+              onSave={handleSave}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -82,7 +159,7 @@ const Setoran = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.lahan}`}
+              {`Delete ${(action?.delete as TSchemaDeleteSetoran)?.nama}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -94,11 +171,11 @@ const Setoran = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deleteSetoran.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={handleDelete}
                 ml={3}
               >
                 Delete

@@ -5,7 +5,7 @@ export function setJWT(token: string) {
 }
 
 axios.defaults.headers.common['Authorization'] =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFfdXNlci1Tai1EOThlIiwiaWF0IjoxNjkwNzc0NzQ4fQ.22kVa57y1TpUa8OhAqwxmioMMXZDmU3qn6_gOtjCKFQ';
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFfdXNlci1Tai1EOThlIiwiaWF0IjoxNjkwODcwODgzfQ.shey7BDox1MYJ9iUmHFG0ODI2KNegZdhb1aKm26qvBM';
 
 const http = {
   get: axios.get,
