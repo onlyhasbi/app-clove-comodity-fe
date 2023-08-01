@@ -11,7 +11,10 @@ export const schemaLahan = z.object({
 });
 
 export type TSchemaLahan = z.infer<typeof schemaLahan>;
-export type TSchemaUpdateLahan = TSchemaLahan & { id: string };
+export type TSchemaUpdateLahan = TSchemaLahan & {
+  id: string;
+  hasil_panen: string;
+};
 export type TSchemaDeleteLahan = { id: string; nama: string };
 
 export const defaultValues = {

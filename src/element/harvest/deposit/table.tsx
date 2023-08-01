@@ -6,7 +6,6 @@ import { TTableSetoran } from './types';
 import { TSchemaDeleteSetoran, TSchemaUpdateSetoran } from './schema';
 import { formatValue } from '../../../utils';
 import { NumericFormat } from 'react-number-format';
-import dayjs from 'dayjs';
 
 type Props = {
   onDelete: (data: TSchemaDeleteSetoran) => void;

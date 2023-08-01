@@ -31,6 +31,7 @@ export const tableAdapter = (payloads: any) => {
           luas_lahan: luas_m2,
           hasil_panen: total_massa_kg_hasil_panen_lahan,
         },
+
         delete: {
           id,
           nama,
