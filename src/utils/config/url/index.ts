@@ -1,6 +1,10 @@
 const BASE_URL = 'https://api-clove.vercel.app';
 
 export const url = {
+  auth: {
+    key: 'auth',
+    dev: `${BASE_URL}/authentication-acc`,
+  },
   provinsi: {
     key: 'provinsi',
     dev: `${BASE_URL}/lokasi/all-provinsi`,

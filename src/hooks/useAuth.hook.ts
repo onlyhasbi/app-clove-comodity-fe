@@ -1,14 +1,41 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import http from '../api';
+import { SignInPayload } from '../element/auth/FormLogin';
+import { url } from '../utils/config/url';
+import { useMutation } from '@tanstack/react-query';
 
-export function useAuth() {
-  const isAuthSuccess = true; //auth switch
-  const navigate = useNavigate();
+type Props = {
+  onSuccess: (data: any) => void;
+  onError: (error: any) => void;
+};
 
-  useEffect(() => {
-    if (!isAuthSuccess) navigate('/signin');
-    if (isAuthSuccess) navigate('/');
-  }, []);
+export const useAuth = ({ onSuccess, onError }: Props) =>
+  useMutation({
+    mutationFn: (payload: SignInPayload) =>
+      http.post(url.auth.dev, payload).then((data) => data),
+    onSuccess,
+    onError,
+  });
 
-  return isAuthSuccess;
+export const isAuthenticated = (name:string) =>{
+  return Boolean(getToken(name))
+}
+
+export function setToken(name: string, token: string) {
+  if (!name && !token) throw new Error('No token provided');
+  localStorage.setItem(name, token);
+}
+
+export function deleteToken(name: string) {
+  if (!name) throw new Error('Token name not provided');
+  const token = localStorage.getItem(name);
+  token && localStorage.removeItem(name);
+}
+
+export function getToken(name: string) {
+  if (!name) return null;
+  return localStorage.getItem(name) || null;
+}
+
+export function verifyToken() {
+  console.log('verifyToken');
 }

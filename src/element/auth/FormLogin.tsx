@@ -10,63 +10,72 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm, FieldValues } from 'react-hook-form';
 import { z } from 'zod';
 import { useReducer } from 'react';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
 const defaultValues = {
-  telepon: '',
-  password: '',
+  nomor_telpon: '',
+  sandi: '',
 };
 
 const schema = z
   .object({
-    telepon: z.string().nonempty({ message: 'Nomor telepon belum diisi' }),
-    password: z.string().nonempty({ message: 'Kata sandi belum diisi' }),
+    nomor_telpon: z.string().nonempty({ message: 'Nomor telepon belum diisi' }),
+    sandi: z.string().nonempty({ message: 'Kata sandi belum diisi' }),
   })
   .required();
 
-function SignInForm() {
+export type SignInPayload = z.infer<typeof schema>;
+
+type Props = {
+  isLoading?: boolean;
+  onSignIn: (data: SignInPayload) => void;
+};
+
+function SignInForm({ onSignIn, isLoading }: Props) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({ defaultValues, resolver: zodResolver(schema) });
 
   const [show, toggle] = useReducer((prev) => !prev, false);
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
+  const onSubmit = (payload: FieldValues) => {
+    onSignIn(payload as SignInPayload);
+    reset();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack spacing={4}>
-        <FormControl isInvalid={Boolean(errors.telepon)}>
-          <FormLabel color={'gray.600'}>Telepon</FormLabel>
+        <FormControl isInvalid={Boolean(errors.nomor_telpon)}>
+          <FormLabel color={'gray.600'}>Nomor Telepon</FormLabel>
           <Input
             type="text"
             color={'gray.600'}
             placeholder="Nomor Telepon"
-            {...register('telepon')}
+            {...register('nomor_telpon')}
           />
           <FormErrorMessage>
-            {errors.telepon && errors.telepon.message}
+            {errors.nomor_telpon && errors.nomor_telpon.message}
           </FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={Boolean(errors.password)}>
+        <FormControl isInvalid={Boolean(errors.sandi)}>
           <FormLabel color={'gray.600'}>Sandi</FormLabel>
           <InputGroup>
             <Input
-              type={show ? 'text' : 'password'}
+              type={show ? 'text' : 'sandi'}
               color={'gray.600'}
               placeholder="Kata sandi"
-              {...register('password')}
+              {...register('sandi')}
             />
             <InputRightElement>
               <IconButton
-                aria-label="password toggle"
+                aria-label="sandi toggle"
                 color="gray.600"
                 variant="ghost"
                 _hover={{ bg: 'none' }}
@@ -82,10 +91,18 @@ function SignInForm() {
             </InputRightElement>
           </InputGroup>
           <FormErrorMessage>
-            {errors.password && errors.password.message}
+            {errors.sandi && errors.sandi.message}
           </FormErrorMessage>
         </FormControl>
-        <Button type="submit" size="md" width="full" variant="primary">
+        <Button
+          size="md"
+          width="full"
+          type="submit"
+          colorScheme="green"
+          isLoading={isLoading}
+          loadingText="Masuk..."
+          spinnerPlacement="start"
+        >
           Masuk
         </Button>
       </VStack>

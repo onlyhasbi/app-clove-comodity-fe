@@ -1,11 +1,18 @@
 import { Grid, GridItem, Show } from '@chakra-ui/react';
 import Sidebar from './sidebar';
 import Header from './header';
-import { Outlet } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth.hook';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { isAuthenticated } from '../../hooks/useAuth.hook';
+import { useEffect } from 'react';
 
 const Layout = () => {
-  const isAuthSuccess = useAuth();
+  const isAuthSuccess = isAuthenticated(import.meta.env.VITE_TOKEN_NAME);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthSuccess) navigate('/signin', { replace: true });
+  }, [isAuthSuccess, navigate]);
+
   if (!isAuthSuccess) return null;
 
   return (
