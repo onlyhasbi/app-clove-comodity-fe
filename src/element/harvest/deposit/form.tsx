@@ -54,18 +54,11 @@ const FormSetoran = ({
 
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
-      const {
-        tanggal_setoran,
-        berat,
-        volume,
-        upah,
-        id_buruh,
-        tanggal,
-        catatan,
-      } = initialValues;
+      const { tanggal_panen, berat, volume, upah, id_buruh, tanggal, catatan } =
+        initialValues;
 
       setValue('id_buruh', id_buruh);
-      setValue('tanggal_setoran', tanggal_setoran);
+      setValue('tanggal_panen', tanggal_panen);
       setValue('berat', berat);
       setValue('volume', volume);
       setValue('upah', upah);
@@ -109,14 +102,14 @@ const FormSetoran = ({
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={Boolean(errors.tanggal_setoran)}>
+        <FormControl isInvalid={Boolean(errors.tanggal_panen)}>
           <FormLabel fontSize="sm" htmlFor="lahan">
             Tgl. Setoran
           </FormLabel>
           <Select
             id="lahan"
             placeholder="Pilih Tanggal Setoran"
-            {...register('tanggal_setoran')}
+            {...register('tanggal_panen')}
             disabled={isLoading}
           >
             {hasil?.map((item: any) => {
@@ -128,7 +121,7 @@ const FormSetoran = ({
             })}
           </Select>
           <FormErrorMessage>
-            {errors.tanggal_setoran && errors.tanggal_setoran.message}
+            {errors.tanggal_panen && errors.tanggal_panen.message}
           </FormErrorMessage>
         </FormControl>
 

@@ -27,10 +27,10 @@ const TableSetoran = ({
       header: () => <Box>Buruh</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
-    columnHelper.accessor('lahan', {
-      id: 'lahan',
-      header: () => <Box>Lahan</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    columnHelper.accessor('tanggal_panen', {
+      id: 'tanggal_panen',
+      header: () => <Center>Tanggal Panen</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
     columnHelper.accessor('berat', {
       id: 'berat',
@@ -75,11 +75,17 @@ const TableSetoran = ({
     }),
     columnHelper.accessor('status_bayar', {
       id: 'status_bayar',
-      header: () => <Box>Status Bayar</Box>,
+      header: () => <Center>Pembayaran</Center>,
       cell: ({ getValue }) => (
-        <Box textAlign="center">
-          {getValue() ? 'Lunas' : <Button variant="primary">Bayar</Button>}
-        </Box>
+        <Center textAlign="center">
+          {getValue() ? (
+            'Lunas'
+          ) : (
+            <Button variant="primary" size="xs">
+              Belum Dibayar
+            </Button>
+          )}
+        </Center>
       ),
     }),
     columnHelper.accessor('action', {

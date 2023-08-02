@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const schemaSetoran = z.object({
-  tanggal_setoran: z.string().nonempty({ message: 'Tanggal Setoran tidak boleh kosong' }),
+  tanggal_panen: z.string().nonempty({ message: 'Tanggal Panen tidak boleh kosong' }),
   id_buruh: z
     .string()
     .nonempty({ message: 'ID Buruh lahan tidak boleh kosong' }),
@@ -21,7 +21,7 @@ export type TSchemaUpdateSetoran = TSchemaSetoran & {
 export type TSchemaDeleteSetoran = { id: string; nama: string };
 
 export const defaultValues = {
-  tanggal_setoran: '',
+  tanggal_panen: '',
   id_buruh: '',
   berat: '0',
   volume: '0',

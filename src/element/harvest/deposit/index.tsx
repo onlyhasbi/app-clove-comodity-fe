@@ -67,7 +67,7 @@ const Setoran = () => {
   const handleSave = useCallback(
     (payload: TSchemaSetoran | TSchemaUpdateSetoran) => {
       const defaultPayload = {
-        id_hasil_panen: payload.lahan,
+        id_hasil_panen: payload.tanggal_panen,
         id_buruh: payload.id_buruh,
         volume_liter: payload.volume,
         berat_kg: payload.berat,
@@ -159,7 +159,9 @@ const Setoran = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TSchemaDeleteSetoran)?.nama}`}
+              {`Delete ${dayjs(
+                (action?.delete as TSchemaDeleteSetoran)?.nama
+              ).format('DD MMMM YYYY')}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>

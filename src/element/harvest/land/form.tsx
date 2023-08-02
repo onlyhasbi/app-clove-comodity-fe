@@ -7,8 +7,6 @@ import {
   Button,
   VStack,
   HStack,
-  NumberInput,
-  NumberInputField,
   Text,
 } from '@chakra-ui/react';
 
