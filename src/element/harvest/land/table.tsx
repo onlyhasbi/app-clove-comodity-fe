@@ -7,6 +7,7 @@ import StatusLahan from '../../../components/status-lahan';
 import Provinsi from '../../../components/provinsi';
 import Kabupaten from '../../../components/kabupaten';
 import { TSchemaDeleteLahan, TSchemaUpdateLahan } from './schema';
+import { NumericFormat } from 'react-number-format';
 
 type Props = {
   data: any[];
@@ -63,12 +64,32 @@ const TableLahan = ({
           Luas (M<Text as={'sup'}>2</Text>)
         </Center>
       ),
-      cell: ({ getValue }) => <Center>{getValue()}</Center>,
+      cell: ({ getValue }) => (
+        <Center w="5rem" overflow="hidden">
+          <Text
+            as={NumericFormat}
+            value={getValue() || 0}
+            textAlign="center"
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('hasil_panen', {
       id: 'hasil_panen',
       header: () => <Center>Panen (Kg)</Center>,
-      cell: ({ getValue }) => <Center>{getValue() || '0'}</Center>,
+      cell: ({ getValue }) => (
+        <Center w="5rem" overflow="hidden">
+          <Text
+            as={NumericFormat}
+            value={getValue() || 0}
+            textAlign="center"
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
 
     columnHelper.accessor('action', {

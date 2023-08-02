@@ -10,8 +10,11 @@ import Profile from './pages/profile';
 import Penawaran from './pages/offer';
 import Pekerjaan from './pages/work';
 import './app.style.css';
+import dayjs from 'dayjs';
+import * as locale from 'dayjs/locale/id'
 
 function App() {
+  dayjs.locale(locale);
   return (
     <Routes>
       <Route path="/signin" element={<SignIn />} />

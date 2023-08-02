@@ -9,6 +9,7 @@ import {
   HStack,
   NumberInput,
   NumberInputField,
+  Text,
 } from '@chakra-ui/react';
 
 import { useEffect } from 'react';
@@ -22,6 +23,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useProvinsi, useKabupaten } from '../../../hooks/useLocation.hook';
 import { STATUS_LAHAN } from '../../../model/status-lahan.model';
+import { NumericFormat } from 'react-number-format';
 
 type Props = {
   onClose: () => void;
@@ -170,24 +172,24 @@ const FormLahan = ({
 
         <FormControl isInvalid={Boolean(errors.luas_lahan)}>
           <FormLabel fontSize="sm" htmlFor="luas_lahan">
-            Luas lahan
+            Luas lahan (m<Text as="sup">2</Text>)
           </FormLabel>
           <Controller
             control={control}
             name="luas_lahan"
-            render={({ field: { ref, ...restField } }) => (
-              <NumberInput
-                placeholder="Luas Lahan"
+            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                id="luas_lahan"
                 defaultValue={0}
-                {...restField}
-              >
-                <NumberInputField
-                  id="luas_lahan"
-                  ref={ref}
-                  name={restField.name}
-                  disabled={isLoading}
-                />
-              </NumberInput>
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
             )}
           />
           <FormErrorMessage>
@@ -206,7 +208,7 @@ const FormLahan = ({
         </Button>
         <Button
           type="submit"
-          variant="primary"
+          colorScheme="green"
           isLoading={isLoading}
           loadingText="Menyimpan..."
           spinnerPlacement="start"

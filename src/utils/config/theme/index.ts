@@ -21,7 +21,3 @@ export const configTheme = extendTheme({
     },
   },
 });
-
-
-
-

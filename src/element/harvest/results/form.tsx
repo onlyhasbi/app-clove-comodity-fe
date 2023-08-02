@@ -103,7 +103,7 @@ const FormHasil = ({
 
         <FormControl isInvalid={Boolean(errors.berat)}>
           <FormLabel fontSize="sm" htmlFor="berat">
-            Berat
+            Berat (Kg)
           </FormLabel>
           <NumberInput placeholder="Berat" defaultValue={0}>
             <Controller
@@ -132,7 +132,7 @@ const FormHasil = ({
 
         <FormControl isInvalid={Boolean(errors.volume)}>
           <FormLabel fontSize="sm" htmlFor="volume">
-            Volume
+            Volume (Ltr)
           </FormLabel>
           <Controller
             control={control}
@@ -202,7 +202,7 @@ const FormHasil = ({
         </Button>
         <Button
           type="submit"
-          variant="primary"
+          colorScheme="green"
           isLoading={isLoading}
           loadingText="Menyimpan..."
           spinnerPlacement="start"

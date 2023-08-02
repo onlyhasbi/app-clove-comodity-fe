@@ -22,9 +22,9 @@ import {
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { useGetLahan } from '../../../hooks/useLahan.hook';
 import { NumericFormat } from 'react-number-format';
 import { selectLahanAdapter } from './helper';
+import { useGetHasil } from '../../../hooks/useHasilPanen.hook';
 import ReactDatePicker from 'react-datepicker';
 
 type Props = {
@@ -54,11 +54,18 @@ const FormSetoran = ({
 
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
-      const { lahan, berat, volume, upah, id_buruh, tanggal, catatan } =
-        initialValues;
+      const {
+        tanggal_setoran,
+        berat,
+        volume,
+        upah,
+        id_buruh,
+        tanggal,
+        catatan,
+      } = initialValues;
 
       setValue('id_buruh', id_buruh);
-      setValue('lahan', lahan);
+      setValue('tanggal_setoran', tanggal_setoran);
       setValue('berat', berat);
       setValue('volume', volume);
       setValue('upah', upah);
@@ -67,8 +74,10 @@ const FormSetoran = ({
     }
   }, []);
 
-  const getLahan = useGetLahan();
-  const lahan = selectLahanAdapter(getLahan?.data?.data?.data?.lahan || []);
+  const getHasil = useGetHasil();
+  const hasil = selectLahanAdapter(
+    getHasil?.data?.data?.data?.hasil_panen || []
+  );
 
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
@@ -100,17 +109,17 @@ const FormSetoran = ({
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={Boolean(errors.lahan)}>
+        <FormControl isInvalid={Boolean(errors.tanggal_setoran)}>
           <FormLabel fontSize="sm" htmlFor="lahan">
-            Lahan
+            Tgl. Setoran
           </FormLabel>
           <Select
             id="lahan"
-            placeholder="Pilih Lahan"
-            {...register('lahan')}
+            placeholder="Pilih Tanggal Setoran"
+            {...register('tanggal_setoran')}
             disabled={isLoading}
           >
-            {lahan?.map((item: any) => {
+            {hasil?.map((item: any) => {
               return (
                 <option key={item.value} value={item.value}>
                   {item.label}
@@ -119,13 +128,13 @@ const FormSetoran = ({
             })}
           </Select>
           <FormErrorMessage>
-            {errors.lahan && errors.lahan.message}
+            {errors.tanggal_setoran && errors.tanggal_setoran.message}
           </FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.berat)}>
           <FormLabel fontSize="sm" htmlFor="berat">
-            Berat
+            Berat (Kg)
           </FormLabel>
           <Controller
             control={control}
@@ -148,7 +157,7 @@ const FormSetoran = ({
 
         <FormControl isInvalid={Boolean(errors.volume)}>
           <FormLabel fontSize="sm" htmlFor="volume">
-            Volume
+            Volume (Ltr)
           </FormLabel>
           <Controller
             control={control}
@@ -247,7 +256,7 @@ const FormSetoran = ({
         </Button>
         <Button
           type="submit"
-          variant="primary"
+          colorScheme="green"
           isLoading={isLoading}
           loadingText="Menyimpan..."
           spinnerPlacement="start"

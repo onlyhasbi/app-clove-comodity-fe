@@ -2,8 +2,8 @@ import dayjs from 'dayjs';
 
 export const selectLahanAdapter = (data: any) => {
   return data?.map((item: any) => ({
-    label: item.nama,
-    value: item.daftar_hasil_panen,
+    label: item.waktu,
+    value: item.id,
   }));
 };
 
@@ -12,7 +12,7 @@ export const tableAdapter = (payloads: any) => {
     const {
       id,
       id_buruh,
-      lahan,
+      tanggal_setoran,
       catatan,
       upah_rp,
       berat_kg,
@@ -25,7 +25,7 @@ export const tableAdapter = (payloads: any) => {
 
     return {
       id_buruh,
-      lahan,
+      tanggal_setoran,
       berat: berat_kg,
       volume: volume_liter,
       upah: upah_rp,
@@ -37,7 +37,7 @@ export const tableAdapter = (payloads: any) => {
         update: {
           id,
           id_buruh,
-          lahan: id_hasil_panen,
+          tanggal_setoran: id_hasil_panen,
           berat: String(berat_kg),
           volume: String(volume_liter),
           upah: String(upah_rp),
@@ -48,7 +48,7 @@ export const tableAdapter = (payloads: any) => {
         },
         delete: {
           id,
-          nama: lahan,
+          nama: tanggal_setoran,
         },
       },
     };

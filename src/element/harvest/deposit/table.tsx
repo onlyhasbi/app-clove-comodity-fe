@@ -1,5 +1,5 @@
 import Table from '../../../components/table';
-import { Box, Center, HStack, Text } from '@chakra-ui/react';
+import { Box, Button, Center, HStack, Text } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTableSetoran } from './types';
@@ -77,7 +77,9 @@ const TableSetoran = ({
       id: 'status_bayar',
       header: () => <Box>Status Bayar</Box>,
       cell: ({ getValue }) => (
-        <Box textAlign="center">{getValue() ? 'Belum' : 'Lunas'}</Box>
+        <Box textAlign="center">
+          {getValue() ? 'Lunas' : <Button variant="primary">Bayar</Button>}
+        </Box>
       ),
     }),
     columnHelper.accessor('action', {
