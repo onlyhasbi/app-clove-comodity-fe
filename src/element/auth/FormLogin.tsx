@@ -68,7 +68,7 @@ function SignInForm({ onSignIn, isLoading }: Props) {
           <FormLabel color={'gray.600'}>Sandi</FormLabel>
           <InputGroup>
             <Input
-              type={show ? 'text' : 'sandi'}
+              type={show ? 'text' : 'password'}
               color={'gray.600'}
               placeholder="Kata sandi"
               {...register('sandi')}
@@ -82,10 +82,7 @@ function SignInForm({ onSignIn, isLoading }: Props) {
                 _active={{
                   bg: 'none',
                 }}
-                onClick={() => {
-                  console.log('clicked', show);
-                  toggle();
-                }}
+                onClick={toggle}
                 icon={show ? <RiEyeFill /> : <RiEyeOffFill />}
               />
             </InputRightElement>

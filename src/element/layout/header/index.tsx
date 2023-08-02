@@ -10,17 +10,26 @@ import {
   Stack,
   Divider,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
+import { deleteToken } from '../../../hooks/useAuth.hook';
 
 const routes = [
   { path: 'profile', label: 'Profil' },
   { path: 'offer', label: 'Penawaran' },
   { path: 'work', label: 'Pekerjaan' },
-  { path: '/', label: 'Keluar' },
 ];
 
 const Header = () => {
+  const location = useLocation().pathname;
+  const navigate = useNavigate();
+  const path = location === '/' ? 'home' : location.replace('/', '');
+
+  const handleLogOut = () => {
+    deleteToken(import.meta.env.VITE_TOKEN_NAME);
+    navigate('/', { replace: true });
+  };
+
   return (
     <Flex
       w="full"
@@ -47,11 +56,14 @@ const Header = () => {
         <PopoverContent w="10rem" paddingY={2} _focus={{ boxShadow: 'none' }}>
           <PopoverBody>
             <VStack gap={2}>
-              {routes.map((item, index) => {
+              {routes.map((item) => {
                 return (
                   <React.Fragment key={item.label}>
                     <Text
-                      _hover={{ color: 'brand.100' }}
+                      _hover={{
+                        color: `${path !== item.path ? 'brand.100' : ''}`,
+                      }}
+                      color={path === item.path ? 'brand.100' : ''}
                       w="full"
                       paddingLeft={5}
                     >
@@ -59,10 +71,18 @@ const Header = () => {
                         {item.label}
                       </Link>
                     </Text>
-                    {index !== routes.length - 1 && <Divider />}
+                    <Divider />
                   </React.Fragment>
                 );
               })}
+              <Text
+                _hover={{ color: 'brand.100' }}
+                w="full"
+                paddingLeft={5}
+                onClick={handleLogOut}
+              >
+                Keluar
+              </Text>
             </VStack>
           </PopoverBody>
         </PopoverContent>
