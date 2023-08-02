@@ -15,7 +15,10 @@ function SignIn() {
   }, []);
 
   const onError = useCallback((error: any) => {
-    toast.error(error);
+    const errorMessage =
+      error?.response?.data?.statusCode == 400 &&
+      'Nomor telepon dan sandi salah';
+    if (errorMessage) toast.error(errorMessage);
   }, []);
 
   const signIn = useAuth({ onSuccess, onError });
@@ -47,13 +50,17 @@ function SignIn() {
         </Box>
         <Wrap direction="row" justify="center" color="gray.600">
           <Text>Belum punya akun ?</Text>
-          <Text
+          <Box
             fontWeight="bold"
             cursor="pointer"
             _hover={{ color: 'brand.100' }}
           >
-            <Link to="/signup">Daftar</Link>
-          </Text>
+            {signIn.isLoading ? (
+              <Text>Daftar</Text>
+            ) : (
+              <Link to="/signup">Daftar</Link>
+            )}
+          </Box>
         </Wrap>
       </Box>
     </Container>
