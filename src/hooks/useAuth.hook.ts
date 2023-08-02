@@ -1,4 +1,4 @@
-import http from '../api';
+import http, { setAuthToken } from '../api';
 import { SignInPayload } from '../element/auth/FormLogin';
 import { url } from '../utils/config/url';
 import { useMutation } from '@tanstack/react-query';
@@ -16,9 +16,9 @@ export const useAuth = ({ onSuccess, onError }: Props) =>
     onError,
   });
 
-export const isAuthenticated = (name:string) =>{
-  return Boolean(getToken(name))
-}
+export const isAuthenticated = (name: string) => {
+  return Boolean(getToken(name));
+};
 
 export function setToken(name: string, token: string) {
   if (!name && !token) throw new Error('No token provided');
@@ -33,7 +33,9 @@ export function deleteToken(name: string) {
 
 export function getToken(name: string) {
   if (!name) return null;
-  return localStorage.getItem(name) || null;
+  const token = localStorage.getItem(name) || null;
+  if (token) setAuthToken(token);
+  return token;
 }
 
 export function verifyToken() {

@@ -38,7 +38,6 @@ function SignInForm({ onSignIn, isLoading }: Props) {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({ defaultValues, resolver: zodResolver(schema) });
 
@@ -46,7 +45,6 @@ function SignInForm({ onSignIn, isLoading }: Props) {
 
   const onSubmit = (payload: FieldValues) => {
     onSignIn(payload as SignInPayload);
-    reset();
   };
 
   return (

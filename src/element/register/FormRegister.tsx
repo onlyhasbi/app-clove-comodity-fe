@@ -31,115 +31,97 @@ function SignUpForm() {
           Cepat dan mudah.
         </Text>
       </Box>
-      <Wrap spacing={3} width="full" p={4} pt={2} mx="auto">
+      <Wrap spacing={3} mx="auto">
         <form>
-          <Grid templateColumns="repeat(2,1fr)" gap={6}>
-            <Grid gap={3}>
-              <GridItem>
-                <FormControl>
-                  <Input type="text" placeholder="Nama" />
-                </FormControl>
-              </GridItem>
-              <GridItem>
-                <FormControl>
-                  <Input type="tel" placeholder="Nomor telepon" />
-                </FormControl>
-              </GridItem>
-              <GridItem>
-                <FormControl>
-                  <Input type="password" placeholder="Kata sandi" />
-                </FormControl>
-              </GridItem>
-              <GridItem>
-                <FormControl>
-                  <Text fontSize="sm" mb={2} color="gray.500">
-                    Tanggal lahir
-                  </Text>
-                  <Flex gap={4} width="full">
-                    <Select placeholder="Tanggal">
-                      {numberOfDate.map((date, i) => (
-                        <option key={i} value={date}>
-                          {date}
-                        </option>
-                      ))}
-                    </Select>
-                    <Select placeholder="Bulan">
-                      {months.map((month, i) => (
-                        <option key={i} value={month.toLowerCase()}>
-                          {month}
-                        </option>
-                      ))}
-                    </Select>
-                    <Select placeholder="Tahun">
-                      {numberOfYear.map((year, i) => (
-                        <option key={i} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </Select>
-                  </Flex>
-                </FormControl>
-              </GridItem>
-              <GridItem>
-                <FormControl>
-                  <Text fontSize="sm" mb={2} color="gray.500">
-                    Jenis kelamin
-                  </Text>
-                  <RadioGroup value={checked} onChange={setChecked}>
-                    <Stack direction="row">
-                      <Radio value="male">Male</Radio>
-                      <Radio value="female">Female</Radio>
-                    </Stack>
-                  </RadioGroup>
-                </FormControl>
-              </GridItem>
-            </Grid>
+          <Grid templateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }} gap={4}>
+            <FormControl>
+              <Input type="text" placeholder="Nama" />
+            </FormControl>
 
-            {/* grid right */}
-            <Grid gap={3}>
-              <GridItem>
-                <FormControl>
-                  <Textarea placeholder="Alamat" rows={4} />
-                </FormControl>
-              </GridItem>
-              <GridItem>
-                <FormControl>
-                  <Select placeholder="Jenis Pengguna">
-                    {['perorangan', 'UMKM/KLP.Tani', 'CV', 'PT'].map((item) => (
-                      <option key={item} value={item}>
-                        {item.toUpperCase()}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-              </GridItem>
+            <FormControl>
+              <Select placeholder="Jenis Pengguna">
+                {['perorangan', 'UMKM/KLP.Tani', 'CV', 'PT'].map((item) => (
+                  <option key={item} value={item}>
+                    {item.toUpperCase()}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
 
-              <GridItem>
-                <FormControl>
-                  <Select placeholder="Provinsi">
-                    {/* load from api provinsi */}
-                  </Select>
-                </FormControl>
-              </GridItem>
+            <FormControl>
+              <Text fontSize="sm" mb={2} color="gray.500">
+                Tanggal lahir
+              </Text>
+              <Flex gap={4} width="full">
+                <Select placeholder="Tanggal">
+                  {numberOfDate.map((date, i) => (
+                    <option key={i} value={date}>
+                      {date}
+                    </option>
+                  ))}
+                </Select>
+                <Select placeholder="Bulan">
+                  {months.map((month, i) => (
+                    <option key={i} value={month.toLowerCase()}>
+                      {month}
+                    </option>
+                  ))}
+                </Select>
+                <Select placeholder="Tahun">
+                  {numberOfYear.map((year, i) => (
+                    <option key={i} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </Select>
+              </Flex>
+            </FormControl>
 
-              <GridItem>
-                <FormControl>
-                  <Select placeholder="Kabupaten / Kota">
-                    {/* load from api kabupaten */}
-                  </Select>
-                </FormControl>
-              </GridItem>
-            </Grid>
+            <FormControl>
+              <Text fontSize="sm" mb={2} color="gray.500">
+                Jenis kelamin
+              </Text>
+              <RadioGroup value={checked} onChange={setChecked}>
+                <Stack direction="row">
+                  <Radio value="male">Male</Radio>
+                  <Radio value="female">Female</Radio>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
+
+            <FormControl>
+              <Select placeholder="Provinsi">
+                {/* load from api provinsi */}
+              </Select>
+            </FormControl>
+
+            <FormControl>
+              <Select placeholder="Kabupaten / Kota">
+                {/* load from api kabupaten */}
+              </Select>
+            </FormControl>
+            <FormControl>
+              <Input type="tel" placeholder="Nomor telepon" />
+            </FormControl>
+
+            <FormControl>
+              <Input type="password" placeholder="Kata sandi" />
+            </FormControl>
+
+            <GridItem colSpan={2}>
+              <FormControl>
+                <Textarea placeholder="Alamat" rows={3} />
+              </FormControl>
+            </GridItem>
           </Grid>
-          <Flex marginY={6} justifyContent="space-between">
+          <Flex marginY={3} justifyContent="space-between">
             <Checkbox value="setuju" defaultChecked={true}>
               saya setuju dengan ketentuan yang berlaku
             </Checkbox>
             <Button
               type="submit"
               display="block"
-              bg="brand.100"
-              color="white"
+              colorScheme="green"
               width="10em"
             >
               Submit
