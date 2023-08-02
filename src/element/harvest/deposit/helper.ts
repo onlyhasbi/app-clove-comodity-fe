@@ -25,7 +25,7 @@ export const tableAdapter = (payloads: any) => {
 
     return {
       id_buruh,
-      tanggal_panen:waktu_hasil_panen,
+      tanggal_panen: dayjs(waktu_hasil_panen).format('DD MMMM YYYY'),
       berat: berat_kg,
       volume: volume_liter,
       upah: upah_rp,

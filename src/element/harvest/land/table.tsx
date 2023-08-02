@@ -96,20 +96,34 @@ const TableLahan = ({
       id: 'action',
       header: () => <Center>Aksi</Center>,
       cell: ({ getValue }) => {
+        const {
+          delete: { hasil_panen },
+        } = getValue();
+        const isDisabled = Number(hasil_panen) > 0;
+
         return (
-          <HStack gap={3} justify="center">
+          <HStack justify="center" gap={3}>
             <Box
-              title="ubah"
+              as="button"
               cursor="pointer"
-              _hover={{ color: 'brand.100' }}
+              title="Klik untuk mengubah data lahan"
+              _hover={{ color: 'blue.600' }}
               onClick={() => handleUpdate(getValue().update)}
             >
               <Edit height={15} width={15} />
             </Box>
+
             <Box
-              title="hapus"
+              as="button"
+              disabled={isDisabled}
+              title={`${
+                isDisabled
+                  ? 'Data lahan tidak dapat dihapus'
+                  : 'Klik untuk menghapus data lahan'
+              }`}
               cursor="pointer"
-              _hover={{ color: 'brand.100' }}
+              color={`${isDisabled ? 'gray.500' : ''}`}
+              _hover={{ color: `${!isDisabled ? 'red.600' : ''}` }}
               onClick={() => handleDelete(getValue().delete)}
             >
               <Trash2 height={15} width={15} />

@@ -15,7 +15,11 @@ export type TSchemaUpdateLahan = TSchemaLahan & {
   id: string;
   hasil_panen: string;
 };
-export type TSchemaDeleteLahan = { id: string; nama: string };
+export type TSchemaDeleteLahan = {
+  id: string;
+  nama: string;
+  hasil_panen: string;
+};
 
 export const defaultValues = {
   nama: '',
