@@ -132,15 +132,19 @@ const FormSetoran = ({
           <Controller
             control={control}
             name="berat"
-            render={({ field: { ref, ...restField } }) => (
-              <NumberInput placeholder="Berat" defaultValue={0} {...restField}>
-                <NumberInputField
-                  id="berat"
-                  ref={ref}
-                  name={restField.name}
-                  disabled={isLoading}
-                />
-              </NumberInput>
+            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                id="berat"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
             )}
           />
           <FormErrorMessage>
@@ -155,15 +159,19 @@ const FormSetoran = ({
           <Controller
             control={control}
             name="volume"
-            render={({ field: { ref, ...restField } }) => (
-              <NumberInput placeholder="Volume" defaultValue={0} {...restField}>
-                <NumberInputField
-                  id="volume"
-                  ref={ref}
-                  name={restField.name}
-                  disabled={isLoading}
-                />
-              </NumberInput>
+            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                id="volume"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
             )}
           />
           <FormErrorMessage>

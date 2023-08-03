@@ -4,7 +4,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTableHasil } from './types';
 import { TSchemaDeleteHasil, TSchemaUpdateHasil } from './schema';
-import { formatValue } from '../../../utils';
+import { NumericFormat } from 'react-number-format';
 
 type Props = {
   data: any[];
@@ -28,13 +28,31 @@ const TableHasil = ({
     }),
     columnHelper.accessor('berat', {
       id: 'berat',
-      header: () => <Center>Berat</Center>,
-      cell: ({ getValue }) => <Center>{formatValue(getValue(), 'Kg')}</Center>,
+      header: () => <Center>Berat (Kg)</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('volume', {
       id: 'volume',
-      header: () => <Center>Volume</Center>,
-      cell: ({ getValue }) => <Center>{formatValue(getValue(), 'Ltr')}</Center>,
+      header: () => <Center>Volume (Ltr)</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('tanggal', {
       id: 'tanggal',

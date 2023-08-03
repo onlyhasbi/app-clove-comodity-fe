@@ -67,8 +67,8 @@ const Hasil = () => {
 
       const defaultPayload = {
         id_lahan: payload.lahan,
-        berat_pengukuran_kg: +payload.berat,
-        volume_pengukuran_liter: +payload.volume,
+        berat_pengukuran_kg: payload.berat.replace('.', ''),
+        volume_pengukuran_liter: payload.volume.replace('.', ''),
         waktu: formatDate,
         catatan: payload.catatan,
       };

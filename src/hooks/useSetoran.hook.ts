@@ -9,7 +9,7 @@ type PayloadSetoran = {
   id_buruh: string;
   volume_liter: string;
   berat_kg: string;
-  upah_rp: number;
+  upah_rp: string;
   waktu: string;
   catatan: string;
 };

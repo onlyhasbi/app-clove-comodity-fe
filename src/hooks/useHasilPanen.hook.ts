@@ -6,8 +6,8 @@ import { keys } from './helper';
 
 type PayloadHasil = {
   id_lahan: string;
-  berat_pengukuran_kg: number;
-  volume_pengukuran_liter: number;
+  berat_pengukuran_kg: string;
+  volume_pengukuran_liter: string;
   waktu: string;
   catatan: string;
 };

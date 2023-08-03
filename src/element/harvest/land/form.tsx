@@ -72,15 +72,13 @@ const FormLahan = ({
   }, [getKabupaten.isSuccess]);
 
   const onSubmit = (data: FieldValues) => {
-    const luas_lahan = data.luas_lahan.replace('.', '');
     if (initialValues) {
       handleSave({
         id: (initialValues as TSchemaUpdateLahan).id,
         ...data,
-        luas_lahan,
       } as TSchemaUpdateLahan);
     } else {
-      handleSave({ ...(data as TSchemaLahan), luas_lahan });
+      handleSave({ ...(data as TSchemaLahan)});
       reset();
     }
   };

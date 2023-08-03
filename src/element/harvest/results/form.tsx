@@ -9,6 +9,7 @@ import {
   Select,
   NumberInput,
   NumberInputField,
+  Input,
 } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -23,6 +24,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useGetLahan } from '../../../hooks/useLahan.hook';
 import { selectLahanAdapter } from './helper';
+import { NumericFormat } from 'react-number-format';
 
 type Props = {
   onClose: () => void;
@@ -109,19 +111,19 @@ const FormHasil = ({
             <Controller
               control={control}
               name="berat"
-              render={({ field: { ref, ...restField } }) => (
-                <NumberInput
-                  placeholder="Berat"
+              render={({ field: { onChange, onBlur, value, ref } }: any) => (
+                <Input
+                  getInputRef={ref}
+                  as={NumericFormat}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  id="berat"
                   defaultValue={0}
-                  {...restField}
-                >
-                  <NumberInputField
-                    id="berat"
-                    ref={ref}
-                    name={restField.name}
-                    disabled={isLoading}
-                  />
-                </NumberInput>
+                  decimalSeparator=","
+                  thousandSeparator="."
+                  disabled={isLoading}
+                />
               )}
             />
           </NumberInput>
@@ -137,15 +139,19 @@ const FormHasil = ({
           <Controller
             control={control}
             name="volume"
-            render={({ field: { ref, ...restField } }) => (
-              <NumberInput placeholder="Volume" defaultValue={0} {...restField}>
-                <NumberInputField
-                  id="volume"
-                  ref={ref}
-                  name={restField.name}
-                  disabled={isLoading}
-                />
-              </NumberInput>
+            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                id="volume"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
             )}
           />
           <FormErrorMessage>

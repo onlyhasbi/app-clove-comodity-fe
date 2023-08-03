@@ -1,10 +1,9 @@
 import Table from '../../../components/table';
-import { Box, Button, Center, HStack, Text } from '@chakra-ui/react';
+import { Box, Button, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTableSetoran } from './types';
 import { TSchemaDeleteSetoran, TSchemaUpdateSetoran } from './schema';
-import { formatValue } from '../../../utils';
 import { NumericFormat } from 'react-number-format';
 
 type Props = {
@@ -34,23 +33,40 @@ const TableSetoran = ({
     }),
     columnHelper.accessor('berat', {
       id: 'berat',
-      header: () => <Center>Berat</Center>,
-      cell: ({ getValue }) => <Center>{formatValue(getValue(), 'Kg')}</Center>,
+      header: () => <Center>Berat (Kg)</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('volume', {
       id: 'volume',
-      header: () => <Center>Volume</Center>,
-      cell: ({ getValue }) => <Center>{formatValue(getValue(), 'Ltr')}</Center>,
+      header: () => <Center>Volume (Ltr)</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('upah', {
       id: 'upah',
       header: () => <Center>Upah</Center>,
       cell: ({ getValue }) => (
-        <Center w="5rem" overflow="hidden">
-          <Text
-            as={NumericFormat}
+        <Center>
+          <NumericFormat
             value={getValue()}
-            textAlign="center"
+            displayType="text"
             decimalSeparator=","
             thousandSeparator="."
           />

@@ -43,7 +43,6 @@ const TableLahan = ({
       header: () => <Center>Kabupaten</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {' '}
           <Kabupaten value={getValue()} />
         </Center>
       ),
@@ -65,11 +64,10 @@ const TableLahan = ({
         </Center>
       ),
       cell: ({ getValue }) => (
-        <Center w="5rem" overflow="hidden">
-          <Text
-            as={NumericFormat}
+        <Center>
+          <NumericFormat
+            displayType="text"
             value={getValue() || 0}
-            textAlign="center"
             decimalSeparator=","
             thousandSeparator="."
           />
@@ -80,11 +78,10 @@ const TableLahan = ({
       id: 'hasil_panen',
       header: () => <Center>Panen (Kg)</Center>,
       cell: ({ getValue }) => (
-        <Center w="5rem" overflow="hidden">
-          <Text
-            as={NumericFormat}
+        <Center>
+          <NumericFormat
+            displayType="text"
             value={getValue() || 0}
-            textAlign="center"
             decimalSeparator=","
             thousandSeparator="."
           />
