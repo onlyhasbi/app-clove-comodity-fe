@@ -8,7 +8,6 @@ import {
   HStack,
   Select,
   NumberInput,
-  NumberInputField,
   Input,
 } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';

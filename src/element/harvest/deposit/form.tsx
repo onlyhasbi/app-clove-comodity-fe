@@ -8,8 +8,6 @@ import {
   Button,
   Grid,
   HStack,
-  NumberInput,
-  NumberInputField,
   GridItem,
 } from '@chakra-ui/react';
 
