@@ -11,12 +11,7 @@ import {
   GridItem,
 } from '@chakra-ui/react';
 
-import {
-  useForm,
-  FieldValues,
-  Controller,
-  ControllerProps,
-} from 'react-hook-form';
+import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
   TSchemaSetoran,
   TSchemaUpdateSetoran,

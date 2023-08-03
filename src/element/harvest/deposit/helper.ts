@@ -1,5 +1,35 @@
 import dayjs from 'dayjs';
 
+// export type TableAdapterSetoran = {
+//   id_buruh: string;
+//   tanggal_panen: string;
+//   berat: number;
+//   volume: number;
+//   upah: number;
+//   tanggal: string;
+//   komplaint: string;
+//   status_bayar: string;
+//   catatan: string;
+//   action: {
+//     update: {
+//       id: number;
+//       id_buruh: string;
+//       tanggal_panen: string;
+//       berat: string;
+//       volume: string;
+//       upah: string;
+//       tanggal: dayjs.Dayjs;
+//       komplaint: string;
+//       status_bayar: string;
+//       catatan: string;
+//     };
+//     delete: {
+//       id: number;
+//       nama: string;
+//     };
+//   };
+// };
+
 export const tableAdapter = (payloads: GetDeposit[]) => {
   return payloads.map((payload: GetDeposit) => {
     const {

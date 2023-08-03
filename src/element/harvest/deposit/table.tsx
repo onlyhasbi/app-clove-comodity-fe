@@ -5,12 +5,13 @@ import { Edit, Trash2 } from 'lucide-react';
 import { TTableSetoran } from './types';
 import { TSchemaDeleteSetoran, TSchemaUpdateSetoran } from './schema';
 import { NumericFormat } from 'react-number-format';
+import { TableAdapterSetoran } from './helper';
 
 type Props = {
   onDelete: (data: TSchemaDeleteSetoran) => void;
   onUpdate: (data: TSchemaUpdateSetoran) => void;
   isLoading?: boolean;
-  data: GetDeposit[];
+  data: any[];
 };
 
 const TableSetoran = ({
