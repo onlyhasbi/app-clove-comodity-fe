@@ -56,7 +56,7 @@ const TabelBuruh = () => {
       id: 'action',
       header: () => <Box>Aksi</Box>,
       cell: () => (
-        <Center _hover={{ color: 'brand.100' }} cursor="pointer" title="terima">
+        <Center _hover={{ color: 'green.600' }} cursor="pointer" title="terima">
           <Check height={20} width={20} />
         </Center>
       ),
@@ -73,7 +73,7 @@ const TabelBuruh = () => {
           fontWeight={700}
           letterSpacing="-0.01rem"
           textAlign="left"
-          color="brand.100"
+          color="green.600"
         >
           Buruh
         </Text>

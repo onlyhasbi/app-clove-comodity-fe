@@ -44,7 +44,7 @@ const Sidebar = () => {
                 <Icon
                   width={16}
                   height={16}
-                  color={isSelected ? '#548c31' : '#334155'}
+                  color={isSelected ? '#2F855A' : '#334155'}
                 />
                 <Link to={item.path}>
                   <Text color={isSelected ? '#64748B' : '#334155'}>

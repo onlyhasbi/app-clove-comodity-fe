@@ -53,7 +53,7 @@ const Pekerjaan = () => {
             fontWeight={700}
             letterSpacing="-0.01rem"
             textAlign="left"
-            color="brand.100"
+            color="green.600"
           >
             Dapatkan Buruh
           </Text>

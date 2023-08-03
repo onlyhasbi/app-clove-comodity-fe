@@ -53,7 +53,7 @@ const Penawaran = () => {
             fontWeight={700}
             letterSpacing="-0.01rem"
             textAlign="left"
-            color="brand.100"
+            color="green.600"
           >
             Penawaran Komoditas
           </Text>

@@ -56,7 +56,7 @@ const TabelTim = ({
             <Box
               title="ubah"
               cursor="pointer"
-              _hover={{ color: 'brand.100' }}
+              _hover={{ color: 'green.600' }}
               onClick={() => handleUpdate(getValue().update)}
             >
               <Edit height={15} width={15} />
@@ -64,7 +64,7 @@ const TabelTim = ({
             <Box
               title="hapus"
               cursor="pointer"
-              _hover={{ color: 'brand.100' }}
+              _hover={{ color: 'green.600' }}
               onClick={() => handleDelete(getValue().delete)}
             >
               <Trash2 height={15} width={15} />

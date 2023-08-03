@@ -26,7 +26,7 @@ const Profile = () => {
           fontWeight={700}
           letterSpacing="-0.01rem"
           textAlign="left"
-          color="brand.100"
+          color="green.600"
         >
           Lengkapi Profilmu
         </Text>

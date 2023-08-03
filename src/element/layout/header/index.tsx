@@ -59,7 +59,7 @@ const Header = () => {
                 )}
               </Text>
             )}
-            <Circle size={{ lg: 25, base: 75 }} bg="brand.100">
+            <Circle size={{ lg: 25, base: 75 }} bg="green.600">
               <Text fontSize={16} fontWeight="bold" color="white">
                 G
               </Text>
@@ -74,9 +74,9 @@ const Header = () => {
                   <React.Fragment key={item.label}>
                     <Text
                       _hover={{
-                        color: `${path !== item.path ? 'brand.100' : ''}`,
+                        color: `${path !== item.path ? 'green.600' : ''}`,
                       }}
-                      color={path === item.path ? 'brand.100' : ''}
+                      color={path === item.path ? 'green.600' : ''}
                       w="full"
                       paddingLeft={5}
                     >
@@ -89,7 +89,7 @@ const Header = () => {
                 );
               })}
               <Text
-                _hover={{ color: 'brand.100' }}
+                _hover={{ color: 'green.600' }}
                 w="full"
                 paddingLeft={5}
                 onClick={handleLogOut}

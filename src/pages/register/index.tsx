@@ -12,7 +12,7 @@ function SignUp() {
           <Text
             fontWeight="bold"
             cursor="pointer"
-            _hover={{ color: 'brand.100' }}
+            _hover={{ color: 'green.600' }}
           >
             <Link to="/signin">Masuk</Link>
           </Text>
