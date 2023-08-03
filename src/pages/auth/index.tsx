@@ -11,13 +11,15 @@ function SignIn() {
   const isAuthSuccess = isAuthenticated(import.meta.env.VITE_TOKEN_NAME);
 
   const onSuccess = useCallback((data: any) => {
-    setToken(import.meta.env.VITE_TOKEN_NAME, data?.data?.data?.accessToken);
+    const token = data?.data?.data?.accessToken;
+    setToken(import.meta.env.VITE_TOKEN_NAME, token);
   }, []);
 
   const onError = useCallback((error: any) => {
     const errorMessage =
-      error?.response?.data?.statusCode == 400 &&
-      'Nomor telepon dan sandi salah';
+      error?.response?.data?.statusCode == 400
+        ? 'Nomor telepon dan sandi salah'
+        : error?.response?.data?.message;
     if (errorMessage) toast.error(errorMessage);
   }, []);
 
@@ -50,11 +52,7 @@ function SignIn() {
         </Box>
         <Wrap direction="row" justify="center" color="gray.600">
           <Text>Belum punya akun ?</Text>
-          <Box
-            fontWeight="bold"
-            cursor="pointer"
-            _hover={{ color: 'brand.100' }}
-          >
+          <Box fontWeight="bold" cursor="pointer" _hover={{ color: 'green.600' }}>
             {signIn.isLoading ? (
               <Text>Daftar</Text>
             ) : (

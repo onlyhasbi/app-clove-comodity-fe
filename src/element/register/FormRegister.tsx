@@ -2,27 +2,69 @@ import {
   Box,
   Flex,
   FormControl,
+  FormErrorMessage,
+  InputRightElement,
+  InputGroup,
+  FormLabel,
   Input,
-  Radio,
-  Select,
-  RadioGroup,
-  Stack,
-  Text,
-  Wrap,
   Textarea,
   Grid,
   GridItem,
   Button,
   Checkbox,
+  Text,
+  Select,
+  IconButton,
 } from '@chakra-ui/react';
-import { numberOfDate, months, numberOfYear } from '../../model/date.model';
-import { useState } from 'react';
+import { useReducer } from 'react';
+import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
+import { TSchemaRegister, defaultValues, schemaRegister } from './schema';
+import { useForm, FieldValues } from 'react-hook-form';
+import { useProvinsi, useKabupaten } from '../../hooks/useLocation.hook';
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { usePostProfile } from '../../hooks/useProfile.hook';
+import { useNavigate } from 'react-router-dom';
 
 function SignUpForm() {
-  const [checked, setChecked] = useState('');
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<TSchemaRegister>({
+    defaultValues,
+    resolver: zodResolver(schemaRegister),
+  });
+  const [show, toggle] = useReducer((prev) => !prev, false);
+  const navigate = useNavigate();
+
+  const onSuccess = () => {
+    navigate('/signin', { replace: true });
+  };
+
+  const profile = usePostProfile({ onSuccess });
+
+  const getProvinsi = useProvinsi();
+  const getKabupaten = useKabupaten(watch('provinsi').trim());
+
+  const provinsi = getProvinsi.data?.data?.data?.lokasi?.sub_lokasi ?? [];
+  const kabupaten = getKabupaten?.data?.data?.data?.lokasi?.sub_lokasi ?? [];
+
+  const onSubmit = (payload: FieldValues) => {
+    const defaultPayload = {
+      nomor_telpon: payload.telepon,
+      jenis_pengguna: payload.jenis_pengguna,
+      nama: payload.nama,
+      sandi: payload.sandi,
+      alamat: payload.kabupaten,
+    };
+
+    profile.mutate(defaultPayload);
+  };
 
   return (
-    <Wrap width="2xl" color="gray.700">
+    <Box color="gray.700">
       <Box width="full" padding={4} pt={2}>
         <Text fontSize="3xl" fontWeight="bold">
           Daftar
@@ -31,105 +73,146 @@ function SignUpForm() {
           Cepat dan mudah.
         </Text>
       </Box>
-      <Wrap spacing={3} mx="auto">
-        <form>
-          <Grid templateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }} gap={4}>
-            <FormControl>
-              <Input type="text" placeholder="Nama" />
-            </FormControl>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid
+          templateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }}
+          padding={4}
+          gap={4}
+        >
+          <FormControl isInvalid={Boolean(errors.nama)}>
+            <FormLabel fontSize="sm" htmlFor="nama">
+              Nama
+            </FormLabel>
+            <Input id="nama" placeholder="Nama" {...register('nama')} />
+            <FormErrorMessage>
+              {errors.nama && errors.nama.message}
+            </FormErrorMessage>
+          </FormControl>
 
-            <FormControl>
-              <Select placeholder="Jenis Pengguna">
-                {['perorangan', 'UMKM/KLP.Tani', 'CV', 'PT'].map((item) => (
-                  <option key={item} value={item}>
-                    {item.toUpperCase()}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
+          <FormControl isInvalid={Boolean(errors.jenis_pengguna)}>
+            <FormLabel fontSize="sm" htmlFor="jenis_pengguna">
+              Jenis Pengguna
+            </FormLabel>
 
-            <FormControl>
-              <Text fontSize="sm" mb={2} color="gray.500">
-                Tanggal lahir
-              </Text>
-              <Flex gap={4} width="full">
-                <Select placeholder="Tanggal">
-                  {numberOfDate.map((date, i) => (
-                    <option key={i} value={date}>
-                      {date}
-                    </option>
-                  ))}
-                </Select>
-                <Select placeholder="Bulan">
-                  {months.map((month, i) => (
-                    <option key={i} value={month.toLowerCase()}>
-                      {month}
-                    </option>
-                  ))}
-                </Select>
-                <Select placeholder="Tahun">
-                  {numberOfYear.map((year, i) => (
-                    <option key={i} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </Select>
-              </Flex>
-            </FormControl>
-
-            <FormControl>
-              <Text fontSize="sm" mb={2} color="gray.500">
-                Jenis kelamin
-              </Text>
-              <RadioGroup value={checked} onChange={setChecked}>
-                <Stack direction="row">
-                  <Radio value="male">Male</Radio>
-                  <Radio value="female">Female</Radio>
-                </Stack>
-              </RadioGroup>
-            </FormControl>
-
-            <FormControl>
-              <Select placeholder="Provinsi">
-                {/* load from api provinsi */}
-              </Select>
-            </FormControl>
-
-            <FormControl>
-              <Select placeholder="Kabupaten / Kota">
-                {/* load from api kabupaten */}
-              </Select>
-            </FormControl>
-            <FormControl>
-              <Input type="tel" placeholder="Nomor telepon" />
-            </FormControl>
-
-            <FormControl>
-              <Input type="password" placeholder="Kata sandi" />
-            </FormControl>
-
-            <GridItem colSpan={2}>
-              <FormControl>
-                <Textarea placeholder="Alamat" rows={3} />
-              </FormControl>
-            </GridItem>
-          </Grid>
-          <Flex marginY={3} justifyContent="space-between">
-            <Checkbox value="setuju" defaultChecked={true}>
-              saya setuju dengan ketentuan yang berlaku
-            </Checkbox>
-            <Button
-              type="submit"
-              display="block"
-              colorScheme="green"
-              width="10em"
+            <Select
+              id="jenis_pengguna"
+              placeholder="Pilih Jenis Pengguna"
+              {...register('jenis_pengguna')}
             >
-              Submit
-            </Button>
-          </Flex>
-        </form>
-      </Wrap>
-    </Wrap>
+              {JENIS_PENGGUNA.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
+
+            <FormErrorMessage>
+              {errors.jenis_pengguna && errors.jenis_pengguna.message}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={Boolean(errors.provinsi)}>
+            <FormLabel fontSize="sm" htmlFor="provinsi">
+              Provinsi
+            </FormLabel>
+            <Select
+              id="provinsi"
+              placeholder="Pilih Provinsi"
+              {...register('provinsi')}
+            >
+              {provinsi.map((provinsi: any) => {
+                return (
+                  <option key={provinsi.id_lokasi} value={provinsi.id_lokasi}>
+                    {provinsi.nama_lokasi}
+                  </option>
+                );
+              })}
+            </Select>
+            <FormErrorMessage>
+              {errors.provinsi && errors.provinsi.message}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={Boolean(errors.kabupaten)}>
+            <FormLabel fontSize="sm" htmlFor="kabupaten">
+              Kabupaten
+            </FormLabel>
+            <Select
+              id="kabupaten"
+              placeholder="Pilih Kabupaten"
+              {...register('kabupaten')}
+            >
+              {kabupaten.map((kabupaten: any) => (
+                <option key={kabupaten.id_lokasi} value={kabupaten.id_lokasi}>
+                  {kabupaten.nama_lokasi}
+                </option>
+              ))}
+            </Select>
+            <FormErrorMessage>
+              {errors.kabupaten && errors.kabupaten.message}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={Boolean(errors.telepon)}>
+            <FormLabel fontSize="sm" htmlFor="telepon">
+              Telepon
+            </FormLabel>
+            <Input
+              id="telepon"
+              placeholder="Telepon"
+              {...register('telepon')}
+            />
+            <FormErrorMessage>
+              {errors.telepon && errors.telepon.message}
+            </FormErrorMessage>
+          </FormControl>
+
+          <FormControl isInvalid={Boolean(errors.sandi)}>
+            <FormLabel color={'gray.600'}>Sandi</FormLabel>
+            <InputGroup>
+              <Input
+                type={show ? 'text' : 'password'}
+                color={'gray.600'}
+                placeholder="Kata sandi"
+                {...register('sandi')}
+              />
+              <InputRightElement>
+                <IconButton
+                  aria-label="sandi toggle"
+                  color="gray.600"
+                  variant="ghost"
+                  _hover={{ bg: 'none' }}
+                  _active={{
+                    bg: 'none',
+                  }}
+                  onClick={toggle}
+                  icon={show ? <RiEyeFill /> : <RiEyeOffFill />}
+                />
+              </InputRightElement>
+            </InputGroup>
+            <FormErrorMessage>
+              {errors.sandi && errors.sandi.message}
+            </FormErrorMessage>
+          </FormControl>
+        </Grid>
+        <Flex padding={4} justifyContent="space-between">
+          <Checkbox value="setuju" defaultChecked={true}>
+            <Text as="h4" fontSize="sm">
+              saya setuju dengan ketentuan yang berlaku
+            </Text>
+          </Checkbox>
+          <Button
+            type="submit"
+            colorScheme="green"
+            isLoading={profile.isLoading}
+            loadingText="Daftar..."
+            spinnerPlacement="start"
+          >
+            Daftar
+          </Button>
+        </Flex>
+      </form>
+    </Box>
   );
 }
 

@@ -2,6 +2,7 @@ import http, { setAuthToken } from '../api';
 import { SignInPayload } from '../element/auth/FormLogin';
 import { url } from '../utils/config/url';
 import { useMutation } from '@tanstack/react-query';
+import jwt_decode from 'jwt-decode';
 
 type Props = {
   onSuccess: (data: any) => void;
@@ -33,8 +34,10 @@ export function deleteToken(name: string) {
 
 export function getToken(name: string) {
   if (!name) return null;
+
   const token = localStorage.getItem(name) || null;
   if (token) setAuthToken(token);
+
   return token;
 }
 

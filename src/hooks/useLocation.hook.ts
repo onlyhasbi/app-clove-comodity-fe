@@ -1,6 +1,6 @@
 import http from '../api';
-import { useQuery } from '@tanstack/react-query';
 import { url } from '../utils/config/url';
+import { useQuery } from '@tanstack/react-query';
 import { keys } from './helper';
 
 type ResponseLokasi = {

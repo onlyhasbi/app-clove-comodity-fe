@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function SignUp() {
   return (
-    <Center w="full" h="100vh">
+    <Center w="full" minH="100vh" paddingY={{ lg: '2rem', base: '5rem' }}>
       <Stack direction="column">
         <SignUpForm />
         <Wrap direction="row" justify="center" color="gray.600">

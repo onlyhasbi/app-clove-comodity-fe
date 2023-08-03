@@ -9,10 +9,13 @@ import {
   VStack,
   Stack,
   Divider,
+  SkeletonText,
 } from '@chakra-ui/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import React from 'react';
 import { deleteToken } from '../../../hooks/useAuth.hook';
+import { useGetProfile } from '../../../hooks/useProfile.hook';
+import React from 'react';
+import { capitalize } from '../../../utils';
 
 const routes = [
   { path: 'profile', label: 'Profil' },
@@ -30,6 +33,8 @@ const Header = () => {
     navigate('/', { replace: true });
   };
 
+  const profile = useGetProfile();
+
   return (
     <Flex
       w="full"
@@ -45,7 +50,15 @@ const Header = () => {
             alignItems={{ base: 'center' }}
             gap={4}
           >
-            <Text order={{ lg: '0', base: '1' }}>User Guest</Text>
+            {profile.isLoading ? (
+              <SkeletonText w="5rem" noOfLines={1} skeletonHeight="2" />
+            ) : (
+              <Text order={{ lg: '0', base: '1' }}>
+                {capitalize(
+                  profile.isSuccess && profile?.data?.data?.data?.user?.nama
+                )}
+              </Text>
+            )}
             <Circle size={{ lg: 25, base: 75 }} bg="brand.100">
               <Text fontSize={16} fontWeight="bold" color="white">
                 G

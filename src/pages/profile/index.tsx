@@ -1,8 +1,15 @@
 import { Stack, Box, Text } from '@chakra-ui/react';
 import ProfileForm from '../../element/profile/form';
 import SocialMedia from '../../element/profile/social-media';
+import { useGetProfile } from '../../hooks/useProfile.hook';
 
 const Profile = () => {
+  const getProfile = useGetProfile();
+
+  const handleSave = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <Stack
       direction="column"
@@ -35,7 +42,12 @@ const Profile = () => {
         </Text>
       </Box>
 
-      <ProfileForm />
+      <ProfileForm
+        onSave={handleSave}
+        initialValues={
+          getProfile.isSuccess ? getProfile?.data?.data?.data?.user : []
+        }
+      />
       <SocialMedia />
     </Stack>
   );

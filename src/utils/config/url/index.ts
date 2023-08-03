@@ -5,6 +5,10 @@ export const url = {
     key: 'auth',
     dev: `${BASE_URL}/authentication-acc`,
   },
+  profile: {
+    key: 'profile',
+    dev: `${BASE_URL}/user-acc`,
+  },
   provinsi: {
     key: 'provinsi',
     dev: `${BASE_URL}/lokasi/all-provinsi`,
