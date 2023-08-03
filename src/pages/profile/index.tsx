@@ -1,13 +1,21 @@
-import { Stack, Box, Text } from '@chakra-ui/react';
+import { Stack, Box, Text, SkeletonText } from '@chakra-ui/react';
 import ProfileForm from '../../element/profile/form';
 import SocialMedia from '../../element/profile/social-media';
-import { useGetProfile } from '../../hooks/useProfile.hook';
+import { useGetProfile, useUpdateProfile } from '../../hooks/useProfile.hook';
 
 const Profile = () => {
   const getProfile = useGetProfile();
+  const updateProfile = useUpdateProfile();
 
-  const handleSave = (data: any) => {
-    console.log(data);
+  const handleSave = (payload: PayloadProps) => {
+    const defaultPayload = {
+      id: payload.id,
+      jenis_pengguna: payload.jenis_pengguna,
+      nomor_telpon: payload.telepon,
+      nama: payload.nama,
+      alamat: payload.kabupaten,
+    };
+    updateProfile.mutate(defaultPayload);
   };
 
   return (
@@ -42,12 +50,17 @@ const Profile = () => {
         </Text>
       </Box>
 
-      <ProfileForm
-        onSave={handleSave}
-        initialValues={
-          getProfile.isSuccess ? getProfile?.data?.data?.data?.user : []
-        }
-      />
+      {getProfile.isLoading ? (
+        <SkeletonText spacing={6} noOfLines={8} skeletonHeight={3} />
+      ) : (
+        <ProfileForm
+          onSave={handleSave}
+          isLoading={updateProfile.isLoading}
+          initialValues={
+            getProfile.isSuccess ? getProfile?.data?.data?.data?.user : []
+          }
+        />
+      )}
       <SocialMedia />
     </Stack>
   );

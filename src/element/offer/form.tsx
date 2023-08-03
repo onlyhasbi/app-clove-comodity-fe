@@ -9,20 +9,32 @@ import {
   HStack,
 } from '@chakra-ui/react';
 
-import { useForm, FieldValues } from 'react-hook-form';
-import { defaultValues, schemaPenawaran } from './schema';
+import { useForm, FieldValues, Controller } from 'react-hook-form';
+import {
+  TSchemaPenawaran,
+  TSchemaUpdatePenawaran,
+  defaultValues,
+  schemaPenawaran,
+} from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { TUpdate } from './types';
+import { NumericFormat } from 'react-number-format';
 
 type Props = {
   initialValues: TUpdate | undefined | boolean;
   onReset: () => void;
+  onSave: (payload: TSchemaPenawaran | TSchemaUpdatePenawaran) => void;
 };
 
-const FormPenawaran = ({ onReset: handleReset, initialValues }: Props) => {
+const FormPenawaran = ({
+  onReset: handleReset,
+  onSave,
+  initialValues,
+}: Props) => {
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit,
     setValue,
@@ -53,9 +65,9 @@ const FormPenawaran = ({ onReset: handleReset, initialValues }: Props) => {
 
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
-      console.log('update', data);
+      onSave({ id: initialValues.id, ...(data as TSchemaPenawaran) });
     } else {
-      console.log('add', data);
+      onSave(data as TSchemaPenawaran);
     }
   };
 
@@ -117,7 +129,24 @@ const FormPenawaran = ({ onReset: handleReset, initialValues }: Props) => {
           <FormLabel fontSize="sm" htmlFor="harga">
             Harga
           </FormLabel>
-          <Input id="harga" placeholder="Harga" {...register('harga')} />
+          <Controller
+            control={control}
+            name="harga"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                id="harga"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={false}
+              />
+            )}
+          />
           <FormErrorMessage>
             {errors.harga && errors.harga.message}
           </FormErrorMessage>
@@ -126,10 +155,23 @@ const FormPenawaran = ({ onReset: handleReset, initialValues }: Props) => {
           <FormLabel fontSize="sm" htmlFor="berat_min">
             Berat Min.
           </FormLabel>
-          <Input
-            id="berat_min"
-            placeholder="Berat Minimal"
-            {...register('berat_min')}
+          <Controller
+            control={control}
+            name="berat_min"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                id="berat_min"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={false}
+              />
+            )}
           />
           <FormErrorMessage>
             {errors.berat_min && errors.berat_min.message}
@@ -139,10 +181,23 @@ const FormPenawaran = ({ onReset: handleReset, initialValues }: Props) => {
           <FormLabel fontSize="sm" htmlFor="berat_max">
             Berat Maks.
           </FormLabel>
-          <Input
-            id="berat_max"
-            placeholder="Berat Maksimal"
-            {...register('berat_max')}
+          <Controller
+            control={control}
+            name="berat_max"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                id="berat_max"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={false}
+              />
+            )}
           />
           <FormErrorMessage>
             {errors.berat_max && errors.berat_max.message}

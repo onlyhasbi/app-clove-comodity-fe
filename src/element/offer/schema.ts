@@ -16,12 +16,13 @@ export const schemaPenawaran = z.object({
 });
 
 export type TSchemaPenawaran = z.infer<typeof schemaPenawaran>;
+export type TSchemaUpdatePenawaran = TSchemaPenawaran & { id: string };
 
 export const defaultValues = {
   jenis_penawaran: '',
   komoditas: '',
   satuan: '',
-  harga: '',
-  berat_min: '',
-  berat_max: '',
+  harga: '0',
+  berat_min: '0',
+  berat_max: '0',
 };

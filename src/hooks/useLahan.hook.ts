@@ -32,10 +32,7 @@ export const useUpdateLahan = () =>
 export const useDeleteLahan = () =>
   useMutation({
     mutationFn: (id: string) =>
-      http.delete(`${url.lahan.dev}/${id}`).then((data) => {
-        console.log(data);
-        return data;
-      }),
+      http.delete(`${url.lahan.dev}/${id}`).then((data) => data),
     onSuccess: () => toast.success(`Lahan berhasil dihapus`),
   });
 

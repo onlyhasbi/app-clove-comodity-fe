@@ -69,9 +69,9 @@ const Setoran = () => {
       const defaultPayload = {
         id_hasil_panen: payload.tanggal_panen,
         id_buruh: payload.id_buruh,
-        volume_liter: payload.volume.replace('.', ''),
-        berat_kg: payload.berat.replace('.', ''),
-        upah_rp: payload.upah.replace('.', ''),
+        volume_liter: payload.volume,
+        berat_kg: payload.berat,
+        upah_rp: payload.upah,
         waktu: dayjs(payload.tanggal).format('YYYY/MM/DD'),
         catatan: payload.catatan,
       };

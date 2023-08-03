@@ -2,18 +2,7 @@ import http from '../api';
 import { url } from '../utils/config/url';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { keys } from './helper';
-
-type PayloadProfile = {
-  nomor_telpon: string;
-  jenis_pengguna: string;
-  nama: string;
-  sandi: string;
-  alamat: string;
-};
-
-type payloadUpdateProfile = PayloadProfile & {
-  id: string;
-};
+import { toast } from 'react-hot-toast';
 
 export function useGetProfile() {
   return useQuery({
@@ -28,13 +17,14 @@ type Props = {
 
 export const usePostProfile = ({ onSuccess }: Props) =>
   useMutation({
-    mutationFn: (payload: PayloadProfile) =>
+    mutationFn: (payload: PayloadRegisterProfile) =>
       http.post(url.profile.dev, payload).then((data) => data),
     onSuccess,
   });
 
 export const useUpdateProfile = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: payloadUpdateProfile) =>
+    mutationFn: ({ id, ...restPayload }: initialProfileProps) =>
       http.put(`${url.profile.dev}/${id}`, restPayload).then((data) => data),
+    onSuccess: () => toast.success('Profile berhasil diperbarui'),
   });

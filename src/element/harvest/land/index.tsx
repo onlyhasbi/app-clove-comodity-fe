@@ -65,7 +65,7 @@ const Lahan = () => {
       const defaultPayload = {
         nama: payload.nama,
         lokasi: payload.kabupaten,
-        luas_m2: payload.luas_lahan.replace('.', ''),
+        luas_m2: payload.luas_lahan,
         status_hak_panen: payload.status_lahan,
       };
 

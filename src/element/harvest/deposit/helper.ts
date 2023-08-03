@@ -1,14 +1,7 @@
 import dayjs from 'dayjs';
 
-export const selectLahanAdapter = (data: any) => {
-  return data?.map((item: any) => ({
-    label: item.waktu,
-    value: item.id,
-  }));
-};
-
-export const tableAdapter = (payloads: any) => {
-  return payloads.map((payload: any) => {
+export const tableAdapter = (payloads: GetDeposit[]) => {
+  return payloads.map((payload: GetDeposit) => {
     const {
       id,
       id_buruh,
@@ -53,4 +46,11 @@ export const tableAdapter = (payloads: any) => {
       },
     };
   });
+};
+
+export const selectLahanAdapter = (data: GetResult[]) => {
+  return data?.map((item: GetResult) => ({
+    label: item.waktu,
+    value: item.id,
+  }));
 };

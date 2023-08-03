@@ -118,7 +118,7 @@ function SignUpForm() {
               placeholder="Pilih Provinsi"
               {...register('provinsi')}
             >
-              {provinsi.map((provinsi: any) => {
+              {provinsi.map((provinsi: LocationProps) => {
                 return (
                   <option key={provinsi.id_lokasi} value={provinsi.id_lokasi}>
                     {provinsi.nama_lokasi}
@@ -140,7 +140,7 @@ function SignUpForm() {
               placeholder="Pilih Kabupaten"
               {...register('kabupaten')}
             >
-              {kabupaten.map((kabupaten: any) => (
+              {kabupaten.map((kabupaten: LocationProps) => (
                 <option key={kabupaten.id_lokasi} value={kabupaten.id_lokasi}>
                   {kabupaten.nama_lokasi}
                 </option>

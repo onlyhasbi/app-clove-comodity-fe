@@ -32,6 +32,20 @@ const Penawaran = () => {
     []
   );
 
+  const handleSave = (payload: any) => {
+    const defaultPayload = {
+      jenis_penawaran: payload.jenis_penawaran,
+      jenis_komoditas: payload.komoditas,
+      max: payload.berat_max.replace('.', ''),
+      min: payload.berat_min.replace('.', ''),
+      satuan: payload.satuan,
+      harga_rp: payload.harga.replace('.', ''),
+      catatan: '-',
+    };
+
+    console.log(defaultPayload);
+  };
+
   const handleReset = useCallback(() => setAction(null), []);
 
   const cancelRef = useRef(null);
@@ -68,7 +82,11 @@ const Penawaran = () => {
             Tingkatkan profit dengan menawarkan komoditasmu
           </Text>
         </Box>
-        <FormPenawaran onReset={handleReset} initialValues={action?.update} />
+        <FormPenawaran
+          onSave={handleSave}
+          onReset={handleReset}
+          initialValues={action?.update}
+        />
         <Box marginTop={6}>
           <TabelPenawaran
             onUpdate={handleUpdate}

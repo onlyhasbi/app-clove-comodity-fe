@@ -11,7 +11,12 @@ import {
   GridItem,
 } from '@chakra-ui/react';
 
-import { useForm, FieldValues, Controller } from 'react-hook-form';
+import {
+  useForm,
+  FieldValues,
+  Controller,
+  ControllerProps,
+} from 'react-hook-form';
 import {
   TSchemaSetoran,
   TSchemaUpdateSetoran,
@@ -20,7 +25,7 @@ import {
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { NumericFormat } from 'react-number-format';
+import { NumberFormatValues, NumericFormat } from 'react-number-format';
 import { selectLahanAdapter } from './helper';
 import { useGetHasil } from '../../../hooks/useHasilPanen.hook';
 import ReactDatePicker from 'react-datepicker';
@@ -110,7 +115,7 @@ const FormSetoran = ({
             {...register('tanggal_panen')}
             disabled={isLoading}
           >
-            {hasil?.map((item: any) => {
+            {hasil?.map((item: OptionProps) => {
               return (
                 <option key={item.value} value={item.value}>
                   {item.label}
@@ -130,11 +135,13 @@ const FormSetoran = ({
           <Controller
             control={control}
             name="berat"
-            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+            render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
                 as={NumericFormat}
-                onChange={onChange}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
                 onBlur={onBlur}
                 value={value}
                 id="berat"
@@ -157,11 +164,13 @@ const FormSetoran = ({
           <Controller
             control={control}
             name="volume"
-            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+            render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
                 as={NumericFormat}
-                onChange={onChange}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
                 onBlur={onBlur}
                 value={value}
                 id="volume"
@@ -184,11 +193,13 @@ const FormSetoran = ({
           <Controller
             control={control}
             name="upah"
-            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+            render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
                 as={NumericFormat}
-                onChange={onChange}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
                 onBlur={onBlur}
                 value={value}
                 id="upah"
@@ -211,7 +222,7 @@ const FormSetoran = ({
           <Controller
             control={control}
             name="tanggal"
-            render={({ field: { onChange, value, onBlur } }: any) => (
+            render={({ field: { onChange, value, onBlur } }) => (
               <ReactDatePicker
                 onChange={onChange}
                 onBlur={onBlur}

@@ -21,7 +21,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useProvinsi, useKabupaten } from '../../../hooks/useLocation.hook';
 import { STATUS_LAHAN } from '../../../model/status-lahan.model';
-import { NumericFormat } from 'react-number-format';
+import { NumberFormatValues, NumericFormat } from 'react-number-format';
 
 type Props = {
   onClose: () => void;
@@ -78,7 +78,7 @@ const FormLahan = ({
         ...data,
       } as TSchemaUpdateLahan);
     } else {
-      handleSave({ ...(data as TSchemaLahan)});
+      handleSave({ ...(data as TSchemaLahan) });
       reset();
     }
   };
@@ -111,7 +111,7 @@ const FormLahan = ({
             {...register('provinsi')}
             disabled={isLoading}
           >
-            {provinsi.map((provinsi: any) => {
+            {provinsi.map((provinsi: LocationProps) => {
               return (
                 <option key={provinsi.id_lokasi} value={provinsi.id_lokasi}>
                   {provinsi.nama_lokasi}
@@ -134,7 +134,7 @@ const FormLahan = ({
             {...register('kabupaten')}
             disabled={isLoading}
           >
-            {kabupaten.map((kabupaten: any) => (
+            {kabupaten.map((kabupaten: LocationProps) => (
               <option key={kabupaten.id_lokasi} value={kabupaten.id_lokasi}>
                 {kabupaten.nama_lokasi}
               </option>
@@ -156,7 +156,7 @@ const FormLahan = ({
             {...register('status_lahan')}
             disabled={isLoading}
           >
-            {STATUS_LAHAN.map((lahan) => (
+            {STATUS_LAHAN.map((lahan:OptionProps) => (
               <option key={lahan.value} value={lahan.value}>
                 {lahan.label}
               </option>
@@ -175,11 +175,13 @@ const FormLahan = ({
           <Controller
             control={control}
             name="luas_lahan"
-            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+            render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
                 as={NumericFormat}
-                onChange={onChange}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
                 onBlur={onBlur}
                 value={value}
                 id="luas_lahan"

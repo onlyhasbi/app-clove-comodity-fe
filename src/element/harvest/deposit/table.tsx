@@ -10,7 +10,7 @@ type Props = {
   onDelete: (data: TSchemaDeleteSetoran) => void;
   onUpdate: (data: TSchemaUpdateSetoran) => void;
   isLoading?: boolean;
-  data: any[];
+  data: GetDeposit[];
 };
 
 const TableSetoran = ({

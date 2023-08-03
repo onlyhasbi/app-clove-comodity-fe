@@ -23,7 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useGetLahan } from '../../../hooks/useLahan.hook';
 import { selectLahanAdapter } from './helper';
-import { NumericFormat } from 'react-number-format';
+import { NumberFormatValues, NumericFormat } from 'react-number-format';
 
 type Props = {
   onClose: () => void;
@@ -89,7 +89,7 @@ const FormHasil = ({
             {...register('lahan')}
             disabled={isLoading}
           >
-            {lahan?.map((item: any) => {
+            {lahan?.map((item) => {
               return (
                 <option key={item.value} value={item.value}>
                   {item.label}
@@ -106,26 +106,26 @@ const FormHasil = ({
           <FormLabel fontSize="sm" htmlFor="berat">
             Berat (Kg)
           </FormLabel>
-          <NumberInput placeholder="Berat" defaultValue={0}>
-            <Controller
-              control={control}
-              name="berat"
-              render={({ field: { onChange, onBlur, value, ref } }: any) => (
-                <Input
-                  getInputRef={ref}
-                  as={NumericFormat}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  id="berat"
-                  defaultValue={0}
-                  decimalSeparator=","
-                  thousandSeparator="."
-                  disabled={isLoading}
-                />
-              )}
-            />
-          </NumberInput>
+          <Controller
+            control={control}
+            name="berat"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
+                onBlur={onBlur}
+                value={value}
+                id="berat"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
+            )}
+          />
           <FormErrorMessage>
             {errors.berat && errors.berat.message}
           </FormErrorMessage>
@@ -138,11 +138,13 @@ const FormHasil = ({
           <Controller
             control={control}
             name="volume"
-            render={({ field: { onChange, onBlur, value, ref } }: any) => (
+            render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
                 as={NumericFormat}
-                onChange={onChange}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
                 onBlur={onBlur}
                 value={value}
                 id="volume"

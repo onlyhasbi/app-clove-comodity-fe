@@ -7,7 +7,7 @@ import { TSchemaDeleteHasil, TSchemaUpdateHasil } from './schema';
 import { NumericFormat } from 'react-number-format';
 
 type Props = {
-  data: any[];
+  data: GetResult[];
   isLoading?: boolean;
   onDelete: (data: TSchemaDeleteHasil) => void;
   onUpdate: (data: TSchemaUpdateHasil) => void;

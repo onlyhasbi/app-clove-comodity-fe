@@ -10,7 +10,7 @@ import { TSchemaDeleteLahan, TSchemaUpdateLahan } from './schema';
 import { NumericFormat } from 'react-number-format';
 
 type Props = {
-  data: any[];
+  data: GetLahan[];
   isLoading?: boolean;
   onDelete: (data: TSchemaDeleteLahan) => void;
   onUpdate: (data: TSchemaUpdateLahan) => void;

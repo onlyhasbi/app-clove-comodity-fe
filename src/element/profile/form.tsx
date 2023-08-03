@@ -23,11 +23,12 @@ import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
 import { getProvince } from '../../utils';
 
 type Props = {
-  initialValues: any;
+  initialValues: initialProfileProps;
+  isLoading: boolean;
   onSave: (payload: TSchemaUpdateProfile) => void;
 };
 
-const ProfileForm = ({ initialValues, onSave }: Props) => {
+const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
   const {
     register,
     formState: { errors },
@@ -113,7 +114,7 @@ const ProfileForm = ({ initialValues, onSave }: Props) => {
             placeholder="Pilih Provinsi"
             {...register('provinsi')}
           >
-            {provinsi.map((provinsi: any) => {
+            {provinsi.map((provinsi: LocationProps) => {
               return (
                 <option key={provinsi.id_lokasi} value={provinsi.id_lokasi}>
                   {provinsi.nama_lokasi}
@@ -135,7 +136,7 @@ const ProfileForm = ({ initialValues, onSave }: Props) => {
             placeholder="Pilih Kabupaten"
             {...register('kabupaten')}
           >
-            {kabupaten.map((kabupaten: any) => (
+            {kabupaten.map((kabupaten: LocationProps) => (
               <option key={kabupaten.id_lokasi} value={kabupaten.id_lokasi}>
                 {kabupaten.nama_lokasi}
               </option>
@@ -165,7 +166,7 @@ const ProfileForm = ({ initialValues, onSave }: Props) => {
       <Button
         type="submit"
         colorScheme="green"
-        isLoading={false}
+        isLoading={isLoading}
         loadingText="Menyimpan..."
         spinnerPlacement="start"
         marginTop={6}
