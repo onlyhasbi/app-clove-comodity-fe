@@ -1,7 +1,6 @@
 import http from '../api';
 import { url } from '../utils/config/url';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
 import { keys } from './helper';
 
 type PayloadProfile = {

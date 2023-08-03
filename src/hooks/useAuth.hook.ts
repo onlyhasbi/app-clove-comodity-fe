@@ -2,7 +2,6 @@ import http, { setAuthToken } from '../api';
 import { SignInPayload } from '../element/auth/FormLogin';
 import { url } from '../utils/config/url';
 import { useMutation } from '@tanstack/react-query';
-import jwt_decode from 'jwt-decode';
 
 type Props = {
   onSuccess: (data: any) => void;
