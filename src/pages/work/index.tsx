@@ -121,7 +121,7 @@ const Pekerjaan = () => {
           </Text>
         </Box>
         <FormPekerjaan
-          isLoading={postWork.isLoading || updateWork}
+          isLoading={postWork.isLoading || updateWork.isLoading}
           onSave={handleSave}
           onReset={handleReset}
           initialValues={action?.update}
