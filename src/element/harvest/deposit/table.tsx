@@ -7,10 +7,10 @@ import { TSchemaDeleteSetoran, TSchemaUpdateSetoran } from './schema';
 import { NumericFormat } from 'react-number-format';
 
 type Props = {
-  onDelete: (data: TSchemaDeleteSetoran) => void;
-  onUpdate: (data: TSchemaUpdateSetoran) => void;
   isLoading?: boolean;
   data: any[];
+  onDelete: (data: TSchemaDeleteSetoran) => void;
+  onUpdate: (data: TSchemaUpdateSetoran) => void;
 };
 
 const TableSetoran = ({

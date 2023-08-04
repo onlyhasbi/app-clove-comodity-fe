@@ -22,21 +22,21 @@ export const usePostOffer = () =>
   useMutation({
     mutationFn: (payload: PayloadOffer) =>
       http.post(url.penawaran.dev, payload).then((data) => data),
-    onSuccess: () => toast.success('Offer baru berhasil disimpan'),
+    onSuccess: () => toast.success('Penawaran baru berhasil disimpan'),
   });
 
 export const useUpdateOffer = () =>
   useMutation({
     mutationFn: ({ id, ...restPayload }: payloadUpdateOffer) =>
       http.put(`${url.penawaran.dev}/${id}`, restPayload).then((data) => data),
-    onSuccess: () => toast.success('Offer berhasil diperbarui'),
+    onSuccess: () => toast.success('Penawaran berhasil diperbarui'),
   });
 
 export const useDeleteOffer = () =>
   useMutation({
     mutationFn: (id: string) =>
       http.delete(`${url.penawaran.dev}/${id}`).then((data) => data),
-    onSuccess: () => toast.success(`Offer berhasil dihapus`),
+    onSuccess: () => toast.success(`Penawaran berhasil dihapus`),
   });
 
 export const useGetOffer = () =>

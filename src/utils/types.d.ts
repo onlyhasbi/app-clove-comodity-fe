@@ -127,3 +127,26 @@ type GetPekerjaan = {
 
 // pembelian
 
+type GetPembelian = {
+  id: string;
+  id_penjual: string;
+  jenis_komditas_cengkeh: string;
+  berat_kg: number;
+  harga_rp: number;
+  waktu: string;
+  catatan: string;
+  verifikasi_non_author: boolean;
+};
+
+// penjualan
+
+type GetPenjualan = {
+  id: string;
+  id_pembeli: string;
+  jenis_komditas_cengkeh: string;
+  berat_kg: number;
+  harga_rp: number;
+  waktu: string;
+  catatan: string;
+  verifikasi_non_author: boolean;
+};

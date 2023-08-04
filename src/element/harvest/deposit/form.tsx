@@ -219,6 +219,7 @@ const FormSetoran = ({
             name="tanggal"
             render={({ field: { onChange, value, onBlur } }) => (
               <ReactDatePicker
+                readOnly={isLoading}
                 onChange={onChange}
                 onBlur={onBlur}
                 selected={value}

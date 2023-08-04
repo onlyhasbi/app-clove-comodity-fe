@@ -53,7 +53,7 @@ const Penawaran = () => {
   const updateOffer = useUpdateOffer();
   const getOffer = useGetOffer();
 
-  const handleSave = (payload: any) => {
+  const handleSave = useCallback((payload: any) => {
     const defaultPayload = {
       jenis_penawaran: payload.jenis_penawaran,
       jenis_komoditas: payload.komoditas,
@@ -68,7 +68,7 @@ const Penawaran = () => {
     } else {
       postOffer.mutate(defaultPayload);
     }
-  };
+  }, []);
 
   const handleDelete = useCallback(
     (id: string) => {

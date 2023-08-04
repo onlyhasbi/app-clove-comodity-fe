@@ -15,15 +15,22 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import FormPenjualan from './form';
 import TabelPenjualan from './table';
-import { TDelete, TUpdate } from './types';
+import {
+  usePostPenjualan,
+  useGetPenjualan,
+  useUpdatePenjualan,
+  useDeletePenjualan,
+} from '../../../hooks/useSell.hook';
+import { TSchemaDeletePenjualan, TSchemaUpdatePenjualan } from './schema';
+import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TSchemaUpdatePenjualan;
+  delete?: TSchemaDeletePenjualan;
 };
 
 const Penjualan = () => {
@@ -33,16 +40,66 @@ const Penjualan = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TSchemaUpdatePenjualan) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TSchemaDeletePenjualan) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
   const cancelRef = useRef(null);
+
+  const postPenjualan = usePostPenjualan();
+  const updatePenjualan = useUpdatePenjualan();
+  const deletePenjualan = useDeletePenjualan();
+  const getPenjualan = useGetPenjualan();
+
+  const handleSave = useCallback((payload: any) => {
+    const defaultPayload = {
+      id_pembeli: payload.id_pembeli,
+      jenis_komditas_cengkeh: payload.jenis_komoditas,
+      berat_kg: payload.berat_kg,
+      harga_rp: payload.harga_rp,
+      waktu: payload.tanggal,
+      catatan: payload.catatan,
+    };
+
+    if ('id' in payload) {
+      updatePenjualan.mutate({ id: payload.id, ...defaultPayload });
+    } else {
+      postPenjualan.mutate(defaultPayload);
+    }
+  }, []);
+
+  const handleDelete = useCallback(() => {
+    if (action?.delete?.id) {
+      deletePenjualan.mutate((action?.delete as TSchemaDeletePenjualan)?.id);
+    }
+  }, [action?.delete?.id]);
+
+  useEffect(() => {
+    if (
+      postPenjualan.isSuccess ||
+      updatePenjualan.isSuccess ||
+      deletePenjualan.isSuccess
+    ) {
+      getPenjualan.refetch();
+    }
+  }, [
+    postPenjualan.isSuccess,
+    deletePenjualan.isSuccess,
+    updatePenjualan.isSuccess,
+  ]);
+
+  useEffect(() => {
+    if (updatePenjualan.isSuccess || deletePenjualan.isSuccess) {
+      handleReset();
+    }
+  }, [deletePenjualan.isSuccess, updatePenjualan.isSuccess, handleReset]);
 
   return (
     <>
@@ -53,6 +110,12 @@ const Penjualan = () => {
           </Button>
         </Box>
         <TabelPenjualan
+          data={
+            getPenjualan.isSuccess
+              ? tableAdapter(getPenjualan?.data?.data?.data?.penjualan)
+              : []
+          }
+          isLoading={getPenjualan.isLoading}
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -70,6 +133,8 @@ const Penjualan = () => {
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
             <FormPenjualan
+              isLoading={postPenjualan.isLoading || updatePenjualan.isLoading}
+              onSave={handleSave}
               initialValues={action?.update}
               onClose={handleReset}
             />
@@ -84,7 +149,7 @@ const Penjualan = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.id}`}
+              Delete Penjualan
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -96,11 +161,11 @@ const Penjualan = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deletePenjualan.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={handleDelete}
                 ml={3}
               >
                 Delete

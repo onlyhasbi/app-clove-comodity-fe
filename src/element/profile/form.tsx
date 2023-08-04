@@ -139,7 +139,7 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
           </FormErrorMessage>
         </FormControl>
 
-        <GridItem colSpan={2}>
+        <GridItem colSpan={{ lg: 2, base: 1 }}>
           <FormControl isInvalid={Boolean(errors.telepon)}>
             <FormLabel fontSize="sm" htmlFor="telepon">
               Telepon

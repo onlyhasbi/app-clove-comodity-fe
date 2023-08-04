@@ -15,15 +15,22 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import FormPembelian from './form';
 import TabelPembelian from './table';
-import { TDelete, TUpdate } from './types';
+import {
+  usePostPembelian,
+  useGetPembelian,
+  useUpdatePembelian,
+  useDeletePembelian,
+} from '../../../hooks/useBuy.hook';
+import { TSchemaDeletePembelian, TSchemaUpdatePembelian } from './schema';
+import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TSchemaUpdatePembelian;
+  delete?: TSchemaDeletePembelian;
 };
 
 const Pembelian = () => {
@@ -33,17 +40,67 @@ const Pembelian = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TSchemaUpdatePembelian) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TSchemaDeletePembelian) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
   const cancelRef = useRef(null);
+
+  const postPembelian = usePostPembelian();
+  const updatePembelian = useUpdatePembelian();
+  const deletePembelian = useDeletePembelian();
+  const getPembelian = useGetPembelian();
+
+  const handleSave = useCallback((payload: any) => {
+    const defaultPayload = {
+      id_penjual: payload.id_penjual,
+      jenis_komditas_cengkeh: payload.jenis_komoditas,
+      berat_kg: payload.berat_kg,
+      harga_rp: payload.harga_rp,
+      waktu: payload.tanggal,
+      catatan: payload.catatan,
+    };
+
+    if ('id' in payload) {
+      updatePembelian.mutate({ id: payload.id, ...defaultPayload });
+    } else {
+      postPembelian.mutate(defaultPayload);
+    }
+  }, []);
+
+  const handleDelete = useCallback(() => {
+    if (action?.delete?.id) {
+      deletePembelian.mutate((action?.delete as TSchemaDeletePembelian)?.id);
+    }
+  }, [action?.delete?.id]);
+
+  useEffect(() => {
+    if (
+      postPembelian.isSuccess ||
+      updatePembelian.isSuccess ||
+      deletePembelian.isSuccess
+    ) {
+      getPembelian.refetch();
+    }
+  }, [
+    postPembelian.isSuccess,
+    deletePembelian.isSuccess,
+    updatePembelian.isSuccess,
+  ]);
+
+  useEffect(() => {
+    if (updatePembelian.isSuccess || deletePembelian.isSuccess) {
+      handleReset();
+    }
+  }, [deletePembelian.isSuccess, updatePembelian.isSuccess, handleReset]);
 
   return (
     <>
@@ -54,6 +111,12 @@ const Pembelian = () => {
           </Button>
         </Box>
         <TabelPembelian
+          data={
+            getPembelian.isSuccess
+              ? tableAdapter(getPembelian?.data?.data?.data?.pembelian)
+              : []
+          }
+          isLoading={getPembelian.isLoading}
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -71,6 +134,8 @@ const Pembelian = () => {
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
             <FormPembelian
+              isLoading={postPembelian.isLoading || updatePembelian.isLoading}
+              onSave={handleSave}
               initialValues={action?.update}
               onClose={handleReset}
             />
@@ -86,7 +151,7 @@ const Pembelian = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.id}`}
+              Delete Pembelian
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -98,11 +163,11 @@ const Pembelian = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deletePembelian.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={handleDelete}
                 ml={3}
               >
                 Delete

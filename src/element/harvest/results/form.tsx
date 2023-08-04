@@ -168,6 +168,7 @@ const FormHasil = ({
             name="tanggal"
             render={({ field: { onChange, value, onBlur } }) => (
               <DatePicker
+                readOnly={isLoading}
                 onChange={onChange}
                 onBlur={onBlur}
                 selected={value}

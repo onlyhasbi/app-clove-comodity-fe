@@ -2,67 +2,72 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TDelete, TTablePembelian, TUpdate } from './types';
-
-const dummy = [
-  {
-    id: 'TRX-87634',
-    id_pembeli: 'XA-321',
-    jenis_komoditas: 'Cengkeh Basah',
-    berat_kg: '45Kg',
-    harga_rp: '35.000',
-    tanggal: '12/07/2023',
-    catatan: '-',
-    action: {
-      update: {
-        id: 'TRX-87634',
-        id_pembeli: 'XA-321',
-        jenis_komoditas: 'Cengkeh Basah',
-        berat_kg: '45Kg',
-        harga_rp: '35.000',
-        tanggal: '12/07/2023',
-        catatan: '-',
-      },
-      delete: { id: 'TRX-87634' },
-    },
-  },
-];
+import { TTablePembelian } from './types';
+import { TSchemaDeletePembelian, TSchemaUpdatePembelian } from './schema';
+import { NumericFormat } from 'react-number-format';
+import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
 
 type Props = {
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  isLoading?: boolean;
+  data: any[];
+  onDelete: (data: TSchemaDeletePembelian) => void;
+  onUpdate: (data: TSchemaUpdatePembelian) => void;
 };
 
 const TabelPembelian = ({
+  isLoading,
+  data,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
   const columnHelper = createColumnHelper<TTablePembelian>();
   const columns = [
-    columnHelper.accessor('id_pembeli', {
-      id: 'id_pembeli',
-      header: () => <Box>Id Pembeli</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    columnHelper.accessor('id_penjual', {
+      id: 'id_penjual',
+      header: () => <Center>Id Penjual</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
     columnHelper.accessor('jenis_komoditas', {
       id: 'jenis_komoditas',
-      header: () => <Box>Komoditas</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Komoditas</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          {JENIS_KOMODITAS?.find((item) => item.value === getValue())?.label}
+        </Center>
+      ),
     }),
     columnHelper.accessor('berat_kg', {
       id: 'berat',
-      header: () => <Box>Berat</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Berat (Kg)</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('harga_rp', {
       id: 'harga',
-      header: () => <Box>Harga</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Harga</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('tanggal', {
       id: 'tanggal',
-      header: () => <Box>Tanggal</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Tanggal</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
     columnHelper.accessor('catatan', {
       id: 'catatan',
@@ -78,7 +83,7 @@ const TabelPembelian = ({
             <Box
               title="ubah"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'blue.600' }}
               onClick={() => handleUpdate(getValue().update)}
             >
               <Edit height={15} width={15} />
@@ -86,7 +91,7 @@ const TabelPembelian = ({
             <Box
               title="hapus"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'red.600' }}
               onClick={() => handleDelete(getValue().delete)}
             >
               <Trash2 height={15} width={15} />
@@ -97,7 +102,7 @@ const TabelPembelian = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
 export default TabelPembelian;

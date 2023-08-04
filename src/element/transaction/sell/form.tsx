@@ -10,23 +10,39 @@ import {
   Select,
 } from '@chakra-ui/react';
 
-import { useForm, FieldValues } from 'react-hook-form';
-import { defaultValues, schemaPenjualan } from './schema';
+import { useForm, FieldValues, Controller } from 'react-hook-form';
+import {
+  TSchemaPenjualan,
+  TSchemaUpdatePenjualan,
+  defaultValues,
+  schemaPenjualan,
+} from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TUpdate } from './types';
 import { useEffect } from 'react';
+import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
+import { NumericFormat, NumberFormatValues } from 'react-number-format';
+import ReactDatePicker from 'react-datepicker';
 
 type Props = {
+  isLoading: boolean;
+  onSave: (payload: TSchemaPenjualan | TSchemaUpdatePenjualan) => void;
   onClose: () => void;
-  initialValues: TUpdate | undefined | boolean;
+  initialValues: TSchemaUpdatePenjualan | undefined | boolean;
 };
 
-const FormPenjualan = ({ onClose: handleCloseModal, initialValues }: Props) => {
+const FormPenjualan = ({
+  onClose: handleCloseModal,
+  isLoading,
+  onSave: handleSave,
+  initialValues,
+}: Props) => {
   const {
     register,
+    control,
     formState: { errors },
     handleSubmit,
     setValue,
+    reset,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaPenjualan),
@@ -35,7 +51,7 @@ const FormPenjualan = ({ onClose: handleCloseModal, initialValues }: Props) => {
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
       const {
-        id_penjual,
+        id_pembeli,
         jenis_komoditas,
         berat_kg,
         harga_rp,
@@ -43,38 +59,42 @@ const FormPenjualan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         catatan,
       } = initialValues;
 
-      setValue('id_penjual', id_penjual);
+      setValue('id_pembeli', id_pembeli);
       setValue('jenis_komoditas', jenis_komoditas);
       setValue('berat_kg', berat_kg);
       setValue('harga_rp', harga_rp);
-      setValue('tanggal', tanggal);
+      setValue('tanggal', new Date(tanggal));
       setValue('catatan', catatan);
     }
   }, []);
 
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
-      console.log('update', data);
-      handleCloseModal();
+      handleSave({
+        id: (initialValues as TSchemaUpdatePenjualan).id,
+        ...data,
+      } as TSchemaUpdatePenjualan);
     } else {
-      console.log('add', data);
+      handleSave(data as TSchemaPenjualan);
+      reset();
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
-        <FormControl isInvalid={Boolean(errors.id_penjual)}>
-          <FormLabel fontSize="sm" htmlFor="id_penjual">
-            ID Penjual
+        <FormControl isInvalid={Boolean(errors.id_pembeli)}>
+          <FormLabel fontSize="sm" htmlFor="id_pembeli">
+            ID Pembeli
           </FormLabel>
           <Input
-            id="id_penjual"
+            id="id_pembeli"
             placeholder="ID Penjual"
-            {...register('id_penjual')}
+            {...register('id_pembeli')}
+            disabled={isLoading}
           />
           <FormErrorMessage>
-            {errors.id_penjual && errors.id_penjual.message}
+            {errors.id_pembeli && errors.id_pembeli.message}
           </FormErrorMessage>
         </FormControl>
 
@@ -83,12 +103,16 @@ const FormPenjualan = ({ onClose: handleCloseModal, initialValues }: Props) => {
             Komoditas
           </FormLabel>
           <Select
-            id="tim"
+            id="jenis_komoditas"
             placeholder="Pilih Jenis Komoditas"
             {...register('jenis_komoditas')}
+            disabled={isLoading}
           >
-            <option value="Cengkeh Basah">Cengkeh basah</option>
-            <option value="Cengkeh Kering">Cengkeh kering</option>
+            {JENIS_KOMODITAS.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
           </Select>
           <FormErrorMessage>
             {errors.jenis_komoditas && errors.jenis_komoditas.message}
@@ -99,7 +123,26 @@ const FormPenjualan = ({ onClose: handleCloseModal, initialValues }: Props) => {
           <FormLabel fontSize="sm" htmlFor="berat_kg">
             Berat (Kg)
           </FormLabel>
-          <Input id="berat_kg" placeholder="Berat" {...register('berat_kg')} />
+          <Controller
+            control={control}
+            name="berat_kg"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                disabled={isLoading}
+                as={NumericFormat}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
+                onBlur={onBlur}
+                value={value}
+                id="berat_kg"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+              />
+            )}
+          />
           <FormErrorMessage>
             {errors.berat_kg && errors.berat_kg.message}
           </FormErrorMessage>
@@ -109,7 +152,26 @@ const FormPenjualan = ({ onClose: handleCloseModal, initialValues }: Props) => {
           <FormLabel fontSize="sm" htmlFor="harga_rp">
             Harga (Rp)
           </FormLabel>
-          <Input id="harga_rp" placeholder="Harga" {...register('harga_rp')} />
+          <Controller
+            control={control}
+            name="harga_rp"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                disabled={isLoading}
+                as={NumericFormat}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
+                onBlur={onBlur}
+                value={value}
+                id="harga_rp"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+              />
+            )}
+          />
           <FormErrorMessage>
             {errors.harga_rp && errors.harga_rp.message}
           </FormErrorMessage>
@@ -118,7 +180,20 @@ const FormPenjualan = ({ onClose: handleCloseModal, initialValues }: Props) => {
           <FormLabel fontSize="sm" htmlFor="tanggal">
             Tanggal
           </FormLabel>
-          <Input id="tanggal" placeholder="Tanggal" {...register('tanggal')} />
+          <Controller
+            control={control}
+            name="tanggal"
+            render={({ field: { onChange, value, onBlur } }) => (
+              <ReactDatePicker
+                onChange={onChange}
+                readOnly={isLoading}
+                onBlur={onBlur}
+                selected={value}
+                dateFormat="dd / MM / yyyy"
+                disabled={isLoading}
+              />
+            )}
+          />
           <FormErrorMessage>
             {errors.tanggal && errors.tanggal.message}
           </FormErrorMessage>
@@ -140,10 +215,21 @@ const FormPenjualan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button onClick={handleCloseModal} type="button" variant="ghost">
+        <Button
+          onClick={handleCloseModal}
+          type="button"
+          variant="ghost"
+          disabled={isLoading}
+        >
           Batal
         </Button>
-        <Button type="submit" variant="primary">
+        <Button
+          type="submit"
+          colorScheme="green"
+          isLoading={isLoading}
+          loadingText="Menyimpan..."
+          spinnerPlacement="start"
+        >
           {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>
