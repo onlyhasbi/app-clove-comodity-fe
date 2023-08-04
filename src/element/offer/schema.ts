@@ -17,6 +17,7 @@ export const schemaPenawaran = z.object({
 
 export type TSchemaPenawaran = z.infer<typeof schemaPenawaran>;
 export type TSchemaUpdatePenawaran = TSchemaPenawaran & { id: string };
+export type TSchemaDeletePenawaran = { id: string; nama: string };
 
 export const defaultValues = {
   jenis_penawaran: '',

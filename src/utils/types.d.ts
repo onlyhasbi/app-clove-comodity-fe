@@ -1,7 +1,6 @@
 // Profile
 
 type PayloadProps = {
-  id: string;
   nama: string;
   jenis_pengguna: string;
   kabupaten: string;
@@ -10,7 +9,6 @@ type PayloadProps = {
 };
 
 type initialProfileProps = {
-  id: string;
   nama: string;
   jenis_pengguna: string;
   alamat: string;
@@ -27,6 +25,18 @@ type PayloadRegisterProfile = {
 
 type PayloadUpdateProfile = PayloadProfile & {
   id: string;
+};
+
+// sosmed
+type initialSosmedProps = {
+  id: string;
+  jenis_kontak: string;
+  kontak: string;
+};
+
+type PayloadSosmed = {
+  jenis_kontak: string;
+  kontak: string;
 };
 
 // location
@@ -83,4 +93,17 @@ type GetDeposit = {
   status_pembayaran: boolean;
   kategori_konplaint: string | null;
   deskripsi_konplaint: string | null;
+};
+
+// penawaran
+type GetPenawaran = {
+  id: string;
+  jenis_penawaran: string;
+  jenis_komoditas: string;
+  max: number;
+  min: number;
+  satuan: string;
+  harga_rp: number;
+  catatan: string;
+  status_penawaran: boolean;
 };

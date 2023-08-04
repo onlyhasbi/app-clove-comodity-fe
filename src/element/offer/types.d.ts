@@ -1,11 +1,12 @@
-import { schemaPenawaran } from './schema';
-
-export type TUpdate = schemaPenawaran & { id: string };
-export type TDelete = { id: string };
+import {
+  schemaPenawaran,
+  TSchemaUpdatePenawaran,
+  TSchemaDeletePenawaran,
+} from './schema';
 
 type TActionTable = {
-  update: TUpdate;
-  delete: TDelete;
+  update: TSchemaUpdatePenawaran;
+  delete: TSchemaDeletePenawaran;
 };
 
 export type TTablePenawaran = schemaPenawaran & { action: TActionTable };

@@ -29,14 +29,14 @@ export const useUpdateSetoran = () =>
   useMutation({
     mutationFn: ({ id, ...restPayload }: payloadUpdateSetoran) =>
       http.put(`${url.setoran.dev}/${id}`, restPayload).then((data) => data),
-    onSuccess: () => toast.success('Setoran panen berhasil diperbarui'),
+    onSuccess: () => toast.success('Setoran berhasil diperbarui'),
   });
 
 export const useDeleteSetoran = () =>
   useMutation({
     mutationFn: (id: string) =>
       http.delete(`${url.setoran.dev}/${id}`).then((data) => data),
-    onSuccess: () => toast.success(`Setoran panen berhasil dihapus`),
+    onSuccess: () => toast.success(`Setoran berhasil dihapus`),
   });
 
 export const useGetSetoran = () =>

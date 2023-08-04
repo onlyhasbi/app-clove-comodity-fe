@@ -9,6 +9,7 @@ import Kabupaten from '../../../components/kabupaten';
 import { TSchemaDeleteLahan, TSchemaUpdateLahan } from './schema';
 import { NumericFormat } from 'react-number-format';
 
+
 type Props = {
   data: any[];
   isLoading?: boolean;

@@ -12,43 +12,82 @@ import {
   Text,
   Button,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
-import { TDelete, TUpdate } from '../../element/offer/types';
+import { useCallback, useRef, useState, useEffect } from 'react';
+import {
+  usePostOffer,
+  useGetOffer,
+  useUpdateOffer,
+  useDeleteOffer,
+} from '../../hooks/useOffer.hook';
+import { tableAdapter } from '../../element/offer/helper';
+import {
+  TSchemaDeletePenawaran,
+  TSchemaUpdatePenawaran,
+} from '@/element/offer/schema';
 
 type TAction = {
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TSchemaUpdatePenawaran;
+  delete?: TSchemaDeletePenawaran;
 };
 
 const Penawaran = () => {
   const [action, setAction] = useState<TAction | null>(null);
   const handleUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TSchemaUpdatePenawaran) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TSchemaDeletePenawaran) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
+
+  const handleReset = useCallback(() => setAction(null), []);
+
+  const cancelRef = useRef(null);
+
+  const postOffer = usePostOffer();
+  const deleteOffer = useDeleteOffer();
+  const updateOffer = useUpdateOffer();
+  const getOffer = useGetOffer();
 
   const handleSave = (payload: any) => {
     const defaultPayload = {
       jenis_penawaran: payload.jenis_penawaran,
       jenis_komoditas: payload.komoditas,
-      max: payload.berat_max.replace('.', ''),
-      min: payload.berat_min.replace('.', ''),
+      max: payload.berat_max,
+      min: payload.berat_min,
       satuan: payload.satuan,
-      harga_rp: payload.harga.replace('.', ''),
+      harga_rp: payload.harga,
       catatan: '-',
     };
-
-    console.log(defaultPayload);
+    if ('id' in payload) {
+      updateOffer.mutate({ id: payload.id, ...defaultPayload });
+    } else {
+      postOffer.mutate(defaultPayload);
+    }
   };
 
-  const handleReset = useCallback(() => setAction(null), []);
+  const handleDelete = useCallback(
+    (id: string) => {
+      if (action?.delete?.id) deleteOffer.mutate(id);
+    },
+    [action?.delete?.id]
+  );
 
-  const cancelRef = useRef(null);
+  useEffect(() => {
+    if (postOffer.isSuccess || updateOffer.isSuccess || deleteOffer.isSuccess) {
+      getOffer.refetch();
+    }
+  }, [postOffer.isSuccess, deleteOffer.isSuccess, updateOffer.isSuccess]);
+
+  useEffect(() => {
+    if (updateOffer.isSuccess || deleteOffer.isSuccess) {
+      handleReset();
+    }
+  }, [deleteOffer.isSuccess, updateOffer.isSuccess, handleReset]);
 
   return (
     <>
@@ -83,12 +122,19 @@ const Penawaran = () => {
           </Text>
         </Box>
         <FormPenawaran
+          isLoading={postOffer.isLoading || updateOffer.isLoading}
           onSave={handleSave}
           onReset={handleReset}
           initialValues={action?.update}
         />
         <Box marginTop={6}>
           <TabelPenawaran
+            data={
+              getOffer.isSuccess
+                ? tableAdapter(getOffer?.data?.data?.data?.lamaran)
+                : []
+            }
+            isLoading={getOffer.isLoading}
             onUpdate={handleUpdate}
             onDelete={handleOpenModalDelete}
           />
@@ -102,7 +148,7 @@ const Penawaran = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.id}`}
+              {`Delete ${(action?.delete as TSchemaDeletePenawaran)?.id}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -114,11 +160,13 @@ const Penawaran = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deleteOffer.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={() =>
+                  handleDelete((action?.delete as TSchemaDeletePenawaran)?.id)
+                }
                 ml={3}
               >
                 Delete

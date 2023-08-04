@@ -11,12 +11,7 @@ import {
 
 import { useEffect } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
-import {
-  TSchemaProfile,
-  TSchemaUpdateProfile,
-  defaultValues,
-  schemaProfile,
-} from './schema';
+import { TSchemaProfile, defaultValues, schemaProfile } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useProvinsi, useKabupaten } from '../../hooks/useLocation.hook';
 import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
@@ -25,7 +20,7 @@ import { getProvince } from '../../utils';
 type Props = {
   initialValues: initialProfileProps;
   isLoading: boolean;
-  onSave: (payload: TSchemaUpdateProfile) => void;
+  onSave: (payload: TSchemaProfile) => void;
 };
 
 const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
@@ -47,10 +42,7 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
   const kabupaten = getKabupaten?.data?.data?.data?.lokasi?.sub_lokasi ?? [];
 
   const onSubmit = (data: FieldValues) => {
-    onSave({
-      id: initialValues.id,
-      ...(data as TSchemaProfile),
-    });
+    onSave(data as TSchemaProfile);
   };
 
   useEffect(() => {

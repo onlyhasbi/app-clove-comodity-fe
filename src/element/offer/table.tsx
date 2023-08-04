@@ -2,38 +2,25 @@ import Table from '../../components/table';
 import { Box, HStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Trash2, Edit } from 'lucide-react';
-import { TDelete, TTablePenawaran, TUpdate } from './types';
-
-const dummy = [
-  {
-    id: 'TRX-24342',
-    jenis_penawaran: 'Penjualan',
-    komoditas: 'Cengkeh Basah',
-    satuan: 'Kg',
-    harga: '15.000',
-    berat_min: '100',
-    berat_max: '200',
-    action: {
-      update: {
-        id: 'TRX-24342',
-        jenis_penawaran: 'Penjualan',
-        komoditas: 'Cengkeh Basah',
-        satuan: 'Kg',
-        harga: '15.000',
-        berat_min: '100',
-        berat_max: '200',
-      },
-      delete: { id: 'TRX-24342' },
-    },
-  },
-];
+import { TTablePenawaran } from './types';
+import { NumericFormat } from 'react-number-format';
+import {
+  JENIS_KOMODITAS,
+  JENIS_PENAWARAN,
+  SATUAN,
+} from '../../model/penawaran.model';
+import { TSchemaDeletePenawaran, TSchemaUpdatePenawaran } from './schema';
 
 type Props = {
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  data: any[];
+  isLoading?: boolean;
+  onDelete: (data: TSchemaDeletePenawaran) => void;
+  onUpdate: (data: TSchemaUpdatePenawaran) => void;
 };
 
 const TablePenawaran = ({
+  data,
+  isLoading,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
@@ -41,33 +28,84 @@ const TablePenawaran = ({
   const columns = [
     columnHelper.accessor('jenis_penawaran', {
       id: 'jenis_penawaran',
-      header: () => <Box>Jenis Penawaran</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Jenis Penawaran</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          {JENIS_PENAWARAN?.find((item) => item.value === getValue())?.label}
+        </Center>
+      ),
     }),
     columnHelper.accessor('komoditas', {
       id: 'komoditas',
-      header: () => <Box>Komoditas</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Komoditas</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          {JENIS_KOMODITAS?.find((item) => item.value === getValue())?.label}
+        </Center>
+      ),
     }),
     columnHelper.accessor('satuan', {
       id: 'satuan',
-      header: () => <Box>Satuan</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Satuan</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          {SATUAN?.find((item) => item.value === getValue())?.label}
+        </Center>
+      ),
     }),
     columnHelper.accessor('harga', {
       id: 'harga',
-      header: () => <Box>Harga</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Harga</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('berat_min', {
       id: 'berat_min',
-      header: () => <Box>Berat Min.</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Berat Min. (Kg)</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('berat_max', {
       id: 'berat_max',
-      header: () => <Box>Berat Maks.</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Berat Maks. (Kg)</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
+    }),
+    columnHelper.accessor('catatan', {
+      id: 'catatan',
+      header: () => <Center>Catatan</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
+    }),
+    columnHelper.accessor('status', {
+      id: 'status',
+      header: () => <Center>Status</Center>,
+      cell: ({ getValue }) => (
+        <Center>{getValue() ? 'Aktif' : 'Tidak Aktif'}</Center>
+      ),
     }),
     columnHelper.accessor('action', {
       id: 'action',
@@ -78,7 +116,7 @@ const TablePenawaran = ({
             <Box
               title="ubah"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'blue.600' }}
               onClick={() => handleUpdate(getValue().update)}
             >
               <Edit height={15} width={15} />
@@ -86,7 +124,7 @@ const TablePenawaran = ({
             <Box
               title="hapus"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'red.600' }}
               onClick={() => handleDelete(getValue().delete)}
             >
               <Trash2 height={15} width={15} />
@@ -97,7 +135,7 @@ const TablePenawaran = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
 export default TablePenawaran;

@@ -24,7 +24,20 @@ export const usePostProfile = ({ onSuccess }: Props) =>
 
 export const useUpdateProfile = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: initialProfileProps) =>
-      http.put(`${url.profile.dev}/${id}`, restPayload).then((data) => data),
+    mutationFn: (data: initialProfileProps) =>
+      http.put(url.profile.dev, data).then((data) => data),
     onSuccess: () => toast.success('Profile berhasil diperbarui'),
+  });
+
+export function useGetSosmed() {
+  return useQuery({
+    queryKey: keys(url.sosmed.key),
+    queryFn: () => http.get(url.sosmed.dev).then((data) => data),
+  });
+}
+
+export const usePostSosmed = () =>
+  useMutation({
+    mutationFn: (payload: PayloadSosmed) =>
+      http.post(url.sosmed.dev, payload).then((data) => data),
   });

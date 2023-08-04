@@ -9,6 +9,14 @@ export const url = {
     key: 'profile',
     dev: `${BASE_URL}/user-acc`,
   },
+  penawaran: {
+    key: 'penawaran',
+    dev: `${BASE_URL}/penawaran-komoditas`,
+  },
+  sosmed: {
+    key: 'sosmed',
+    dev: `${BASE_URL}/acc-kontak`,
+  },
   provinsi: {
     key: 'provinsi',
     dev: `${BASE_URL}/lokasi/all-provinsi`,

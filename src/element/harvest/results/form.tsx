@@ -20,7 +20,7 @@ import {
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { useGetLahan } from '../../../hooks/useLahan.hook';
+import { useGetLahan } from '../../../hooks/useLand.hook';
 import { selectLahanAdapter } from './helper';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
 

@@ -22,7 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
 import { selectLahanAdapter } from './helper';
-import { useGetHasil } from '../../../hooks/useHasilPanen.hook';
+import { useGetHasil } from '../../../hooks/useResult.hook';
 import ReactDatePicker from 'react-datepicker';
 
 type Props = {

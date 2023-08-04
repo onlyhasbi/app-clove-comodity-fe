@@ -1,15 +1,19 @@
 import { Stack, Box, Text, SkeletonText } from '@chakra-ui/react';
 import ProfileForm from '../../element/profile/form';
 import SocialMedia from '../../element/profile/social-media';
-import { useGetProfile, useUpdateProfile } from '../../hooks/useProfile.hook';
+import {
+  useGetProfile,
+  useUpdateProfile,
+  useGetSosmed,
+} from '../../hooks/useProfile.hook';
 
 const Profile = () => {
   const getProfile = useGetProfile();
+  const getSosmed = useGetSosmed();
   const updateProfile = useUpdateProfile();
 
   const handleSave = (payload: PayloadProps) => {
     const defaultPayload = {
-      id: payload.id,
       jenis_pengguna: payload.jenis_pengguna,
       nomor_telpon: payload.telepon,
       nama: payload.nama,
@@ -61,7 +65,11 @@ const Profile = () => {
           }
         />
       )}
-      <SocialMedia />
+      <SocialMedia
+        initialValues={
+          getSosmed.isSuccess ? getSosmed?.data?.data?.data?.kontak : []
+        }
+      />
     </Stack>
   );
 };

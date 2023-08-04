@@ -26,7 +26,7 @@ export const useUpdateLahan = () =>
   useMutation({
     mutationFn: ({ id, ...restPayload }: payloadUpdateLahan) =>
       http.put(`${url.lahan.dev}/${id}`, restPayload).then((data) => data),
-    onSuccess: () => toast.success('Lahan baru berhasil diperbarui'),
+    onSuccess: () => toast.success('Lahan berhasil diperbarui'),
   });
 
 export const useDeleteLahan = () =>

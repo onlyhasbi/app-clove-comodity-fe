@@ -18,16 +18,22 @@ import {
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { TUpdate } from './types';
-import { NumericFormat } from 'react-number-format';
+import { NumberFormatValues, NumericFormat } from 'react-number-format';
+import {
+  JENIS_KOMODITAS,
+  JENIS_PENAWARAN,
+  SATUAN,
+} from '../../model/penawaran.model';
 
 type Props = {
-  initialValues: TUpdate | undefined | boolean;
+  initialValues: TSchemaUpdatePenawaran | undefined | boolean;
+  isLoading: boolean;
   onReset: () => void;
   onSave: (payload: TSchemaPenawaran | TSchemaUpdatePenawaran) => void;
 };
 
 const FormPenawaran = ({
+  isLoading,
   onReset: handleReset,
   onSave,
   initialValues,
@@ -64,11 +70,15 @@ const FormPenawaran = ({
   }, [initialValues]);
 
   const onSubmit = (data: FieldValues) => {
-    if (initialValues) {
-      onSave({ id: initialValues.id, ...(data as TSchemaPenawaran) });
+    if (initialValues && typeof initialValues === 'object') {
+      onSave({
+        id: initialValues.id,
+        ...(data as TSchemaPenawaran),
+      });
     } else {
       onSave(data as TSchemaPenawaran);
     }
+    reset();
   };
 
   return (
@@ -82,12 +92,16 @@ const FormPenawaran = ({
             Jenis Penawaran
           </FormLabel>
           <Select
+            disabled={isLoading}
             id="jenis_penawaran"
             placeholder="Pilih Jenis Penawaran"
             {...register('jenis_penawaran')}
           >
-            <option value="Penjualan">Penjualan</option>
-            <option value="Pembelian">Pembelian</option>
+            {JENIS_PENAWARAN.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
           </Select>
           <FormErrorMessage>
             {errors.jenis_penawaran && errors.jenis_penawaran.message}
@@ -99,11 +113,15 @@ const FormPenawaran = ({
           </FormLabel>
           <Select
             id="komoditas"
+            disabled={isLoading}
             placeholder="Pilih Jenis Komoditas"
             {...register('komoditas')}
           >
-            <option value="Cengkeh Basah">Cengkeh Basah</option>
-            <option value="Cengkeh Kering">Cengkeh Kering</option>
+            {JENIS_KOMODITAS.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
           </Select>
           <FormErrorMessage>
             {errors.komoditas && errors.komoditas.message}
@@ -115,11 +133,15 @@ const FormPenawaran = ({
           </FormLabel>
           <Select
             id="satuan"
+            disabled={isLoading}
             placeholder="Pilih Satuan"
             {...register('satuan')}
           >
-            <option value="Kg">Kg</option>
-            <option value="Ltr">Ltr</option>
+            {SATUAN.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
           </Select>
           <FormErrorMessage>
             {errors.satuan && errors.satuan.message}
@@ -135,15 +157,17 @@ const FormPenawaran = ({
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
+                disabled={isLoading}
                 as={NumericFormat}
-                onChange={onChange}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
                 onBlur={onBlur}
                 value={value}
                 id="harga"
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={false}
               />
             )}
           />
@@ -162,14 +186,16 @@ const FormPenawaran = ({
               <Input
                 getInputRef={ref}
                 as={NumericFormat}
-                onChange={onChange}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
                 onBlur={onBlur}
                 value={value}
                 id="berat_min"
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={false}
+                disabled={isLoading}
               />
             )}
           />
@@ -188,14 +214,16 @@ const FormPenawaran = ({
               <Input
                 getInputRef={ref}
                 as={NumericFormat}
-                onChange={onChange}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
                 onBlur={onBlur}
                 value={value}
                 id="berat_max"
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={false}
+                disabled={isLoading}
               />
             )}
           />
@@ -206,6 +234,7 @@ const FormPenawaran = ({
       </Grid>
       <HStack justify="end" gap={3} marginTop={6}>
         <Button
+          disabled={isLoading}
           onClick={() => {
             reset();
             handleReset();
@@ -215,7 +244,13 @@ const FormPenawaran = ({
         >
           Batal
         </Button>
-        <Button type="submit" variant="primary">
+        <Button
+          type="submit"
+          colorScheme="green"
+          isLoading={isLoading}
+          loadingText="Menyimpan..."
+          spinnerPlacement="start"
+        >
           {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>

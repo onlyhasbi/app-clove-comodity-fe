@@ -24,9 +24,11 @@ import {
   useGetHasil,
   usePostHasil,
   useUpdateHasil,
-} from '../../../hooks/useHasilPanen.hook';
+} from '../../../hooks/useResult.hook';
 import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
+import { useQueryClient } from '@tanstack/react-query';
+import { url } from '../../../utils/config/url';
 
 type TAction = {
   add?: boolean;
@@ -35,6 +37,7 @@ type TAction = {
 };
 
 const Hasil = () => {
+  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
@@ -91,6 +94,10 @@ const Hasil = () => {
   useEffect(() => {
     if (postHasil.isSuccess || updateHasil.isSuccess || deleteHasil.isSuccess) {
       getHasil.refetch();
+      queryClient.refetchQueries({
+        queryKey: [url.lahan.key],
+        type: 'active',
+      });
     }
   }, [postHasil.isSuccess, deleteHasil.isSuccess, updateHasil.isSuccess]);
 

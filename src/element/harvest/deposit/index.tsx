@@ -23,7 +23,7 @@ import {
   useGetSetoran,
   usePostSetoran,
   useUpdateSetoran,
-} from '../../../hooks/useSetoran.hook';
+} from '../../../hooks/useDeposit.hook';
 import {
   TSchemaDeleteSetoran,
   TSchemaSetoran,

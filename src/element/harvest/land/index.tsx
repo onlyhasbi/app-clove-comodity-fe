@@ -24,7 +24,7 @@ import {
   useGetLahan,
   usePostLahan,
   useUpdateLahan,
-} from '../../../hooks/useLahan.hook';
+} from '../../../hooks/useLand.hook';
 import { tableAdapter } from './helper';
 
 type TAction = {
