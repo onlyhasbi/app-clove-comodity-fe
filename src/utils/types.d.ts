@@ -114,7 +114,7 @@ type GetPenawaran = {
   status_penawaran: boolean;
 };
 
-// Work
+// pekerjaan
 type GetPekerjaan = {
   id: string;
   jenis_pekerjaan: string;
@@ -125,23 +125,5 @@ type GetPekerjaan = {
   status_referensi: boolean;
 };
 
-type TableProps = {
-  id: string;
-  nama_pekerjaan: string;
-  upah: string;
-  satuan: string;
-  lokasi: string;
-  action: {
-    update: {
-      id: string;
-      nama_pekerjaan: string;
-      upah: string;
-      satuan: string;
-      lokasi: string;
-    };
-    delete: {
-      id: string;
-      nama: string;
-    };
-  };
-};
+// pembelian
+

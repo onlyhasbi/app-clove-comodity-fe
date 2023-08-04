@@ -13,6 +13,14 @@ export const url = {
     key: 'penawaran',
     dev: `${BASE_URL}/penawaran-komoditas`,
   },
+  pembelian: {
+    key: 'pembelian',
+    dev: `${BASE_URL}/pembelian`,
+  },
+  penjualan: {
+    key: 'penjualan',
+    dev: `${BASE_URL}/penjualan`,
+  },
   pekerjaan: {
     key: 'pekerjaan',
     dev: `${BASE_URL}/lowongan-kerja`,

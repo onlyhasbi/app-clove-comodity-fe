@@ -79,14 +79,14 @@ const Pekerjaan = () => {
   useEffect(() => {
     if (postWork.isSuccess || updateWork.isSuccess || deleteWork.isSuccess) {
       getWork.refetch();
-    }
-  }, [postWork.isSuccess, deleteWork.isSuccess, updateWork.isSuccess]);
-
-  useEffect(() => {
-    if (updateWork.isSuccess || deleteWork.isSuccess) {
       handleReset();
     }
-  }, [deleteWork.isSuccess, updateWork.isSuccess, handleReset]);
+  }, [
+    postWork.isSuccess,
+    deleteWork.isSuccess,
+    updateWork.isSuccess,
+    handleReset,
+  ]);
 
   return (
     <>
@@ -159,11 +159,13 @@ const Pekerjaan = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deleteWork.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  handleDelete((action?.delete as TSchemaDeletePekerjaan)?.id);
-                  handleReset();
-                }}
+                onClick={() =>
+                  handleDelete((action?.delete as TSchemaDeletePekerjaan)?.id)
+                }
                 ml={3}
               >
                 Delete

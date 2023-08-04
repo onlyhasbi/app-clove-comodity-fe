@@ -14,7 +14,7 @@ type PayloadSetoran = {
   catatan: string;
 };
 
-type payloadUpdateSetoran = PayloadSetoran & {
+type PayloadUpdateSetoran = PayloadSetoran & {
   id: string;
 };
 
@@ -27,7 +27,7 @@ export const usePostSetoran = () =>
 
 export const useUpdateSetoran = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: payloadUpdateSetoran) =>
+    mutationFn: ({ id, ...restPayload }: PayloadUpdateSetoran) =>
       http.put(`${url.setoran.dev}/${id}`, restPayload).then((data) => data),
     onSuccess: () => toast.success('Setoran berhasil diperbarui'),
   });

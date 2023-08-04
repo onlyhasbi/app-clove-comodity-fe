@@ -80,14 +80,14 @@ const Penawaran = () => {
   useEffect(() => {
     if (postOffer.isSuccess || updateOffer.isSuccess || deleteOffer.isSuccess) {
       getOffer.refetch();
-    }
-  }, [postOffer.isSuccess, deleteOffer.isSuccess, updateOffer.isSuccess]);
-
-  useEffect(() => {
-    if (updateOffer.isSuccess || deleteOffer.isSuccess) {
       handleReset();
     }
-  }, [deleteOffer.isSuccess, updateOffer.isSuccess, handleReset]);
+  }, [
+    postOffer.isSuccess,
+    deleteOffer.isSuccess,
+    updateOffer.isSuccess,
+    handleReset,
+  ]);
 
   return (
     <>
