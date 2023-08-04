@@ -65,11 +65,15 @@ const Profile = () => {
           }
         />
       )}
-      <SocialMedia
-        initialValues={
-          getSosmed.isSuccess ? getSosmed?.data?.data?.data?.kontak : []
-        }
-      />
+      {getSosmed.isLoading ? (
+        <SkeletonText spacing={6} noOfLines={5} skeletonHeight={3} />
+      ) : (
+        <SocialMedia
+          initialValues={
+            getSosmed.isSuccess ? getSosmed?.data?.data?.data?.kontak : []
+          }
+        />
+      )}
     </Stack>
   );
 };

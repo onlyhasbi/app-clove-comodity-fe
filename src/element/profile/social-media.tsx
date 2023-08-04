@@ -1,4 +1,4 @@
-import { usePostSosmed } from '../../hooks/useProfile.hook';
+import { usePostSosmed, useUpdateSosmed } from '../../hooks/useProfile.hook';
 import { Circle, Grid, HStack, Heading, Input, VStack } from '@chakra-ui/react';
 import { Facebook, Linkedin, Instagram, Twitter } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -27,9 +27,19 @@ const SocialMedia = ({ initialValues }: Props) => {
   }, [initialValues]);
 
   const postSosmed = usePostSosmed();
+  const updateSosmed = useUpdateSosmed();
 
   const handleAddSosmed = (sosmed: string, value: string) => {
-    postSosmed.mutate({ jenis_kontak: sosmed, kontak: value });
+    const isFound = initialValues.find((item) => item.jenis_kontak === sosmed);
+    if (isFound) {
+      updateSosmed.mutate({
+        id: isFound.id,
+        jenis_kontak: sosmed,
+        kontak: value,
+      });
+    } else {
+      postSosmed.mutate({ jenis_kontak: sosmed, kontak: value });
+    }
   };
 
   return (

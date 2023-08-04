@@ -34,7 +34,13 @@ type initialSosmedProps = {
   kontak: string;
 };
 
-type PayloadSosmed = {
+type PayloadAddSosmed = {
+  jenis_kontak: string;
+  kontak: string;
+};
+
+type PayloadUpdateSosmed = {
+  id: string;
   jenis_kontak: string;
   kontak: string;
 };

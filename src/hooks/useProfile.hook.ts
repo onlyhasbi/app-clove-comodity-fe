@@ -38,6 +38,16 @@ export function useGetSosmed() {
 
 export const usePostSosmed = () =>
   useMutation({
-    mutationFn: (payload: PayloadSosmed) =>
+    mutationFn: (payload: PayloadAddSosmed) =>
       http.post(url.sosmed.dev, payload).then((data) => data),
+  });
+
+export const useUpdateSosmed = () =>
+  useMutation({
+    mutationFn: (payload: PayloadUpdateSosmed) => {
+      const { id, ...restPayload } = payload;
+      return http
+        .put(`${url.sosmed.dev}/${id}`, restPayload)
+        .then((data) => data);
+    },
   });
