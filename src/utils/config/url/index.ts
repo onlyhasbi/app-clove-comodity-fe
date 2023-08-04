@@ -13,6 +13,10 @@ export const url = {
     key: 'penawaran',
     dev: `${BASE_URL}/penawaran-komoditas`,
   },
+  pekerjaan: {
+    key: 'pekerjaan',
+    dev: `${BASE_URL}/lowongan-kerja`,
+  },
   sosmed: {
     key: 'sosmed',
     dev: `${BASE_URL}/acc-kontak`,

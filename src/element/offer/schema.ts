@@ -13,11 +13,12 @@ export const schemaPenawaran = z.object({
   berat_max: z
     .string()
     .nonempty({ message: 'Berat maksimal tidak boleh kosong' }),
+  catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
 export type TSchemaPenawaran = z.infer<typeof schemaPenawaran>;
 export type TSchemaUpdatePenawaran = TSchemaPenawaran & { id: string };
-export type TSchemaDeletePenawaran = { id: string; nama: string };
+export type TSchemaDeletePenawaran = { id: string };
 
 export const defaultValues = {
   jenis_penawaran: '',
@@ -26,4 +27,5 @@ export const defaultValues = {
   harga: '0',
   berat_min: '0',
   berat_max: '0',
+  catatan: '',
 };

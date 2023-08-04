@@ -32,7 +32,7 @@ export const tableAdapter = (payloads: GetPenawaran[]) => {
           harga: harga_rp,
           catatan,
         },
-        delete: { id, nama: `Penawaran ${id}` },
+        delete: { id },
       },
     };
   });

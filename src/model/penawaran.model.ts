@@ -12,3 +12,8 @@ export const SATUAN = [
   { label: 'Kg', value: 'berat/kg' },
   { label: 'Ltr', value: 'volume/liter' },
 ];
+
+export const PEKERJAAN = [
+  { label: 'Buruh Panen', value: 'buruh_panen' },
+  { label: 'Buruh Penjemuran', value: 'buruh_penjemuran' },
+];

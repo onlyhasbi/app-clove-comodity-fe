@@ -54,9 +54,8 @@ const Header = () => {
               <SkeletonText w="5rem" noOfLines={1} skeletonHeight="2" />
             ) : (
               <Text order={{ lg: '0', base: '1' }}>
-                {capitalize(
-                  profile.isSuccess && profile?.data?.data?.data?.user?.nama
-                )}
+                {profile.isSuccess &&
+                  capitalize(profile?.data?.data?.data?.user?.nama)}
               </Text>
             )}
             <Circle size={{ lg: 25, base: 75 }} bg="green.600">

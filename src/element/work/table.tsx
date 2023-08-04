@@ -2,34 +2,21 @@ import Table from '../../components/table';
 import { Box, HStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Trash2, Edit } from 'lucide-react';
-import { TDelete, TTablePekerjaan, TUpdate } from './types';
-
-const dummy = [
-  {
-    id: '1',
-    nama_pekerjaan: 'Pemetik',
-    upah: '15.000',
-    satuan: 'Harian',
-    lokasi: 'Malino',
-    action: {
-      update: {
-        id: '1',
-        nama_pekerjaan: 'Pemetik',
-        upah: '15.000',
-        satuan: 'Harian',
-        lokasi: 'Malino',
-      },
-      delete: { id: '1', nama: 'Pemetik' },
-    },
-  },
-];
+import { TTablePekerjaan } from './types';
+import { TSchemaDeletePekerjaan, TSchemaUpdatePekerjaan } from './schema';
+import { NumericFormat } from 'react-number-format';
+import { PEKERJAAN, SATUAN } from '../../model/penawaran.model';
 
 type Props = {
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  data: any[];
+  isLoading?: boolean;
+  onDelete: (data: TSchemaDeletePekerjaan) => void;
+  onUpdate: (data: TSchemaUpdatePekerjaan) => void;
 };
 
 const TablePenawaran = ({
+  isLoading,
+  data,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
@@ -38,22 +25,42 @@ const TablePenawaran = ({
     columnHelper.accessor('nama_pekerjaan', {
       id: 'nama_pekerjaan',
       header: () => <Box>Nama Pekerjaan</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      cell: ({ getValue }) => (
+        <Box>{PEKERJAAN?.find((item) => item.value === getValue())?.label}</Box>
+      ),
     }),
     columnHelper.accessor('upah', {
       id: 'upah',
-      header: () => <Box>Upah</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Upah</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('satuan', {
       id: 'satuan',
-      header: () => <Box>Satuan</Box>,
+      header: () => <Center>Satuan</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          {SATUAN?.find((item) => item.value === getValue())?.label}
+        </Center>
+      ),
+    }),
+    columnHelper.accessor('catatan', {
+      id: 'catatan',
+      header: () => <Box>Catatan</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
-    columnHelper.accessor('lokasi', {
-      id: 'lokasi',
-      header: () => <Box>Lokasi</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    columnHelper.accessor('status', {
+      id: 'status',
+      header: () => <Box>Status</Box>,
+      cell: ({ getValue }) => <Box>{getValue() ? 'Aktif' : 'Tidak Aktif'}</Box>,
     }),
     columnHelper.accessor('action', {
       id: 'action',
@@ -83,7 +90,7 @@ const TablePenawaran = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
 export default TablePenawaran;

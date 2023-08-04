@@ -7,6 +7,8 @@ import {
   Button,
   Grid,
   HStack,
+  Textarea,
+  VStack,
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
@@ -59,6 +61,7 @@ const FormPenawaran = ({
         harga,
         berat_min,
         berat_max,
+        catatan,
       } = initialValues;
       setValue('jenis_penawaran', jenis_penawaran);
       setValue('komoditas', komoditas);
@@ -66,6 +69,7 @@ const FormPenawaran = ({
       setValue('harga', harga);
       setValue('berat_min', berat_min);
       setValue('berat_max', berat_max);
+      setValue('catatan', catatan);
     }
   }, [initialValues]);
 
@@ -84,153 +88,174 @@ const FormPenawaran = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid
-        gridTemplateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }}
-        gap={{ lg: 5, base: 4 }}
+        gridTemplateColumns={{ lg: 'repeat(3,1fr)', base: '1fr' }}
+        gap={{ lg: 8, base: 4 }}
       >
-        <FormControl isInvalid={Boolean(errors.jenis_penawaran)}>
-          <FormLabel fontSize="sm" htmlFor="jenis_penawaran">
-            Jenis Penawaran
-          </FormLabel>
-          <Select
-            disabled={isLoading}
-            id="jenis_penawaran"
-            placeholder="Pilih Jenis Penawaran"
-            {...register('jenis_penawaran')}
-          >
-            {JENIS_PENAWARAN.map((item) => (
-              <option key={item.value} value={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </Select>
-          <FormErrorMessage>
-            {errors.jenis_penawaran && errors.jenis_penawaran.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.komoditas)}>
-          <FormLabel fontSize="sm" htmlFor="komoditas">
-            Komoditas
-          </FormLabel>
-          <Select
-            id="komoditas"
-            disabled={isLoading}
-            placeholder="Pilih Jenis Komoditas"
-            {...register('komoditas')}
-          >
-            {JENIS_KOMODITAS.map((item) => (
-              <option key={item.value} value={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </Select>
-          <FormErrorMessage>
-            {errors.komoditas && errors.komoditas.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.satuan)}>
-          <FormLabel fontSize="sm" htmlFor="satuan">
-            Satuan
-          </FormLabel>
-          <Select
-            id="satuan"
-            disabled={isLoading}
-            placeholder="Pilih Satuan"
-            {...register('satuan')}
-          >
-            {SATUAN.map((item) => (
-              <option key={item.value} value={item.value}>
-                {item.label}
-              </option>
-            ))}
-          </Select>
-          <FormErrorMessage>
-            {errors.satuan && errors.satuan.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.harga)}>
-          <FormLabel fontSize="sm" htmlFor="harga">
-            Harga
-          </FormLabel>
-          <Controller
-            control={control}
-            name="harga"
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <Input
-                getInputRef={ref}
-                disabled={isLoading}
-                as={NumericFormat}
-                onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
-                }
-                onBlur={onBlur}
-                value={value}
-                id="harga"
-                defaultValue={0}
-                decimalSeparator=","
-                thousandSeparator="."
-              />
-            )}
-          />
-          <FormErrorMessage>
-            {errors.harga && errors.harga.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.berat_min)}>
-          <FormLabel fontSize="sm" htmlFor="berat_min">
-            Berat Min.
-          </FormLabel>
-          <Controller
-            control={control}
-            name="berat_min"
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <Input
-                getInputRef={ref}
-                as={NumericFormat}
-                onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
-                }
-                onBlur={onBlur}
-                value={value}
-                id="berat_min"
-                defaultValue={0}
-                decimalSeparator=","
-                thousandSeparator="."
-                disabled={isLoading}
-              />
-            )}
-          />
-          <FormErrorMessage>
-            {errors.berat_min && errors.berat_min.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.berat_max)}>
-          <FormLabel fontSize="sm" htmlFor="berat_max">
-            Berat Maks.
-          </FormLabel>
-          <Controller
-            control={control}
-            name="berat_max"
-            render={({ field: { onChange, onBlur, value, ref } }) => (
-              <Input
-                getInputRef={ref}
-                as={NumericFormat}
-                onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
-                }
-                onBlur={onBlur}
-                value={value}
-                id="berat_max"
-                defaultValue={0}
-                decimalSeparator=","
-                thousandSeparator="."
-                disabled={isLoading}
-              />
-            )}
-          />
-          <FormErrorMessage>
-            {errors.berat_max && errors.berat_max.message}
-          </FormErrorMessage>
-        </FormControl>
+        <VStack gap={4}>
+          <FormControl isInvalid={Boolean(errors.jenis_penawaran)}>
+            <FormLabel fontSize="sm" htmlFor="jenis_penawaran">
+              Jenis Penawaran
+            </FormLabel>
+            <Select
+              disabled={isLoading}
+              id="jenis_penawaran"
+              placeholder="Pilih Jenis Penawaran"
+              {...register('jenis_penawaran')}
+            >
+              {JENIS_PENAWARAN.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
+            <FormErrorMessage>
+              {errors.jenis_penawaran && errors.jenis_penawaran.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.komoditas)}>
+            <FormLabel fontSize="sm" htmlFor="komoditas">
+              Komoditas
+            </FormLabel>
+            <Select
+              id="komoditas"
+              disabled={isLoading}
+              placeholder="Pilih Jenis Komoditas"
+              {...register('komoditas')}
+            >
+              {JENIS_KOMODITAS.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
+            <FormErrorMessage>
+              {errors.komoditas && errors.komoditas.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.satuan)}>
+            <FormLabel fontSize="sm" htmlFor="satuan">
+              Satuan
+            </FormLabel>
+            <Select
+              id="satuan"
+              disabled={isLoading}
+              placeholder="Pilih Satuan"
+              {...register('satuan')}
+            >
+              {SATUAN.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
+            <FormErrorMessage>
+              {errors.satuan && errors.satuan.message}
+            </FormErrorMessage>
+          </FormControl>
+        </VStack>
+        <VStack gap={4}>
+          <FormControl isInvalid={Boolean(errors.harga)}>
+            <FormLabel fontSize="sm" htmlFor="harga">
+              Harga
+            </FormLabel>
+            <Controller
+              control={control}
+              name="harga"
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <Input
+                  getInputRef={ref}
+                  disabled={isLoading}
+                  as={NumericFormat}
+                  onValueChange={(event: NumberFormatValues) =>
+                    onChange(event.value)
+                  }
+                  onBlur={onBlur}
+                  value={value}
+                  id="harga"
+                  defaultValue={0}
+                  decimalSeparator=","
+                  thousandSeparator="."
+                />
+              )}
+            />
+            <FormErrorMessage>
+              {errors.harga && errors.harga.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.berat_min)}>
+            <FormLabel fontSize="sm" htmlFor="berat_min">
+              Berat Min.
+            </FormLabel>
+            <Controller
+              control={control}
+              name="berat_min"
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <Input
+                  getInputRef={ref}
+                  as={NumericFormat}
+                  onValueChange={(event: NumberFormatValues) =>
+                    onChange(event.value)
+                  }
+                  onBlur={onBlur}
+                  value={value}
+                  id="berat_min"
+                  defaultValue={0}
+                  decimalSeparator=","
+                  thousandSeparator="."
+                  disabled={isLoading}
+                />
+              )}
+            />
+            <FormErrorMessage>
+              {errors.berat_min && errors.berat_min.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.berat_max)}>
+            <FormLabel fontSize="sm" htmlFor="berat_max">
+              Berat Maks.
+            </FormLabel>
+            <Controller
+              control={control}
+              name="berat_max"
+              render={({ field: { onChange, onBlur, value, ref } }) => (
+                <Input
+                  getInputRef={ref}
+                  as={NumericFormat}
+                  onValueChange={(event: NumberFormatValues) =>
+                    onChange(event.value)
+                  }
+                  onBlur={onBlur}
+                  value={value}
+                  id="berat_max"
+                  defaultValue={0}
+                  decimalSeparator=","
+                  thousandSeparator="."
+                  disabled={isLoading}
+                />
+              )}
+            />
+            <FormErrorMessage>
+              {errors.berat_max && errors.berat_max.message}
+            </FormErrorMessage>
+          </FormControl>
+        </VStack>
+        <VStack gap={4}>
+          <FormControl isInvalid={Boolean(errors.catatan)}>
+            <FormLabel fontSize="sm" htmlFor="catatan">
+              Catatan
+            </FormLabel>
+            <Textarea
+              id="catatan"
+              rows={8}
+              placeholder="Catatan"
+              {...register('catatan')}
+              disabled={isLoading}
+            />
+            <FormErrorMessage>
+              {errors.catatan && errors.catatan.message}
+            </FormErrorMessage>
+          </FormControl>
+        </VStack>
       </Grid>
       <HStack justify="end" gap={3} marginTop={6}>
         <Button

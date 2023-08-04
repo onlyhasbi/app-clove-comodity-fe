@@ -61,7 +61,7 @@ const Penawaran = () => {
       min: payload.berat_min,
       satuan: payload.satuan,
       harga_rp: payload.harga,
-      catatan: '-',
+      catatan: payload.catatan,
     };
     if ('id' in payload) {
       updateOffer.mutate({ id: payload.id, ...defaultPayload });
@@ -148,7 +148,7 @@ const Penawaran = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TSchemaDeletePenawaran)?.id}`}
+              {`Delete Penawaran`}
             </AlertDialogHeader>
 
             <AlertDialogBody>

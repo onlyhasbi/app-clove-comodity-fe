@@ -113,3 +113,35 @@ type GetPenawaran = {
   catatan: string;
   status_penawaran: boolean;
 };
+
+// Work
+type GetPekerjaan = {
+  id: string;
+  jenis_pekerjaan: string;
+  upah_rp: number;
+  indikator_ukur: string;
+  catatan: string;
+  status_lowongan: boolean;
+  status_referensi: boolean;
+};
+
+type TableProps = {
+  id: string;
+  nama_pekerjaan: string;
+  upah: string;
+  satuan: string;
+  lokasi: string;
+  action: {
+    update: {
+      id: string;
+      nama_pekerjaan: string;
+      upah: string;
+      satuan: string;
+      lokasi: string;
+    };
+    delete: {
+      id: string;
+      nama: string;
+    };
+  };
+};
