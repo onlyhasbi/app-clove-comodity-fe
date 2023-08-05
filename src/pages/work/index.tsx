@@ -70,10 +70,8 @@ const Pekerjaan = () => {
   };
 
   const handleDelete = useCallback(
-    (id: string) => {
-      if (action?.delete?.id) deleteWork.mutate(id);
-    },
-    [action?.delete?.id]
+    (id: string) => id && deleteWork.mutate(id),
+    []
   );
 
   useEffect(() => {

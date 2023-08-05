@@ -15,35 +15,78 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import {
+  useDeleteTim,
+  useGetTim,
+  usePostTim,
+  useUpdateTim,
+} from '../../../hooks/useTeam.hook';
 import FormTim from './form';
 import TabelTim from './table';
-import { TDelete, TUpdate } from './types';
+import { useCallback, useRef, useState, useEffect } from 'react';
+import { TSchemaTim, TSchemaDeleteTim, TSchemaUpdateTim } from './schema';
+import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TSchemaUpdateTim;
+  delete?: TSchemaDeleteTim;
 };
 
 const Tim = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
+  const getTim = useGetTim();
+  const postTim = usePostTim();
+  const deleteTim = useDeleteTim();
+  const updateTim = useUpdateTim();
+
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
+
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TSchemaUpdateTim) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TSchemaDeleteTim) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
+
   const handleReset = useCallback(() => setAction(null), []);
 
-  const cancelRef = useRef(null);
+  const handleSave = useCallback((payload: TSchemaTim | TSchemaUpdateTim) => {
+    if ('id' in payload) {
+      updateTim.mutate(payload);
+    } else {
+      postTim.mutate(payload);
+    }
+  }, []);
+
+  const handleDelete = useCallback((id: string) => {
+    if (id) {
+      deleteTim.mutate(id);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (postTim.isSuccess || updateTim.isSuccess || deleteTim.isSuccess) {
+      getTim.refetch();
+    }
+  }, [postTim.isSuccess, deleteTim.isSuccess, updateTim.isSuccess]);
+
+  useEffect(() => {
+    if (updateTim.isSuccess || deleteTim.isSuccess) {
+      handleReset();
+    }
+  }, [updateTim.isSuccess, deleteTim.isSuccess, handleReset]);
+
   return (
     <>
       <VStack direction="column">
@@ -53,6 +96,10 @@ const Tim = () => {
           </Button>
         </Box>
         <TabelTim
+          isLoading={getTim.isLoading}
+          data={
+            getTim.isSuccess ? tableAdapter(getTim?.data?.data?.data?.tim) : []
+          }
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -69,7 +116,12 @@ const Tim = () => {
           } Tim Pengeringan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormTim initialValues={action?.update} onClose={handleReset} />
+            <FormTim
+              onSave={handleSave}
+              isLoading={postTim.isLoading || updateTim.isLoading}
+              initialValues={action?.update}
+              onClose={handleReset}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -82,7 +134,7 @@ const Tim = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.nama}`}
+              Delete Tim
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -94,11 +146,13 @@ const Tim = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deleteTim.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={() =>
+                  handleDelete((action?.delete as TSchemaDeleteTim).id)
+                }
                 ml={3}
               >
                 Delete

@@ -2,35 +2,20 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TDelete, TTableHasilPengeringan, TUpdate } from './types';
-
-const dummy = [
-  {
-    tim: 'Rakko 1',
-    berat_kg: '25Kg',
-    volume_liter: '34Ltr',
-    waktu_selesai: '15/07/2023',
-    catatan: 'Selesai tepat waktu',
-    action: {
-      update: {
-        id: '1',
-        tim: 'Rakko 1',
-        berat_kg: '25Kg',
-        volume_liter: '34Ltr',
-        waktu_selesai: '15/07/2023',
-        catatan: 'Selesai tepat waktu',
-      },
-      delete: { id: '1', tim: 'Rakko 1' },
-    },
-  },
-];
+import { TTableHasilPengeringan } from './types';
+import { TDeletePengeringan, TUpdatePengeringan } from './schema';
+import { NumericFormat } from 'react-number-format';
 
 type Props = {
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  data: any[];
+  isLoading: boolean;
+  onDelete: (data: TDeletePengeringan) => void;
+  onUpdate: (data: TUpdatePengeringan) => void;
 };
 
 const TabelHasilPengeringan = ({
+  isLoading,
+  data,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
@@ -41,25 +26,57 @@ const TabelHasilPengeringan = ({
       header: () => <Box>Tim</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
-    columnHelper.accessor('berat_kg', {
+    columnHelper.accessor('berat', {
       id: 'berat',
-      header: () => <Box>Berat</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Berat</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
-    columnHelper.accessor('volume_liter', {
+    columnHelper.accessor('volume', {
       id: 'volume',
-      header: () => <Box>Volume</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Volume</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
-    columnHelper.accessor('waktu_selesai', {
-      id: 'waktu',
-      header: () => <Box>Waktu Selesai</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    columnHelper.accessor('tanggal', {
+      id: 'tanggal',
+      header: () => <Center>Waktu Selesai</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
     columnHelper.accessor('catatan', {
       id: 'catatan',
       header: () => <Box>Catatan</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    }),
+    columnHelper.accessor('upah', {
+      id: 'upah',
+      header: () => <Center>Upah</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('action', {
       id: 'action',
@@ -89,7 +106,7 @@ const TabelHasilPengeringan = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
 export default TabelHasilPengeringan;

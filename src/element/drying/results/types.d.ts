@@ -1,11 +1,14 @@
-import { schemaHasilPengeringan } from './schema';
-
-export type TUpdate = schemaHasilPengeringan & { id: string };
-export type TDelete = { id: string; tim: string };
+import {
+  TDeletePengeringan,
+  TUpdatePengeringan,
+  schemaHasilPengeringan,
+} from './schema';
 
 type TActionTable = {
-  update: TUpdate;
-  delete: TDelete;
+  update: TUpdatePengeringan;
+  delete: TDeletePengeringan;
 };
 
-export type TTableHasilPengeringan = schemaHasilPengeringan & { action: TActionTable };
+export type TTableHasilPengeringan = schemaHasilPengeringan & {
+  action: TActionTable;
+};

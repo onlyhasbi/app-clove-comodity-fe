@@ -10,49 +10,64 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
-import { useForm, FieldValues } from 'react-hook-form';
+import { useForm, FieldValues, Controller } from 'react-hook-form';
 import { defaultValues, schemaHasilPengeringan } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { TUpdate } from './types';
+import { TAddPengeringan, TUpdatePengeringan } from './schema';
+import { NumericFormat, NumberFormatValues } from 'react-number-format';
+import ReactDatePicker from 'react-datepicker';
+import { useGetTim } from '../../../hooks/useTeam.hook';
 
 type Props = {
   onClose: () => void;
-  initialValues: TUpdate | undefined | boolean;
+  isLoading?: boolean;
+  onSave: (payload: TAddPengeringan | TUpdatePengeringan) => void;
+  initialValues: TUpdatePengeringan | undefined | boolean;
 };
 
 const FormHasilPengeringan = ({
+  isLoading,
+  onSave: handleSave,
   onClose: handleCloseModal,
   initialValues,
 }: Props) => {
   const {
+    control,
     register,
     formState: { errors },
     handleSubmit,
     setValue,
+    reset,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaHasilPengeringan),
   });
 
+  const getTim = useGetTim();
+  const teams = getTim.data?.data?.data?.tim;
+
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
-      const { tim, berat_kg, volume_liter, waktu_selesai, catatan } =
-        initialValues;
+      const { tim, berat, volume, tanggal, catatan, upah } = initialValues;
       setValue('tim', tim);
-      setValue('berat_kg', berat_kg);
-      setValue('volume_liter', volume_liter);
-      setValue('waktu_selesai', waktu_selesai);
+      setValue('berat', berat);
+      setValue('volume', volume);
+      setValue('tanggal', tanggal);
       setValue('catatan', catatan);
+      setValue('upah', upah);
     }
   }, []);
 
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
-      console.log('update', data);
-      handleCloseModal();
+      handleSave({
+        id: (initialValues as TUpdatePengeringan).id,
+        ...data,
+      } as TUpdatePengeringan);
     } else {
-      console.log('add', data);
+      handleSave(data as TAddPengeringan);
+      reset();
     }
   };
 
@@ -64,48 +79,124 @@ const FormHasilPengeringan = ({
             Tim
           </FormLabel>
           <Select id="tim" placeholder="Pilih Tim" {...register('tim')}>
-            <option value="Rakko 1">Rakko 1</option>
+            {teams?.map((team: GetTim) => (
+              <option key={team.id} value={team.id}>
+                {team.nama_tim}
+              </option>
+            ))}
           </Select>
           <FormErrorMessage>
             {errors.tim && errors.tim.message}
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={Boolean(errors.berat_kg)}>
-          <FormLabel fontSize="sm" htmlFor="berat_kg">
+        <FormControl isInvalid={Boolean(errors.berat)}>
+          <FormLabel fontSize="sm" htmlFor="berat">
             Berat (Kg)
           </FormLabel>
-          <Input id="berat_kg" placeholder="Berat" {...register('berat_kg')} />
-          <FormErrorMessage>
-            {errors.berat_kg && errors.berat_kg.message}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={Boolean(errors.volume_liter)}>
-          <FormLabel fontSize="sm" htmlFor="volume_liter">
-            Volume (Ltr)
-          </FormLabel>
-          <Input
-            id="volume_liter"
-            placeholder="Volume"
-            {...register('volume_liter')}
+          <Controller
+            control={control}
+            name="berat"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.floatValue)
+                }
+                onBlur={onBlur}
+                value={value}
+                id="berat"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
+            )}
           />
           <FormErrorMessage>
-            {errors.volume_liter && errors.volume_liter.message}
+            {errors.berat && errors.berat.message}
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={Boolean(errors.waktu_selesai)}>
+        <FormControl isInvalid={Boolean(errors.volume)}>
+          <FormLabel fontSize="sm" htmlFor="volume">
+            Volume (Ltr)
+          </FormLabel>
+          <Controller
+            control={control}
+            name="volume"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.floatValue)
+                }
+                onBlur={onBlur}
+                value={value}
+                id="volume"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
+            )}
+          />
+          <FormErrorMessage>
+            {errors.volume && errors.volume.message}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={Boolean(errors.tanggal)}>
           <FormLabel fontSize="sm" htmlFor="waktu_mulai">
             Waktu Selesai
           </FormLabel>
-          <Input
-            id="waktu_selesai"
-            placeholder="Waktu Selesai"
-            {...register('waktu_selesai')}
+          <Controller
+            control={control}
+            name="tanggal"
+            render={({ field: { onChange, value, onBlur } }) => (
+              <ReactDatePicker
+                readOnly={isLoading}
+                onChange={onChange}
+                onBlur={onBlur}
+                selected={value}
+                dateFormat="dd / MM / yyyy"
+                disabled={isLoading}
+              />
+            )}
           />
           <FormErrorMessage>
-            {errors.waktu_selesai && errors.waktu_selesai.message}
+            {errors.tanggal && errors.tanggal.message}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={Boolean(errors.upah)}>
+          <FormLabel fontSize="sm" htmlFor="upah">
+            Upah
+          </FormLabel>
+          <Controller
+            control={control}
+            name="upah"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.floatValue)
+                }
+                onBlur={onBlur}
+                value={value}
+                id="upah"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
+            )}
+          />
+          <FormErrorMessage>
+            {errors.upah && errors.upah.message}
           </FormErrorMessage>
         </FormControl>
 
@@ -125,10 +216,21 @@ const FormHasilPengeringan = ({
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button onClick={handleCloseModal} type="button" variant="ghost">
+        <Button
+          onClick={handleCloseModal}
+          type="button"
+          variant="ghost"
+          disabled={isLoading}
+        >
           Batal
         </Button>
-        <Button type="submit" variant="primary">
+        <Button
+          type="submit"
+          colorScheme="green"
+          isLoading={isLoading}
+          loadingText="Menyimpan..."
+          spinnerPlacement="start"
+        >
           {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>

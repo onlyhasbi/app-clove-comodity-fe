@@ -21,6 +21,18 @@ export const url = {
     key: 'penjualan',
     dev: `${BASE_URL}/penjualan`,
   },
+  tim: {
+    key: 'tim-pengeringan',
+    dev: `${BASE_URL}/tim-pengeringan`,
+  },
+  bahan: {
+    key: 'bahan-pengeringan',
+    dev: `${BASE_URL}/bahan-pengeringan`,
+  },
+  pengeringan: {
+    key: 'hasil-pengeringan',
+    dev: `${BASE_URL}/hasil-pengeringan`,
+  },
   pekerjaan: {
     key: 'pekerjaan',
     dev: `${BASE_URL}/lowongan-kerja`,

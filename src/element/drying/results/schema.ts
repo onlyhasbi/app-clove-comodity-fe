@@ -2,20 +2,22 @@ import { z } from 'zod';
 
 export const schemaHasilPengeringan = z.object({
   tim: z.string().nonempty({ message: 'Tim tidak boleh kosong' }),
-  berat_kg: z.string().nonempty({ message: 'Berat tidak boleh kosong' }),
-  volume_liter: z.string().nonempty({ message: 'Volume tidak boleh kosong' }),
-  waktu_selesai: z
-    .string()
-    .nonempty({ message: 'Waktu selesai tidak boleh kosong' }),
+  berat: z.number().min(1, { message: 'Berat tidak boleh kosong' }),
+  volume: z.number().min(1, { message: 'Volume tidak boleh kosong' }),
+  tanggal: z.coerce.date(),
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
+  upah: z.number().min(1, { message: 'Upah tidak boleh kosong' }),
 });
 
-export type TSchemaHasilPengeringan = z.infer<typeof schemaHasilPengeringan>;
+export type TAddPengeringan = z.infer<typeof schemaHasilPengeringan>;
+export type TUpdatePengeringan = TAddPengeringan & { id: string };
+export type TDeletePengeringan = { id: string };
 
 export const defaultValues = {
   tim: '',
-  berat_kg: '',
-  volume_liter: '',
-  waktu_selesai: '',
+  berat: 0,
+  volume: 0,
+  tanggal: new Date(),
   catatan: '',
+  upah: 0,
 };

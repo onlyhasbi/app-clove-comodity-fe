@@ -2,52 +2,57 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TDelete, TTableBahanPengeringan, TUpdate } from './types';
-
-const dummy = [
-  {
-    berat_kg: '45Kg',
-    volume_liter: '15Ltr',
-    waktu_mulai: '12/07/2023',
-    catatan: 'Kembali 3 hari lagi',
-    action: {
-      update: {
-        id: '1',
-        berat_kg: '45Kg',
-        volume_liter: '15Ltr',
-        waktu_mulai: '12/07/2023',
-        catatan: 'Kembali 3 hari lagi',
-      },
-      delete: { id: '1', berat_kg: '45Kg' },
-    },
-  },
-];
+import { TTableBahan } from './types';
+import { NumericFormat } from 'react-number-format';
+import { TSchemaUpdateBahan, TSchemaDeleteBahan } from './schema';
 
 type Props = {
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  data: any[];
+  isLoading: boolean;
+  onDelete: (data: TSchemaDeleteBahan) => void;
+  onUpdate: (data: TSchemaUpdateBahan) => void;
 };
 
 const TabelBahan = ({
+  isLoading,
+  data,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
-  const columnHelper = createColumnHelper<TTableBahanPengeringan>();
+  const columnHelper = createColumnHelper<TTableBahan>();
   const columns = [
     columnHelper.accessor('berat_kg', {
       id: 'berat',
-      header: () => <Box>Berat</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Berat</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('volume_liter', {
       id: 'volume',
-      header: () => <Box>Volume</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Volume</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
     }),
     columnHelper.accessor('waktu_mulai', {
-      id: 'waktu',
-      header: () => <Box>Waktu Mulai</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      id: 'waktu_mulai',
+      header: () => <Center>Waktu Mulai</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
     columnHelper.accessor('catatan', {
       id: 'catatan',
@@ -61,17 +66,19 @@ const TabelBahan = ({
         return (
           <HStack gap={3} justify="center">
             <Box
-              title="ubah"
+              as="button"
+              title="Klik untuk mengubah data bahan pengerignan"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'blue.600' }}
               onClick={() => handleUpdate(getValue().update)}
             >
               <Edit height={15} width={15} />
             </Box>
             <Box
-              title="hapus"
+              as="button"
+              title="Klik untuk menghapus data bahan pengeringan"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'red.600' }}
               onClick={() => handleDelete(getValue().delete)}
             >
               <Trash2 height={15} width={15} />
@@ -82,7 +89,7 @@ const TabelBahan = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
 export default TabelBahan;

@@ -78,11 +78,10 @@ const Pembelian = () => {
     }
   }, []);
 
-  const handleDelete = useCallback(() => {
-    if (action?.delete?.id) {
-      deletePembelian.mutate((action?.delete as TSchemaDeletePembelian)?.id);
-    }
-  }, [action?.delete?.id]);
+  const handleDelete = useCallback(
+    (id: string) => id && deletePembelian.mutate(id),
+    []
+  );
 
   useEffect(() => {
     if (
@@ -166,7 +165,9 @@ const Pembelian = () => {
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
-                onClick={handleDelete}
+                onClick={() =>
+                  handleDelete((action?.delete as TSchemaDeletePembelian)?.id)
+                }
                 ml={3}
               >
                 Delete

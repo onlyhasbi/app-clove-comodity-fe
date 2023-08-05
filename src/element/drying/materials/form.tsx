@@ -9,26 +9,37 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
-import { useForm, FieldValues } from 'react-hook-form';
-import { defaultValues, schemaBahanPengeringan } from './schema';
+import { useForm, FieldValues, Controller } from 'react-hook-form';
+import { defaultValues, schemaBahan } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { TUpdate } from './types';
+import { TSchemaBahan, TSchemaUpdateBahan } from './schema';
+import { NumericFormat, NumberFormatValues } from 'react-number-format';
+import ReactDatePicker from 'react-datepicker';
 
 type Props = {
   onClose: () => void;
-  initialValues: TUpdate | undefined | boolean;
+  isLoading?: boolean;
+  onSave: (payload: TSchemaBahan | TSchemaUpdateBahan) => void;
+  initialValues: TSchemaUpdateBahan | undefined | boolean;
 };
 
-const FormBahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
+const FormBahan = ({
+  isLoading,
+  onSave: handleSave,
+  onClose: handleCloseModal,
+  initialValues,
+}: Props) => {
   const {
+    control,
     register,
     formState: { errors },
     handleSubmit,
     setValue,
+    reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaBahanPengeringan),
+    resolver: zodResolver(schemaBahan),
   });
 
   useEffect(() => {
@@ -43,10 +54,13 @@ const FormBahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
 
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
-      console.log('update', data);
-      handleCloseModal();
+      handleSave({
+        id: (initialValues as TSchemaUpdateBahan).id,
+        ...data,
+      } as TSchemaUpdateBahan);
     } else {
-      console.log('add', data);
+      handleSave(data as TSchemaBahan);
+      reset();
     }
   };
 
@@ -54,19 +68,57 @@ const FormBahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.berat_kg)}>
-          <FormLabel fontSize="sm" htmlFor="berat_kg">Berat (Kg)</FormLabel>
-          <Input id="berat_kg" placeholder="Berat" {...register('berat_kg')} />
+          <FormLabel fontSize="sm" htmlFor="berat_kg">
+            Berat (Kg)
+          </FormLabel>
+          <Controller
+            control={control}
+            name="berat_kg"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
+                onBlur={onBlur}
+                value={value}
+                id="berat_kg"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
+            )}
+          />
           <FormErrorMessage>
             {errors.berat_kg && errors.berat_kg.message}
           </FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.volume_liter)}>
-          <FormLabel fontSize="sm" htmlFor="volume_liter">Volume (Ltr)</FormLabel>
-          <Input
-            id="volume_liter"
-            placeholder="Volume"
-            {...register('volume_liter')}
+          <FormLabel fontSize="sm" htmlFor="volume_liter">
+            Volume (Ltr)
+          </FormLabel>
+          <Controller
+            control={control}
+            name="volume_liter"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <Input
+                getInputRef={ref}
+                as={NumericFormat}
+                onValueChange={(event: NumberFormatValues) =>
+                  onChange(event.value)
+                }
+                onBlur={onBlur}
+                value={value}
+                id="volume_liter"
+                defaultValue={0}
+                decimalSeparator=","
+                thousandSeparator="."
+                disabled={isLoading}
+              />
+            )}
           />
           <FormErrorMessage>
             {errors.volume_liter && errors.volume_liter.message}
@@ -74,11 +126,22 @@ const FormBahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.waktu_mulai)}>
-          <FormLabel fontSize="sm" htmlFor="waktu_mulai">Waktu Mulai</FormLabel>
-          <Input
-            id="waktu_mulai"
-            placeholder="Waktu Mulai"
-            {...register('waktu_mulai')}
+          <FormLabel fontSize="sm" htmlFor="waktu_mulai">
+            Waktu Mulai
+          </FormLabel>
+          <Controller
+            control={control}
+            name="waktu_mulai"
+            render={({ field: { onChange, value, onBlur } }) => (
+              <ReactDatePicker
+                readOnly={isLoading}
+                onChange={onChange}
+                onBlur={onBlur}
+                selected={value}
+                dateFormat="dd / MM / yyyy"
+                disabled={isLoading}
+              />
+            )}
           />
           <FormErrorMessage>
             {errors.waktu_mulai && errors.waktu_mulai.message}
@@ -86,7 +149,9 @@ const FormBahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.catatan)}>
-          <FormLabel fontSize="sm" htmlFor="catatan">Catatan</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="catatan">
+            Catatan
+          </FormLabel>
           <Textarea
             id="catatan"
             rows={3}
@@ -99,10 +164,21 @@ const FormBahan = ({ onClose: handleCloseModal, initialValues }: Props) => {
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button onClick={handleCloseModal} type="button" variant="ghost">
+        <Button
+          onClick={handleCloseModal}
+          type="button"
+          variant="ghost"
+          disabled={isLoading}
+        >
           Batal
         </Button>
-        <Button type="submit" variant="primary">
+        <Button
+          type="submit"
+          colorScheme="green"
+          isLoading={isLoading}
+          loadingText="Menyimpan..."
+          spinnerPlacement="start"
+        >
           {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>

@@ -71,10 +71,8 @@ const Penawaran = () => {
   }, []);
 
   const handleDelete = useCallback(
-    (id: string) => {
-      if (action?.delete?.id) deleteOffer.mutate(id);
-    },
-    [action?.delete?.id]
+    (id: string) => id && deleteOffer.mutate(id),
+    []
   );
 
   useEffect(() => {

@@ -84,11 +84,10 @@ const Setoran = () => {
     []
   );
 
-  const handleDelete = useCallback(() => {
-    if (action?.delete?.id) {
-      deleteSetoran.mutate(action.delete.id);
-    }
-  }, [action?.delete?.id]);
+  const handleDelete = useCallback(
+    (id: string) => id && deleteSetoran.mutate(id),
+    []
+  );
 
   useEffect(() => {
     if (
@@ -176,7 +175,9 @@ const Setoran = () => {
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
-                onClick={handleDelete}
+                onClick={() =>
+                  handleDelete((action?.delete as TSchemaDeleteSetoran)?.id)
+                }
                 ml={3}
               >
                 Delete

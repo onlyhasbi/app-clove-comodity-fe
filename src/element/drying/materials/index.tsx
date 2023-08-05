@@ -15,36 +15,92 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import FormBahan from './form';
 import TabelBahan from './table';
-import { TDelete, TUpdate } from './types';
+import { TSchemaBahan, TSchemaDeleteBahan, TSchemaUpdateBahan } from './schema';
+import {
+  useDeleteMaterial,
+  useGetMaterial,
+  usePostMaterial,
+  useUpdateMaterial,
+} from '../../../hooks/useMaterial.hook';
+import dayjs from 'dayjs';
+import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TSchemaUpdateBahan;
+  delete?: TSchemaDeleteBahan;
 };
 
 const BahanPengeringan = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
+  const getMaterial = useGetMaterial();
+  const postMaterial = usePostMaterial();
+  const deleteMaterial = useDeleteMaterial();
+  const updateMaterial = useUpdateMaterial();
+
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
-
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TSchemaUpdateBahan) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
-
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TSchemaDeleteBahan) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
-  const cancelRef = useRef(null);
+  const handleSave = useCallback(
+    (payload: TSchemaBahan | TSchemaUpdateBahan) => {
+      const defaultPayload = {
+        berat_kg: payload.berat_kg,
+        volume_liter: payload.volume_liter,
+        dikeringkan_pada_hari: dayjs(payload.waktu_mulai).format('YYYY/MM/DD'),
+        catatan: payload.catatan,
+      };
+
+      if ('id' in payload) {
+        updateMaterial.mutate({ id: payload.id, ...defaultPayload });
+      } else {
+        postMaterial.mutate(defaultPayload);
+      }
+    },
+    []
+  );
+
+  const handleDelete = useCallback(
+    (id: string) => deleteMaterial.mutate(id),
+    []
+  );
+
+  useEffect(() => {
+    if (
+      postMaterial.isSuccess ||
+      updateMaterial.isSuccess ||
+      deleteMaterial.isSuccess
+    ) {
+      getMaterial.refetch();
+    }
+  }, [
+    postMaterial.isSuccess,
+    deleteMaterial.isSuccess,
+    updateMaterial.isSuccess,
+  ]);
+
+  useEffect(() => {
+    if (updateMaterial.isSuccess || deleteMaterial.isSuccess) {
+      handleReset();
+    }
+  }, [updateMaterial.isSuccess, deleteMaterial.isSuccess, handleReset]);
 
   return (
     <>
@@ -55,6 +111,12 @@ const BahanPengeringan = () => {
           </Button>
         </Box>
         <TabelBahan
+          isLoading={getMaterial.isLoading}
+          data={
+            getMaterial.isSuccess
+              ? tableAdapter(getMaterial?.data?.data?.data?.bahan)
+              : []
+          }
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -71,7 +133,12 @@ const BahanPengeringan = () => {
           } Bahan Pengeringan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormBahan initialValues={action?.update} onClose={handleReset} />
+            <FormBahan
+              isLoading={postMaterial.isLoading || updateMaterial.isLoading}
+              onSave={handleSave}
+              initialValues={action?.update}
+              onClose={handleReset}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -84,7 +151,7 @@ const BahanPengeringan = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.berat_kg}`}
+              Delete Bahan
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -96,11 +163,13 @@ const BahanPengeringan = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deleteMaterial.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={() =>
+                  handleDelete((action?.delete as TSchemaDeleteBahan)?.id)
+                }
                 ml={3}
               >
                 Delete

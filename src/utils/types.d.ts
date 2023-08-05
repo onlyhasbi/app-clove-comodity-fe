@@ -150,3 +150,19 @@ type GetPenjualan = {
   catatan: string;
   verifikasi_non_author: boolean;
 };
+
+// Tim
+type GetTim = {
+  id: string;
+  nama_tim: string;
+  ketua_tim: string;
+};
+
+// Bahan Pengeringan
+type GetBahan = {
+  id: string;
+  berat_kg: string;
+  volume_liter: string;
+  dikeringkan_pada_hari: string;
+  catatan: string;
+};

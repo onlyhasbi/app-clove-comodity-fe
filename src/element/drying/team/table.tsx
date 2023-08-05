@@ -3,48 +3,31 @@ import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TDelete, TTableTim, TUpdate } from './types';
-
-const dummy = [
-  {
-    nama: 'Rakko 1',
-    ketua: 'Aso',
-    anggota: 'Ahmad',
-    action: {
-      update: {
-        id: '1',
-        nama: 'Rakko 1',
-        ketua: 'Aso',
-        anggota: `Ahmad`,
-      },
-      delete: { id: '1', nama: 'Rakko 1' },
-    },
-  },
-];
+import { TSchemaDeleteTim, TSchemaUpdateTim } from './schema';
 
 type Props = {
-  onDelete: (data: TDelete) => void;
-  onUpdate: (data: TUpdate) => void;
+  isLoading?: boolean;
+  data: any[];
+  onDelete: (data: TSchemaDeleteTim) => void;
+  onUpdate: (data: TSchemaUpdateTim) => void;
 };
 
 const TabelTim = ({
+  isLoading,
+  data,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
   const columnHelper = createColumnHelper<TTableTim>();
   const columns = [
-    columnHelper.accessor('nama', {
-      id: 'nama',
-      header: () => <Box>Nama</Box>,
+    columnHelper.accessor('nama_tim', {
+      id: 'nama_tim',
+      header: () => <Box>Nama Tim</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
-    columnHelper.accessor('ketua', {
-      id: 'ketua',
-      header: () => <Box>Ketua</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
-    }),
-    columnHelper.accessor('anggota', {
-      id: 'anggota',
-      header: () => <Box>Anggota</Box>,
+    columnHelper.accessor('ketua_tim', {
+      id: 'ketua_tim',
+      header: () => <Box>Ketua Tim</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
     columnHelper.accessor('action', {
@@ -54,17 +37,19 @@ const TabelTim = ({
         return (
           <HStack gap={3} justify="center">
             <Box
-              title="ubah"
+              as="button"
+              title="Klik untuk mengubah data tim"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'blue.600' }}
               onClick={() => handleUpdate(getValue().update)}
             >
               <Edit height={15} width={15} />
             </Box>
             <Box
-              title="hapus"
+              as="button"
+              title="Klik untuk menghapus data tim"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'red.600' }}
               onClick={() => handleDelete(getValue().delete)}
             >
               <Trash2 height={15} width={15} />
@@ -75,7 +60,7 @@ const TabelTim = ({
     }),
   ];
 
-  return <Table data={dummy} columns={columns} />;
+  return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
 export default TabelTim;

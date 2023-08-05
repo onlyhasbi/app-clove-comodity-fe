@@ -86,11 +86,7 @@ const Hasil = () => {
     []
   );
 
-  const handleDelete = useCallback(() => {
-    if (action?.delete?.id) {
-      deleteHasil.mutate((action?.delete as TSchemaDeleteHasil)?.id);
-    }
-  }, [action?.delete?.id]);
+  const handleDelete = useCallback((id: string) => id && deleteHasil.mutate(id), []);
 
   useEffect(() => {
     if (postHasil.isSuccess || updateHasil.isSuccess || deleteHasil.isSuccess) {
@@ -173,7 +169,9 @@ const Hasil = () => {
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
-                onClick={handleDelete}
+                onClick={() =>
+                  deleteHasil.mutate((action?.delete as TSchemaDeleteHasil)?.id)
+                }
                 ml={3}
               >
                 Delete

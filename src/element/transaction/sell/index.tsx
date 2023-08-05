@@ -78,11 +78,10 @@ const Penjualan = () => {
     }
   }, []);
 
-  const handleDelete = useCallback(() => {
-    if (action?.delete?.id) {
-      deletePenjualan.mutate((action?.delete as TSchemaDeletePenjualan)?.id);
-    }
-  }, [action?.delete?.id]);
+  const handleDelete = useCallback(
+    (id: string) => id && deletePenjualan.mutate(id),
+    []
+  );
 
   useEffect(() => {
     if (
@@ -165,7 +164,9 @@ const Penjualan = () => {
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
-                onClick={handleDelete}
+                onClick={() =>
+                  handleDelete((action?.delete as TSchemaDeletePenjualan)?.id)
+                }
                 ml={3}
               >
                 Delete

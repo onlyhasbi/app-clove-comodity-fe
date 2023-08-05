@@ -15,36 +15,98 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import FormHasilPengeringan from './form';
 import TabelHasilPengeringan from './table';
-import { TDelete, TUpdate } from './types';
+import {
+  TAddPengeringan,
+  TDeletePengeringan,
+  TUpdatePengeringan,
+} from './schema';
+import {
+  useDeletePengeringan,
+  useGetPengeringan,
+  usePostPengeringan,
+  useUpdatePengeringan,
+} from '../../../hooks/useDryResult.hook';
+import dayjs from 'dayjs';
+import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdate;
-  delete?: TDelete;
+  update?: TUpdatePengeringan;
+  delete?: TDeletePengeringan;
 };
 
 const HasilPengeringan = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
+  const getPengeringan = useGetPengeringan();
+  const postPengeringan = usePostPengeringan();
+  const deletePengeringan = useDeletePengeringan();
+  const updatePengeringan = useUpdatePengeringan();
+
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
-
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdate) => setAction((prev) => ({ ...prev, update: data })),
+    (data: TUpdatePengeringan) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
-
   const handleOpenModalDelete = useCallback(
-    (data: TDelete) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: TDeletePengeringan) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
-  const cancelRef = useRef(null);
+  const handleSave = useCallback(
+    (payload: TAddPengeringan | TUpdatePengeringan) => {
+      const defaultPayload = {
+        id_tim: payload.tim,
+        berat_kg: +payload.berat,
+        volume_liter: +payload.volume,
+        kering_pada_hari: payload.tanggal,
+        catatan: payload.catatan,
+        upah: +payload.upah,
+      };
+
+      if ('id' in payload) {
+        updatePengeringan.mutate({ id: payload.id, ...defaultPayload });
+      } else {
+        postPengeringan.mutate(defaultPayload);
+      }
+    },
+    []
+  );
+
+  const handleDelete = useCallback(
+    (id: string) => deletePengeringan.mutate(id),
+    []
+  );
+
+  useEffect(() => {
+    if (
+      postPengeringan.isSuccess ||
+      updatePengeringan.isSuccess ||
+      deletePengeringan.isSuccess
+    ) {
+      getPengeringan.refetch();
+    }
+  }, [
+    postPengeringan.isSuccess,
+    deletePengeringan.isSuccess,
+    updatePengeringan.isSuccess,
+  ]);
+
+  useEffect(() => {
+    if (updatePengeringan.isSuccess || deletePengeringan.isSuccess) {
+      handleReset();
+    }
+  }, [updatePengeringan.isSuccess, deletePengeringan.isSuccess, handleReset]);
 
   return (
     <>
@@ -55,6 +117,12 @@ const HasilPengeringan = () => {
           </Button>
         </Box>
         <TabelHasilPengeringan
+          isLoading={getPengeringan.isLoading}
+          data={
+            getPengeringan.isSuccess
+              ? tableAdapter(getPengeringan?.data?.data?.data?.hasil)
+              : []
+          }
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -72,6 +140,10 @@ const HasilPengeringan = () => {
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
             <FormHasilPengeringan
+              isLoading={
+                postPengeringan.isLoading || updatePengeringan.isLoading
+              }
+              onSave={handleSave}
               initialValues={action?.update}
               onClose={handleReset}
             />
@@ -87,7 +159,7 @@ const HasilPengeringan = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDelete)?.tim}`}
+              Delete Hasil Pengeringan
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -99,11 +171,13 @@ const HasilPengeringan = () => {
                 Cancel
               </Button>
               <Button
+                isLoading={deletePengeringan.isLoading}
+                loadingText="Menghapus..."
+                spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() => {
-                  console.log((action?.delete as TDelete)?.id);
-                  handleReset();
-                }}
+                onClick={() =>
+                  handleDelete((action?.delete as TDeletePengeringan)?.id)
+                }
                 ml={3}
               >
                 Delete

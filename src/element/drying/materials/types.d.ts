@@ -1,13 +1,15 @@
-import { schemaBahanPengeringan } from './schema';
-
-export type TUpdate = schemaBahanPengeringan & { id: string };
-export type TDelete = { id: string; berat_kg: string };
+import { TSchemaBahan, TSchemaUpdateBahan, TSchemaDeleteBahan } from './schema';
 
 type TActionTable = {
-  update: TUpdate;
-  delete: TDelete;
+  update: TSchemaUpdateBahan;
+  delete: TSchemaDeleteBahan;
 };
 
-export type TTableBahanPengeringan = schemaBahanPengeringan & {
+export type TTableBahan = {
+  berat_kg: string;
+  volume_liter: string;
+  waktu_mulai: string;
+  catatan: string;
+} & {
   action: TActionTable;
 };

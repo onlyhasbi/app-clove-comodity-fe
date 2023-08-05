@@ -78,11 +78,7 @@ const Lahan = () => {
     []
   );
 
-  const handleDelete = useCallback(() => {
-    if (action?.delete?.id) {
-      deleteLahan.mutate((action?.delete as TSchemaDeleteLahan)?.id);
-    }
-  }, [action?.delete?.id]);
+  const handleDelete = useCallback((id: string) => id && deleteLahan.mutate(id), []);
 
   useEffect(() => {
     if (postLahan.isSuccess || updateLahan.isSuccess || deleteLahan.isSuccess)
@@ -158,7 +154,9 @@ const Lahan = () => {
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
-                onClick={handleDelete}
+                onClick={() =>
+                  handleDelete((action?.delete as TSchemaDeleteLahan)?.id)
+                }
                 ml={3}
               >
                 Hapus

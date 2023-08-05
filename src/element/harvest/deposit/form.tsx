@@ -70,14 +70,14 @@ const FormSetoran = ({
     getHasil?.data?.data?.data?.hasil_panen || []
   );
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
       handleSave({
         id: (initialValues as TSchemaUpdateSetoran).id,
-        ...data,
+        ...payload,
       } as TSchemaUpdateSetoran);
     } else {
-      handleSave(data as TSchemaSetoran);
+      handleSave(payload as TSchemaSetoran);
       reset();
     }
   };

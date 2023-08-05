@@ -10,22 +10,34 @@ import {
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues } from 'react-hook-form';
-import { defaultValues, schemaTim } from './schema';
+import {
+  TSchemaTim,
+  TSchemaUpdateTim,
+  defaultValues,
+  schemaTim,
+} from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { TUpdate } from './types';
 
 type Props = {
   onClose: () => void;
-  initialValues: TUpdate | undefined | boolean;
+  isLoading?: boolean;
+  onSave: (payload: TSchemaTim | TSchemaUpdateTim) => void;
+  initialValues: TSchemaUpdateTim | undefined | boolean;
 };
 
-const FormTim = ({ onClose: handleCloseModal, initialValues }: Props) => {
+const FormTim = ({
+  isLoading,
+  onSave: handleSave,
+  onClose: handleCloseModal,
+  initialValues,
+}: Props) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
     setValue,
+    reset,
   } = useForm({
     defaultValues,
     resolver: zodResolver(schemaTim),
@@ -33,69 +45,71 @@ const FormTim = ({ onClose: handleCloseModal, initialValues }: Props) => {
 
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
-      const { nama, ketua, anggota } = initialValues;
-      setValue('nama', nama);
-      setValue('ketua', ketua);
-      setValue('anggota', anggota);
+      const { nama_tim, ketua_tim } = initialValues;
+      setValue('nama_tim', nama_tim);
+      setValue('ketua_tim', ketua_tim);
     }
   }, []);
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
-      console.log('update', data);
-      handleCloseModal();
+      handleSave({
+        id: (initialValues as TSchemaUpdateTim).id,
+        ...payload,
+      } as TSchemaUpdateTim);
     } else {
-      console.log('add', data);
+      handleSave(payload as TSchemaTim);
+      reset();
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack gap={4}>
-        <FormControl isInvalid={Boolean(errors.nama)}>
-          <FormLabel fontSize="sm" htmlFor="nama">
+        <FormControl isInvalid={Boolean(errors.nama_tim)}>
+          <FormLabel fontSize="sm" htmlFor="nama_tim">
             Nama
           </FormLabel>
-          <Input id="nama" placeholder="Nama" {...register('nama')} />
+          <Input
+            id="nama_tim"
+            placeholder="Nama Tim"
+            {...register('nama_tim')}
+          />
           <FormErrorMessage>
-            {errors.nama && errors.nama.message}
+            {errors.nama_tim && errors.nama_tim.message}
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={Boolean(errors.ketua)}>
-          <FormLabel fontSize="sm" htmlFor="ketua">
+        <FormControl isInvalid={Boolean(errors.ketua_tim)}>
+          <FormLabel fontSize="sm" htmlFor="ketua_tim">
             Ketua
           </FormLabel>
-          <Select id="ketua" placeholder="Pilih Ketua" {...register('ketua')}>
-            <option value="Aso">Aso</option>
-            <option value="Antoni">Antoni</option>
-          </Select>
+          <Input
+            id="ketua_tim"
+            placeholder="Ketua Tim"
+            {...register('ketua_tim')}
+          />
           <FormErrorMessage>
-            {errors.ketua && errors.ketua.message}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={Boolean(errors.anggota)}>
-          <FormLabel fontSize="sm" htmlFor="anggota">
-            Anggota
-          </FormLabel>
-          <Select
-            id="anggota"
-            placeholder="Pilih Anggota"
-            {...register('anggota')}
-          >
-            <option value="Ahmad">Ahmad</option>
-          </Select>
-          <FormErrorMessage>
-            {errors.anggota && errors.anggota.message}
+            {errors.ketua_tim && errors.ketua_tim.message}
           </FormErrorMessage>
         </FormControl>
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
-        <Button onClick={handleCloseModal} type="button" variant="ghost">
+        <Button
+          disabled={isLoading}
+          onClick={handleCloseModal}
+          type="button"
+          variant="ghost"
+        >
           Batal
         </Button>
-        <Button type="submit" variant="primary">
+        <Button
+          type="submit"
+          colorScheme="green"
+          isLoading={isLoading}
+          loadingText="Menyimpan..."
+          spinnerPlacement="start"
+        >
           {`${initialValues ? 'Perbarui' : 'Simpan'}`}
         </Button>
       </HStack>
