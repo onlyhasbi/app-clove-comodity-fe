@@ -29,7 +29,6 @@ import {
   usePostPengeringan,
   useUpdatePengeringan,
 } from '../../../hooks/useDryResult.hook';
-import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
 
 type TAction = {
