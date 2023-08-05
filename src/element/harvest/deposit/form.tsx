@@ -135,7 +135,7 @@ const FormSetoran = ({
                 getInputRef={ref}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
+                  onChange(event.floatValue)
                 }
                 onBlur={onBlur}
                 value={value}
@@ -164,7 +164,7 @@ const FormSetoran = ({
                 getInputRef={ref}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
+                  onChange(event.floatValue)
                 }
                 onBlur={onBlur}
                 value={value}
@@ -193,7 +193,7 @@ const FormSetoran = ({
                 getInputRef={ref}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
+                  onChange(event.floatValue)
                 }
                 onBlur={onBlur}
                 value={value}

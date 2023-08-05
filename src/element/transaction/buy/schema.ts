@@ -5,8 +5,8 @@ export const schemaPembelian = z.object({
   jenis_komoditas: z
     .string()
     .nonempty({ message: 'Jenis komoditas tidak boleh kosong' }),
-  berat_kg: z.string().nonempty({ message: 'Berat tidak boleh kosong' }),
-  harga_rp: z.string().nonempty({ message: 'Harga tidak boleh kosong' }),
+  berat_kg: z.number().min(1,{ message: 'Berat tidak boleh kosong' }),
+  harga_rp: z.number().min(1,{ message: 'Harga tidak boleh kosong' }),
   tanggal: z.coerce.date(),
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
@@ -18,8 +18,8 @@ export type TSchemaDeletePembelian = { id: string };
 export const defaultValues = {
   id_penjual: '',
   jenis_komoditas: '',
-  berat_kg: '0',
-  harga_rp: '0',
+  berat_kg: 0,
+  harga_rp: 0,
   tanggal: new Date(),
   catatan: '',
 };

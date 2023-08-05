@@ -132,7 +132,7 @@ const FormPembeli = ({
                 disabled={isLoading}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
+                  onChange(event.floatValue)
                 }
                 onBlur={onBlur}
                 value={value}
@@ -161,7 +161,7 @@ const FormPembeli = ({
                 disabled={isLoading}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
+                  onChange(event.floatValue)
                 }
                 onBlur={onBlur}
                 value={value}

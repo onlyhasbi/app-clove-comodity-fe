@@ -13,8 +13,8 @@ export const tableAdapter = (payloads: GetBahan[]) => {
       action: {
         update: {
           id,
-          berat_kg,
-          volume_liter,
+          berat_kg: +berat_kg,
+          volume_liter: +volume_liter,
           waktu_mulai: new Date(dikeringkan_pada_hari),
           catatan,
         },

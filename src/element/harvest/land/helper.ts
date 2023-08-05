@@ -28,7 +28,7 @@ export const tableAdapter = (payloads: GetLahan[]) => {
           provinsi: provinsi,
           kabupaten: lokasi,
           status_lahan: status_hak_panen,
-          luas_lahan: luas_m2,
+          luas_lahan: +luas_m2,
           hasil_panen: total_massa_kg_hasil_panen_lahan,
         },
 

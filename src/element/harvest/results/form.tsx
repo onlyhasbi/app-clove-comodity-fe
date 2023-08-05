@@ -113,7 +113,7 @@ const FormHasil = ({
                 getInputRef={ref}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
+                  onChange(event.floatValue)
                 }
                 onBlur={onBlur}
                 value={value}
@@ -142,7 +142,7 @@ const FormHasil = ({
                 getInputRef={ref}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
-                  onChange(event.value)
+                  onChange(event.floatValue)
                 }
                 onBlur={onBlur}
                 value={value}

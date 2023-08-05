@@ -22,8 +22,8 @@ export const tableAdapter = (payloads: GetResult[]) => {
         update: {
           id,
           lahan: id_lahan,
-          berat: String(berat_pengukuran_kg),
-          volume: String(volume_pengukuran_liter),
+          berat: +berat_pengukuran_kg,
+          volume: +volume_pengukuran_liter,
           tanggal: waktu,
           catatan: catatan,
         },
