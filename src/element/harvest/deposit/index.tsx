@@ -96,16 +96,13 @@ const Setoran = () => {
       postSetoran.isSuccess ||
       updateSetoran.isSuccess ||
       deleteSetoran.isSuccess
-    ) {
+    )
       getSetoran.refetch();
-    }
   }, [postSetoran.isSuccess, deleteSetoran.isSuccess, updateSetoran.isSuccess]);
 
   useEffect(() => {
-    if (updateSetoran.isSuccess || deleteSetoran.isSuccess) {
-      handleReset();
-    }
-  }, [deleteSetoran.isSuccess, updateSetoran.isSuccess, handleReset]);
+    if (updateSetoran.isSuccess || deleteSetoran.isSuccess) handleReset();
+  }, [updateSetoran.isSuccess, deleteSetoran.isSuccess, handleReset]);
 
   return (
     <>

@@ -49,7 +49,6 @@ const Penjualan = () => {
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
-  const handleReset = useCallback(() => setAction(null), []);
 
   const cancelRef = useRef(null);
 
@@ -57,6 +56,8 @@ const Penjualan = () => {
   const updatePenjualan = useUpdatePenjualan();
   const deletePenjualan = useDeletePenjualan();
   const getPenjualan = useGetPenjualan();
+
+  const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback((payload: any) => {
     const defaultPayload = {
@@ -86,9 +87,8 @@ const Penjualan = () => {
       postPenjualan.isSuccess ||
       updatePenjualan.isSuccess ||
       deletePenjualan.isSuccess
-    ) {
+    )
       getPenjualan.refetch();
-    }
   }, [
     postPenjualan.isSuccess,
     deletePenjualan.isSuccess,
@@ -96,10 +96,8 @@ const Penjualan = () => {
   ]);
 
   useEffect(() => {
-    if (updatePenjualan.isSuccess || deletePenjualan.isSuccess) {
-      handleReset();
-    }
-  }, [deletePenjualan.isSuccess, updatePenjualan.isSuccess, handleReset]);
+    if (updatePenjualan.isSuccess || deletePenjualan.isSuccess) handleReset();
+  }, [updatePenjualan.isSuccess, deletePenjualan.isSuccess, handleReset]);
 
   return (
     <>

@@ -87,9 +87,8 @@ const Pembelian = () => {
       postPembelian.isSuccess ||
       updatePembelian.isSuccess ||
       deletePembelian.isSuccess
-    ) {
+    )
       getPembelian.refetch();
-    }
   }, [
     postPembelian.isSuccess,
     deletePembelian.isSuccess,
@@ -97,10 +96,8 @@ const Pembelian = () => {
   ]);
 
   useEffect(() => {
-    if (updatePembelian.isSuccess || deletePembelian.isSuccess) {
-      handleReset();
-    }
-  }, [deletePembelian.isSuccess, updatePembelian.isSuccess, handleReset]);
+    if (updatePembelian.isSuccess || deletePembelian.isSuccess) handleReset();
+  }, [updatePembelian.isSuccess, deletePembelian.isSuccess, handleReset]);
 
   return (
     <>

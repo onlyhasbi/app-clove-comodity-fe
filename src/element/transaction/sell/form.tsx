@@ -31,8 +31,8 @@ type Props = {
 };
 
 const FormPenjualan = ({
-  onClose: handleCloseModal,
   isLoading,
+  onClose: handleCloseModal,
   onSave: handleSave,
   initialValues,
 }: Props) => {
