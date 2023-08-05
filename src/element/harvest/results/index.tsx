@@ -39,10 +39,13 @@ type TAction = {
 const Hasil = () => {
   const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
+
   const handleOpenModalUpdate = useCallback(
     (data: TSchemaUpdateHasil) =>
       setAction((prev) => ({ ...prev, update: data })),
@@ -55,14 +58,12 @@ const Hasil = () => {
     []
   );
 
-  const handleReset = useCallback(() => setAction(null), []);
-
-  const cancelRef = useRef(null);
-
   const getHasil = useGetHasil();
   const postHasil = usePostHasil();
   const deleteHasil = useDeleteHasil();
   const updateHasil = useUpdateHasil();
+
+  const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback(
     (payload: TSchemaHasil | TSchemaUpdateHasil) => {

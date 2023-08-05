@@ -40,6 +40,13 @@ type TAction = {
 
 const Setoran = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
+  const getSetoran = useGetSetoran();
+  const postSetoran = usePostSetoran();
+  const deleteSetoran = useDeleteSetoran();
+  const updateSetoran = useUpdateSetoran();
+
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
@@ -49,20 +56,12 @@ const Setoran = () => {
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
-
   const handleOpenModalDelete = useCallback(
     (data: TSchemaDeleteSetoran) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
-
-  const cancelRef = useRef(null);
-
-  const getSetoran = useGetSetoran();
-  const postSetoran = usePostSetoran();
-  const deleteSetoran = useDeleteSetoran();
-  const updateSetoran = useUpdateSetoran();
 
   const handleSave = useCallback(
     (payload: TSchemaSetoran | TSchemaUpdateSetoran) => {
@@ -87,7 +86,7 @@ const Setoran = () => {
 
   const handleDelete = useCallback(() => {
     if (action?.delete?.id) {
-      deleteSetoran.mutate((action?.delete as TSchemaDeleteSetoran)?.id);
+      deleteSetoran.mutate(action.delete.id);
     }
   }, [action?.delete?.id]);
 
@@ -96,12 +95,15 @@ const Setoran = () => {
       postSetoran.isSuccess ||
       updateSetoran.isSuccess ||
       deleteSetoran.isSuccess
-    )
+    ) {
       getSetoran.refetch();
+    }
   }, [postSetoran.isSuccess, deleteSetoran.isSuccess, updateSetoran.isSuccess]);
 
   useEffect(() => {
-    if (updateSetoran.isSuccess || deleteSetoran.isSuccess) handleReset();
+    if (updateSetoran.isSuccess || deleteSetoran.isSuccess) {
+      handleReset();
+    }
   }, [updateSetoran.isSuccess, deleteSetoran.isSuccess, handleReset]);
 
   return (

@@ -35,6 +35,8 @@ type TAction = {
 
 const Lahan = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
@@ -51,14 +53,12 @@ const Lahan = () => {
     []
   );
 
-  const handleReset = useCallback(() => setAction(null), []);
-
-  const cancelRef = useRef(null);
-
   const getLahan = useGetLahan();
   const postLahan = usePostLahan();
   const deleteLahan = useDeleteLahan();
   const updateLahan = useUpdateLahan();
+
+  const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback(
     (payload: TSchemaLahan | TSchemaUpdateLahan) => {

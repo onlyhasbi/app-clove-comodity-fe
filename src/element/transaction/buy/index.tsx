@@ -35,10 +35,13 @@ type TAction = {
 
 const Pembelian = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
+
   const handleOpenModalUpdate = useCallback(
     (data: TSchemaUpdatePembelian) =>
       setAction((prev) => ({ ...prev, update: data })),
@@ -50,14 +53,13 @@ const Pembelian = () => {
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
-  const handleReset = useCallback(() => setAction(null), []);
-
-  const cancelRef = useRef(null);
 
   const postPembelian = usePostPembelian();
   const updatePembelian = useUpdatePembelian();
   const deletePembelian = useDeletePembelian();
   const getPembelian = useGetPembelian();
+
+  const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback((payload: any) => {
     const defaultPayload = {

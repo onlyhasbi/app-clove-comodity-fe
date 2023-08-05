@@ -33,6 +33,8 @@ type TAction = {
 
 const Pekerjaan = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
   const handleUpdate = useCallback(
     (data: TSchemaUpdatePekerjaan) =>
       setAction((prev) => ({ ...prev, update: data })),
@@ -45,13 +47,12 @@ const Pekerjaan = () => {
     []
   );
 
-  const handleReset = useCallback(() => setAction(null), []);
-  const cancelRef = useRef(null);
-
   const getWork = useGetWork();
   const postWork = usePostWork();
   const updateWork = useUpdateWork();
   const deleteWork = useDeleteWork();
+
+  const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = (payload: TSchemaPekerjaan | TSchemaUpdatePekerjaan) => {
     const defaultPayload = {

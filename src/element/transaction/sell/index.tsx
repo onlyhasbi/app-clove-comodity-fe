@@ -35,22 +35,24 @@ type TAction = {
 
 const Penjualan = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
+
   const handleOpenModalUpdate = useCallback(
     (data: TSchemaUpdatePenjualan) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
+
   const handleOpenModalDelete = useCallback(
     (data: TSchemaDeletePenjualan) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
-
-  const cancelRef = useRef(null);
 
   const postPenjualan = usePostPenjualan();
   const updatePenjualan = useUpdatePenjualan();

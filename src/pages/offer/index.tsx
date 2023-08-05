@@ -32,6 +32,8 @@ type TAction = {
 
 const Penawaran = () => {
   const [action, setAction] = useState<TAction | null>(null);
+  const cancelRef = useRef(null);
+
   const handleUpdate = useCallback(
     (data: TSchemaUpdatePenawaran) =>
       setAction((prev) => ({ ...prev, update: data })),
@@ -44,14 +46,12 @@ const Penawaran = () => {
     []
   );
 
-  const handleReset = useCallback(() => setAction(null), []);
-
-  const cancelRef = useRef(null);
-
   const postOffer = usePostOffer();
   const deleteOffer = useDeleteOffer();
   const updateOffer = useUpdateOffer();
   const getOffer = useGetOffer();
+
+  const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback((payload: any) => {
     const defaultPayload = {
