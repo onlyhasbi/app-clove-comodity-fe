@@ -25,7 +25,6 @@ import {
   usePostHasil,
   useUpdateHasil,
 } from '../../../hooks/useResult.hook';
-import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
 import { useQueryClient } from '@tanstack/react-query';
 import { url } from '../../../utils/config/url';
