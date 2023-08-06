@@ -14,9 +14,9 @@ export const schemaPenawaran = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TSchemaPenawaran = z.infer<typeof schemaPenawaran>;
-export type TSchemaUpdatePenawaran = TSchemaPenawaran & { id: string };
-export type TSchemaDeletePenawaran = { id: string };
+export type TAddPenawaran = z.infer<typeof schemaPenawaran>;
+export type TUpdatePenawaran = TAddPenawaran & { id: string };
+export type TDeletePenawaran = { id: string };
 
 export const defaultValues = {
   jenis_penawaran: '',

@@ -4,13 +4,13 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTableBahan } from './types';
 import { NumericFormat } from 'react-number-format';
-import { TSchemaUpdateBahan, TSchemaDeleteBahan } from './schema';
+import { TUpdateBahan, TDeleteBahan } from './schema';
 
 type Props = {
   data: any[];
   isLoading: boolean;
-  onDelete: (data: TSchemaDeleteBahan) => void;
-  onUpdate: (data: TSchemaUpdateBahan) => void;
+  onDelete: (data: TDeleteBahan) => void;
+  onUpdate: (data: TUpdateBahan) => void;
 };
 
 const TabelBahan = ({

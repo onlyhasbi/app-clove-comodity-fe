@@ -12,8 +12,8 @@ import {
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
-  TSchemaPembelian,
-  TSchemaUpdatePembelian,
+  TAddPembelian,
+  TUpdatePembelian,
   defaultValues,
   schemaPembelian,
 } from './schema';
@@ -25,9 +25,9 @@ import ReactDatePicker from 'react-datepicker';
 
 type Props = {
   isLoading: boolean;
-  onSave: (payload: TSchemaPembelian | TSchemaUpdatePembelian) => void;
+  onSave: (payload: TAddPembelian | TUpdatePembelian) => void;
   onClose: () => void;
-  initialValues: TSchemaUpdatePembelian | undefined | boolean;
+  initialValues: TUpdatePembelian | undefined | boolean;
 };
 
 const FormPembeli = ({
@@ -71,11 +71,11 @@ const FormPembeli = ({
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TSchemaUpdatePembelian).id,
+        id: (initialValues as TUpdatePembelian).id,
         ...data,
-      } as TSchemaUpdatePembelian);
+      } as TUpdatePembelian);
     } else {
-      handleSave(data as TSchemaPembelian);
+      handleSave(data as TAddPembelian);
       reset();
     }
   };

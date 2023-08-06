@@ -14,9 +14,9 @@ import {
 } from '@chakra-ui/react';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import {
-  TSchemaDeletePekerjaan,
-  TSchemaPekerjaan,
-  TSchemaUpdatePekerjaan,
+  TDeletePekerjaan,
+  TAddPekerjaan,
+  TUpdatePekerjaan,
 } from '@/element/work/schema';
 import {
   usePostWork,
@@ -27,8 +27,8 @@ import {
 import { tableAdapter } from '../../element/work/helper';
 
 type TAction = {
-  update?: TSchemaUpdatePekerjaan;
-  delete?: TSchemaDeletePekerjaan;
+  update?: TUpdatePekerjaan;
+  delete?: TDeletePekerjaan;
 };
 
 const Pekerjaan = () => {
@@ -36,13 +36,13 @@ const Pekerjaan = () => {
   const cancelRef = useRef(null);
 
   const handleUpdate = useCallback(
-    (data: TSchemaUpdatePekerjaan) =>
+    (data: TUpdatePekerjaan) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TSchemaDeletePekerjaan) =>
+    (data: TDeletePekerjaan) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
@@ -54,7 +54,7 @@ const Pekerjaan = () => {
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = (payload: TSchemaPekerjaan | TSchemaUpdatePekerjaan) => {
+  const handleSave = (payload: TAddPekerjaan | TUpdatePekerjaan) => {
     const defaultPayload = {
       jenis_pekerjaan: payload.nama_pekerjaan,
       upah_rp: +payload.upah,
@@ -166,7 +166,7 @@ const Pekerjaan = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TSchemaDeletePekerjaan)?.id)
+                  handleDelete((action?.delete as TDeletePekerjaan)?.id)
                 }
                 ml={3}
               >

@@ -3,13 +3,13 @@ import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTableTim } from './types';
-import { TSchemaDeleteTim, TSchemaUpdateTim } from './schema';
+import { TDeleteTim, TUpdateTim } from './schema';
 
 type Props = {
   isLoading?: boolean;
   data: any[];
-  onDelete: (data: TSchemaDeleteTim) => void;
-  onUpdate: (data: TSchemaUpdateTim) => void;
+  onDelete: (data: TDeleteTim) => void;
+  onUpdate: (data: TUpdateTim) => void;
 };
 
 const TabelTim = ({

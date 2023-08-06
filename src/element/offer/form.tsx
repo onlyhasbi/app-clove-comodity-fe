@@ -13,8 +13,8 @@ import {
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
-  TSchemaPenawaran,
-  TSchemaUpdatePenawaran,
+  TAddPenawaran,
+  TUpdatePenawaran,
   defaultValues,
   schemaPenawaran,
 } from './schema';
@@ -28,10 +28,10 @@ import {
 } from '../../model/penawaran.model';
 
 type Props = {
-  initialValues: TSchemaUpdatePenawaran | undefined | boolean;
+  initialValues: TUpdatePenawaran | undefined | boolean;
   isLoading: boolean;
   onReset: () => void;
-  onSave: (payload: TSchemaPenawaran | TSchemaUpdatePenawaran) => void;
+  onSave: (payload: TAddPenawaran | TUpdatePenawaran) => void;
 };
 
 const FormPenawaran = ({
@@ -77,10 +77,10 @@ const FormPenawaran = ({
     if (initialValues && typeof initialValues === 'object') {
       onSave({
         id: initialValues.id,
-        ...(data as TSchemaPenawaran),
+        ...(data as TAddPenawaran),
       });
     } else {
-      onSave(data as TSchemaPenawaran);
+      onSave(data as TAddPenawaran);
     }
     reset();
   };

@@ -3,14 +3,14 @@ import { Box, Button, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTableSetoran } from './types';
-import { TSchemaDeleteSetoran, TSchemaUpdateSetoran } from './schema';
+import { TDeleteSetoran, TUpdateSetoran } from './schema';
 import { NumericFormat } from 'react-number-format';
 
 type Props = {
   isLoading?: boolean;
   data: any[];
-  onDelete: (data: TSchemaDeleteSetoran) => void;
-  onUpdate: (data: TSchemaUpdateSetoran) => void;
+  onDelete: (data: TDeleteSetoran) => void;
+  onUpdate: (data: TUpdateSetoran) => void;
 };
 
 const TableSetoran = ({

@@ -25,17 +25,17 @@ import {
   useUpdateSetoran,
 } from '../../../hooks/useDeposit.hook';
 import {
-  TSchemaDeleteSetoran,
-  TSchemaSetoran,
-  TSchemaUpdateSetoran,
+  TDeleteSetoran,
+  TAddSetoran,
+  TUpdateSetoran,
 } from './schema';
 import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TSchemaUpdateSetoran;
-  delete?: TSchemaDeleteSetoran;
+  update?: TUpdateSetoran;
+  delete?: TDeleteSetoran;
 };
 
 const Setoran = () => {
@@ -52,19 +52,19 @@ const Setoran = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TSchemaUpdateSetoran) =>
+    (data: TUpdateSetoran) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
   const handleOpenModalDelete = useCallback(
-    (data: TSchemaDeleteSetoran) =>
+    (data: TDeleteSetoran) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback(
-    (payload: TSchemaSetoran | TSchemaUpdateSetoran) => {
+    (payload: TAddSetoran | TUpdateSetoran) => {
       const defaultPayload = {
         id_hasil_panen: payload.tanggal_panen,
         id_buruh: payload.id_buruh,
@@ -162,7 +162,7 @@ const Setoran = () => {
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               {`Delete ${dayjs(
-                (action?.delete as TSchemaDeleteSetoran)?.nama
+                (action?.delete as TDeleteSetoran)?.nama
               ).format('DD MMMM YYYY')}`}
             </AlertDialogHeader>
 
@@ -184,7 +184,7 @@ const Setoran = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TSchemaDeleteSetoran)?.id)
+                  handleDelete((action?.delete as TDeleteSetoran)?.id)
                 }
                 ml={3}
               >

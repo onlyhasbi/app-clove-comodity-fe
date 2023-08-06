@@ -1,12 +1,12 @@
 import {
-  TSchemaDeletePekerjaan,
-  TSchemaUpdatePekerjaan,
+  TDeletePekerjaan,
+  TUpdatePekerjaan,
   schemaPekerjaan,
 } from './schema';
 
 type TActionTable = {
-  update: TSchemaUpdatePekerjaan;
-  delete: TSchemaDeletePekerjaan;
+  update: TUpdatePekerjaan;
+  delete: TDeletePekerjaan;
 };
 
 export type TTablePekerjaan = schemaPekerjaan & { action: TActionTable };

@@ -2,7 +2,7 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { TTablePenjualan } from './types';
-import { TSchemaDeletePenjualan, TSchemaUpdatePenjualan } from './schema';
+import { TDeletePenjualan, TUpdatePenjualan } from './schema';
 import { Edit, Trash2 } from 'lucide-react';
 import { NumericFormat } from 'react-number-format';
 import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
@@ -10,8 +10,8 @@ import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
 type Props = {
   isLoading?: boolean;
   data: any[];
-  onDelete: (data: TSchemaDeletePenjualan) => void;
-  onUpdate: (data: TSchemaUpdatePenjualan) => void;
+  onDelete: (data: TDeletePenjualan) => void;
+  onUpdate: (data: TUpdatePenjualan) => void;
 };
 
 const TabelPenjualan = ({

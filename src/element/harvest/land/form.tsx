@@ -13,8 +13,8 @@ import {
 import { useEffect } from 'react';
 import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
-  TSchemaLahan,
-  TSchemaUpdateLahan,
+  TAddLahan,
+  TUpdateLahan,
   defaultValues,
   schemaLahan,
 } from './schema';
@@ -26,8 +26,8 @@ import { NumberFormatValues, NumericFormat } from 'react-number-format';
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TSchemaLahan | TSchemaUpdateLahan) => void;
-  initialValues: TSchemaUpdateLahan | undefined | boolean;
+  onSave: (payload: TAddLahan | TUpdateLahan) => void;
+  initialValues: TUpdateLahan | undefined | boolean;
 };
 
 const FormLahan = ({
@@ -74,11 +74,11 @@ const FormLahan = ({
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TSchemaUpdateLahan).id,
+        id: (initialValues as TUpdateLahan).id,
         ...data,
-      } as TSchemaUpdateLahan);
+      } as TUpdateLahan);
     } else {
-      handleSave({ ...(data as TSchemaLahan) });
+      handleSave({ ...(data as TAddLahan) });
       reset();
     }
   };

@@ -13,8 +13,8 @@ import {
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
-  TSchemaSetoran,
-  TSchemaUpdateSetoran,
+  TAddSetoran,
+  TUpdateSetoran,
   defaultValues,
   schemaSetoran,
 } from './schema';
@@ -28,8 +28,8 @@ import ReactDatePicker from 'react-datepicker';
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TSchemaSetoran | TSchemaUpdateSetoran) => void;
-  initialValues: TSchemaUpdateSetoran | undefined | boolean;
+  onSave: (payload: TAddSetoran | TUpdateSetoran) => void;
+  initialValues: TUpdateSetoran | undefined | boolean;
 };
 
 const FormSetoran = ({
@@ -73,11 +73,11 @@ const FormSetoran = ({
   const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TSchemaUpdateSetoran).id,
+        id: (initialValues as TUpdateSetoran).id,
         ...payload,
-      } as TSchemaUpdateSetoran);
+      } as TUpdateSetoran);
     } else {
-      handleSave(payload as TSchemaSetoran);
+      handleSave(payload as TAddSetoran);
       reset();
     }
   };

@@ -24,13 +24,13 @@ import {
   useUpdatePembelian,
   useDeletePembelian,
 } from '../../../hooks/useBuy.hook';
-import { TSchemaDeletePembelian, TSchemaUpdatePembelian } from './schema';
+import { TDeletePembelian, TUpdatePembelian } from './schema';
 import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TSchemaUpdatePembelian;
-  delete?: TSchemaDeletePembelian;
+  update?: TUpdatePembelian;
+  delete?: TDeletePembelian;
 };
 
 const Pembelian = () => {
@@ -43,13 +43,13 @@ const Pembelian = () => {
   );
 
   const handleOpenModalUpdate = useCallback(
-    (data: TSchemaUpdatePembelian) =>
+    (data: TUpdatePembelian) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TSchemaDeletePembelian) =>
+    (data: TDeletePembelian) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
@@ -174,7 +174,7 @@ const Pembelian = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TSchemaDeletePembelian)?.id)
+                  handleDelete((action?.delete as TDeletePembelian)?.id)
                 }
                 ml={3}
               >

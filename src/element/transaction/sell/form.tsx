@@ -12,8 +12,8 @@ import {
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
-  TSchemaPenjualan,
-  TSchemaUpdatePenjualan,
+  TAddPenjualan,
+  TUpdatePenjualan,
   defaultValues,
   schemaPenjualan,
 } from './schema';
@@ -25,9 +25,9 @@ import ReactDatePicker from 'react-datepicker';
 
 type Props = {
   isLoading: boolean;
-  onSave: (payload: TSchemaPenjualan | TSchemaUpdatePenjualan) => void;
+  onSave: (payload: TAddPenjualan | TUpdatePenjualan) => void;
   onClose: () => void;
-  initialValues: TSchemaUpdatePenjualan | undefined | boolean;
+  initialValues: TUpdatePenjualan | undefined | boolean;
 };
 
 const FormPenjualan = ({
@@ -71,11 +71,11 @@ const FormPenjualan = ({
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TSchemaUpdatePenjualan).id,
+        id: (initialValues as TUpdatePenjualan).id,
         ...data,
-      } as TSchemaUpdatePenjualan);
+      } as TUpdatePenjualan);
     } else {
-      handleSave(data as TSchemaPenjualan);
+      handleSave(data as TAddPenjualan);
       reset();
     }
   };

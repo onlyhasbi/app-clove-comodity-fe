@@ -13,8 +13,8 @@ import {
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
-  TSchemaPekerjaan,
-  TSchemaUpdatePekerjaan,
+  TAddPekerjaan,
+  TUpdatePekerjaan,
   defaultValues,
   schemaPekerjaan,
 } from './schema';
@@ -25,9 +25,9 @@ import { NumericFormat, NumberFormatValues } from 'react-number-format';
 
 type Props = {
   isLoading: boolean;
-  initialValues: TSchemaUpdatePekerjaan | undefined | boolean;
+  initialValues: TUpdatePekerjaan | undefined | boolean;
   onReset: () => void;
-  onSave: (payload: TSchemaPekerjaan | TSchemaUpdatePekerjaan) => void;
+  onSave: (payload: TAddPekerjaan | TUpdatePekerjaan) => void;
 };
 
 const FormPenawaran = ({
@@ -60,9 +60,9 @@ const FormPenawaran = ({
 
   const onSubmit = (payload: FieldValues) => {
     if (initialValues && typeof initialValues === 'object') {
-      onSave({ id: initialValues.id, ...(payload as TSchemaPekerjaan) });
+      onSave({ id: initialValues.id, ...(payload as TAddPekerjaan) });
     } else {
-      onSave(payload as TSchemaPekerjaan);
+      onSave(payload as TAddPekerjaan);
     }
     reset();
   };

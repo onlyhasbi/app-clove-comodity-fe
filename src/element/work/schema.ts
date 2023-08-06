@@ -9,9 +9,9 @@ export const schemaPekerjaan = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TSchemaPekerjaan = z.infer<typeof schemaPekerjaan>;
-export type TSchemaUpdatePekerjaan = TSchemaPekerjaan & { id: string };
-export type TSchemaDeletePekerjaan = { id: string };
+export type TAddPekerjaan = z.infer<typeof schemaPekerjaan>;
+export type TUpdatePekerjaan = TAddPekerjaan & { id: string };
+export type TDeletePekerjaan = { id: string };
 
 export const defaultValues = {
   nama_pekerjaan: '',

@@ -8,9 +8,9 @@ export const schemaHasil = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TSchemaHasil = z.infer<typeof schemaHasil>;
-export type TSchemaUpdateHasil = { id: string } & TSchemaHasil;
-export type TSchemaDeleteHasil = { id: string; nama: string };
+export type TAddPanen = z.infer<typeof schemaHasil>;
+export type TUpdatePanen = { id: string } & TAddPanen;
+export type TDeletePanen = { id: string; nama: string };
 
 export const defaultValues = {
   lahan: '',

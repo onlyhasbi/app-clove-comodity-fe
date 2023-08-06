@@ -1,5 +1,5 @@
 export const tableAdapter = (payloads: GetPenawaran[]) => {
-  return payloads.map((payload: GetPenawaran) => {
+  return payloads?.map((payload: GetPenawaran) => {
     const {
       id,
       jenis_penawaran,

@@ -1,8 +1,8 @@
-import { TSchemaBahan, TSchemaUpdateBahan, TSchemaDeleteBahan } from './schema';
+import { TAddBahan, TUpdateBahan, TDeleteBahan } from './schema';
 
 type TActionTable = {
-  update: TSchemaUpdateBahan;
-  delete: TSchemaDeleteBahan;
+  update: TUpdateBahan;
+  delete: TDeleteBahan;
 };
 
 export type TTableBahan = {

@@ -24,13 +24,13 @@ import {
 import FormTim from './form';
 import TabelTim from './table';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import { TSchemaTim, TSchemaDeleteTim, TSchemaUpdateTim } from './schema';
+import { TAddTim, TDeleteTim, TUpdateTim } from './schema';
 import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TSchemaUpdateTim;
-  delete?: TSchemaDeleteTim;
+  update?: TUpdateTim;
+  delete?: TDeleteTim;
 };
 
 const Tim = () => {
@@ -48,20 +48,20 @@ const Tim = () => {
   );
 
   const handleOpenModalUpdate = useCallback(
-    (data: TSchemaUpdateTim) =>
+    (data: TUpdateTim) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TSchemaDeleteTim) =>
+    (data: TDeleteTim) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback((payload: TSchemaTim | TSchemaUpdateTim) => {
+  const handleSave = useCallback((payload: TAddTim | TUpdateTim) => {
     if ('id' in payload) {
       updateTim.mutate(payload);
     } else {
@@ -159,7 +159,7 @@ const Tim = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TSchemaDeleteTim).id)
+                  handleDelete((action?.delete as TDeleteTim).id)
                 }
                 ml={3}
               >

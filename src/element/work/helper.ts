@@ -1,26 +1,5 @@
-// type TableProps = {
-//   id: string;
-//   nama_pekerjaan: string;
-//   upah: string;
-//   satuan: string;
-//   lokasi: string;
-//   action: {
-//     update: {
-//       id: string;
-//       nama_pekerjaan: string;
-//       upah: string;
-//       satuan: string;
-//       lokasi: string;
-//     };
-//     delete: {
-//       id: string;
-//       nama: string;
-//     };
-//   };
-// };
-
 export const tableAdapter = (payloads: GetPekerjaan[]) => {
-  return payloads.map((payload: GetPekerjaan) => {
+  return payloads?.map((payload: GetPekerjaan) => {
     const {
       id,
       jenis_pekerjaan,

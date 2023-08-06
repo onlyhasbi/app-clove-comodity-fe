@@ -11,9 +11,9 @@ export const schemaPenjualan = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TSchemaPenjualan = z.infer<typeof schemaPenjualan>;
-export type TSchemaUpdatePenjualan = TSchemaPenjualan & { id: string };
-export type TSchemaDeletePenjualan = { id: string };
+export type TAddPenjualan = z.infer<typeof schemaPenjualan>;
+export type TUpdatePenjualan = TAddPenjualan & { id: string };
+export type TDeletePenjualan = { id: string };
 
 export const defaultValues = {
   id_pembeli: '',

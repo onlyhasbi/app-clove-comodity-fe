@@ -1,12 +1,12 @@
 import {
   schemaPenawaran,
-  TSchemaUpdatePenawaran,
-  TSchemaDeletePenawaran,
+  TUpdatePenawaran,
+  TDeletePenawaran,
 } from './schema';
 
 type TActionTable = {
-  update: TSchemaUpdatePenawaran;
-  delete: TSchemaDeletePenawaran;
+  update: TUpdatePenawaran;
+  delete: TDeletePenawaran;
 };
 
 export type TTablePenawaran = schemaPenawaran & { action: TActionTable };

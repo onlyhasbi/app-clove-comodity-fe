@@ -1,7 +1,7 @@
 import { getProvince } from '../../../utils';
 
 export const tableAdapter = (payloads: GetLahan[]) => {
-  return payloads.map((payload: GetLahan) => {
+  return payloads?.map((payload: GetLahan) => {
     const {
       id,
       nama,

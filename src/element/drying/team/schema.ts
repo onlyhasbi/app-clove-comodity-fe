@@ -5,9 +5,9 @@ export const schemaTim = z.object({
   ketua_tim: z.string().nonempty({ message: 'Ketua tidak boleh kosong' }),
 });
 
-export type TSchemaTim = z.infer<typeof schemaTim>;
-export type TSchemaUpdateTim = TSchemaTim & { id: string };
-export type TSchemaDeleteTim = { id: string };
+export type TAddTim = z.infer<typeof schemaTim>;
+export type TUpdateTim = TAddTim & { id: string };
+export type TDeleteTim = { id: string };
 
 export const defaultValues = {
   nama_tim: '',

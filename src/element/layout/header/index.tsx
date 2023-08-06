@@ -15,7 +15,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { deleteToken } from '../../../hooks/useAuth.hook';
 import { useGetProfile } from '../../../hooks/useProfile.hook';
 import React from 'react';
-import { capitalize } from '../../../utils';
+import { capitalize, getFirstCharacter } from '../../../utils';
 
 const routes = [
   { path: 'profile', label: 'Profil' },
@@ -34,6 +34,8 @@ const Header = () => {
   };
 
   const profile = useGetProfile();
+  const profileName =
+    profile.isSuccess && capitalize(profile?.data?.data?.data?.user?.nama);
 
   return (
     <Flex
@@ -53,14 +55,11 @@ const Header = () => {
             {profile.isLoading ? (
               <SkeletonText w="5rem" noOfLines={1} skeletonHeight="2" />
             ) : (
-              <Text order={{ lg: '0', base: '1' }}>
-                {profile.isSuccess &&
-                  capitalize(profile?.data?.data?.data?.user?.nama)}
-              </Text>
+              <Text order={{ lg: '0', base: '1' }}>{profileName}</Text>
             )}
-            <Circle size={{ lg: 25, base: 75 }} bg="green.600">
-              <Text fontSize={16} fontWeight="bold" color="white">
-                G
+            <Circle size={{ lg: 35, base: 75 }} bg="green.600">
+              <Text fontSize={12} fontWeight="bold" color="white">
+                {getFirstCharacter(profileName)}
               </Text>
             </Circle>
           </Stack>

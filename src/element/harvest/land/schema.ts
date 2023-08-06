@@ -10,12 +10,12 @@ export const schemaLahan = z.object({
   luas_lahan: z.number().min(1,{ message: 'Luas lahan tidak boleh kosong' }),
 });
 
-export type TSchemaLahan = z.infer<typeof schemaLahan>;
-export type TSchemaUpdateLahan = TSchemaLahan & {
+export type TAddLahan = z.infer<typeof schemaLahan>;
+export type TUpdateLahan = TAddLahan & {
   id: string;
   hasil_panen: string;
 };
-export type TSchemaDeleteLahan = {
+export type TDeleteLahan = {
   id: string;
   nama: string;
   hasil_panen: string;

@@ -6,15 +6,15 @@ import { TTableLahan } from './types';
 import StatusLahan from '../../../components/status-lahan';
 import Provinsi from '../../../components/provinsi';
 import Kabupaten from '../../../components/kabupaten';
-import { TSchemaDeleteLahan, TSchemaUpdateLahan } from './schema';
+import { TDeleteLahan, TUpdateLahan } from './schema';
 import { NumericFormat } from 'react-number-format';
 
 
 type Props = {
   data: any[];
   isLoading?: boolean;
-  onDelete: (data: TSchemaDeleteLahan) => void;
-  onUpdate: (data: TSchemaUpdateLahan) => void;
+  onDelete: (data: TDeleteLahan) => void;
+  onUpdate: (data: TUpdateLahan) => void;
 };
 
 const TableLahan = ({

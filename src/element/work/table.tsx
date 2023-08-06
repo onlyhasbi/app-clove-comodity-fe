@@ -3,15 +3,15 @@ import { Box, HStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Trash2, Edit } from 'lucide-react';
 import { TTablePekerjaan } from './types';
-import { TSchemaDeletePekerjaan, TSchemaUpdatePekerjaan } from './schema';
+import { TDeletePekerjaan, TUpdatePekerjaan } from './schema';
 import { NumericFormat } from 'react-number-format';
 import { PEKERJAAN, SATUAN } from '../../model/penawaran.model';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
-  onDelete: (data: TSchemaDeletePekerjaan) => void;
-  onUpdate: (data: TSchemaUpdatePekerjaan) => void;
+  onDelete: (data: TDeletePekerjaan) => void;
+  onUpdate: (data: TUpdatePekerjaan) => void;
 };
 
 const TablePenawaran = ({

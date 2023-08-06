@@ -1,11 +1,11 @@
-import { TSchemaDeleteLahan, TSchemaLahan, TSchemaUpdateLahan } from './schema';
+import { TDeleteLahan, TAddLahan, TUpdateLahan } from './schema';
 
 type TActionTable = {
-  update: TSchemaUpdateLahan;
-  delete: TSchemaDeleteLahan;
+  update: TUpdateLahan;
+  delete: TDeleteLahan;
 };
 
-export type TTableLahan = TSchemaLahan & {
+export type TTableLahan = TAddLahan & {
   hasil_panen: string;
   action: TActionTable;
 };

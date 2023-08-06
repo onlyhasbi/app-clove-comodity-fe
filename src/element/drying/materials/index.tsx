@@ -18,7 +18,7 @@ import {
 import { useCallback, useRef, useState, useEffect } from 'react';
 import FormBahan from './form';
 import TabelBahan from './table';
-import { TSchemaBahan, TSchemaDeleteBahan, TSchemaUpdateBahan } from './schema';
+import { TAddBahan, TDeleteBahan, TUpdateBahan } from './schema';
 import {
   useDeleteMaterial,
   useGetMaterial,
@@ -30,8 +30,8 @@ import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TSchemaUpdateBahan;
-  delete?: TSchemaDeleteBahan;
+  update?: TUpdateBahan;
+  delete?: TDeleteBahan;
 };
 
 const BahanPengeringan = () => {
@@ -48,19 +48,19 @@ const BahanPengeringan = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TSchemaUpdateBahan) =>
+    (data: TUpdateBahan) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
   const handleOpenModalDelete = useCallback(
-    (data: TSchemaDeleteBahan) =>
+    (data: TDeleteBahan) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback(
-    (payload: TSchemaBahan | TSchemaUpdateBahan) => {
+    (payload: TAddBahan | TUpdateBahan) => {
       const defaultPayload = {
         berat_kg: payload.berat_kg,
         volume_liter: payload.volume_liter,
@@ -176,7 +176,7 @@ const BahanPengeringan = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TSchemaDeleteBahan)?.id)
+                  handleDelete((action?.delete as TDeleteBahan)?.id)
                 }
                 ml={3}
               >

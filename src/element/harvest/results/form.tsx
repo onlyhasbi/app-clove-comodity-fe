@@ -13,8 +13,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
-  TSchemaHasil,
-  TSchemaUpdateHasil,
+  TAddPanen,
+  TUpdatePanen,
   defaultValues,
   schemaHasil,
 } from './schema';
@@ -27,8 +27,8 @@ import { NumberFormatValues, NumericFormat } from 'react-number-format';
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TSchemaHasil | TSchemaUpdateHasil) => void;
-  initialValues: TSchemaUpdateHasil | undefined | boolean;
+  onSave: (payload: TAddPanen | TUpdatePanen) => void;
+  initialValues: TUpdatePanen | undefined | boolean;
 };
 
 const FormHasil = ({
@@ -66,11 +66,11 @@ const FormHasil = ({
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TSchemaUpdateHasil).id,
+        id: (initialValues as TUpdatePanen).id,
         ...data,
-      } as TSchemaUpdateHasil);
+      } as TUpdatePanen);
     } else {
-      handleSave(data as TSchemaHasil);
+      handleSave(data as TAddPanen);
       reset();
     }
   };

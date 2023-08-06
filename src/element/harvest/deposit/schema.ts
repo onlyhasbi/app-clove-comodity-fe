@@ -14,13 +14,13 @@ export const schemaSetoran = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TSchemaSetoran = z.infer<typeof schemaSetoran>;
-export type TSchemaUpdateSetoran = TSchemaSetoran & {
+export type TAddSetoran = z.infer<typeof schemaSetoran>;
+export type TUpdateSetoran = TAddSetoran & {
   id: string;
   komplaint: string;
   status_bayar: boolean;
 };
-export type TSchemaDeleteSetoran = { id: string; nama: string };
+export type TDeleteSetoran = { id: string; nama: string };
 
 export const defaultValues = {
   tanggal_panen: '',

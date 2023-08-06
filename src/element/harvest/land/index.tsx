@@ -18,7 +18,7 @@ import {
 import FormLahan from './form';
 import TableLahan from './table';
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { TSchemaLahan, TSchemaUpdateLahan, TSchemaDeleteLahan } from './schema';
+import { TAddLahan, TUpdateLahan, TDeleteLahan } from './schema';
 import {
   useDeleteLahan,
   useGetLahan,
@@ -29,8 +29,8 @@ import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TSchemaUpdateLahan;
-  delete?: TSchemaDeleteLahan;
+  update?: TUpdateLahan;
+  delete?: TDeleteLahan;
 };
 
 const Lahan = () => {
@@ -42,13 +42,13 @@ const Lahan = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TSchemaUpdateLahan) =>
+    (data: TUpdateLahan) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TSchemaDeleteLahan) =>
+    (data: TDeleteLahan) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
@@ -61,7 +61,7 @@ const Lahan = () => {
   const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback(
-    (payload: TSchemaLahan | TSchemaUpdateLahan) => {
+    (payload: TAddLahan | TUpdateLahan) => {
       const defaultPayload = {
         nama: payload.nama,
         lokasi: payload.kabupaten,
@@ -145,7 +145,7 @@ const Lahan = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TSchemaDeleteLahan)?.nama}`}
+              {`Delete ${(action?.delete as TDeleteLahan)?.nama}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -166,7 +166,7 @@ const Lahan = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TSchemaDeleteLahan)?.id)
+                  handleDelete((action?.delete as TDeleteLahan)?.id)
                 }
                 ml={3}
               >

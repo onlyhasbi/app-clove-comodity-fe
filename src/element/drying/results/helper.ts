@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export const tableAdapter = (payloads: any[]) => {
-  return payloads.map((payload: any) => {
+  return payloads?.map((payload: any) => {
     const {
       id,
       tim_pengeringan,

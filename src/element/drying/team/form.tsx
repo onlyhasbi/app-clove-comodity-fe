@@ -10,8 +10,8 @@ import {
 
 import { useForm, FieldValues } from 'react-hook-form';
 import {
-  TSchemaTim,
-  TSchemaUpdateTim,
+  TAddTim,
+  TUpdateTim,
   defaultValues,
   schemaTim,
 } from './schema';
@@ -21,8 +21,8 @@ import { useEffect } from 'react';
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TSchemaTim | TSchemaUpdateTim) => void;
-  initialValues: TSchemaUpdateTim | undefined | boolean;
+  onSave: (payload: TAddTim | TUpdateTim) => void;
+  initialValues: TUpdateTim | undefined | boolean;
 };
 
 const FormTim = ({
@@ -53,11 +53,11 @@ const FormTim = ({
   const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TSchemaUpdateTim).id,
+        id: (initialValues as TUpdateTim).id,
         ...payload,
-      } as TSchemaUpdateTim);
+      } as TUpdateTim);
     } else {
-      handleSave(payload as TSchemaTim);
+      handleSave(payload as TAddTim);
       reset();
     }
   };

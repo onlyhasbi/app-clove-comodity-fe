@@ -1,8 +1,8 @@
-import { TSchemaDeleteSetoran, TSchemaUpdateSetoran, schemaSetoran } from './schema';
+import { TDeleteSetoran, TUpdateSetoran, schemaSetoran } from './schema';
 
 type TActionTable = {
-  update: TSchemaUpdateSetoran;
-  delete: TSchemaDeleteSetoran;
+  update: TUpdateSetoran;
+  delete: TDeleteSetoran;
 };
 
 export type TTableSetoran = schemaSetoran & { action: TActionTable };

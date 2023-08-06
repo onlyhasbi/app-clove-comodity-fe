@@ -24,13 +24,13 @@ import {
   useUpdatePenjualan,
   useDeletePenjualan,
 } from '../../../hooks/useSell.hook';
-import { TSchemaDeletePenjualan, TSchemaUpdatePenjualan } from './schema';
+import { TDeletePenjualan, TUpdatePenjualan } from './schema';
 import { tableAdapter } from './helper';
 
 type TAction = {
   add?: boolean;
-  update?: TSchemaUpdatePenjualan;
-  delete?: TSchemaDeletePenjualan;
+  update?: TUpdatePenjualan;
+  delete?: TDeletePenjualan;
 };
 
 const Penjualan = () => {
@@ -43,13 +43,13 @@ const Penjualan = () => {
   );
 
   const handleOpenModalUpdate = useCallback(
-    (data: TSchemaUpdatePenjualan) =>
+    (data: TUpdatePenjualan) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TSchemaDeletePenjualan) =>
+    (data: TDeletePenjualan) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
@@ -104,7 +104,11 @@ const Penjualan = () => {
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
-          <Button onClick={handleOpenModalAdd} colorScheme="green">
+          <Button
+            onClick={handleOpenModalAdd}
+            colorScheme="green"
+            isDisabled={getPenjualan.isLoading}
+          >
             Tambah
           </Button>
         </Box>
@@ -165,7 +169,7 @@ const Penjualan = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TSchemaDeletePenjualan)?.id)
+                  handleDelete((action?.delete as TDeletePenjualan)?.id)
                 }
                 ml={3}
               >

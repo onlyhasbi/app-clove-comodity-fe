@@ -9,13 +9,13 @@ import {
   JENIS_PENAWARAN,
   SATUAN,
 } from '../../model/penawaran.model';
-import { TSchemaDeletePenawaran, TSchemaUpdatePenawaran } from './schema';
+import { TDeletePenawaran, TUpdatePenawaran } from './schema';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
-  onDelete: (data: TSchemaDeletePenawaran) => void;
-  onUpdate: (data: TSchemaUpdatePenawaran) => void;
+  onDelete: (data: TDeletePenawaran) => void;
+  onUpdate: (data: TUpdatePenawaran) => void;
 };
 
 const TablePenawaran = ({

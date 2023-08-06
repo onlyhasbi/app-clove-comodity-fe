@@ -1,11 +1,7 @@
 import dayjs from 'dayjs';
 
-// export type TableAdapterPembelian = {
-
-// };
-
 export const tableAdapter = (payloads: GetPembelian[]) => {
-  return payloads.map((payload: GetPembelian) => {
+  return payloads?.map((payload: GetPembelian) => {
     const {
       id,
       id_penjual,

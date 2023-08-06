@@ -3,14 +3,14 @@ import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTableHasil } from './types';
-import { TSchemaDeleteHasil, TSchemaUpdateHasil } from './schema';
+import { TDeletePanen, TUpdatePanen } from './schema';
 import { NumericFormat } from 'react-number-format';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
-  onDelete: (data: TSchemaDeleteHasil) => void;
-  onUpdate: (data: TSchemaUpdateHasil) => void;
+  onDelete: (data: TDeletePanen) => void;
+  onUpdate: (data: TUpdatePanen) => void;
 };
 
 const TableHasil = ({

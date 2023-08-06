@@ -3,15 +3,15 @@ import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTablePembelian } from './types';
-import { TSchemaDeletePembelian, TSchemaUpdatePembelian } from './schema';
+import { TDeletePembelian, TUpdatePembelian } from './schema';
 import { NumericFormat } from 'react-number-format';
 import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
 
 type Props = {
   isLoading?: boolean;
   data: any[];
-  onDelete: (data: TSchemaDeletePembelian) => void;
-  onUpdate: (data: TSchemaUpdatePembelian) => void;
+  onDelete: (data: TDeletePembelian) => void;
+  onUpdate: (data: TUpdatePembelian) => void;
 };
 
 const TabelPembelian = ({

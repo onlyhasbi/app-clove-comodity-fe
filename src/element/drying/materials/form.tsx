@@ -13,15 +13,15 @@ import { useForm, FieldValues, Controller } from 'react-hook-form';
 import { defaultValues, schemaBahan } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { TSchemaBahan, TSchemaUpdateBahan } from './schema';
+import { TAddBahan, TUpdateBahan } from './schema';
 import { NumericFormat, NumberFormatValues } from 'react-number-format';
 import ReactDatePicker from 'react-datepicker';
 
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TSchemaBahan | TSchemaUpdateBahan) => void;
-  initialValues: TSchemaUpdateBahan | undefined | boolean;
+  onSave: (payload: TAddBahan | TUpdateBahan) => void;
+  initialValues: TUpdateBahan | undefined | boolean;
 };
 
 const FormBahan = ({
@@ -55,11 +55,11 @@ const FormBahan = ({
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TSchemaUpdateBahan).id,
+        id: (initialValues as TUpdateBahan).id,
         ...data,
-      } as TSchemaUpdateBahan);
+      } as TUpdateBahan);
     } else {
-      handleSave(data as TSchemaBahan);
+      handleSave(data as TAddBahan);
       reset();
     }
   };

@@ -7,9 +7,9 @@ export const schemaBahan = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TSchemaBahan = z.infer<typeof schemaBahan>;
-export type TSchemaUpdateBahan = TSchemaBahan & { id: string };
-export type TSchemaDeleteBahan = { id: string };
+export type TAddBahan = z.infer<typeof schemaBahan>;
+export type TUpdateBahan = TAddBahan & { id: string };
+export type TDeleteBahan = { id: string };
 
 export const defaultValues = {
   berat_kg: 0,

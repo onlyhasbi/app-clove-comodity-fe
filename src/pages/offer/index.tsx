@@ -21,13 +21,13 @@ import {
 } from '../../hooks/useOffer.hook';
 import { tableAdapter } from '../../element/offer/helper';
 import {
-  TSchemaDeletePenawaran,
-  TSchemaUpdatePenawaran,
+  TDeletePenawaran,
+  TUpdatePenawaran,
 } from '@/element/offer/schema';
 
 type TAction = {
-  update?: TSchemaUpdatePenawaran;
-  delete?: TSchemaDeletePenawaran;
+  update?: TUpdatePenawaran;
+  delete?: TDeletePenawaran;
 };
 
 const Penawaran = () => {
@@ -35,13 +35,13 @@ const Penawaran = () => {
   const cancelRef = useRef(null);
 
   const handleUpdate = useCallback(
-    (data: TSchemaUpdatePenawaran) =>
+    (data: TUpdatePenawaran) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TSchemaDeletePenawaran) =>
+    (data: TDeletePenawaran) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
@@ -167,7 +167,7 @@ const Penawaran = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TSchemaDeletePenawaran)?.id)
+                  handleDelete((action?.delete as TDeletePenawaran)?.id)
                 }
                 ml={3}
               >

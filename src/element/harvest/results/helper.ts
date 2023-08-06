@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export const tableAdapter = (payloads: GetResult[]) => {
-  return payloads.map((payload: GetResult) => {
+  return payloads?.map((payload: GetResult) => {
     const {
       berat_pengukuran_kg,
       catatan,
