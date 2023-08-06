@@ -87,7 +87,7 @@ const FormBahan = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -116,7 +116,7 @@ const FormBahan = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -139,7 +139,6 @@ const FormBahan = ({
                 onBlur={onBlur}
                 selected={value}
                 dateFormat="dd / MM / yyyy"
-                disabled={isLoading}
               />
             )}
           />
@@ -154,6 +153,7 @@ const FormBahan = ({
           </FormLabel>
           <Textarea
             id="catatan"
+            isDisabled={isLoading}
             rows={3}
             placeholder="Catatan"
             {...register('catatan')}
@@ -168,7 +168,7 @@ const FormBahan = ({
           onClick={handleCloseModal}
           type="button"
           variant="ghost"
-          disabled={isLoading}
+          isDisabled={isLoading}
         >
           Batal
         </Button>

@@ -5,6 +5,7 @@ import { Edit, Trash2 } from 'lucide-react';
 import { TTableHasilPengeringan } from './types';
 import { TDeletePengeringan, TUpdatePengeringan } from './schema';
 import { NumericFormat } from 'react-number-format';
+import Team from '../../../components/tim';
 
 type Props = {
   data: any[];
@@ -24,7 +25,11 @@ const TabelHasilPengeringan = ({
     columnHelper.accessor('tim', {
       id: 'tim',
       header: () => <Box>Tim</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      cell: ({ getValue }) => (
+        <Box>
+          <Team value={getValue()} />
+        </Box>
+      ),
     }),
     columnHelper.accessor('berat', {
       id: 'berat',

@@ -104,7 +104,11 @@ const Pembelian = () => {
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
-          <Button onClick={handleOpenModalAdd} variant="primary">
+          <Button
+            onClick={handleOpenModalAdd}
+            colorScheme="green"
+            isDisabled={getPembelian.isLoading}
+          >
             Tambah
           </Button>
         </Box>
@@ -157,7 +161,11 @@ const Pembelian = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleReset}>
+              <Button
+                ref={cancelRef}
+                onClick={handleReset}
+                isDisabled={deletePembelian.isLoading}
+              >
                 Cancel
               </Button>
               <Button

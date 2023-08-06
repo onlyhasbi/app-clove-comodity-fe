@@ -78,7 +78,10 @@ const Lahan = () => {
     []
   );
 
-  const handleDelete = useCallback((id: string) => id && deleteLahan.mutate(id), []);
+  const handleDelete = useCallback(
+    (id: string) => id && deleteLahan.mutate(id),
+    []
+  );
 
   useEffect(() => {
     if (postLahan.isSuccess || updateLahan.isSuccess || deleteLahan.isSuccess)
@@ -93,7 +96,11 @@ const Lahan = () => {
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
-          <Button onClick={handleOpenModalAdd} variant="primary">
+          <Button
+            onClick={handleOpenModalAdd}
+            colorScheme="green"
+            isDisabled={getLahan.isLoading}
+          >
             Tambah
           </Button>
         </Box>
@@ -146,7 +153,11 @@ const Lahan = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleReset}>
+              <Button
+                ref={cancelRef}
+                onClick={handleReset}
+                isDisabled={deleteLahan.isLoading}
+              >
                 Batal
               </Button>
               <Button

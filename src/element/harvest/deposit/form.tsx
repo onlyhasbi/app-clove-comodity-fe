@@ -91,9 +91,9 @@ const FormSetoran = ({
           </FormLabel>
           <Input
             id="id_buruh"
+            isDisabled={isLoading}
             placeholder="Kode Buruh"
             {...register('id_buruh')}
-            disabled={isLoading}
           />
           <FormErrorMessage>
             {errors.id_buruh && errors.id_buruh.message}
@@ -106,9 +106,9 @@ const FormSetoran = ({
           </FormLabel>
           <Select
             id="lahan"
+            isDisabled={isLoading}
             placeholder="Pilih Tanggal Setoran"
             {...register('tanggal_panen')}
-            disabled={isLoading}
           >
             {hasil?.map((item: OptionProps) => {
               return (
@@ -143,7 +143,7 @@ const FormSetoran = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -172,7 +172,7 @@ const FormSetoran = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -201,7 +201,7 @@ const FormSetoran = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -224,7 +224,6 @@ const FormSetoran = ({
                 onBlur={onBlur}
                 selected={value}
                 dateFormat="dd / MM / yyyy"
-                disabled={isLoading}
               />
             )}
           />
@@ -242,8 +241,8 @@ const FormSetoran = ({
               id="catatan"
               rows={3}
               placeholder="Catatan"
+              isDisabled={isLoading}
               {...register('catatan')}
-              disabled={isLoading}
             />
             <FormErrorMessage>
               {errors.catatan && errors.catatan.message}
@@ -256,7 +255,7 @@ const FormSetoran = ({
           onClick={handleCloseModal}
           type="button"
           variant="ghost"
-          disabled={isLoading}
+          isDisabled={isLoading}
         >
           Batal
         </Button>

@@ -7,10 +7,10 @@ import { keys } from './helper';
 type PayloadSetoran = {
   id_hasil_panen: string;
   id_buruh: string;
-  volume_liter: string;
-  berat_kg: string;
-  upah_rp: string;
-  waktu: string;
+  volume_liter: number;
+  berat_kg: number;
+  upah_rp: number;
+  waktu: Date;
   catatan: string;
 };
 

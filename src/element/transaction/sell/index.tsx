@@ -104,7 +104,7 @@ const Penjualan = () => {
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
-          <Button onClick={handleOpenModalAdd} variant="primary">
+          <Button onClick={handleOpenModalAdd} colorScheme="green">
             Tambah
           </Button>
         </Box>

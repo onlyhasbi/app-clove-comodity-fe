@@ -81,6 +81,7 @@ const FormPenawaran = ({
             <Select
               id="nama_pekerjaan"
               placeholder="Pilih Pekerjaan"
+              isDisabled={isLoading}
               {...register('nama_pekerjaan')}
             >
               {PEKERJAAN.map((item) => (
@@ -103,7 +104,6 @@ const FormPenawaran = ({
               render={({ field: { onChange, onBlur, value, ref } }) => (
                 <Input
                   getInputRef={ref}
-                  disabled={isLoading}
                   as={NumericFormat}
                   onValueChange={(event: NumberFormatValues) =>
                     onChange(event.floatValue)
@@ -114,6 +114,7 @@ const FormPenawaran = ({
                   defaultValue={0}
                   decimalSeparator=","
                   thousandSeparator="."
+                  isDisabled={isLoading}
                 />
               )}
             />
@@ -128,6 +129,7 @@ const FormPenawaran = ({
             <Select
               id="satuan"
               placeholder="Pilih Satuan"
+              isDisabled={isLoading}
               {...register('satuan')}
             >
               {SATUAN.map((item) => (
@@ -149,8 +151,8 @@ const FormPenawaran = ({
             id="catatan"
             rows={8}
             placeholder="Catatan"
+            isDisabled={isLoading}
             {...register('catatan')}
-            disabled={isLoading}
           />
           <FormErrorMessage>
             {errors.catatan && errors.catatan.message}
@@ -159,7 +161,7 @@ const FormPenawaran = ({
       </Grid>
       <HStack justify="end" gap={3} marginTop={6}>
         <Button
-          disabled={isLoading}
+          isDisabled={isLoading}
           onClick={() => {
             reset();
             handleReset();

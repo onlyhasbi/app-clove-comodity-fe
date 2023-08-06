@@ -91,7 +91,11 @@ const Tim = () => {
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
-          <Button onClick={handleOpenModalAdd} variant="primary">
+          <Button
+            isDisabled={getTim.isLoading}
+            onClick={handleOpenModalAdd}
+            colorScheme="green"
+          >
             Tambah
           </Button>
         </Box>
@@ -142,7 +146,11 @@ const Tim = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleReset}>
+              <Button
+                ref={cancelRef}
+                onClick={handleReset}
+                isDisabled={deleteTim.isLoading}
+              >
                 Cancel
               </Button>
               <Button

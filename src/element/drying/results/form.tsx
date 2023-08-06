@@ -78,7 +78,7 @@ const FormHasilPengeringan = ({
           <FormLabel fontSize="sm" htmlFor="tim">
             Tim
           </FormLabel>
-          <Select id="tim" placeholder="Pilih Tim" {...register('tim')}>
+          <Select id="tim" isDisabled={isLoading} placeholder="Pilih Tim" {...register('tim')}>
             {teams?.map((team: GetTim) => (
               <option key={team.id} value={team.id}>
                 {team.nama_tim}
@@ -110,7 +110,7 @@ const FormHasilPengeringan = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -139,7 +139,7 @@ const FormHasilPengeringan = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -162,7 +162,6 @@ const FormHasilPengeringan = ({
                 onBlur={onBlur}
                 selected={value}
                 dateFormat="dd / MM / yyyy"
-                disabled={isLoading}
               />
             )}
           />
@@ -191,7 +190,7 @@ const FormHasilPengeringan = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -208,6 +207,7 @@ const FormHasilPengeringan = ({
             id="catatan"
             rows={3}
             placeholder="Catatan"
+            isDisabled={isLoading} 
             {...register('catatan')}
           />
           <FormErrorMessage>
@@ -220,7 +220,7 @@ const FormHasilPengeringan = ({
           onClick={handleCloseModal}
           type="button"
           variant="ghost"
-          disabled={isLoading}
+          isDisabled={isLoading}
         >
           Batal
         </Button>

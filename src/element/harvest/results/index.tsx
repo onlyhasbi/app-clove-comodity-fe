@@ -67,13 +67,11 @@ const Hasil = () => {
 
   const handleSave = useCallback(
     (payload: TSchemaHasil | TSchemaUpdateHasil) => {
-      const formatDate = dayjs(payload.tanggal).format('YYYY/MM/DD');
-
       const defaultPayload = {
         id_lahan: payload.lahan,
         berat_pengukuran_kg: payload.berat,
         volume_pengukuran_liter: payload.volume,
-        waktu: formatDate,
+        waktu: payload.tanggal,
         catatan: payload.catatan,
       };
 
@@ -111,7 +109,11 @@ const Hasil = () => {
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
-          <Button onClick={handleOpenModalAdd} variant="primary">
+          <Button
+            onClick={handleOpenModalAdd}
+            colorScheme="green"
+            isDisabled={getHasil.isLoading}
+          >
             Tambah
           </Button>
         </Box>
@@ -164,7 +166,11 @@ const Hasil = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleReset}>
+              <Button
+                ref={cancelRef}
+                onClick={handleReset}
+                isDisabled={deleteHasil.isLoading}
+              >
                 Cancel
               </Button>
               <Button

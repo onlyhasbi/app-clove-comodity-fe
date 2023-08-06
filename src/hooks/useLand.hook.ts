@@ -7,7 +7,7 @@ import { keys } from './helper';
 type PayloadLahan = {
   nama: string;
   lokasi: string;
-  luas_m2: string;
+  luas_m2: number;
   status_hak_panen: string;
 };
 

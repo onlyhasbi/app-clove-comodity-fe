@@ -90,8 +90,8 @@ const FormPembeli = ({
           <Input
             id="id_penjual"
             placeholder="ID Penjual"
+            isDisabled={isLoading}
             {...register('id_penjual')}
-            disabled={isLoading}
           />
           <FormErrorMessage>
             {errors.id_penjual && errors.id_penjual.message}
@@ -105,8 +105,8 @@ const FormPembeli = ({
           <Select
             id="jenis_komoditas"
             placeholder="Pilih Jenis Komoditas"
+            isDisabled={isLoading}
             {...register('jenis_komoditas')}
-            disabled={isLoading}
           >
             {JENIS_KOMODITAS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -129,7 +129,6 @@ const FormPembeli = ({
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
-                disabled={isLoading}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
                   onChange(event.floatValue)
@@ -140,6 +139,7 @@ const FormPembeli = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
+                isDisabled={isLoading}
               />
             )}
           />
@@ -158,7 +158,6 @@ const FormPembeli = ({
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
-                disabled={isLoading}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
                   onChange(event.floatValue)
@@ -169,6 +168,7 @@ const FormPembeli = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
+                isDisabled={isLoading}
               />
             )}
           />
@@ -190,7 +190,6 @@ const FormPembeli = ({
                 onBlur={onBlur}
                 selected={value}
                 dateFormat="dd / MM / yyyy"
-                disabled={isLoading}
               />
             )}
           />
@@ -207,6 +206,7 @@ const FormPembeli = ({
             id="catatan"
             rows={3}
             placeholder="Catatan"
+            isDisabled={isLoading}
             {...register('catatan')}
           />
           <FormErrorMessage>
@@ -219,7 +219,7 @@ const FormPembeli = ({
           onClick={handleCloseModal}
           type="button"
           variant="ghost"
-          disabled={isLoading}
+          isDisabled={isLoading}
         >
           Batal
         </Button>

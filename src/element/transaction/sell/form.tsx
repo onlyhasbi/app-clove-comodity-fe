@@ -90,8 +90,8 @@ const FormPenjualan = ({
           <Input
             id="id_pembeli"
             placeholder="ID Penjual"
+            isDisabled={isLoading}
             {...register('id_pembeli')}
-            disabled={isLoading}
           />
           <FormErrorMessage>
             {errors.id_pembeli && errors.id_pembeli.message}
@@ -105,8 +105,8 @@ const FormPenjualan = ({
           <Select
             id="jenis_komoditas"
             placeholder="Pilih Jenis Komoditas"
+            isDisabled={isLoading}
             {...register('jenis_komoditas')}
-            disabled={isLoading}
           >
             {JENIS_KOMODITAS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -129,7 +129,6 @@ const FormPenjualan = ({
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
-                disabled={isLoading}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
                   onChange(event.floatValue)
@@ -140,6 +139,7 @@ const FormPenjualan = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
+                isDisabled={isLoading}
               />
             )}
           />
@@ -158,7 +158,6 @@ const FormPenjualan = ({
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <Input
                 getInputRef={ref}
-                disabled={isLoading}
                 as={NumericFormat}
                 onValueChange={(event: NumberFormatValues) =>
                   onChange(event.floatValue)
@@ -169,6 +168,7 @@ const FormPenjualan = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
+                isDisabled={isLoading}
               />
             )}
           />
@@ -190,7 +190,6 @@ const FormPenjualan = ({
                 onBlur={onBlur}
                 selected={value}
                 dateFormat="dd / MM / yyyy"
-                disabled={isLoading}
               />
             )}
           />
@@ -207,6 +206,7 @@ const FormPenjualan = ({
             id="catatan"
             rows={3}
             placeholder="Catatan"
+            isDisabled={isLoading}
             {...register('catatan')}
           />
           <FormErrorMessage>
@@ -219,7 +219,7 @@ const FormPenjualan = ({
           onClick={handleCloseModal}
           type="button"
           variant="ghost"
-          disabled={isLoading}
+          isDisabled={isLoading}
         >
           Batal
         </Button>

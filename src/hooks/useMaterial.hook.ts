@@ -5,8 +5,8 @@ import { toast } from 'react-hot-toast';
 import { keys } from './helper';
 
 type PayloadMaterial = {
-  berat_kg: string;
-  volume_liter: string;
+  berat_kg: number;
+  volume_liter: number;
   dikeringkan_pada_hari: string;
   catatan: string;
 };

@@ -73,6 +73,7 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
           <Select
             id="jenis_pengguna"
             placeholder="Pilih Jenis Pengguna"
+            isDisabled={isLoading}
             {...register('jenis_pengguna')}
           >
             {JENIS_PENGGUNA.map((item) => (
@@ -91,7 +92,12 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
           <FormLabel fontSize="sm" htmlFor="nama">
             Nama
           </FormLabel>
-          <Input id="nama" placeholder="Nama" {...register('nama')} />
+          <Input
+            id="nama"
+            placeholder="Nama"
+            {...register('nama')}
+            isDisabled={isLoading}
+          />
           <FormErrorMessage>
             {errors.nama && errors.nama.message}
           </FormErrorMessage>
@@ -104,6 +110,7 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
           <Select
             id="provinsi"
             placeholder="Pilih Provinsi"
+            isDisabled={isLoading}
             {...register('provinsi')}
           >
             {provinsi.map((provinsi: LocationProps) => {
@@ -126,6 +133,7 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
           <Select
             id="kabupaten"
             placeholder="Pilih Kabupaten"
+            isDisabled={isLoading}
             {...register('kabupaten')}
           >
             {kabupaten.map((kabupaten: LocationProps) => (
@@ -147,6 +155,7 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
             <Input
               id="telepon"
               placeholder="Telepon"
+              isDisabled={isLoading}
               {...register('telepon')}
             />
             <FormErrorMessage>

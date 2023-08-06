@@ -106,7 +106,11 @@ const BahanPengeringan = () => {
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
-          <Button onClick={handleOpenModalAdd} variant="primary">
+          <Button
+            isDisabled={getMaterial.isLoading}
+            onClick={handleOpenModalAdd}
+            colorScheme="green"
+          >
             Tambah
           </Button>
         </Box>
@@ -159,7 +163,11 @@ const BahanPengeringan = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleReset}>
+              <Button
+                ref={cancelRef}
+                onClick={handleReset}
+                isDisabled={deleteMaterial.isLoading}
+              >
                 Cancel
               </Button>
               <Button

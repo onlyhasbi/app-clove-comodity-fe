@@ -7,9 +7,9 @@ import { keys } from './helper';
 type PayloadPembelian = {
   id_penjual: string;
   jenis_komditas_cengkeh: string;
-  berat_kg: string;
-  harga_rp: string;
-  waktu: string;
+  berat_kg: number;
+  harga_rp: number;
+  waktu: Date;
   catatan: string;
 };
 

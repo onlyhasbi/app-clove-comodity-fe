@@ -85,8 +85,8 @@ const FormHasil = ({
           <Select
             id="lahan"
             placeholder="Pilih Lahan"
+            isDisabled={isLoading}
             {...register('lahan')}
-            disabled={isLoading}
           >
             {lahan?.map((item) => {
               return (
@@ -121,7 +121,7 @@ const FormHasil = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -150,7 +150,7 @@ const FormHasil = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -173,7 +173,6 @@ const FormHasil = ({
                 onBlur={onBlur}
                 selected={value}
                 dateFormat="dd / MM / yyyy"
-                disabled={isLoading}
               />
             )}
           />
@@ -190,8 +189,8 @@ const FormHasil = ({
             id="catatan"
             rows={3}
             placeholder="Catatan"
+            isDisabled={isLoading}
             {...register('catatan')}
-            disabled={isLoading}
           />
           <FormErrorMessage>
             {errors.catatan && errors.catatan.message}
@@ -203,7 +202,7 @@ const FormHasil = ({
           onClick={handleCloseModal}
           type="button"
           variant="ghost"
-          disabled={isLoading}
+          isDisabled={isLoading}
         >
           Batal
         </Button>

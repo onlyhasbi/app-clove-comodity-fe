@@ -154,7 +154,11 @@ const Penawaran = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleReset}>
+              <Button
+                ref={cancelRef}
+                onClick={handleReset}
+                isDisabled={deleteOffer.isLoading}
+              >
                 Cancel
               </Button>
               <Button

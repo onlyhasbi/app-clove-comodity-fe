@@ -71,7 +71,7 @@ const Setoran = () => {
         volume_liter: payload.volume,
         berat_kg: payload.berat,
         upah_rp: payload.upah,
-        waktu: dayjs(payload.tanggal).format('YYYY/MM/DD'),
+        waktu: payload.tanggal,
         catatan: payload.catatan,
       };
 
@@ -109,7 +109,11 @@ const Setoran = () => {
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
-          <Button onClick={handleOpenModalAdd} variant="primary">
+          <Button
+            onClick={handleOpenModalAdd}
+            colorScheme="green"
+            isDisabled={getSetoran.isLoading}
+          >
             Tambah
           </Button>
         </Box>
@@ -167,7 +171,11 @@ const Setoran = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleReset}>
+              <Button
+                ref={cancelRef}
+                onClick={handleReset}
+                isDisabled={deleteSetoran.isLoading}
+              >
                 Cancel
               </Button>
               <Button

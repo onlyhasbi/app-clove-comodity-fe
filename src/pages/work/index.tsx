@@ -153,7 +153,11 @@ const Pekerjaan = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleReset}>
+              <Button
+                ref={cancelRef}
+                onClick={handleReset}
+                isDisabled={deleteWork.isLoading}
+              >
                 Cancel
               </Button>
               <Button

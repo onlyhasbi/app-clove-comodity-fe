@@ -60,7 +60,7 @@ const FormLahan = ({
       const { nama, provinsi, status_lahan, luas_lahan } = initialValues;
       setValue('nama', nama);
       setValue('status_lahan', status_lahan);
-      setValue('luas_lahan', String(luas_lahan));
+      setValue('luas_lahan', luas_lahan);
       setValue('provinsi', provinsi);
     }
   }, []);
@@ -93,8 +93,8 @@ const FormLahan = ({
           <Input
             id="nama"
             placeholder="Nama"
+            isDisabled={isLoading}
             {...register('nama')}
-            disabled={isLoading}
           />
           <FormErrorMessage>
             {errors.nama && errors.nama.message}
@@ -108,8 +108,8 @@ const FormLahan = ({
           <Select
             id="provinsi"
             placeholder="Pilih Provinsi"
+            isDisabled={isLoading}
             {...register('provinsi')}
-            disabled={isLoading}
           >
             {provinsi.map((provinsi: LocationProps) => {
               return (
@@ -131,8 +131,8 @@ const FormLahan = ({
           <Select
             id="kabupaten"
             placeholder="Pilih Kabupaten"
+            isDisabled={isLoading}
             {...register('kabupaten')}
-            disabled={isLoading}
           >
             {kabupaten.map((kabupaten: LocationProps) => (
               <option key={kabupaten.id_lokasi} value={kabupaten.id_lokasi}>
@@ -153,10 +153,10 @@ const FormLahan = ({
           <Select
             id="status_lahan"
             placeholder="Pilih Status Lahan"
+            isDisabled={isLoading}
             {...register('status_lahan')}
-            disabled={isLoading}
           >
-            {STATUS_LAHAN.map((lahan:OptionProps) => (
+            {STATUS_LAHAN.map((lahan: OptionProps) => (
               <option key={lahan.value} value={lahan.value}>
                 {lahan.label}
               </option>
@@ -188,7 +188,7 @@ const FormLahan = ({
                 defaultValue={0}
                 decimalSeparator=","
                 thousandSeparator="."
-                disabled={isLoading}
+                isDisabled={isLoading}
               />
             )}
           />
@@ -202,7 +202,7 @@ const FormLahan = ({
           type="button"
           variant="ghost"
           onClick={handleCloseModal}
-          disabled={isLoading}
+          isDisabled={isLoading}
         >
           Batal
         </Button>

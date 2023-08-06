@@ -72,6 +72,7 @@ const FormTim = ({
           <Input
             id="nama_tim"
             placeholder="Nama Tim"
+            isDisabled={isLoading}
             {...register('nama_tim')}
           />
           <FormErrorMessage>
@@ -86,6 +87,7 @@ const FormTim = ({
           <Input
             id="ketua_tim"
             placeholder="Ketua Tim"
+            isDisabled={isLoading}
             {...register('ketua_tim')}
           />
           <FormErrorMessage>
@@ -95,7 +97,7 @@ const FormTim = ({
       </VStack>
       <HStack justify="end" gap={3} marginTop={4}>
         <Button
-          disabled={isLoading}
+          isDisabled={isLoading}
           onClick={handleCloseModal}
           type="button"
           variant="ghost"
