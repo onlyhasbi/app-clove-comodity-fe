@@ -23,11 +23,13 @@ import {
   useGetSetoran,
   usePostSetoran,
   useUpdateSetoran,
+  useUpdateStatusSetoran,
 } from '../../../hooks/useDeposit.hook';
 import {
   TDeleteSetoran,
   TAddSetoran,
   TUpdateSetoran,
+  TUpdateStatusPayment,
 } from './schema';
 import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
@@ -46,58 +48,64 @@ const Setoran = () => {
   const postSetoran = usePostSetoran();
   const deleteSetoran = useDeleteSetoran();
   const updateSetoran = useUpdateSetoran();
+  const updateStatusSetoran = useUpdateStatusSetoran();
 
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdateSetoran) =>
-      setAction((prev) => ({ ...prev, update: data })),
+    (data: TUpdateSetoran) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
   const handleOpenModalDelete = useCallback(
-    (data: TDeleteSetoran) =>
-      setAction((prev) => ({ ...prev, delete: data })),
+    (data: TDeleteSetoran) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback(
-    (payload: TAddSetoran | TUpdateSetoran) => {
-      const defaultPayload = {
-        id_hasil_panen: payload.tanggal_panen,
-        id_buruh: payload.id_buruh,
-        volume_liter: payload.volume,
-        berat_kg: payload.berat,
-        upah_rp: payload.upah,
-        waktu: payload.tanggal,
-        catatan: payload.catatan,
-      };
+  const handleSave = useCallback((payload: TAddSetoran | TUpdateSetoran) => {
+    const defaultPayload = {
+      id_hasil_panen: payload.tanggal_panen,
+      id_buruh: payload.id_buruh,
+      volume_liter: payload.volume,
+      berat_kg: payload.berat,
+      upah_rp: payload.upah,
+      waktu: payload.tanggal,
+      catatan: payload.catatan,
+    };
 
-      if ('id' in payload) {
-        updateSetoran.mutate({ id: payload.id, ...defaultPayload });
-      } else {
-        postSetoran.mutate(defaultPayload);
-      }
-    },
-    []
-  );
+    if ('id' in payload) {
+      updateSetoran.mutate({ id: payload.id, ...defaultPayload });
+    } else {
+      postSetoran.mutate(defaultPayload);
+    }
+  }, []);
 
   const handleDelete = useCallback(
     (id: string) => id && deleteSetoran.mutate(id),
     []
   );
 
+  const handleUpdatePembayaran = useCallback((props: TUpdateStatusPayment) => {
+    updateStatusSetoran.mutate(props)
+  }, []);
+
   useEffect(() => {
     if (
       postSetoran.isSuccess ||
       updateSetoran.isSuccess ||
-      deleteSetoran.isSuccess
+      deleteSetoran.isSuccess ||
+      updateStatusSetoran.isSuccess
     ) {
       getSetoran.refetch();
     }
-  }, [postSetoran.isSuccess, deleteSetoran.isSuccess, updateSetoran.isSuccess]);
+  }, [
+    postSetoran.isSuccess,
+    deleteSetoran.isSuccess,
+    updateStatusSetoran.isSuccess,
+    updateSetoran.isSuccess,
+  ]);
 
   useEffect(() => {
     if (updateSetoran.isSuccess || deleteSetoran.isSuccess) {
@@ -124,6 +132,7 @@ const Setoran = () => {
               ? tableAdapter(getSetoran?.data?.data?.data?.setoran)
               : []
           }
+          onUpdatePayment={handleUpdatePembayaran}
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -161,9 +170,9 @@ const Setoran = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${dayjs(
-                (action?.delete as TDeleteSetoran)?.nama
-              ).format('DD MMMM YYYY')}`}
+              {`Delete ${dayjs((action?.delete as TDeleteSetoran)?.nama).format(
+                'DD MMMM YYYY'
+              )}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>

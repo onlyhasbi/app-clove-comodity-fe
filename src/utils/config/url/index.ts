@@ -61,4 +61,8 @@ export const url = {
     key: 'setoran',
     dev: `${BASE_URL}/setoran`,
   },
+  pembayaran_setoran: {
+    key: 'pembayaran_setoran',
+    dev: `${BASE_URL}/status-pembayaran-setoran`,
+  },
 };

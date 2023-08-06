@@ -5,6 +5,7 @@ export const setAuthToken = (token: string) => {
 };
 
 const http = {
+  config: axios,
   get: axios.get,
   post: axios.post,
   put: axios.put,

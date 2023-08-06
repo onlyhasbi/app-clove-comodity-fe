@@ -50,16 +50,22 @@ const HasilPengeringan = () => {
     () => setAction((prev) => ({ ...prev, add: true })),
     []
   );
+
   const handleOpenModalUpdate = useCallback(
     (data: TUpdatePengeringan) =>
       setAction((prev) => ({ ...prev, update: data })),
     []
   );
+
   const handleOpenModalDelete = useCallback(
     (data: TDeletePengeringan) =>
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
+
+  // const handlePaid = useCallback(()=>{},[])
+
+
   const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback(
@@ -81,6 +87,7 @@ const HasilPengeringan = () => {
     },
     []
   );
+
 
   const handleDelete = useCallback(
     (id: string) => deletePengeringan.mutate(id),

@@ -3,6 +3,7 @@ import { url } from '../utils/config/url';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { keys } from './helper';
+import { TUpdateStatusPayment } from '../element/harvest/deposit/schema';
 
 type PayloadSetoran = {
   id_hasil_panen: string;
@@ -43,4 +44,17 @@ export const useGetSetoran = () =>
   useQuery({
     queryKey: keys(url.setoran.key),
     queryFn: () => http.get(url.setoran.dev).then((data) => data),
+  });
+
+export const useUpdateStatusSetoran = () =>
+  useMutation({
+    mutationFn: ({ id, status }: TUpdateStatusPayment) =>
+      http.config({
+        method: 'put',
+        url: `${url.pembayaran_setoran.dev}/${id}`,
+        params: {
+          status,
+        },
+      }),
+    onSuccess: () => toast.success('Status Pembayaran Setoran telah selesai'),
   });

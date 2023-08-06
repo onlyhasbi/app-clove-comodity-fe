@@ -24,7 +24,10 @@ export const tableAdapter = (payloads: GetDeposit[]) => {
       upah: upah_rp,
       tanggal: dayjs(waktu_setoran).format('DD MMMM YYYY'),
       komplaint: deskripsi_konplaint,
-      status_bayar: status_pembayaran,
+      status_bayar: {
+        id_setoran: id,
+        status_pembayaran,
+      },
       catatan,
       action: {
         update: {
@@ -36,7 +39,6 @@ export const tableAdapter = (payloads: GetDeposit[]) => {
           upah: +upah_rp,
           tanggal: dayjs(waktu_setoran),
           komplaint: deskripsi_konplaint,
-          status_bayar: status_pembayaran,
           catatan,
         },
         delete: {

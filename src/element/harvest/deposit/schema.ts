@@ -21,6 +21,8 @@ export type TUpdateSetoran = TAddSetoran & {
   status_bayar: boolean;
 };
 export type TDeleteSetoran = { id: string; nama: string };
+export type TUpdateStatusPayment = {id:string,status:boolean}
+
 
 export const defaultValues = {
   tanggal_panen: '',

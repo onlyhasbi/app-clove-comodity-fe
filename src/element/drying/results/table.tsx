@@ -1,7 +1,20 @@
 import Table from '../../../components/table';
-import { Box, Center, HStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Center,
+  HStack,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverFooter,
+} from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, Trash2, CheckCircle } from 'lucide-react';
 import { TTableHasilPengeringan } from './types';
 import { TDeletePengeringan, TUpdatePengeringan } from './schema';
 import { NumericFormat } from 'react-number-format';
@@ -64,11 +77,6 @@ const TabelHasilPengeringan = ({
       header: () => <Center>Waktu Selesai</Center>,
       cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
-    columnHelper.accessor('catatan', {
-      id: 'catatan',
-      header: () => <Box>Catatan</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
-    }),
     columnHelper.accessor('upah', {
       id: 'upah',
       header: () => <Center>Upah</Center>,
@@ -83,6 +91,56 @@ const TabelHasilPengeringan = ({
         </Center>
       ),
     }),
+    columnHelper.accessor('catatan', {
+      id: 'catatan',
+      header: () => <Box>Catatan</Box>,
+      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    }),
+    columnHelper.accessor('bahan', {
+      id: 'bahan',
+      header: () => <Center>Bahan</Center>,
+      cell: ({ getValue }) => <Center>{getValue() || '-'}</Center>,
+    }),
+    columnHelper.accessor('status', {
+      id: 'status',
+      header: () => <Center>Status</Center>,
+      cell: ({ getValue }) => (
+        <Center textAlign="center">
+          {getValue() ? (
+            <Box color="green">
+              <CheckCircle height={15} width={15} />
+            </Box>
+          ) : (
+            <Popover>
+              <PopoverTrigger>
+                <Button colorScheme="red" size="xs">
+                  Belum Dibayar
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader
+                  paddingX={5}
+                  paddingY={3}
+                  textAlign="left"
+                  fontWeight="semibold"
+                >
+                  Konfirmasi
+                </PopoverHeader>
+                <PopoverBody whiteSpace="normal" textAlign="left" padding={5}>
+                  Apakah anda telah melakukan pembayaran?
+                </PopoverBody>
+                <PopoverFooter display="flex" justifyContent="flex-end">
+                  <Button colorScheme="green">Lunas</Button>
+                </PopoverFooter>
+              </PopoverContent>
+            </Popover>
+          )}
+        </Center>
+      ),
+    }),
+
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Center>Aksi</Center>,
