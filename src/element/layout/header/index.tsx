@@ -18,9 +18,9 @@ import React from 'react';
 import { capitalize, getFirstCharacter } from '../../../utils';
 
 const routes = [
-  { path: 'profile', label: 'Profil' },
-  { path: 'offer', label: 'Penawaran' },
-  { path: 'work', label: 'Pekerjaan' },
+  { path: '/profile', label: 'Profil' },
+  { path: '/offer', label: 'Penawaran' },
+  { path: '/work', label: 'Pekerjaan' },
 ];
 
 const Header = () => {
