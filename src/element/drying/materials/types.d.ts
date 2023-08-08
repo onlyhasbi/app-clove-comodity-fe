@@ -6,6 +6,7 @@ type TActionTable = {
 };
 
 export type TTableBahan = {
+  id: string;
   berat_kg: string;
   volume_liter: string;
   waktu_mulai: string;

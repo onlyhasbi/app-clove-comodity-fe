@@ -3,7 +3,6 @@ import { url } from '../utils/config/url';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { keys } from './helper';
-import { TUpdateStatusPayment } from '../element/harvest/deposit/schema';
 
 type PayloadSetoran = {
   id_hasil_panen: string;
@@ -56,5 +55,5 @@ export const useUpdateStatusSetoran = () =>
           status,
         },
       }),
-    onSuccess: () => toast.success('Status Pembayaran Setoran telah selesai'),
+    onSuccess: () => toast.dismiss(),
   });

@@ -166,3 +166,6 @@ type GetBahan = {
   dikeringkan_pada_hari: string;
   catatan: string;
 };
+
+//Konfirmasi pembayaran
+type TUpdateStatusPayment = { id: string; status: boolean };

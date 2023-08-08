@@ -1,38 +1,30 @@
 import Table from '../../../components/table';
-import {
-  Box,
-  Button,
-  Center,
-  HStack,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverFooter,
-} from '@chakra-ui/react';
+import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Edit, Trash2, CheckCircle } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
 import { TTableSetoran } from './types';
-import { TDeleteSetoran, TUpdateSetoran, TUpdateStatusPayment } from './schema';
+import { TDeleteSetoran, TUpdateSetoran } from './schema';
 import { NumericFormat } from 'react-number-format';
+import Status from '../../../components/pembayaran';
 
 type Props = {
-  isLoading?: boolean;
-  data: any[];
-  onUpdatePayment: (data: TUpdateStatusPayment) => void;
-  onDelete: (data: TDeleteSetoran) => void;
-  onUpdate: (data: TUpdateSetoran) => void;
+  listen: {
+    statusSetoran?: string;
+    data: any[];
+    onUpdatePayment: (data: TUpdateStatusPayment) => void;
+    onDelete: (data: TDeleteSetoran) => void;
+    onUpdate: (data: TUpdateSetoran) => void;
+  };
 };
 
 const TableSetoran = ({
-  isLoading,
-  data,
-  onUpdatePayment: handlePayment,
-  onUpdate: handleUpdate,
-  onDelete: handleDelete,
+  listen: {
+    statusSetoran,
+    data,
+    onUpdatePayment: handlePayment,
+    onUpdate: handleUpdate,
+    onDelete: handleDelete,
+  },
 }: Props) => {
   const columnHelper = createColumnHelper<TTableSetoran>();
   const columns = [
@@ -108,49 +100,18 @@ const TableSetoran = ({
       id: 'status_bayar',
       header: () => <Center>Pembayaran</Center>,
       cell: ({ getValue }) => {
+        const { status_pembayaran, id_setoran } = getValue();
         return (
-          <Center textAlign="center">
-            {getValue().status_pembayaran ? (
-              <Box color="green">
-                <CheckCircle height={15} width={15} />
-              </Box>
-            ) : (
-              <Popover>
-                <PopoverTrigger>
-                  <Button colorScheme="red" size="xs">
-                    Belum Dibayar
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverHeader
-                    paddingX={5}
-                    paddingY={3}
-                    textAlign="left"
-                    fontWeight="semibold"
-                  >
-                    Konfirmasi
-                  </PopoverHeader>
-                  <PopoverBody whiteSpace="normal" textAlign="left" padding={5}>
-                    Apakah anda telah melakukan pembayaran?
-                  </PopoverBody>
-                  <PopoverFooter display="flex" justifyContent="flex-end">
-                    <Button
-                      colorScheme="green"
-                      onClick={() =>
-                        handlePayment({
-                          id: getValue().id_setoran,
-                          status: !getValue().status_pembayaran,
-                        })
-                      }
-                    >
-                      Ya
-                    </Button>
-                  </PopoverFooter>
-                </PopoverContent>
-              </Popover>
-            )}
+          <Center>
+            <Status
+              value={status_pembayaran}
+              onConfirm={() =>
+                handlePayment({
+                  id: id_setoran,
+                  status: !status_pembayaran,
+                })
+              }
+            />
           </Center>
         );
       },
@@ -185,7 +146,13 @@ const TableSetoran = ({
     }),
   ];
 
-  return <Table data={data} isLoading={isLoading} columns={columns} />;
+  return (
+    <Table
+      data={data}
+      isLoading={statusSetoran === 'loading'}
+      columns={columns}
+    />
+  );
 };
 
 export default TableSetoran;

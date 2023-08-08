@@ -1,19 +1,25 @@
-// import { useGetTim } from '../../hooks/useTeam.hook';
-// import { SkeletonText } from '@chakra-ui/react';
+import { useGetMaterial } from '../../hooks/useMaterial.hook';
+import { Select } from '@chakra-ui/react';
 
-// type Props = { value: string };
+type Props = { onSetBahan: (value: string) => void };
 
-// const Team = ({ value }: Props) => {
-//   const getTim = useGetTim();
-//   const teams = getTim.data?.data?.data?.tim;
+const SelectBahanPengeringan = ({ onSetBahan }: Props) => {
+  const getBahanPengeringan = useGetMaterial();
+  const bahanPengeringan = getBahanPengeringan?.data?.data?.data.bahan;
 
-//   if (getTim.isLoading)
-//     return <SkeletonText width="full" noOfLines={1} skeletonHeight="2" />;
+  return (
+    <Select
+      variant="unstyled"
+      placeholder="Pilih bahan"
+      onChange={(e) => onSetBahan(e.target.value)}
+    >
+      {bahanPengeringan?.map(({ id }: GetBahan) => (
+        <option key={id} value={id}>
+          {id}
+        </option>
+      ))}
+    </Select>
+  );
+};
 
-//   if (getTim.isSuccess)
-//     return teams.find((team: GetTim) => team.id === value)?.nama_tim;
-
-//   return undefined;
-// };
-
-// export default Team;
+export default SelectBahanPengeringan;

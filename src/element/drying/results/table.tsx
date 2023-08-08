@@ -1,39 +1,50 @@
 import Table from '../../../components/table';
-import {
-  Box,
-  Button,
-  Center,
-  HStack,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverFooter,
-} from '@chakra-ui/react';
+import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Edit, Trash2, CheckCircle } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
 import { TTableHasilPengeringan } from './types';
 import { TDeletePengeringan, TUpdatePengeringan } from './schema';
 import { NumericFormat } from 'react-number-format';
+import { useUpdateBahan } from '../../../hooks/useDryResult.hook';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { url } from '../../../utils/config/url';
+import SelectBahanPengeringan from '../../../components/bahan-pengeringan';
 import Team from '../../../components/tim';
+import Status from '../../../components/pembayaran';
 
 type Props = {
-  data: any[];
-  isLoading: boolean;
-  onDelete: (data: TDeletePengeringan) => void;
-  onUpdate: (data: TUpdatePengeringan) => void;
+  listen: {
+    isLoading: boolean;
+    data: any[];
+    onUpdatePayment: (data: TUpdateStatusPayment) => void;
+    onDelete: (data: TDeletePengeringan) => void;
+    onUpdate: (data: TUpdatePengeringan) => void;
+  };
 };
 
 const TabelHasilPengeringan = ({
-  isLoading,
-  data,
-  onUpdate: handleUpdate,
-  onDelete: handleDelete,
+  listen: {
+    isLoading,
+    data,
+    onUpdatePayment: handlePayment,
+    onUpdate: handleUpdate,
+    onDelete: handleDelete,
+  },
 }: Props) => {
   const columnHelper = createColumnHelper<TTableHasilPengeringan>();
+  const queryClient = useQueryClient();
+  const updateBahan = useUpdateBahan();
+
+  useEffect(() => {
+    if (updateBahan.isSuccess) {
+      queryClient.refetchQueries({
+        queryKey: [url.pengeringan.dev],
+        type: 'active',
+      });
+    }
+  }, [updateBahan.isSuccess]);
+
   const columns = [
     columnHelper.accessor('tim', {
       id: 'tim',
@@ -99,46 +110,43 @@ const TabelHasilPengeringan = ({
     columnHelper.accessor('bahan', {
       id: 'bahan',
       header: () => <Center>Bahan</Center>,
-      cell: ({ getValue }) => <Center>{getValue() || '-'}</Center>,
+      cell: ({ getValue }) => {
+        const { id, nama } = getValue();
+
+        const handleSetBahan = (value: string) => {
+          updateBahan.mutate({ id_bahan: value, id_hasil: id });
+        };
+
+        if (!nama)
+          return (
+            <Center w="7rem">
+              <SelectBahanPengeringan onSetBahan={handleSetBahan} />
+            </Center>
+          );
+
+        return <Center>{nama}</Center>;
+      },
     }),
     columnHelper.accessor('status', {
       id: 'status',
       header: () => <Center>Status</Center>,
-      cell: ({ getValue }) => (
-        <Center textAlign="center">
-          {getValue() ? (
-            <Box color="green">
-              <CheckCircle height={15} width={15} />
-            </Box>
-          ) : (
-            <Popover>
-              <PopoverTrigger>
-                <Button colorScheme="red" size="xs">
-                  Belum Dibayar
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader
-                  paddingX={5}
-                  paddingY={3}
-                  textAlign="left"
-                  fontWeight="semibold"
-                >
-                  Konfirmasi
-                </PopoverHeader>
-                <PopoverBody whiteSpace="normal" textAlign="left" padding={5}>
-                  Apakah anda telah melakukan pembayaran?
-                </PopoverBody>
-                <PopoverFooter display="flex" justifyContent="flex-end">
-                  <Button colorScheme="green">Lunas</Button>
-                </PopoverFooter>
-              </PopoverContent>
-            </Popover>
-          )}
-        </Center>
-      ),
+      cell: ({ getValue }) => {
+        const { status_pembayaran, id_hasil_pengeringan } = getValue();
+
+        return (
+          <Center>
+            <Status
+              value={status_pembayaran}
+              onConfirm={() =>
+                handlePayment({
+                  id: id_hasil_pengeringan,
+                  status: !status_pembayaran,
+                })
+              }
+            />
+          </Center>
+        );
+      },
     }),
 
     columnHelper.accessor('action', {

@@ -28,8 +28,10 @@ import {
   useGetPengeringan,
   usePostPengeringan,
   useUpdatePengeringan,
+  useUpdatePembayaran,
 } from '../../../hooks/useDryResult.hook';
 import { tableAdapter } from './helper';
+import { toast } from 'react-hot-toast';
 
 type TAction = {
   add?: boolean;
@@ -45,6 +47,7 @@ const HasilPengeringan = () => {
   const postPengeringan = usePostPengeringan();
   const deletePengeringan = useDeletePengeringan();
   const updatePengeringan = useUpdatePengeringan();
+  const updateStatusPembayaran = useUpdatePembayaran();
 
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
@@ -62,9 +65,6 @@ const HasilPengeringan = () => {
       setAction((prev) => ({ ...prev, delete: data })),
     []
   );
-
-  // const handlePaid = useCallback(()=>{},[])
-
 
   const handleReset = useCallback(() => setAction(null), []);
 
@@ -88,17 +88,32 @@ const HasilPengeringan = () => {
     []
   );
 
-
   const handleDelete = useCallback(
     (id: string) => deletePengeringan.mutate(id),
     []
   );
 
+  const handleUpdatePembayaran = useCallback((props: TUpdateStatusPayment) => {
+    toast.loading('Memproses pembayaran...');
+    updateStatusPembayaran.mutate(props);
+  }, []);
+
+  const tableListener = {
+    isLoading: getPengeringan.isLoading,
+    data: getPengeringan.isSuccess
+      ? tableAdapter(getPengeringan?.data?.data?.data?.hasil)
+      : [],
+    onUpdatePayment: handleUpdatePembayaran,
+    onUpdate: handleOpenModalUpdate,
+    onDelete: handleOpenModalDelete,
+  };
+
   useEffect(() => {
     if (
       postPengeringan.isSuccess ||
       updatePengeringan.isSuccess ||
-      deletePengeringan.isSuccess
+      deletePengeringan.isSuccess ||
+      updateStatusPembayaran.isSuccess
     ) {
       getPengeringan.refetch();
     }
@@ -106,6 +121,7 @@ const HasilPengeringan = () => {
     postPengeringan.isSuccess,
     deletePengeringan.isSuccess,
     updatePengeringan.isSuccess,
+    updateStatusPembayaran.isSuccess,
   ]);
 
   useEffect(() => {
@@ -126,16 +142,7 @@ const HasilPengeringan = () => {
             Tambah
           </Button>
         </Box>
-        <TabelHasilPengeringan
-          isLoading={getPengeringan.isLoading}
-          data={
-            getPengeringan.isSuccess
-              ? tableAdapter(getPengeringan?.data?.data?.data?.hasil)
-              : []
-          }
-          onUpdate={handleOpenModalUpdate}
-          onDelete={handleOpenModalDelete}
-        />
+        <TabelHasilPengeringan listen={tableListener} />
       </VStack>
 
       <Modal

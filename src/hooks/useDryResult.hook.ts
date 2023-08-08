@@ -13,6 +13,11 @@ type PayloadPengeringan = {
   upah: number;
 };
 
+type PayloadUpdateBahan = {
+  id_bahan: string;
+  id_hasil: string;
+};
+
 type PayloadUpdatePengeringan = PayloadPengeringan & {
   id: string;
 };
@@ -44,4 +49,25 @@ export const useGetPengeringan = () =>
   useQuery({
     queryKey: keys(url.pengeringan.key),
     queryFn: () => http.get(url.pengeringan.dev).then((data) => data),
+  });
+
+export const useUpdateBahan = () =>
+  useMutation({
+    mutationFn: ({ id_bahan, id_hasil }: PayloadUpdateBahan) =>
+      http
+        .put(`${url.update_bahan.dev}/${id_bahan}/${id_hasil}`)
+        .then((data) => data),
+  });
+
+export const useUpdatePembayaran = () =>
+  useMutation({
+    mutationFn: ({ id, status }: TUpdateStatusPayment) =>
+      http.config({
+        method: 'put',
+        url: `${url.pembayaran_pengeringan.dev}/${id}`,
+        params: {
+          status,
+        },
+      }),
+    onSuccess: () => toast.dismiss(),
   });

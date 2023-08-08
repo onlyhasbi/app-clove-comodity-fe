@@ -29,9 +29,17 @@ export const url = {
     key: 'bahan-pengeringan',
     dev: `${BASE_URL}/bahan-pengeringan`,
   },
+  update_bahan: {
+    key: 'update-bahan-pengeringan',
+    dev: `${BASE_URL}/set-pengeringan`,
+  },
   pengeringan: {
     key: 'hasil-pengeringan',
     dev: `${BASE_URL}/hasil-pengeringan`,
+  },
+  pembayaran_pengeringan: {
+    key: 'update-pengeringan',
+    dev: `${BASE_URL}/status-pembayaran-hasil-pengeringan`,
   },
   pekerjaan: {
     key: 'pekerjaan',

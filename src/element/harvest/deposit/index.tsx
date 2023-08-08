@@ -25,14 +25,10 @@ import {
   useUpdateSetoran,
   useUpdateStatusSetoran,
 } from '../../../hooks/useDeposit.hook';
-import {
-  TDeleteSetoran,
-  TAddSetoran,
-  TUpdateSetoran,
-  TUpdateStatusPayment,
-} from './schema';
+import { TDeleteSetoran, TAddSetoran, TUpdateSetoran } from './schema';
 import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
+import { toast } from 'react-hot-toast';
 
 type TAction = {
   add?: boolean;
@@ -88,8 +84,19 @@ const Setoran = () => {
   );
 
   const handleUpdatePembayaran = useCallback((props: TUpdateStatusPayment) => {
-    updateStatusSetoran.mutate(props)
+    toast.loading('Memproses pembayaran...');
+    updateStatusSetoran.mutate(props);
   }, []);
+
+  const tableListener = {
+    statusSetoran: getSetoran.status,
+    data: getSetoran.isSuccess
+      ? tableAdapter(getSetoran?.data?.data?.data?.setoran)
+      : [],
+    onUpdatePayment: handleUpdatePembayaran,
+    onUpdate: handleOpenModalUpdate,
+    onDelete: handleOpenModalDelete,
+  };
 
   useEffect(() => {
     if (
@@ -125,17 +132,7 @@ const Setoran = () => {
             Tambah
           </Button>
         </Box>
-        <TableSetoran
-          isLoading={getSetoran.isLoading}
-          data={
-            getSetoran.isSuccess
-              ? tableAdapter(getSetoran?.data?.data?.data?.setoran)
-              : []
-          }
-          onUpdatePayment={handleUpdatePembayaran}
-          onUpdate={handleOpenModalUpdate}
-          onDelete={handleOpenModalDelete}
-        />
+        <TableSetoran listen={tableListener} />
       </VStack>
 
       <Modal

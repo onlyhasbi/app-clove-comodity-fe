@@ -21,6 +21,11 @@ const TabelBahan = ({
 }: Props) => {
   const columnHelper = createColumnHelper<TTableBahan>();
   const columns = [
+    columnHelper.accessor('id', {
+      id: 'id',
+      header: () => <Center>id</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
+    }),
     columnHelper.accessor('berat_kg', {
       id: 'berat',
       header: () => <Center>Berat</Center>,
