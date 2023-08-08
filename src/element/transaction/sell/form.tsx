@@ -89,7 +89,7 @@ const FormPenjualan = ({
           </FormLabel>
           <Input
             id="id_pembeli"
-            placeholder="ID Penjual"
+            placeholder="ID Pembeli"
             isDisabled={isLoading}
             {...register('id_pembeli')}
           />

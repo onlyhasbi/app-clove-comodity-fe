@@ -29,6 +29,8 @@ function Table({ data, columns, isLoading = false }: TProps) {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  console.log(columns);
+
   return (
     <TableContainer width="100%">
       <TableUi variant="simple">
@@ -37,10 +39,10 @@ function Table({ data, columns, isLoading = false }: TProps) {
             <Tr key={headerGroup.id}>
               {headerGroup?.headers?.map((header: any) => (
                 <Th key={header?.id}>
-                  {header?.isPlaceholder
+                  {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header?.column?.columnDef?.header,
+                        header?.column.columnDef.header,
                         header?.getContext()
                       )}
                 </Th>
@@ -49,7 +51,7 @@ function Table({ data, columns, isLoading = false }: TProps) {
           ))}
         </Thead>
         <Tbody>
-          {table?.getRowModel()?.rows?.length ? (
+          {table?.getRowModel().rows?.length ? (
             table?.getRowModel().rows?.map((row) => (
               <Tr key={row?.id}>
                 {row?.getVisibleCells()?.map((cell) => (
@@ -64,13 +66,7 @@ function Table({ data, columns, isLoading = false }: TProps) {
             ))
           ) : (
             <Tr>
-              <Td
-                colSpan={
-                  columns?.length === 1
-                    ? columns[0]?.columns?.length
-                    : columns?.length
-                }
-              >
+              <Td colSpan={columns?.length || 1}>
                 <Center>
                   {isLoading ? (
                     <Spinner size="md" marginY={8} />
