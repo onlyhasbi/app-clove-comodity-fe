@@ -9,9 +9,10 @@ import Transaksi from './pages/transaction';
 import Profile from './pages/profile';
 import Penawaran from './pages/offer';
 import Pekerjaan from './pages/work';
+import NotFound from './pages/notfound';
 import './app.style.css';
 import dayjs from 'dayjs';
-import * as locale from 'dayjs/locale/id'
+import * as locale from 'dayjs/locale/id';
 
 function App() {
   dayjs.locale(locale);
@@ -19,6 +20,7 @@ function App() {
     <Routes>
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="*" element={<NotFound />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/harvest" element={<Panen />} />

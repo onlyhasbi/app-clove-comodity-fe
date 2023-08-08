@@ -72,7 +72,7 @@ const TabelBahan = ({
           <HStack gap={3} justify="center">
             <Box
               as="button"
-              title="Klik untuk mengubah data bahan pengerignan"
+              title="Klik untuk mengubah data bahan pengeringan"
               cursor="pointer"
               _hover={{ color: 'blue.600' }}
               onClick={() => handleUpdate(getValue().update)}

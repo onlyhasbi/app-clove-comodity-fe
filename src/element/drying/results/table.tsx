@@ -156,17 +156,19 @@ const TabelHasilPengeringan = ({
         return (
           <HStack gap={3} justify="center">
             <Box
-              title="ubah"
+              as="button"
+              title="Klik untuk mengubah data hasil pengeringan"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'blue.600' }}
               onClick={() => handleUpdate(getValue().update)}
             >
               <Edit height={15} width={15} />
             </Box>
             <Box
-              title="hapus"
+              as="button"
+              title="Klik untuk menghapus data bahan pengeringan"
               cursor="pointer"
-              _hover={{ color: 'green.600' }}
+              _hover={{ color: 'red.600' }}
               onClick={() => handleDelete(getValue().delete)}
             >
               <Trash2 height={15} width={15} />

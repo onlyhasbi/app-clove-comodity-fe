@@ -1,3 +1,5 @@
+import { useGetPengeringan } from '../../../hooks/useDryResult.hook';
+import { useGetHasil } from '../../../hooks/useResult.hook';
 import {
   Card,
   CardHeader,
@@ -10,6 +12,20 @@ import {
 import { Wallet2, Wheat, SunMedium } from 'lucide-react';
 
 function CardSummary() {
+  const hasilPanen = useGetHasil();
+  const hasilPengeringan = useGetPengeringan();
+  const hasilTransaksi = 0;
+
+  const jumlahPanen = hasilPanen.isSuccess
+    ? hasilPanen?.data?.data?.data?.jumlah_hasil_panen
+    : 0;
+
+  const jumlahPengeringan = hasilPengeringan.isSuccess
+    ? hasilPengeringan?.data?.data?.data?.jumlah_hasil
+    : 0;
+
+  // console.log(hasilPengeringan?.data?.data?.data)
+
   return (
     <Grid w="full" templateColumns={{ lg: 'repeat(3, 1fr)' }} gap={6}>
       <GridItem>
@@ -28,7 +44,7 @@ function CardSummary() {
               letterSpacing="-0.05rem"
               align="right"
             >
-              83
+              {jumlahPanen}
             </Text>
             <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
               <Wheat width={80} height={80} />
@@ -52,7 +68,7 @@ function CardSummary() {
               letterSpacing="-0.05rem"
               align="right"
             >
-              220
+              {jumlahPengeringan}
             </Text>
             <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
               <SunMedium width={80} height={80} />
