@@ -29,8 +29,6 @@ function Table({ data, columns, isLoading = false }: TProps) {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  console.log(columns);
-
   return (
     <TableContainer width="100%">
       <TableUi variant="simple">
@@ -51,30 +49,29 @@ function Table({ data, columns, isLoading = false }: TProps) {
           ))}
         </Thead>
         <Tbody>
-          {table?.getRowModel().rows?.length ? (
+          {table?.getRowModel().rows.length ? (
             table?.getRowModel().rows?.map((row) => (
-              <Tr key={row?.id}>
-                {row?.getVisibleCells()?.map((cell) => (
+              <Tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
                   <Td key={cell.id}>
-                    {flexRender(
-                      cell?.column.columnDef.cell,
-                      cell?.getContext()
-                    )}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Td>
                 ))}
               </Tr>
             ))
           ) : (
             <Tr>
-              <Td colSpan={columns?.length || 1}>
-                <Center>
-                  {isLoading ? (
-                    <Spinner size="md" marginY={8} />
-                  ) : (
-                    'No Record to Display'
-                  )}
-                </Center>
-              </Td>
+              {columns && (
+                <Td colSpan={columns.length}>
+                  <Center>
+                    {isLoading ? (
+                      <Spinner size="md" marginY={8} />
+                    ) : (
+                      'No Record to Display'
+                    )}
+                  </Center>
+                </Td>
+              )}
             </Tr>
           )}
         </Tbody>
