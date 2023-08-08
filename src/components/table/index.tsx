@@ -33,15 +33,15 @@ function Table({ data, columns, isLoading = false }: TProps) {
     <TableContainer width="100%">
       <TableUi variant="simple">
         <Thead>
-          {table.getHeaderGroups().map((headerGroup: any) => (
+          {table?.getHeaderGroups()?.map((headerGroup: any) => (
             <Tr key={headerGroup.id}>
-              {headerGroup.headers.map((header: any) => (
-                <Th key={header.id}>
-                  {header.isPlaceholder
+              {headerGroup?.headers?.map((header: any) => (
+                <Th key={header?.id}>
+                  {header?.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
+                        header?.column?.columnDef?.header,
+                        header?.getContext()
                       )}
                 </Th>
               ))}
@@ -49,12 +49,15 @@ function Table({ data, columns, isLoading = false }: TProps) {
           ))}
         </Thead>
         <Tbody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows?.map((row) => (
-              <Tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
+          {table?.getRowModel()?.rows?.length ? (
+            table?.getRowModel().rows?.map((row) => (
+              <Tr key={row?.id}>
+                {row?.getVisibleCells()?.map((cell) => (
                   <Td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {flexRender(
+                      cell?.column.columnDef.cell,
+                      cell?.getContext()
+                    )}
                   </Td>
                 ))}
               </Tr>
@@ -63,9 +66,9 @@ function Table({ data, columns, isLoading = false }: TProps) {
             <Tr>
               <Td
                 colSpan={
-                  columns.length === 1
-                    ? columns[0].columns.length
-                    : columns.length
+                  columns?.length === 1
+                    ? columns[0]?.columns?.length
+                    : columns?.length
                 }
               >
                 <Center>
