@@ -1,4 +1,4 @@
-import { VStack, HStack, Center, Text, Button, Box } from '@chakra-ui/react';
+import { VStack, HStack, Center, Text, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { MoveLeft } from 'lucide-react';
 import notfound from '../../assets/notfound.svg';

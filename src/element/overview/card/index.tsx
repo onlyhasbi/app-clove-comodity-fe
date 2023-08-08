@@ -14,7 +14,6 @@ import { Wallet2, Wheat, SunMedium } from 'lucide-react';
 function CardSummary() {
   const hasilPanen = useGetHasil();
   const hasilPengeringan = useGetPengeringan();
-  const hasilTransaksi = 0;
 
   const jumlahPanen = hasilPanen.isSuccess
     ? hasilPanen?.data?.data?.data?.jumlah_hasil_panen
@@ -23,8 +22,6 @@ function CardSummary() {
   const jumlahPengeringan = hasilPengeringan.isSuccess
     ? hasilPengeringan?.data?.data?.data?.jumlah_hasil
     : 0;
-
-  // console.log(hasilPengeringan?.data?.data?.data)
 
   return (
     <Grid w="full" templateColumns={{ lg: 'repeat(3, 1fr)' }} gap={6}>
