@@ -22,7 +22,7 @@ function CardSummary() {
   const jumlahPengeringan = getPengeringan?.data?.data?.data?.jumlah_pembelian;
   const jumlahKomoditas = getKomoditas?.data?.data?.data?.jumlah_data;
   const jumlahTransaksi = getTransaksi?.data?.data?.data?.jumlah_data;
-  const jumlahLahan = getLahan?.data?.data?.data;
+  const jumlahLahan = getLahan?.data?.data?.data?.jumlah_pembelian;
 
   return (
     <Grid w="full" templateColumns={{ lg: 'repeat(3, 1fr)' }} gap={6}>
