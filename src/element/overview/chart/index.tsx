@@ -1,5 +1,5 @@
 import { data } from '../../../model/chart.model';
-import { Box, Stack, VStack, Text } from '@chakra-ui/react';
+import { Box, VStack } from '@chakra-ui/react';
 import {
   LineChart,
   Line,

@@ -1,7 +1,6 @@
 import Table from '../../../../components/table';
 import { Box, VStack, Text, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Check } from 'lucide-react';
 import { tableAdapter } from './helper';
 import { PEKERJAAN, SATUAN } from '../../../../model/penawaran.model';
 
@@ -18,7 +17,7 @@ type Props = {
   isLoading: boolean;
 };
 
-const TabelBuruh = ({ isLoading, data, onAccept }: Props) => {
+const TabelBuruh = ({ isLoading, data }: Props) => {
   const columnHelper = createColumnHelper<TLabor>();
   const columns = [
     columnHelper.accessor('nama', {
