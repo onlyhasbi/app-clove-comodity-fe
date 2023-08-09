@@ -169,3 +169,6 @@ type GetBahan = {
 
 //Konfirmasi pembayaran
 type TUpdateStatusPayment = { id: string; status: boolean };
+
+//Update bahan
+type TUpdateMaterial = { id_bahan: string; id_hasil: string };

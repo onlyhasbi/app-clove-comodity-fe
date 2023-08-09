@@ -23,3 +23,14 @@ export const useGetLahan = () =>
     queryKey: keys(url.report_lahan.key),
     queryFn: () => http.get(url.report_lahan.dev).then((data) => data),
   });
+
+export const useGetInfoPenawaran = () =>
+  useQuery({
+    queryKey: keys(url.info_penawaran.key),
+    queryFn: () => http.get(url.info_penawaran.dev).then((data) => data),
+  });
+export const useGetInfoBuruh = () =>
+  useQuery({
+    queryKey: keys(url.info_buruh.key),
+    queryFn: () => http.get(url.info_buruh.dev).then((data) => data),
+  });

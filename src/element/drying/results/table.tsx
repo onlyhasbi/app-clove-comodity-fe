@@ -5,10 +5,6 @@ import { Edit, Trash2 } from 'lucide-react';
 import { TTableHasilPengeringan } from './types';
 import { TDeletePengeringan, TUpdatePengeringan } from './schema';
 import { NumericFormat } from 'react-number-format';
-import { useUpdateBahan } from '../../../hooks/useDryResult.hook';
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { url } from '../../../utils/config/url';
 import SelectBahanPengeringan from '../../../components/bahan-pengeringan';
 import Team from '../../../components/tim';
 import Status from '../../../components/pembayaran';
@@ -18,6 +14,7 @@ type Props = {
     isLoading: boolean;
     data: any[];
     onUpdatePayment: (data: TUpdateStatusPayment) => void;
+    onUpdateMaterial: (data: TUpdateMaterial) => void;
     onDelete: (data: TDeletePengeringan) => void;
     onUpdate: (data: TUpdatePengeringan) => void;
   };
@@ -28,22 +25,12 @@ const TabelHasilPengeringan = ({
     isLoading,
     data,
     onUpdatePayment: handlePayment,
+    onUpdateMaterial: handleMaterial,
     onUpdate: handleUpdate,
     onDelete: handleDelete,
   },
 }: Props) => {
   const columnHelper = createColumnHelper<TTableHasilPengeringan>();
-  const queryClient = useQueryClient();
-  const updateBahan = useUpdateBahan();
-
-  useEffect(() => {
-    if (updateBahan.isSuccess) {
-      queryClient.refetchQueries({
-        queryKey: [url.pengeringan.dev],
-        type: 'active',
-      });
-    }
-  }, [updateBahan.isSuccess]);
 
   const columns = [
     columnHelper.accessor('tim', {
@@ -113,18 +100,17 @@ const TabelHasilPengeringan = ({
       cell: ({ getValue }) => {
         const { id, nama } = getValue();
 
-        const handleSetBahan = (value: string) => {
-          updateBahan.mutate({ id_bahan: value, id_hasil: id });
+        const handleGetBahan = (value: string) => {
+          handleMaterial({ id_bahan: value, id_hasil: id });
         };
 
-        if (!nama)
-          return (
-            <Center w="7rem">
-              <SelectBahanPengeringan onSetBahan={handleSetBahan} />
-            </Center>
-          );
-
-        return <Center>{nama}</Center>;
+        return !nama ? (
+          <Center w="7rem">
+            <SelectBahanPengeringan onSetBahan={handleGetBahan} />
+          </Center>
+        ) : (
+          <Center>{nama}</Center>
+        );
       },
     }),
     columnHelper.accessor('status', {

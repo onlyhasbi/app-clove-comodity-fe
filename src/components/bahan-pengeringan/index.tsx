@@ -5,7 +5,7 @@ type Props = { onSetBahan: (value: string) => void };
 
 const SelectBahanPengeringan = ({ onSetBahan }: Props) => {
   const getBahanPengeringan = useGetMaterial();
-  const bahanPengeringan = getBahanPengeringan?.data?.data?.data.bahan;
+  const bahanPengeringan = getBahanPengeringan?.data?.data?.data?.bahan;
 
   return (
     <Select

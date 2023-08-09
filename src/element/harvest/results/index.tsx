@@ -46,14 +46,12 @@ const Hasil = () => {
   );
 
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdatePanen) =>
-      setAction((prev) => ({ ...prev, update: data })),
+    (data: TUpdatePanen) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDeletePanen) =>
-      setAction((prev) => ({ ...prev, delete: data })),
+    (data: TDeletePanen) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
@@ -64,24 +62,21 @@ const Hasil = () => {
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback(
-    (payload: TAddPanen | TUpdatePanen) => {
-      const defaultPayload = {
-        id_lahan: payload.lahan,
-        berat_pengukuran_kg: payload.berat,
-        volume_pengukuran_liter: payload.volume,
-        waktu: payload.tanggal,
-        catatan: payload.catatan,
-      };
+  const handleSave = useCallback((payload: TAddPanen | TUpdatePanen) => {
+    const defaultPayload = {
+      id_lahan: payload.lahan,
+      berat_pengukuran_kg: payload.berat,
+      volume_pengukuran_liter: payload.volume,
+      waktu: payload.tanggal,
+      catatan: payload.catatan,
+    };
 
-      if ('id' in payload) {
-        updateHasil.mutate({ id: payload.id, ...defaultPayload });
-      } else {
-        postHasil.mutate(defaultPayload);
-      }
-    },
-    []
-  );
+    if ('id' in payload) {
+      updateHasil.mutate({ id: payload.id, ...defaultPayload });
+    } else {
+      postHasil.mutate(defaultPayload);
+    }
+  }, []);
 
   const handleDelete = useCallback(
     (id: string) => id && deleteHasil.mutate(id),
@@ -94,6 +89,10 @@ const Hasil = () => {
       queryClient.refetchQueries({
         queryKey: [url.lahan.key],
         type: 'active',
+      });
+      queryClient.refetchQueries({
+        queryKey: [url.report_komoditas.key],
+        type: 'inactive',
       });
     }
   }, [postHasil.isSuccess, deleteHasil.isSuccess, updateHasil.isSuccess]);

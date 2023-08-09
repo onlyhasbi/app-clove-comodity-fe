@@ -25,7 +25,9 @@ import {
   usePostLahan,
   useUpdateLahan,
 } from '../../../hooks/useLand.hook';
+import { url } from '../../../utils/config/url';
 import { tableAdapter } from './helper';
+import { useQueryClient } from '@tanstack/react-query';
 
 type TAction = {
   add?: boolean;
@@ -34,6 +36,7 @@ type TAction = {
 };
 
 const Lahan = () => {
+  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -42,14 +45,12 @@ const Lahan = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdateLahan) =>
-      setAction((prev) => ({ ...prev, update: data })),
+    (data: TUpdateLahan) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDeleteLahan) =>
-      setAction((prev) => ({ ...prev, delete: data })),
+    (data: TDeleteLahan) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
@@ -60,23 +61,20 @@ const Lahan = () => {
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback(
-    (payload: TAddLahan | TUpdateLahan) => {
-      const defaultPayload = {
-        nama: payload.nama,
-        lokasi: payload.kabupaten,
-        luas_m2: payload.luas_lahan,
-        status_hak_panen: payload.status_lahan,
-      };
+  const handleSave = useCallback((payload: TAddLahan | TUpdateLahan) => {
+    const defaultPayload = {
+      nama: payload.nama,
+      lokasi: payload.kabupaten,
+      luas_m2: payload.luas_lahan,
+      status_hak_panen: payload.status_lahan,
+    };
 
-      if ('id' in payload) {
-        updateLahan.mutate({ id: payload.id, ...defaultPayload });
-      } else {
-        postLahan.mutate(defaultPayload);
-      }
-    },
-    []
-  );
+    if ('id' in payload) {
+      updateLahan.mutate({ id: payload.id, ...defaultPayload });
+    } else {
+      postLahan.mutate(defaultPayload);
+    }
+  }, []);
 
   const handleDelete = useCallback(
     (id: string) => id && deleteLahan.mutate(id),
@@ -84,8 +82,13 @@ const Lahan = () => {
   );
 
   useEffect(() => {
-    if (postLahan.isSuccess || updateLahan.isSuccess || deleteLahan.isSuccess)
+    if (postLahan.isSuccess || updateLahan.isSuccess || deleteLahan.isSuccess) {
       getLahan.refetch();
+      queryClient.refetchQueries({
+        queryKey: [url.report_lahan.key],
+        type: 'inactive',
+      });
+    }
   }, [postLahan.isSuccess, deleteLahan.isSuccess, updateLahan.isSuccess]);
 
   useEffect(() => {

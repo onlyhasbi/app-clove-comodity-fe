@@ -49,6 +49,7 @@ type TOffer = {
 };
 
 const TabelPenawaran = () => {
+  
   const columnHelper = createColumnHelper<TOffer>();
   const columns = [
     columnHelper.accessor('nama', {

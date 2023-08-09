@@ -89,4 +89,12 @@ export const url = {
     key: 'report_lahan',
     dev: `${BASE_URL}/produktifitas-lahan`,
   },
+  info_penawaran: {
+    key: 'info_penawaran',
+    dev: `${BASE_URL}/info-penawaran-acc`,
+  },
+  info_buruh: {
+    key: 'info_lamaran_kerja',
+    dev: `${BASE_URL}/info-lamaran-kerja-buruh`,
+  },
 };

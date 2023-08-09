@@ -26,6 +26,8 @@ import {
 } from '../../../hooks/useSell.hook';
 import { TDeletePenjualan, TUpdatePenjualan } from './schema';
 import { tableAdapter } from './helper';
+import { useQueryClient } from '@tanstack/react-query';
+import { url } from '../../../utils/config/url';
 
 type TAction = {
   add?: boolean;
@@ -34,6 +36,7 @@ type TAction = {
 };
 
 const Penjualan = () => {
+  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -88,8 +91,13 @@ const Penjualan = () => {
       postPenjualan.isSuccess ||
       updatePenjualan.isSuccess ||
       deletePenjualan.isSuccess
-    )
+    ) {
       getPenjualan.refetch();
+      queryClient.refetchQueries({
+        queryKey: [url.report_transaksi.key],
+        type: 'inactive',
+      });
+    }
   }, [
     postPenjualan.isSuccess,
     deletePenjualan.isSuccess,

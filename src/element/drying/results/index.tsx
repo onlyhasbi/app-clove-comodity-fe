@@ -29,9 +29,12 @@ import {
   usePostPengeringan,
   useUpdatePengeringan,
   useUpdatePembayaran,
+  useUpdateBahan,
 } from '../../../hooks/useDryResult.hook';
 import { tableAdapter } from './helper';
 import { toast } from 'react-hot-toast';
+import { url } from '../../../utils/config/url';
+import { useQueryClient } from '@tanstack/react-query';
 
 type TAction = {
   add?: boolean;
@@ -40,6 +43,7 @@ type TAction = {
 };
 
 const HasilPengeringan = () => {
+  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -48,6 +52,7 @@ const HasilPengeringan = () => {
   const deletePengeringan = useDeletePengeringan();
   const updatePengeringan = useUpdatePengeringan();
   const updateStatusPembayaran = useUpdatePembayaran();
+  const updateBahan = useUpdateBahan();
 
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
@@ -98,11 +103,19 @@ const HasilPengeringan = () => {
     updateStatusPembayaran.mutate(props);
   }, []);
 
+  const handleUpdateBahan = useCallback(
+    ({ id_bahan, id_hasil }: TUpdateMaterial) => {
+      updateBahan.mutate({ id_bahan, id_hasil });
+    },
+    []
+  );
+
   const tableListener = {
     isLoading: getPengeringan.isLoading,
     data: getPengeringan.isSuccess
       ? tableAdapter(getPengeringan?.data?.data?.data?.hasil)
       : [],
+    onUpdateMaterial: handleUpdateBahan,
     onUpdatePayment: handleUpdatePembayaran,
     onUpdate: handleOpenModalUpdate,
     onDelete: handleOpenModalDelete,
@@ -113,15 +126,21 @@ const HasilPengeringan = () => {
       postPengeringan.isSuccess ||
       updatePengeringan.isSuccess ||
       deletePengeringan.isSuccess ||
-      updateStatusPembayaran.isSuccess
+      updateStatusPembayaran.isSuccess ||
+      updateBahan.isSuccess
     ) {
       getPengeringan.refetch();
+      queryClient.refetchQueries({
+        queryKey: [url.report_pengeringan.key],
+        type: 'inactive',
+      });
     }
   }, [
     postPengeringan.isSuccess,
     deletePengeringan.isSuccess,
     updatePengeringan.isSuccess,
     updateStatusPembayaran.isSuccess,
+    updateBahan.isSuccess,
   ]);
 
   useEffect(() => {
