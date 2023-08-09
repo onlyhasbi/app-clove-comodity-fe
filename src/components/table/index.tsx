@@ -49,10 +49,10 @@ function Table({ data, columns, isLoading = false }: TProps) {
           ))}
         </Thead>
         <Tbody>
-          {table?.getRowModel().rows.length ? (
+          {table?.getRowModel().rows?.length ? (
             table?.getRowModel().rows?.map((row) => (
               <Tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
+                {row.getVisibleCells()?.map((cell) => (
                   <Td key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Td>
