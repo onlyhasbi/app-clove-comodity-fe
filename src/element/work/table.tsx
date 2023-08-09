@@ -59,8 +59,8 @@ const TablePenawaran = ({
     }),
     columnHelper.accessor('status', {
       id: 'status',
-      header: () => <Box>Status</Box>,
-      cell: ({ getValue }) => <Box>{getValue() ? 'Aktif' : 'Tidak Aktif'}</Box>,
+      header: () => <Center>Status</Center>,
+      cell: ({ getValue }) => <Center>{getValue() ? 'Aktif' : 'Tidak Aktif'}</Center>,
     }),
     columnHelper.accessor('action', {
       id: 'action',

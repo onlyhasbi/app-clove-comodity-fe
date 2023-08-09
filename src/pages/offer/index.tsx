@@ -20,10 +20,9 @@ import {
   useDeleteOffer,
 } from '../../hooks/useOffer.hook';
 import { tableAdapter } from '../../element/offer/helper';
-import {
-  TDeletePenawaran,
-  TUpdatePenawaran,
-} from '@/element/offer/schema';
+import { TDeletePenawaran, TUpdatePenawaran } from '@/element/offer/schema';
+import { useQueryClient } from '@tanstack/react-query';
+import { url } from '../..//utils/config/url';
 
 type TAction = {
   update?: TUpdatePenawaran;
@@ -31,6 +30,7 @@ type TAction = {
 };
 
 const Penawaran = () => {
+  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -78,6 +78,10 @@ const Penawaran = () => {
   useEffect(() => {
     if (postOffer.isSuccess || updateOffer.isSuccess || deleteOffer.isSuccess) {
       getOffer.refetch();
+      queryClient.refetchQueries({
+        queryKey: [url.info_penawaran.key],
+        type: 'inactive',
+      });
       handleReset();
     }
   }, [

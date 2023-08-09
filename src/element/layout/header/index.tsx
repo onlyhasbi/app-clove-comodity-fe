@@ -26,7 +26,7 @@ const routes = [
 const Header = () => {
   const location = useLocation().pathname;
   const navigate = useNavigate();
-  const path = location === '/' ? 'home' : location.replace('/', '');
+  const path = location === '/' ? 'home' : location;
 
   const handleLogOut = () => {
     deleteToken(import.meta.env.VITE_TOKEN_NAME);

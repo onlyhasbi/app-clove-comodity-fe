@@ -97,4 +97,8 @@ export const url = {
     key: 'info_lamaran_kerja',
     dev: `${BASE_URL}/info-lamaran-kerja-buruh`,
   },
+  accept_buruh: {
+    key: 'terima_lamaran',
+    dev: `${BASE_URL}/terima-lamaran`,
+  },
 };

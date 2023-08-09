@@ -1,4 +1,3 @@
-import { useGetInfoBuruh } from '../../../../hooks/useOverview.hook';
 import Table from '../../../../components/table';
 import { Box, VStack, Text, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
@@ -12,17 +11,14 @@ type TLabor = {
   upah: number;
   satuan: string;
   kontak: string;
-  action: {
-    accept: { id_lamaran: string; id_pelamar: string };
-  };
 };
 
-const TabelBuruh = () => {
-  const getInfoBuruh = useGetInfoBuruh();
-  const infoBuruh = getInfoBuruh.isSuccess
-    ? getInfoBuruh?.data?.data?.data?.lamaran
-    : [];
+type Props = {
+  data: any[];
+  isLoading: boolean;
+};
 
+const TabelBuruh = ({ isLoading, data, onAccept }: Props) => {
   const columnHelper = createColumnHelper<TLabor>();
   const columns = [
     columnHelper.accessor('nama', {
@@ -58,20 +54,6 @@ const TabelBuruh = () => {
       header: () => <Center>Kontak</Center>,
       cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
-
-    columnHelper.accessor('action', {
-      id: 'action',
-      header: () => <Center>Aksi</Center>,
-      cell: ({ getValue }) => (
-        <Center _hover={{ color: 'green.600' }} cursor="pointer" title="terima">
-          <Check
-            height={20}
-            width={20}
-            onClick={() => console.log(getValue())}
-          />
-        </Center>
-      ),
-    }),
   ];
 
   return (
@@ -99,7 +81,11 @@ const TabelBuruh = () => {
           Buruh yang melamar
         </Text>
       </Box>
-      <Table data={tableAdapter(infoBuruh)} columns={columns} />
+      <Table
+        data={tableAdapter(data)}
+        isLoading={isLoading}
+        columns={columns}
+      />
     </VStack>
   );
 };

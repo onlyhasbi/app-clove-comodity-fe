@@ -12,25 +12,6 @@ import {
 function Chart() {
   return (
     <VStack gap={10}>
-      <Stack w="full" lineHeight="2.2rem">
-        <Text as="h4" fontSize="md" letterSpacing="0.04rem">
-          Penghasilan
-        </Text>
-        <Stack direction="row" alignItems="center">
-          <Text as="sup" fontSize="2xl" fontWeight={700}>
-            Rp.
-          </Text>
-          <Text
-            as="h1"
-            fontSize="5xl"
-            fontWeight={700}
-            letterSpacing="-0.05rem"
-          >
-            3.500.000
-          </Text>
-        </Stack>
-      </Stack>
-
       <Box width="full" height={350}>
         <ResponsiveContainer width="100%" height="100%" aspect={3}>
           <LineChart

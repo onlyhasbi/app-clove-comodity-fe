@@ -1,5 +1,4 @@
 import Table from '../../../../components/table';
-import { useGetInfoPenawaran } from '../../../../hooks/useOverview.hook';
 import { Box, Text, VStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { tableAdapter } from './helper';
@@ -19,12 +18,12 @@ type TOffer = {
   kontak: string;
 };
 
-const TabelPenawaran = () => {
-  const getInfoPenawaran = useGetInfoPenawaran();
-  const infoPenawaran = getInfoPenawaran.isSuccess
-    ? getInfoPenawaran?.data?.data?.data?.penawaran
-    : [];
+type Props = {
+  isLoading: boolean;
+  data: any[];
+};
 
+const TabelPenawaran = ({ isLoading, data }: Props) => {
   const columnHelper = createColumnHelper<TOffer>();
   const columns = [
     columnHelper.accessor('nama', {
@@ -124,7 +123,11 @@ const TabelPenawaran = () => {
           Penawaran komoditas terbaru
         </Text>
       </Box>
-      <Table data={tableAdapter(infoPenawaran)} columns={columns} />
+      <Table
+        data={tableAdapter(data)}
+        isLoading={isLoading}
+        columns={columns}
+      />
     </VStack>
   );
 };
