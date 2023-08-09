@@ -23,8 +23,10 @@ type TProps = {
 };
 
 function Table({ data, columns, isLoading = false }: TProps) {
+  const defaultData = data ?? [];
+
   const table = useReactTable({
-    data,
+    data: defaultData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

@@ -1,5 +1,9 @@
-import { useGetPengeringan } from '../../../hooks/useDryResult.hook';
-import { useGetHasil } from '../../../hooks/useResult.hook';
+import {
+  useGetPengeringan,
+  useGetLahan,
+  useGetKomoditas,
+  useGetTransaksi,
+} from '../../../hooks/useOverview.hook';
 import {
   Card,
   CardHeader,
@@ -12,16 +16,15 @@ import {
 import { Wallet2, Wheat, SunMedium } from 'lucide-react';
 
 function CardSummary() {
-  const hasilPanen = useGetHasil();
-  const hasilPengeringan = useGetPengeringan();
+  const getTransaksi = useGetTransaksi();
+  const getPengeringan = useGetPengeringan();
+  const getKomoditas = useGetKomoditas();
+  const getLahan = useGetLahan();
 
-  const jumlahPanen = hasilPanen.isSuccess
-    ? hasilPanen?.data?.data?.data?.jumlah_hasil_panen
-    : 0;
-
-  const jumlahPengeringan = hasilPengeringan.isSuccess
-    ? hasilPengeringan?.data?.data?.data?.jumlah_hasil
-    : 0;
+  const jumlahPengeringan = getPengeringan?.data?.data?.data?.jumlah_pembelian;
+  const jumlahKomoditas = getKomoditas?.data?.data?.data?.jumlah_data;
+  const jumlahTransaksi = getTransaksi?.data?.data?.data?.jumlah_data;
+  const jumlahLahan = getLahan?.data?.data?.data;
 
   return (
     <Grid w="full" templateColumns={{ lg: 'repeat(3, 1fr)' }} gap={6}>
@@ -41,7 +44,7 @@ function CardSummary() {
               letterSpacing="-0.05rem"
               align="right"
             >
-              {jumlahPanen}
+              {/* {jumlahPanen} */}
             </Text>
             <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
               <Wheat width={80} height={80} />
@@ -65,7 +68,7 @@ function CardSummary() {
               letterSpacing="-0.05rem"
               align="right"
             >
-              {jumlahPengeringan}
+              {/* {jumlahPengeringan} */}
             </Text>
             <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
               <SunMedium width={80} height={80} />

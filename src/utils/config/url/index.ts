@@ -73,4 +73,20 @@ export const url = {
     key: 'pembayaran_setoran',
     dev: `${BASE_URL}/status-pembayaran-setoran`,
   },
+  report_pengeringan: {
+    key: 'report_pengeringan',
+    dev: `${BASE_URL}/index-pengeringan`,
+  },
+  report_transaksi: {
+    key: 'report_transaksi',
+    dev: `${BASE_URL}/jual-beli`,
+  },
+  report_komoditas: {
+    key: 'report_komoditas',
+    dev: `${BASE_URL}/komoditas-keluar-masuk`,
+  },
+  report_lahan: {
+    key: 'report_lahan',
+    dev: `${BASE_URL}/produktifitas-lahan`,
+  },
 };
