@@ -1,55 +1,30 @@
 import Table from '../../../../components/table';
-import { Box, Text, VStack } from '@chakra-ui/react';
+import { useGetInfoPenawaran } from '../../../../hooks/useOverview.hook';
+import { Box, Text, VStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
-
-const dummy = [
-  {
-    nama: 'Dulcia Guenther',
-    trk: 'Jual',
-    jumlah: 100,
-    komoditas: 'Cengkeh Basah',
-    phone: '08930525234',
-  },
-  {
-    nama: 'Andre',
-    trk: 'Beli',
-    jumlah: 150,
-    komoditas: 'Cengkeh Kering',
-    phone: '05330524574',
-  },
-  {
-    nama: 'Jeni',
-    trk: 'Beli',
-    jumlah: 36,
-    komoditas: 'Cengkeh Basah',
-    phone: '08312052524',
-  },
-  {
-    nama: 'Agus',
-    trk: 'Jual',
-    jumlah: 84,
-    komoditas: 'Cengkeh Basah',
-    phone: '088035675234',
-  },
-  {
-    nama: 'John',
-    trk: 'Beli',
-    jumlah: 25,
-    komoditas: 'Cengkeh Basah',
-    phone: '08348525234',
-  },
-];
+import { tableAdapter } from './helper';
+import { NumericFormat } from 'react-number-format';
+import {
+  JENIS_KOMODITAS,
+  JENIS_PENAWARAN,
+} from '../../../../model/penawaran.model';
 
 type TOffer = {
   nama: string;
-  trk: number;
-  jumlah: string;
+  penawaran: string;
   komoditas: string;
-  phone: string;
+  min: number;
+  max: number;
+  harga: number;
+  kontak: string;
 };
 
 const TabelPenawaran = () => {
-  
+  const getInfoPenawaran = useGetInfoPenawaran();
+  const infoPenawaran = getInfoPenawaran.isSuccess
+    ? getInfoPenawaran?.data?.data?.data?.penawaran
+    : [];
+
   const columnHelper = createColumnHelper<TOffer>();
   const columns = [
     columnHelper.accessor('nama', {
@@ -57,25 +32,70 @@ const TabelPenawaran = () => {
       header: () => <Box>Nama</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
-    columnHelper.accessor('trk', {
-      id: 'trk',
-      header: () => <Box>Trk.</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
-    }),
-    columnHelper.accessor('jumlah', {
-      id: 'jumlah',
-      header: () => <Box>Jumlah</Box>,
-      cell: ({ getValue }) => <Box>{`${getValue()} Kg`}</Box>,
+    columnHelper.accessor('penawaran', {
+      id: 'penawaran',
+      header: () => <Center>Trk.</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          {JENIS_PENAWARAN?.find((item) => item.value === getValue())?.label}
+        </Center>
+      ),
     }),
     columnHelper.accessor('komoditas', {
       id: 'komoditas',
-      header: () => <Box>Komoditas</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      header: () => <Center>Komoditas</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          {JENIS_KOMODITAS?.find((item) => item.value === getValue())?.label}
+        </Center>
+      ),
     }),
-    columnHelper.accessor('phone', {
-      id: 'phone',
-      header: () => <Box>Kontak</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+    columnHelper.accessor('min', {
+      id: 'min',
+      header: () => <Center>Min.</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
+    }),
+    columnHelper.accessor('max', {
+      id: 'max',
+      header: () => <Center>Max.</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
+    }),
+    columnHelper.accessor('harga', {
+      id: 'harga',
+      header: () => <Center>Harga</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <NumericFormat
+            displayType="text"
+            value={getValue() || 0}
+            decimalSeparator=","
+            thousandSeparator="."
+          />
+        </Center>
+      ),
+    }),
+    columnHelper.accessor('kontak', {
+      id: 'kontak',
+      header: () => <Center>Kontak</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
   ];
 
@@ -104,7 +124,7 @@ const TabelPenawaran = () => {
           Penawaran komoditas terbaru
         </Text>
       </Box>
-      <Table data={dummy} columns={columns} />
+      <Table data={tableAdapter(infoPenawaran)} columns={columns} />
     </VStack>
   );
 };

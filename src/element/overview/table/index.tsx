@@ -4,15 +4,11 @@ import TabelPenawaran from './offer';
 
 function TableInfo() {
   return (
-    <Stack
-      direction={{ lg: 'row', base: 'column' }}
-      justify="space-between"
-      w="full"
-    >
-      <Box w={{ lg: '385px', base: 'full' }}>
+    <Stack direction="column" gap={10} w="full">
+      <Box>
         <TabelBuruh />
       </Box>
-      <Box w={{ lg: '650px', base: 'full' }}>
+      <Box>
         <TabelPenawaran />
       </Box>
     </Stack>
