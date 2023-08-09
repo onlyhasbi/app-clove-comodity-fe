@@ -27,6 +27,8 @@ import {
 } from '../../../hooks/useMaterial.hook';
 import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
+import { useQueryClient } from '@tanstack/react-query';
+import { url } from '../../../utils/config/url';
 
 type TAction = {
   add?: boolean;
@@ -35,6 +37,7 @@ type TAction = {
 };
 
 const BahanPengeringan = () => {
+  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -48,34 +51,29 @@ const BahanPengeringan = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdateBahan) =>
-      setAction((prev) => ({ ...prev, update: data })),
+    (data: TUpdateBahan) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
   const handleOpenModalDelete = useCallback(
-    (data: TDeleteBahan) =>
-      setAction((prev) => ({ ...prev, delete: data })),
+    (data: TDeleteBahan) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback(
-    (payload: TAddBahan | TUpdateBahan) => {
-      const defaultPayload = {
-        berat_kg: payload.berat_kg,
-        volume_liter: payload.volume_liter,
-        dikeringkan_pada_hari: dayjs(payload.waktu_mulai).format('YYYY/MM/DD'),
-        catatan: payload.catatan,
-      };
+  const handleSave = useCallback((payload: TAddBahan | TUpdateBahan) => {
+    const defaultPayload = {
+      berat_kg: payload.berat_kg,
+      volume_liter: payload.volume_liter,
+      dikeringkan_pada_hari: dayjs(payload.waktu_mulai).format('YYYY/MM/DD'),
+      catatan: payload.catatan,
+    };
 
-      if ('id' in payload) {
-        updateMaterial.mutate({ id: payload.id, ...defaultPayload });
-      } else {
-        postMaterial.mutate(defaultPayload);
-      }
-    },
-    []
-  );
+    if ('id' in payload) {
+      updateMaterial.mutate({ id: payload.id, ...defaultPayload });
+    } else {
+      postMaterial.mutate(defaultPayload);
+    }
+  }, []);
 
   const handleDelete = useCallback(
     (id: string) => deleteMaterial.mutate(id),
@@ -89,6 +87,10 @@ const BahanPengeringan = () => {
       deleteMaterial.isSuccess
     ) {
       getMaterial.refetch();
+      queryClient.refetchQueries({
+        queryKey: [url.report_komoditas.key],
+        type: 'inactive',
+      });
     }
   }, [
     postMaterial.isSuccess,

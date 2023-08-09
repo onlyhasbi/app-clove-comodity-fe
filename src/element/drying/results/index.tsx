@@ -134,6 +134,10 @@ const HasilPengeringan = () => {
         queryKey: [url.report_pengeringan.key],
         type: 'inactive',
       });
+      queryClient.refetchQueries({
+        queryKey: [url.report_komoditas.key],
+        type: 'inactive',
+      });
     }
   }, [
     postPengeringan.isSuccess,

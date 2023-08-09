@@ -97,6 +97,10 @@ const Penjualan = () => {
         queryKey: [url.report_transaksi.key],
         type: 'inactive',
       });
+      queryClient.refetchQueries({
+        queryKey: [url.report_komoditas.key],
+        type: 'inactive',
+      });
     }
   }, [
     postPenjualan.isSuccess,
