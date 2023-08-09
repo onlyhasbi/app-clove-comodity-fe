@@ -11,9 +11,7 @@ import {
   Text,
   Grid,
   GridItem,
-  Box,
 } from '@chakra-ui/react';
-import { Wallet2, Wheat, SunMedium } from 'lucide-react';
 
 function CardSummary() {
   const getTransaksi = useGetTransaksi();
@@ -32,7 +30,7 @@ function CardSummary() {
         <Card>
           <CardHeader>
             <Text as="h3" fontSize="lg" letterSpacing="0.05rem">
-              Panen
+              Lahan
             </Text>
           </CardHeader>
 
@@ -44,11 +42,8 @@ function CardSummary() {
               letterSpacing="-0.05rem"
               align="right"
             >
-              {/* {jumlahPanen} */}
+              {jumlahLahan}
             </Text>
-            <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
-              <Wheat width={80} height={80} />
-            </Box>
           </CardBody>
         </Card>
       </GridItem>
@@ -68,11 +63,29 @@ function CardSummary() {
               letterSpacing="-0.05rem"
               align="right"
             >
-              {/* {jumlahPengeringan} */}
+              {jumlahPengeringan}
             </Text>
-            <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
-              <SunMedium width={80} height={80} />
-            </Box>
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem>
+        <Card>
+          <CardHeader>
+            <Text as="h3" fontSize="lg" letterSpacing="0.05rem">
+              Komoditas
+            </Text>
+          </CardHeader>
+
+          <CardBody>
+            <Text
+              as="h2"
+              fontSize="5xl"
+              fontWeight={600}
+              letterSpacing="-0.05rem"
+              align="right"
+            >
+              {jumlahKomoditas}
+            </Text>
           </CardBody>
         </Card>
       </GridItem>
@@ -92,11 +105,8 @@ function CardSummary() {
               letterSpacing="-0.05rem"
               align="right"
             >
-              44
+              {jumlahTransaksi}
             </Text>
-            <Box position="absolute" bottom={5} left="2rem" color="#F1F5F9">
-              <Wallet2 width={80} height={80} />
-            </Box>
           </CardBody>
         </Card>
       </GridItem>
