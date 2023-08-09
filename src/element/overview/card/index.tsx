@@ -1,46 +1,29 @@
 import {
-  useGetPengeringan,
-  useGetLahan,
-  useGetKomoditas,
-  useGetTransaksi,
-} from '../../../hooks/useOverview.hook';
-import {
   Card,
   CardHeader,
   CardBody,
   Text,
   Grid,
   GridItem,
-  Spinner,
 } from '@chakra-ui/react';
 
-function CardSummary() {
-  const getTransaksi = useGetTransaksi();
-  const getPengeringan = useGetPengeringan();
-  const getKomoditas = useGetKomoditas();
-  const getLahan = useGetLahan();
+type Props = {
+  cardProps: {
+    jumlahPengeringan: JSX.Element | number;
+    jumlahKomoditas: JSX.Element | number;
+    jumlahTransaksi: JSX.Element | number;
+    jumlahLahan: JSX.Element | number;
+  };
+};
 
-  const jumlahPengeringan = getPengeringan.isLoading ? (
-    <Spinner size="sm" />
-  ) : (
-    getPengeringan?.data?.data?.data?.jumlah_data
-  );
-  const jumlahKomoditas = getKomoditas.isLoading ? (
-    <Spinner size="sm" />
-  ) : (
-    getKomoditas?.data?.data?.data?.jumlah_data
-  );
-  const jumlahTransaksi = getTransaksi.isLoading ? (
-    <Spinner size="sm" />
-  ) : (
-    getTransaksi?.data?.data?.data?.jumlah_data
-  );
-  const jumlahLahan = getLahan.isLoading ? (
-    <Spinner size="sm" />
-  ) : (
-    getLahan?.data?.data?.data?.jumlah_data
-  );
-
+function CardSummary({
+  cardProps: {
+    jumlahPengeringan,
+    jumlahKomoditas,
+    jumlahTransaksi,
+    jumlahLahan,
+  },
+}: Props) {
   return (
     <Grid w="full" templateColumns={{ lg: 'repeat(4, 1fr)' }} gap={6}>
       <GridItem>

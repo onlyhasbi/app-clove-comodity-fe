@@ -25,6 +25,8 @@ import {
   useDeleteWork,
 } from '../../hooks/useWork.hook';
 import { tableAdapter } from '../../element/work/helper';
+import { useQueryClient } from '@tanstack/react-query';
+import { url } from '../../utils/config/url';
 
 type TAction = {
   update?: TUpdatePekerjaan;
@@ -32,6 +34,7 @@ type TAction = {
 };
 
 const Pekerjaan = () => {
+  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -77,6 +80,10 @@ const Pekerjaan = () => {
   useEffect(() => {
     if (postWork.isSuccess || updateWork.isSuccess || deleteWork.isSuccess) {
       getWork.refetch();
+      queryClient.refetchQueries({
+        queryKey: [url.info_buruh.key],
+        type: 'inactive',
+      });
       handleReset();
     }
   }, [
