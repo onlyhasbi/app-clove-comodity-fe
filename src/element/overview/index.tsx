@@ -37,14 +37,14 @@ function Overview() {
     getLahan?.data?.data?.data?.jumlah_data
   );
 
-  const dataUpahKomoditas = getKomoditas.isSuccess
+  const dataUpah = getKomoditas.isSuccess
     ? getKomoditas?.data?.data?.data?.data?.map((item: any) => ({
         upah: item.harga_rp,
         tanggal: dayjs(item.waktu).format('DD/MM/YYYY'),
       }))
     : [];
 
-  const dataCengkehKomoditas = getKomoditas.isSuccess
+  const dataCengkeh = getKomoditas.isSuccess
     ? getKomoditas?.data?.data?.data?.data?.map((item: any) => ({
         cengkeh_basah: item.cengkeh_basah,
         cengkeh_kering: item.cengkeh_kering,
@@ -61,7 +61,7 @@ function Overview() {
 
   return (
     <Stack direction="column" spacing={10}>
-      <Chart dataUpah={dataUpahKomoditas} dataCengkeh={dataCengkehKomoditas} />
+      <Chart dataUpah={dataUpah} dataCengkeh={dataCengkeh} />
       <CardSummary cardProps={cardProps} />
       <TableInfo />
     </Stack>

@@ -10,12 +10,14 @@ import {
   SATUAN,
 } from '../../model/penawaran.model';
 import { TDeletePenawaran, TUpdatePenawaran } from './schema';
+import ActiveStatus from '../../components/active-status';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
   onDelete: (data: TDeletePenawaran) => void;
   onUpdate: (data: TUpdatePenawaran) => void;
+  onUpdateStatus: (data: UpdateStatus) => void;
 };
 
 const TablePenawaran = ({
@@ -23,8 +25,10 @@ const TablePenawaran = ({
   isLoading,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
+  onUpdateStatus,
 }: Props) => {
   const columnHelper = createColumnHelper<TTablePenawaran>();
+
   const columns = [
     columnHelper.accessor('jenis_penawaran', {
       id: 'jenis_penawaran',
@@ -103,10 +107,18 @@ const TablePenawaran = ({
     columnHelper.accessor('status', {
       id: 'status',
       header: () => <Center>Status</Center>,
-      cell: ({ getValue }) => (
-        <Center>{getValue() ? 'Aktif' : 'Tidak Aktif'}</Center>
-      ),
+      cell: ({ getValue }) => {
+        const { id, value: initialValue } = getValue();
+
+        return (
+          <ActiveStatus
+            initialValue={initialValue}
+            getActiveValue={(value: boolean) => onUpdateStatus({ id, value })}
+          />
+        );
+      },
     }),
+
     columnHelper.accessor('action', {
       id: 'action',
       header: () => <Center>Aksi</Center>,

@@ -97,8 +97,12 @@ export const url = {
     key: 'info_lamaran_kerja',
     dev: `${BASE_URL}/info-lamaran-kerja-buruh`,
   },
-  accept_buruh: {
-    key: 'terima_lamaran',
-    dev: `${BASE_URL}/terima-lamaran`,
+  update_status_penawaran: {
+    key: 'update_status_penawaran',
+    dev: `${BASE_URL}/status-penawaran-komoditas`,
+  },
+  update_status_lowongan: {
+    key: 'update_status_lowongan',
+    dev: `${BASE_URL}/status-lowongan-kerja`,
   },
 };

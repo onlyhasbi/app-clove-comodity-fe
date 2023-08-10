@@ -44,3 +44,15 @@ export const useGetOffer = () =>
     queryKey: keys(url.penawaran.key),
     queryFn: () => http.get(url.penawaran.dev).then((data) => data),
   });
+
+export const useUpdateActive = () =>
+  useMutation({
+    mutationFn: ({ id, value }: UpdateStatus) =>
+      http.config({
+        method: 'put',
+        url: `${url.update_status_penawaran.dev}/${id}`,
+        params: {
+          status: value,
+        },
+      }),
+  });

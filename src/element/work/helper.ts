@@ -14,7 +14,7 @@ export const tableAdapter = (payloads: GetPekerjaan[]) => {
       upah: upah_rp,
       satuan: indikator_ukur,
       catatan,
-      status: status_lowongan,
+      status: { id, value: status_lowongan },
       action: {
         update: {
           id,

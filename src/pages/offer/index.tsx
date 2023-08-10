@@ -18,11 +18,11 @@ import {
   useGetOffer,
   useUpdateOffer,
   useDeleteOffer,
+  useUpdateActive,
 } from '../../hooks/useOffer.hook';
 import { tableAdapter } from '../../element/offer/helper';
 import { TDeletePenawaran, TUpdatePenawaran } from '@/element/offer/schema';
-import { useQueryClient } from '@tanstack/react-query';
-import { url } from '../..//utils/config/url';
+import { toast } from 'react-hot-toast';
 
 type TAction = {
   update?: TUpdatePenawaran;
@@ -30,7 +30,6 @@ type TAction = {
 };
 
 const Penawaran = () => {
-  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -50,6 +49,7 @@ const Penawaran = () => {
   const deleteOffer = useDeleteOffer();
   const updateOffer = useUpdateOffer();
   const getOffer = useGetOffer();
+  const updateActive = useUpdateActive();
 
   const handleReset = useCallback(() => setAction(null), []);
 
@@ -75,19 +75,27 @@ const Penawaran = () => {
     []
   );
 
+  const handleUpdateStatus = useCallback((updateStatus: UpdateStatus) => {
+    updateActive.mutate(updateStatus);
+    toast.loading('Update status penawaran...');
+  }, []);
+
   useEffect(() => {
-    if (postOffer.isSuccess || updateOffer.isSuccess || deleteOffer.isSuccess) {
+    if (
+      postOffer.isSuccess ||
+      updateOffer.isSuccess ||
+      deleteOffer.isSuccess ||
+      updateActive.isSuccess
+    ) {
       getOffer.refetch();
-      queryClient.refetchQueries({
-        queryKey: [url.info_penawaran.key],
-        type: 'inactive',
-      });
+      toast.dismiss();
       handleReset();
     }
   }, [
     postOffer.isSuccess,
     deleteOffer.isSuccess,
     updateOffer.isSuccess,
+    updateActive.isSuccess,
     handleReset,
   ]);
 
@@ -139,6 +147,7 @@ const Penawaran = () => {
             isLoading={getOffer.isLoading}
             onUpdate={handleUpdate}
             onDelete={handleOpenModalDelete}
+            onUpdateStatus={handleUpdateStatus}
           />
         </Box>
       </Stack>

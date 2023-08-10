@@ -202,3 +202,8 @@ type GetInfoBuruh = {
   kontak_pelamar: string[];
   alamat_pelamar: string;
 };
+
+type UpdateStatus = {
+  id: string;
+  value: boolean;
+};

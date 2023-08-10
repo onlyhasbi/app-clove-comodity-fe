@@ -23,10 +23,10 @@ import {
   useGetWork,
   useUpdateWork,
   useDeleteWork,
+  useUpdateActive,
 } from '../../hooks/useWork.hook';
 import { tableAdapter } from '../../element/work/helper';
-import { useQueryClient } from '@tanstack/react-query';
-import { url } from '../../utils/config/url';
+import { toast } from 'react-hot-toast';
 
 type TAction = {
   update?: TUpdatePekerjaan;
@@ -34,7 +34,6 @@ type TAction = {
 };
 
 const Pekerjaan = () => {
-  const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -54,6 +53,7 @@ const Pekerjaan = () => {
   const postWork = usePostWork();
   const updateWork = useUpdateWork();
   const deleteWork = useDeleteWork();
+  const updateActive = useUpdateActive();
 
   const handleReset = useCallback(() => setAction(null), []);
 
@@ -77,19 +77,27 @@ const Pekerjaan = () => {
     []
   );
 
+  const handleUpdateStatus = useCallback((updateStatus: UpdateStatus) => {
+    updateActive.mutate(updateStatus);
+    toast.loading('Memperbarui status lowongan kerja...');
+  }, []);
+
   useEffect(() => {
-    if (postWork.isSuccess || updateWork.isSuccess || deleteWork.isSuccess) {
+    if (
+      postWork.isSuccess ||
+      updateWork.isSuccess ||
+      deleteWork.isSuccess ||
+      updateActive.isSuccess
+    ) {
       getWork.refetch();
-      queryClient.refetchQueries({
-        queryKey: [url.info_buruh.key],
-        type: 'inactive',
-      });
+      toast.dismiss();
       handleReset();
     }
   }, [
     postWork.isSuccess,
     deleteWork.isSuccess,
     updateWork.isSuccess,
+    updateActive.isSuccess,
     handleReset,
   ]);
 
@@ -133,14 +141,15 @@ const Pekerjaan = () => {
         />
         <Box marginTop={6}>
           <TabelPekerjaan
-            isLoading={getWork.isLoading}
             data={
               getWork.isSuccess
                 ? tableAdapter(getWork?.data?.data?.data?.lowongan)
                 : []
             }
+            isLoading={getWork.isLoading}
             onUpdate={handleUpdate}
             onDelete={handleOpenModalDelete}
+            onUpdateStatus={handleUpdateStatus}
           />
         </Box>
       </Stack>

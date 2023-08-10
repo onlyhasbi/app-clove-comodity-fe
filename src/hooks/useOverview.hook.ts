@@ -1,8 +1,7 @@
 import http from '../api';
 import { url } from '../utils/config/url';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { keys } from './helper';
-import { toast } from 'react-hot-toast';
 
 export const useGetPengeringan = () =>
   useQuery({
@@ -29,23 +28,11 @@ export const useGetInfoPenawaran = () =>
   useQuery({
     queryKey: keys(url.info_penawaran.key),
     queryFn: () => http.get(url.info_penawaran.dev).then((data) => data),
+    refetchInterval: 250000,
   });
 export const useGetInfoBuruh = () =>
   useQuery({
     queryKey: keys(url.info_buruh.key),
     queryFn: () => http.get(url.info_buruh.dev).then((data) => data),
-  });
-
-export const useUpdateLamaran = () =>
-  useMutation({
-    mutationFn: ({ id_buruh }: { id_buruh: string }) =>
-      http.put(`${url.accept_buruh.dev}/${id_buruh}`).then((data) => data),
-    onSuccess: () => {
-      toast.dismiss();
-      toast.success('Lamaran buruh diterima');
-    },
-    onError: () => {
-      toast.dismiss();
-      toast.error('Error dalam menerima lamaran...');
-    },
+    refetchInterval: 230000,
   });

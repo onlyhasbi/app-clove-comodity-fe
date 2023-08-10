@@ -20,7 +20,7 @@ export const tableAdapter = (payloads: GetPenawaran[]) => {
       satuan,
       harga: harga_rp,
       catatan,
-      status: status_penawaran,
+      status: { id, value: status_penawaran },
       action: {
         update: {
           id,

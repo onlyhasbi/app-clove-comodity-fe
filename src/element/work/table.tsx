@@ -6,12 +6,14 @@ import { TTablePekerjaan } from './types';
 import { TDeletePekerjaan, TUpdatePekerjaan } from './schema';
 import { NumericFormat } from 'react-number-format';
 import { PEKERJAAN, SATUAN } from '../../model/penawaran.model';
+import ActiveStatus from '../../components/active-status';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
   onDelete: (data: TDeletePekerjaan) => void;
   onUpdate: (data: TUpdatePekerjaan) => void;
+  onUpdateStatus: (data: UpdateStatus) => void;
 };
 
 const TablePenawaran = ({
@@ -19,6 +21,7 @@ const TablePenawaran = ({
   data,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
+  onUpdateStatus,
 }: Props) => {
   const columnHelper = createColumnHelper<TTablePekerjaan>();
   const columns = [
@@ -60,7 +63,16 @@ const TablePenawaran = ({
     columnHelper.accessor('status', {
       id: 'status',
       header: () => <Center>Status</Center>,
-      cell: ({ getValue }) => <Center>{getValue() ? 'Aktif' : 'Tidak Aktif'}</Center>,
+      cell: ({ getValue }) => {
+        const { id, value: initialValue } = getValue();
+
+        return (
+          <ActiveStatus
+            initialValue={initialValue}
+            getActiveValue={(value: boolean) => onUpdateStatus({ id, value })}
+          />
+        );
+      },
     }),
     columnHelper.accessor('action', {
       id: 'action',
