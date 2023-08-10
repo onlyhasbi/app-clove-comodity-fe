@@ -5,7 +5,9 @@ import {
   Text,
   Grid,
   GridItem,
+  Box,
 } from '@chakra-ui/react';
+import { Wallet2, Wheat, SunMedium, Sprout } from 'lucide-react';
 
 type Props = {
   cardProps: {
@@ -34,7 +36,7 @@ function CardSummary({
             </Text>
           </CardHeader>
 
-          <CardBody position="relative">
+          <CardBody paddingRight={8} color="gray.600" position="relative">
             <Text
               as="h2"
               fontSize="5xl"
@@ -44,6 +46,9 @@ function CardSummary({
             >
               {jumlahLahan}
             </Text>
+            <Box position="absolute" bottom="1.6rem" left="2rem" color="#F1F5F9">
+              <Sprout width={70} height={70} />
+            </Box>
           </CardBody>
         </Card>
       </GridItem>
@@ -55,7 +60,7 @@ function CardSummary({
             </Text>
           </CardHeader>
 
-          <CardBody>
+          <CardBody paddingRight={8} color="gray.600">
             <Text
               as="h2"
               fontSize="5xl"
@@ -65,6 +70,9 @@ function CardSummary({
             >
               {jumlahPengeringan}
             </Text>
+            <Box position="absolute" bottom="2rem" left="2rem" color="#F1F5F9">
+              <SunMedium width={65} height={65} />
+            </Box>
           </CardBody>
         </Card>
       </GridItem>
@@ -76,7 +84,7 @@ function CardSummary({
             </Text>
           </CardHeader>
 
-          <CardBody>
+          <CardBody paddingRight={8} color="gray.600">
             <Text
               as="h2"
               fontSize="5xl"
@@ -86,6 +94,9 @@ function CardSummary({
             >
               {jumlahKomoditas}
             </Text>
+            <Box position="absolute" bottom="2rem" left="2rem" color="#F1F5F9">
+              <Wheat width={57} height={57} />
+            </Box>
           </CardBody>
         </Card>
       </GridItem>
@@ -97,7 +108,7 @@ function CardSummary({
             </Text>
           </CardHeader>
 
-          <CardBody>
+          <CardBody paddingRight={8} color="gray.600">
             <Text
               as="h2"
               fontSize="5xl"
@@ -107,6 +118,9 @@ function CardSummary({
             >
               {jumlahTransaksi}
             </Text>
+            <Box position="absolute" bottom="2rem" left="2rem" color="#F1F5F9">
+              <Wallet2 width={59} height={59} />
+            </Box>
           </CardBody>
         </Card>
       </GridItem>
