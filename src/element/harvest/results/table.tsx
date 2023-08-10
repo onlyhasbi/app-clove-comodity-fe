@@ -21,6 +21,11 @@ const TableHasil = ({
 }: Props) => {
   const columnHelper = createColumnHelper<TTableHasil>();
   const columns = [
+    columnHelper.accessor('id', {
+      id: 'id',
+      header: () => <Center>Id</Center>,
+      cell: ({ getValue }) => <Center>{getValue()}</Center>,
+    }),
     columnHelper.accessor('lahan', {
       id: 'lahan',
       header: () => <Box>Lahan</Box>,

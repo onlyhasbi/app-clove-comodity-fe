@@ -52,7 +52,7 @@ export const tableAdapter = (payloads: GetDeposit[]) => {
 
 export const selectLahanAdapter = (data: GetResult[]) => {
   return data?.map((item: GetResult) => ({
-    label: item.waktu,
+    label: `${item.waktu} | ${item.id}`,
     value: item.id,
   }));
 };

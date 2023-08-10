@@ -23,8 +23,8 @@ import { useEffect } from 'react';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
 import { selectLahanAdapter } from './helper';
 import { useGetHasil } from '../../../hooks/useResult.hook';
-import ReactDatePicker from 'react-datepicker';
 import { useAllUserBuruh } from '../../../hooks/useUser.hook';
+import ReactDatePicker from 'react-datepicker';
 
 type Props = {
   onClose: () => void;
@@ -113,12 +113,12 @@ const FormSetoran = ({
 
         <FormControl isInvalid={Boolean(errors.tanggal_panen)}>
           <FormLabel fontSize="sm" htmlFor="lahan">
-            Tgl. Setoran
+            Terakumulasi
           </FormLabel>
           <Select
             id="lahan"
             isDisabled={isLoading}
-            placeholder="Pilih Tanggal Setoran"
+            placeholder="Pilih Hasil Panen"
             {...register('tanggal_panen')}
           >
             {hasil?.map((item: OptionProps) => {

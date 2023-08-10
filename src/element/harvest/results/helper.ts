@@ -13,6 +13,7 @@ export const tableAdapter = (payloads: GetResult[]) => {
     } = payload;
 
     return {
+      id,
       lahan,
       berat: berat_pengukuran_kg,
       volume: volume_pengukuran_liter,
