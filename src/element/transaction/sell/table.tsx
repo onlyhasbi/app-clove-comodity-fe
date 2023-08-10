@@ -6,7 +6,7 @@ import { TDeletePenjualan, TUpdatePenjualan } from './schema';
 import { Edit, Trash2 } from 'lucide-react';
 import { NumericFormat } from 'react-number-format';
 import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
-import LabelUser from '../../../components/user';
+import {LabelUser} from '../../../components/user';
 
 type Props = {
   isLoading?: boolean;

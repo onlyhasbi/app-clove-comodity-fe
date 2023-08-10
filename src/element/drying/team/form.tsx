@@ -6,17 +6,14 @@ import {
   Button,
   VStack,
   HStack,
+  Select,
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues } from 'react-hook-form';
-import {
-  TAddTim,
-  TUpdateTim,
-  defaultValues,
-  schemaTim,
-} from './schema';
+import { TAddTim, TUpdateTim, defaultValues, schemaTim } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
+import { useAllUserBuruh } from '../../../hooks/useUser.hook';
 
 type Props = {
   onClose: () => void;
@@ -49,6 +46,9 @@ const FormTim = ({
       setValue('ketua_tim', ketua_tim);
     }
   }, []);
+
+  const allUserBuruh = useAllUserBuruh();
+  const buruh = allUserBuruh?.data?.data?.data?.user;
 
   const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
@@ -84,12 +84,20 @@ const FormTim = ({
           <FormLabel fontSize="sm" htmlFor="ketua_tim">
             Ketua
           </FormLabel>
-          <Input
+
+          <Select
             id="ketua_tim"
-            placeholder="Ketua Tim"
+            placeholder="Pilih Ketua Tim"
             isDisabled={isLoading}
             {...register('ketua_tim')}
-          />
+          >
+            {buruh?.map((item: GetBuruh) => (
+              <option key={item.id} value={item.id}>
+                {item.nama}
+              </option>
+            ))}
+          </Select>
+
           <FormErrorMessage>
             {errors.ketua_tim && errors.ketua_tim.message}
           </FormErrorMessage>

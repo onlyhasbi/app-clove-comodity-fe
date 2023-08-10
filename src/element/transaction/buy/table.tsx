@@ -6,7 +6,7 @@ import { TTablePembelian } from './types';
 import { TDeletePembelian, TUpdatePembelian } from './schema';
 import { NumericFormat } from 'react-number-format';
 import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
-import LabelUser from '../../../components/user';
+import {LabelUser} from '../../../components/user';
 
 type Props = {
   isLoading?: boolean;

@@ -215,3 +215,10 @@ type GetUser = {
   nama: string;
   alamat: string;
 };
+
+type GetBuruh = {
+  id: string;
+  jenis_kelamin: string;
+  nama: string;
+  alamat: string;
+};

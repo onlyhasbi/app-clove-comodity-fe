@@ -12,6 +12,6 @@ export const useAllUserAcc = () =>
 
 export const useAllUserBuruh = () =>
   useQuery({
-    queryKey: keys(url.all_acc.key),
-    queryFn: () => http.get(url.all_acc.dev).then((data) => data),
+    queryKey: keys(url.all_buruh.key),
+    queryFn: () => http.get(url.all_buruh.dev).then((data) => data),
   });

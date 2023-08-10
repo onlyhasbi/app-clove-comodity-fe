@@ -89,7 +89,7 @@ const FormPenjualan = ({
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.id_pembeli)}>
           <FormLabel fontSize="sm" htmlFor="id_pembeli">
-            ID Pembeli
+            Pembeli
           </FormLabel>
           <Select
             id="id_pembeli"

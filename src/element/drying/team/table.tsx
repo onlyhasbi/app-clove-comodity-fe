@@ -4,6 +4,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
 import { TTableTim } from './types';
 import { TDeleteTim, TUpdateTim } from './schema';
+import { LabelBuruh } from '../../../components/user';
 
 type Props = {
   isLoading?: boolean;
@@ -28,7 +29,11 @@ const TabelTim = ({
     columnHelper.accessor('ketua_tim', {
       id: 'ketua_tim',
       header: () => <Box>Ketua Tim</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      cell: ({ getValue }) => (
+        <Box>
+          <LabelBuruh id={getValue()} />
+        </Box>
+      ),
     }),
     columnHelper.accessor('action', {
       id: 'action',

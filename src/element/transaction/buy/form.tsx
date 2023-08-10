@@ -89,7 +89,7 @@ const FormPembeli = ({
       <VStack gap={4}>
         <FormControl isInvalid={Boolean(errors.id_penjual)}>
           <FormLabel fontSize="sm" htmlFor="id_penjual">
-            ID Penjual
+            Penjual
           </FormLabel>
           <Select
             id="id_penjual"
