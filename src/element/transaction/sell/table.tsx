@@ -6,6 +6,7 @@ import { TDeletePenjualan, TUpdatePenjualan } from './schema';
 import { Edit, Trash2 } from 'lucide-react';
 import { NumericFormat } from 'react-number-format';
 import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
+import LabelUser from '../../../components/user';
 
 type Props = {
   isLoading?: boolean;
@@ -24,8 +25,12 @@ const TabelPenjualan = ({
   const columns = [
     columnHelper.accessor('id_pembeli', {
       id: 'id_pembeli',
-      header: () => <Center>Id Pembeli</Center>,
-      cell: ({ getValue }) => <Center>{getValue()}</Center>,
+      header: () => <Center>Pembeli</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <LabelUser id={getValue()} />
+        </Center>
+      ),
     }),
     columnHelper.accessor('jenis_komoditas', {
       id: 'jenis_komoditas',

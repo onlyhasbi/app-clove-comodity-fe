@@ -207,3 +207,11 @@ type UpdateStatus = {
   id: string;
   value: boolean;
 };
+
+//User
+type GetUser = {
+  id: string;
+  jenis_pengguna: string;
+  nama: string;
+  alamat: string;
+};

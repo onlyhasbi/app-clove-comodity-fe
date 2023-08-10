@@ -105,4 +105,12 @@ export const url = {
     key: 'update_status_lowongan',
     dev: `${BASE_URL}/status-lowongan-kerja`,
   },
+  all_acc: {
+    key: 'all_user_acc',
+    dev: `${BASE_URL}/all-acc`,
+  },
+  all_buruh: {
+    key: 'all_user_buruh',
+    dev: `${BASE_URL}/all-buruh`,
+  },
 };

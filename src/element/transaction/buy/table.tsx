@@ -6,6 +6,7 @@ import { TTablePembelian } from './types';
 import { TDeletePembelian, TUpdatePembelian } from './schema';
 import { NumericFormat } from 'react-number-format';
 import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
+import LabelUser from '../../../components/user';
 
 type Props = {
   isLoading?: boolean;
@@ -24,8 +25,12 @@ const TabelPembelian = ({
   const columns = [
     columnHelper.accessor('id_penjual', {
       id: 'id_penjual',
-      header: () => <Center>Id Penjual</Center>,
-      cell: ({ getValue }) => <Center>{getValue()}</Center>,
+      header: () => <Center>Penjual</Center>,
+      cell: ({ getValue }) => (
+        <Center>
+          <LabelUser id={getValue()} />
+        </Center>
+      ),
     }),
     columnHelper.accessor('jenis_komoditas', {
       id: 'jenis_komoditas',

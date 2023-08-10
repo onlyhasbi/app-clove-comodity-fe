@@ -22,6 +22,7 @@ import { useEffect } from 'react';
 import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
 import { NumericFormat, NumberFormatValues } from 'react-number-format';
 import ReactDatePicker from 'react-datepicker';
+import { useAllUserAcc } from '../../../hooks/useUser.hook';
 
 type Props = {
   isLoading: boolean;
@@ -47,6 +48,9 @@ const FormPembeli = ({
     defaultValues,
     resolver: zodResolver(schemaPembelian),
   });
+
+  const allUserAcc = useAllUserAcc();
+  const users = allUserAcc?.data?.data?.data?.user;
 
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
@@ -87,12 +91,18 @@ const FormPembeli = ({
           <FormLabel fontSize="sm" htmlFor="id_penjual">
             ID Penjual
           </FormLabel>
-          <Input
+          <Select
             id="id_penjual"
-            placeholder="ID Penjual"
+            placeholder="Pilih Pengguna"
             isDisabled={isLoading}
             {...register('id_penjual')}
-          />
+          >
+            {users?.map((item: GetUser) => (
+              <option key={item.id} value={item.id}>
+                {item.nama}
+              </option>
+            ))}
+          </Select>
           <FormErrorMessage>
             {errors.id_penjual && errors.id_penjual.message}
           </FormErrorMessage>

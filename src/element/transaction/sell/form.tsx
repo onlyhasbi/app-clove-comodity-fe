@@ -22,6 +22,7 @@ import { useEffect } from 'react';
 import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
 import { NumericFormat, NumberFormatValues } from 'react-number-format';
 import ReactDatePicker from 'react-datepicker';
+import { useAllUserAcc } from '../../../hooks/useUser.hook';
 
 type Props = {
   isLoading: boolean;
@@ -68,6 +69,9 @@ const FormPenjualan = ({
     }
   }, []);
 
+  const allUserAcc = useAllUserAcc();
+  const users = allUserAcc?.data?.data?.data?.user;
+
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
@@ -87,12 +91,18 @@ const FormPenjualan = ({
           <FormLabel fontSize="sm" htmlFor="id_pembeli">
             ID Pembeli
           </FormLabel>
-          <Input
+          <Select
             id="id_pembeli"
-            placeholder="ID Pembeli"
+            placeholder="Pilih Pengguna"
             isDisabled={isLoading}
             {...register('id_pembeli')}
-          />
+          >
+            {users?.map((item: GetUser) => (
+              <option key={item.id} value={item.id}>
+                {item.nama}
+              </option>
+            ))}
+          </Select>
           <FormErrorMessage>
             {errors.id_pembeli && errors.id_pembeli.message}
           </FormErrorMessage>
