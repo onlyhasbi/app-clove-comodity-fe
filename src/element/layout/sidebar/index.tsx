@@ -25,7 +25,9 @@ const Sidebar = () => {
       borderColor="gray.100"
     >
       <Box width={{ lg: '130px', base: '15rem' }} marginX="auto">
-        <img src={logo} alt="clove-comodity-logo" />
+        <Link to="/">
+          <img src={logo} alt="clove-comodity-logo" />
+        </Link>
       </Box>
       <Show below="lg">
         <Header />

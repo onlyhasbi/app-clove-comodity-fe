@@ -1,4 +1,4 @@
-import { Box, HStack } from '@chakra-ui/react';
+import { GridItem, Grid } from '@chakra-ui/react';
 import {
   BarChart,
   Bar,
@@ -25,14 +25,17 @@ type Props = {
 
 function Chart({ dataUpah, dataCengkeh }: Props) {
   return (
-    <HStack gap={4} marginTop={10}>
-      <Box width="full" height={200}>
+    <Grid
+      templateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }}
+      gap={{ lg: 8, base: 8 }}
+      marginTop={10}
+    >
+      <GridItem>
         <ResponsiveContainer width="100%" height="100%" aspect={3}>
           <BarChart
             data={dataUpah}
             margin={{
               right: 10,
-              left: -2,
               top: 10,
             }}
           >
@@ -56,14 +59,13 @@ function Chart({ dataUpah, dataCengkeh }: Props) {
             <Bar dataKey="upah" name="Upah" fill="#48BB78" />
           </BarChart>
         </ResponsiveContainer>
-      </Box>
-      <Box width="full" height={200}>
+      </GridItem>
+      <GridItem>
         <ResponsiveContainer width="100%" height="100%" aspect={3}>
           <BarChart
             data={dataCengkeh}
             margin={{
               right: 10,
-              left: -2,
               top: 10,
             }}
           >
@@ -92,8 +94,8 @@ function Chart({ dataUpah, dataCengkeh }: Props) {
             />
           </BarChart>
         </ResponsiveContainer>
-      </Box>
-    </HStack>
+      </GridItem>
+    </Grid>
   );
 }
 
