@@ -6,6 +6,7 @@ import { TTableSetoran } from './types';
 import { TDeleteSetoran, TUpdateSetoran } from './schema';
 import { NumericFormat } from 'react-number-format';
 import Status from '../../../components/pembayaran';
+import { LabelBuruh } from '../../../components/user';
 
 type Props = {
   listen: {
@@ -31,7 +32,11 @@ const TableSetoran = ({
     columnHelper.accessor('id_buruh', {
       id: 'id_buruh',
       header: () => <Box>Buruh</Box>,
-      cell: ({ getValue }) => <Box>{getValue()}</Box>,
+      cell: ({ getValue }) => (
+        <Box>
+          <LabelBuruh id={getValue()} />
+        </Box>
+      ),
     }),
     columnHelper.accessor('tanggal_panen', {
       id: 'tanggal_panen',

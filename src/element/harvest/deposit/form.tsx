@@ -24,6 +24,7 @@ import { NumberFormatValues, NumericFormat } from 'react-number-format';
 import { selectLahanAdapter } from './helper';
 import { useGetHasil } from '../../../hooks/useResult.hook';
 import ReactDatePicker from 'react-datepicker';
+import { useAllUserBuruh } from '../../../hooks/useUser.hook';
 
 type Props = {
   onClose: () => void;
@@ -70,6 +71,9 @@ const FormSetoran = ({
     getHasil?.data?.data?.data?.hasil_panen || []
   );
 
+  const allUserBuruh = useAllUserBuruh();
+  const buruh = allUserBuruh?.data?.data?.data?.user;
+
   const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
       handleSave({
@@ -89,12 +93,19 @@ const FormSetoran = ({
           <FormLabel fontSize="sm" htmlFor="id_buruh">
             Kode Buruh
           </FormLabel>
-          <Input
+          <Select
             id="id_buruh"
+            placeholder="Pilih Buruh"
             isDisabled={isLoading}
-            placeholder="Kode Buruh"
             {...register('id_buruh')}
-          />
+          >
+            {buruh?.map((item: GetBuruh) => (
+              <option key={item.id} value={item.id}>
+                {item.nama}
+              </option>
+            ))}
+          </Select>
+
           <FormErrorMessage>
             {errors.id_buruh && errors.id_buruh.message}
           </FormErrorMessage>
