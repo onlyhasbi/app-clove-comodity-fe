@@ -2,6 +2,7 @@ import { Center, Box, Text, Button, VStack } from '@chakra-ui/react';
 import { FallbackProps } from 'react-error-boundary';
 import { MoveLeft } from 'lucide-react';
 import error from '../../assets/error.svg';
+import { deleteToken } from '../../hooks/useAuth.hook';
 
 type Props = {
   title: string;
@@ -32,10 +33,11 @@ const ErrorTemplate = ({ title, action }: Props) => (
 );
 
 function ErrorFallBack({ error, resetErrorBoundary }: FallbackProps) {
-  console.log(error);
-  return (
-    <ErrorTemplate title="Terjadi Kesalahan" action={resetErrorBoundary} />
-  );
+  const handleError = () => {
+    deleteToken(import.meta.env.VITE_TOKEN_NAME);
+    resetErrorBoundary();
+  };
+  return <ErrorTemplate title="Terjadi Kesalahan" action={handleError} />;
 }
 
 export default ErrorFallBack;

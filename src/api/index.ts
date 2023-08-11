@@ -1,23 +1,21 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { toast } from 'react-hot-toast';
+import axios, {
+  AxiosError,
+  InternalAxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 
-// axios.interceptors.request.use(null, () => {});
 
-const onResponse = (response: AxiosResponse<any, any>) => response;
-
-const onError = (error: AxiosError) => {
-  if (error.response) {
-    if (error.response.status >= 400 && error.response.status <= 500) {
-      return Promise.reject(error);
-    } else if (error.response.status === 503) {
-      throw new Error(JSON.stringify({ code: '0053', message: 'Error Code' }));
-    } else {
-      toast.error(`${error.name} - ${error.message}`);
-    }
-  }
+const onErrorResponse = (error: AxiosError) => {
+  console.log(error.response);
 };
 
-axios.interceptors.response.use(onResponse, onError);
+const onResponse = (response: AxiosResponse<any, any>) => response;
+axios.interceptors.response.use(onResponse, onErrorResponse);
+
+const onRequest = (config: InternalAxiosRequestConfig) => {
+  return config;
+};
+axios.interceptors.request.use(onRequest, onErrorResponse);
 
 export const setAuthToken = (token: string) => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

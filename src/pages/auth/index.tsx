@@ -11,8 +11,8 @@ function SignIn() {
   const isAuthSuccess = isAuthenticated(import.meta.env.VITE_TOKEN_NAME);
 
   const onSuccess = useCallback((data: any) => {
-    const token = data?.data?.data?.accessToken;
-    setToken(import.meta.env.VITE_TOKEN_NAME, token);
+    const token = data?.data?.data;
+    setToken(import.meta.env.VITE_TOKEN_NAME, JSON.stringify(token));
   }, []);
 
   const onError = useCallback((error: any) => {

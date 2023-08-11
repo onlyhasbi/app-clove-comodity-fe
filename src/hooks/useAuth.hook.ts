@@ -31,16 +31,12 @@ export function deleteToken(name: string) {
   token && localStorage.removeItem(name);
 }
 
-
 export function getToken(name: string) {
-  if (!name) return null;
+  if (!name) throw new Error('Token name not provided');
 
-  const token = localStorage.getItem(name) || null;
-  if (token) setAuthToken(token);
+  const token = localStorage.getItem(name);
+  const tokenParse = token && JSON.parse(token);
+  if (token) setAuthToken(tokenParse.accessToken);
 
-  return token;
-}
-
-export function verifyToken() {
-  console.log('verifyToken');
+  return tokenParse;
 }
