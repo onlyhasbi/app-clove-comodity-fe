@@ -32,6 +32,7 @@ const ErrorTemplate = ({ title, action }: Props) => (
 );
 
 function ErrorFallBack({ error, resetErrorBoundary }: FallbackProps) {
+  console.log(error);
   return (
     <ErrorTemplate title="Terjadi Kesalahan" action={resetErrorBoundary} />
   );

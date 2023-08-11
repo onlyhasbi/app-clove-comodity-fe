@@ -37,7 +37,7 @@ function CardSummary({
           >
             {jumlahLahan}
           </Text>
-          <Box position="absolute" bottom="1.6rem" left="2rem" color="#F1F5F9">
+          <Box position="absolute" bottom="1.6rem" left="2rem" color="rgb(241 245 249)">
             <Sprout width={70} height={70} />
           </Box>
         </CardBody>
@@ -59,7 +59,7 @@ function CardSummary({
           >
             {jumlahPengeringan}
           </Text>
-          <Box position="absolute" bottom="2rem" left="2rem" color="#F1F5F9">
+          <Box position="absolute" bottom="2rem" left="2rem" color="rgb(241 245 249)">
             <SunMedium width={65} height={65} />
           </Box>
         </CardBody>
@@ -81,7 +81,7 @@ function CardSummary({
           >
             {jumlahKomoditas}
           </Text>
-          <Box position="absolute" bottom="2rem" left="2rem" color="#F1F5F9">
+          <Box position="absolute" bottom="2rem" left="2rem" color="rgb(241 245 249)">
             <Wheat width={57} height={57} />
           </Box>
         </CardBody>
@@ -103,7 +103,7 @@ function CardSummary({
           >
             {jumlahTransaksi}
           </Text>
-          <Box position="absolute" bottom="2rem" left="2rem" color="#F1F5F9">
+          <Box position="absolute" bottom="2rem" left="2rem" color="rgb(241 245 249)">
             <Wallet2 width={59} height={59} />
           </Box>
         </CardBody>
