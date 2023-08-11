@@ -31,6 +31,7 @@ export function deleteToken(name: string) {
   token && localStorage.removeItem(name);
 }
 
+
 export function getToken(name: string) {
   if (!name) return null;
 

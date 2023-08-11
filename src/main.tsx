@@ -9,13 +9,14 @@ import { Toaster } from 'react-hot-toast';
 import { queryClient } from './utils/config/query/index.ts';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallBack from './element/error/index.tsx';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <ChakraProvider theme={configTheme}>
         <QueryClientProvider client={queryClient}>
-          <ErrorBoundary FallbackComponent={() => 'Error'}>
+          <ErrorBoundary fallbackRender={(fallbackProps) => <ErrorFallBack {...fallbackProps}/>}>
             <App />
           </ErrorBoundary>
           <ReactQueryDevtools initialIsOpen={false} />

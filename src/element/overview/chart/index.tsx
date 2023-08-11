@@ -1,4 +1,4 @@
-import { GridItem, Grid } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import {
   BarChart,
   Bar,
@@ -25,77 +25,65 @@ type Props = {
 
 function Chart({ dataUpah, dataCengkeh }: Props) {
   return (
-    <Grid
-      templateColumns={{ lg: 'repeat(2,1fr)', base: '1fr' }}
-      gap={{ lg: 8, base: 8 }}
-      marginTop={10}
-    >
-      <GridItem>
-        <ResponsiveContainer width="100%" height="100%" aspect={3}>
-          <BarChart
-            data={dataUpah}
-            margin={{
-              right: 10,
-              top: 10,
-            }}
-          >
-            <CartesianGrid vertical={false} strokeDasharray="3 3" />
-            <XAxis
-              dataKey="tanggal"
-              fontSize={10}
-              color="#2D3748"
-              strokeOpacity={0}
-            />
-            <YAxis
-              dataKey="upah"
-              type="number"
-              fontSize={10}
-              color="#2D3748"
-              strokeOpacity={0}
-            />
-            <Tooltip />
-            <Legend />
+    <Stack direction={{ lg: 'row', base: 'column' }} gap={8}>
+      <ResponsiveContainer width="100%" height="100%" aspect={3}>
+        <BarChart
+          data={dataUpah}
+          margin={{
+            right: 10,
+            top: 10,
+          }}
+        >
+          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+          <XAxis
+            dataKey="tanggal"
+            fontSize={10}
+            color="#2D3748"
+            strokeOpacity={0}
+          />
+          <YAxis
+            dataKey="upah"
+            type="number"
+            fontSize={10}
+            color="#2D3748"
+            strokeOpacity={0}
+          />
+          <Tooltip />
+          <Legend />
 
-            <Bar dataKey="upah" name="Upah" fill="#48BB78" />
-          </BarChart>
-        </ResponsiveContainer>
-      </GridItem>
-      <GridItem>
-        <ResponsiveContainer width="100%" height="100%" aspect={3}>
-          <BarChart
-            data={dataCengkeh}
-            margin={{
-              right: 10,
-              top: 10,
-            }}
-          >
-            <CartesianGrid vertical={false} strokeDasharray="3 3" />
-            <XAxis
-              dataKey="tanggal"
-              fontSize={10}
-              color="#2D3748"
-              strokeOpacity={0}
-            />
-            <YAxis
-              dataKey={'cengkeh_basah' || 'cengkeh_kering'}
-              type="number"
-              fontSize={10}
-              color="#2D3748"
-              strokeOpacity={0}
-            />
-            <Tooltip />
-            <Legend />
+          <Bar dataKey="upah" name="Upah" fill="#48BB78" />
+        </BarChart>
+      </ResponsiveContainer>
+      <ResponsiveContainer width="100%" height="100%" aspect={3}>
+        <BarChart
+          data={dataCengkeh}
+          margin={{
+            right: 10,
+            top: 10,
+          }}
+        >
+          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+          <XAxis
+            dataKey="tanggal"
+            fontSize={10}
+            color="#2D3748"
+            strokeOpacity={0}
+          />
+          <YAxis
+            dataKey={'cengkeh_basah' || 'cengkeh_kering'}
+            type="number"
+            fontSize={10}
+            color="#2D3748"
+            strokeOpacity={0}
+          />
+          <Tooltip />
+          <Legend />
 
-            <Bar dataKey="cengkeh_basah" name="Cengkeh Basah" fill="#805AD5" />
-            <Bar
-              dataKey="cengkeh_kering"
-              name="Cengkeh Kering"
-              fill="#ED8936"
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </GridItem>
-    </Grid>
+          <Bar dataKey="cengkeh_basah" name="Cengkeh Basah" fill="#805AD5" />
+          <Bar dataKey="cengkeh_kering" name="Cengkeh Kering" fill="#ED8936" />
+        </BarChart>
+      </ResponsiveContainer>
+    </Stack>
   );
 }
 

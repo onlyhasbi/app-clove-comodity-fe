@@ -32,12 +32,7 @@ const Layout = () => {
           <Header />
         </GridItem>
       </Show>
-      <GridItem
-        area="main"
-        overflow="hidden"
-        minH="100vh"
-        placeItems="self-start"
-      >
+      <GridItem area="main" overflowX="hidden" minH="100vh">
         {<Outlet />}
       </GridItem>
     </Grid>

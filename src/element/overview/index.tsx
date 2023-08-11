@@ -1,4 +1,4 @@
-import { Grid, Spinner } from '@chakra-ui/react';
+import { Stack, Spinner } from '@chakra-ui/react';
 import CardSummary from './card';
 import Chart from './chart';
 import TableInfo from './table';
@@ -60,11 +60,11 @@ function Overview() {
   };
 
   return (
-    <Grid gap={10}>
+    <Stack gap={10}>
       <Chart dataUpah={dataUpah} dataCengkeh={dataCengkeh} />
       <CardSummary cardProps={cardProps} />
       <TableInfo />
-    </Grid>
+    </Stack>
   );
 }
 

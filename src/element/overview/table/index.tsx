@@ -1,4 +1,4 @@
-import { Box, Stack } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import TabelBuruh from './labor';
 import TabelPenawaran from './offer';
 import {
@@ -19,15 +19,11 @@ function TableInfo() {
 
   return (
     <Stack direction="column" gap={10} w="full">
-      <Box>
-        <TabelBuruh isLoading={getInfoBuruh.isLoading} data={infoBuruh} />
-      </Box>
-      <Box>
-        <TabelPenawaran
-          isLoading={getInfoPenawaran.isLoading}
-          data={infoPenawaran}
-        />
-      </Box>
+      <TabelBuruh isLoading={getInfoBuruh.isLoading} data={infoBuruh} />
+      <TabelPenawaran
+        isLoading={getInfoPenawaran.isLoading}
+        data={infoPenawaran}
+      />
     </Stack>
   );
 }
