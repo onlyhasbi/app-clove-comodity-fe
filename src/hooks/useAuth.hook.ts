@@ -32,11 +32,14 @@ export function deleteToken(name: string) {
 }
 
 export function getToken(name: string) {
-  if (!name) throw new Error('Token name not provided');
+  try {
+    if (!name) throw new Error('Token name not provided');
+    const token = localStorage.getItem(name);
+    const tokenParse = token && JSON.parse(token);
+    if (token) setAuthToken(tokenParse.accessToken);
 
-  const token = localStorage.getItem(name);
-  const tokenParse = token && JSON.parse(token);
-  if (token) setAuthToken(tokenParse.accessToken);
-
-  return tokenParse;
+    return tokenParse;
+  } catch (e) {
+    throw new Error(`invalid token : ${e}`);
+  }
 }

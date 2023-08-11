@@ -5,6 +5,9 @@ export const url = {
     key: 'auth',
     dev: `${BASE_URL}/authentication-acc`,
   },
+  update_token: {
+    dev: `${BASE_URL}/authentication`,
+  },
   profile: {
     key: 'profile',
     dev: `${BASE_URL}/user-acc`,

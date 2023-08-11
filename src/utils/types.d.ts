@@ -222,3 +222,8 @@ type GetBuruh = {
   nama: string;
   alamat: string;
 };
+
+type ErrorResponse = {
+  statusCode: number;
+  message: string;
+};

@@ -4,17 +4,16 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 
-
 const onErrorResponse = (error: AxiosError) => {
-  console.log(error.response);
+  if ((error.response?.data as ErrorResponse)?.statusCode == 401) {
+    throw new Error('invalid token');
+  }
 };
 
 const onResponse = (response: AxiosResponse<any, any>) => response;
 axios.interceptors.response.use(onResponse, onErrorResponse);
 
-const onRequest = (config: InternalAxiosRequestConfig) => {
-  return config;
-};
+const onRequest = (config: InternalAxiosRequestConfig) => config;
 axios.interceptors.request.use(onRequest, onErrorResponse);
 
 export const setAuthToken = (token: string) => {
