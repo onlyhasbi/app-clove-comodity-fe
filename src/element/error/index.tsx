@@ -33,6 +33,7 @@ const ErrorTemplate = ({ title, action }: Props) => (
 );
 
 function ErrorFallBack({ error, resetErrorBoundary }: FallbackProps) {
+  console.log(error)
   const handleError = () => {
     deleteToken(import.meta.env.VITE_TOKEN_NAME);
     resetErrorBoundary();
