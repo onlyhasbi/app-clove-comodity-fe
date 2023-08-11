@@ -40,6 +40,6 @@ export function getToken(name: string) {
 
     return tokenParse;
   } catch (e) {
-    throw new Error(`invalid token : ${e}`);
+    deleteToken(import.meta.env.VITE_TOKEN_NAME);
   }
 }

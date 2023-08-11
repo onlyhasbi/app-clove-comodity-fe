@@ -16,6 +16,7 @@ function SignIn() {
   }, []);
 
   const onError = useCallback((error: any) => {
+    console.log(error)
     const errorMessage =
       error?.response?.data?.statusCode == 400
         ? 'Nomor telepon dan sandi salah'
