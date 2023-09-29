@@ -16,7 +16,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
       <ChakraProvider theme={configTheme}>
         <QueryClientProvider client={queryClient}>
-          <ErrorBoundary fallbackRender={(fallbackProps) => <ErrorFallBack {...fallbackProps}/>}>
+          <ErrorBoundary
+            fallbackRender={(fallbackProps) => (
+              <ErrorFallBack {...fallbackProps} />
+            )}
+          >
             <App />
           </ErrorBoundary>
           <ReactQueryDevtools initialIsOpen={false} />

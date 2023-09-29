@@ -11,15 +11,10 @@ export function useGetProfile() {
   });
 }
 
-type Props = {
-  onSuccess: () => void;
-};
-
-export const usePostProfile = ({ onSuccess }: Props) =>
+export const usePostProfile = () =>
   useMutation({
     mutationFn: (payload: PayloadRegisterProfile) =>
       http.post(url.profile.dev, payload).then((data) => data),
-    onSuccess,
   });
 
 export const useUpdateProfile = () =>

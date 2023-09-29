@@ -14,7 +14,7 @@ import {
   Select,
   IconButton,
 } from '@chakra-ui/react';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
 import { TSchemaRegister, defaultValues, schemaRegister } from './schema';
 import { useForm, FieldValues } from 'react-hook-form';
@@ -37,17 +37,18 @@ function SignUpForm() {
   const [show, toggle] = useReducer((prev) => !prev, false);
   const navigate = useNavigate();
 
-  const onSuccess = () => {
-    navigate('/signin', { replace: true });
-  };
-
-  const profile = usePostProfile({ onSuccess });
+  const profile = usePostProfile();
+  const { isSuccess } = profile;
 
   const getProvinsi = useProvinsi();
   const getKabupaten = useKabupaten(watch('provinsi').trim());
 
   const provinsi = getProvinsi.data?.data?.data?.lokasi?.sub_lokasi ?? [];
   const kabupaten = getKabupaten?.data?.data?.data?.lokasi?.sub_lokasi ?? [];
+
+  useEffect(() => {
+    if (isSuccess) navigate('/signin', { replace: true });
+  }, [isSuccess, navigate]);
 
   const onSubmit = (payload: FieldValues) => {
     const defaultPayload = {
