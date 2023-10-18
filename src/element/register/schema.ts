@@ -7,7 +7,7 @@ export const schemaRegister = z.object({
     .nonempty({ message: 'Jenis pengguna tidak boleh kosong' }),
   provinsi: z.string().nonempty({ message: 'Provinsi tidak boleh kosong' }),
   kabupaten: z.string().nonempty({ message: 'Kabupaten tidak boleh kosong' }),
-  telepon: z.string().nonempty({ message: 'No telepon tidak boleh kosong' }),
+  telepon: z.string().nonempty({ message: 'No telepon tidak boleh kosong' }).min(11,'No telepon minimal 11 digit'),
   sandi: z.string().nonempty({ message: 'Sandi tidak boleh kosong' }),
 });
 
