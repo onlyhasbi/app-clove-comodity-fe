@@ -13,16 +13,16 @@ export const tableAdapter = (payloads: GetInfoPenawaran[]) => {
     return {
       id: id_penawaran,
       nama: nama_penawar,
-      penawaran:jenis_penawaran,
+      penawaran: jenis_penawaran,
       komoditas: jenis_komoditas,
       min: min,
       max: max,
       harga: harga_rp,
       kontak:
         kontak_penawar
-          .find((item) => item.includes('whatsapp'))
+          ?.find((item) => item.includes('whatsapp'))
           ?.split(':')[1]
-          .trim() || '-',
+          ?.trim() || '-',
     };
   });
 };
