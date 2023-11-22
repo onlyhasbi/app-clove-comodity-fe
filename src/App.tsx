@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import SignIn from './pages/auth';
 import SignUp from './pages/register';
 import Dashboard from './pages/dashboard';
-import Layout from './element/layout';
+import Layout from './layout';
 import Panen from './pages/harvest';
 import Pengeringan from './pages/drying';
 import Transaksi from './pages/transaction';

@@ -1,6 +1,6 @@
 import { Stack, Box, Text, SkeletonText } from '@chakra-ui/react';
-import ProfileForm from '../../element/profile/form';
-import SocialMedia from '../../element/profile/social-media';
+import ProfileForm from '../../features/profile/form';
+import SocialMedia from '../../features/profile/social-media';
 import {
   useGetProfile,
   useUpdateProfile,

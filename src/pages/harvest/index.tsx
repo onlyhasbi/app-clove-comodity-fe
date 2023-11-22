@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import TabsPanen from '../../element/harvest/tabs';
+import TabsPanen from '../../features/harvest/tabs';
 
 const Panen = () => (
   <>

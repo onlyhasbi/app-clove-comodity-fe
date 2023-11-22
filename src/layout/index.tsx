@@ -1,8 +1,8 @@
 import { Grid, GridItem, Show } from '@chakra-ui/react';
 import Sidebar from './sidebar';
-import Header from './header';
+import Header from '../layout/header';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { isAuthenticated } from '../../hooks/useAuth.hook';
+import { isAuthenticated } from '../hooks/useAuth.hook';
 import { useEffect } from 'react';
 
 const Layout = () => {

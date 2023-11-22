@@ -1,4 +1,4 @@
-import SignInForm, { SignInPayload } from '../../element/auth/FormLogin';
+import SignInForm, { SignInPayload } from '../../features/auth/FormLogin';
 import logo from '../../assets/logo.svg';
 import { isAuthenticated, setToken, useAuth } from '../../hooks/useAuth.hook';
 import { Box, Container, Text, Wrap } from '@chakra-ui/react';

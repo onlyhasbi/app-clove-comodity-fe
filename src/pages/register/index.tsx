@@ -1,4 +1,4 @@
-import SignUpForm from '../../element/register/FormRegister';
+import SignUpForm from '../../features/register/FormRegister';
 import { Center, Stack, Text, Wrap } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 

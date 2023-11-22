@@ -1,6 +1,6 @@
 import { HStack, Box, Divider, Flex, Show, Text } from '@chakra-ui/react';
 import { useLocation, Link } from 'react-router-dom';
-import logo from '../../../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 import Header from '../header';
 import { Wallet2, Wheat, SunMedium, LayoutPanelLeft } from 'lucide-react';
 

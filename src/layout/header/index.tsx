@@ -12,10 +12,11 @@ import {
   SkeletonText,
 } from '@chakra-ui/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { deleteToken } from '../../../hooks/useAuth.hook';
-import { useGetProfile } from '../../../hooks/useProfile.hook';
+import { deleteToken } from '../../hooks/useAuth.hook';
+import { useGetProfile } from '../../hooks/useProfile.hook';
 import React from 'react';
-import { capitalize, getFirstCharacter } from '../../../utils';
+import { getFirstCharacter } from "../../utils/getFirstCharacter";
+import { capitalize } from "../../utils/capitalize";
 
 const routes = [
   { path: '/profile', label: 'Profil' },

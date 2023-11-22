@@ -15,7 +15,7 @@ import { TAddProfile, defaultValues, schemaProfile } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useProvinsi, useKabupaten } from '../../hooks/useLocation.hook';
 import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
-import { getProvince } from '../../utils';
+import { getProvince } from "../../utils/getProvince";
 
 type Props = {
   initialValues: initialProfileProps;

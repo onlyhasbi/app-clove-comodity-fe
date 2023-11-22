@@ -1,15 +1,9 @@
 import { Center, Box, Text, Button, VStack } from '@chakra-ui/react';
-import { FallbackProps } from 'react-error-boundary';
 import { MoveLeft } from 'lucide-react';
-import error from '../../assets/error.svg';
-import { deleteToken } from '../../hooks/useAuth.hook';
+import error from '../assets/error.svg';
+import { Props } from '.';
 
-type Props = {
-  title: string;
-  action: () => void;
-};
-
-const ErrorTemplate = ({ title, action }: Props) => (
+export const ErrorTemplate = ({ title, action }: Props) => (
   <Center w="full" minH="100vh" textAlign="center">
     <VStack gap={4} w="30rem">
       <img src={error} alt="error-occured" />
@@ -31,14 +25,3 @@ const ErrorTemplate = ({ title, action }: Props) => (
     </VStack>
   </Center>
 );
-
-function ErrorFallBack({ error, resetErrorBoundary }: FallbackProps) {
-  console.log(error)
-  const handleError = () => {
-    deleteToken(import.meta.env.VITE_TOKEN_NAME);
-    resetErrorBoundary();
-  };
-  return <ErrorTemplate title="Terjadi Kesalahan" action={handleError} />;
-}
-
-export default ErrorFallBack;

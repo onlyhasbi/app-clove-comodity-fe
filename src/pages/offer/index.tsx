@@ -1,5 +1,5 @@
-import FormPenawaran from '../../element/offer/form';
-import TabelPenawaran from '../../element/offer/table';
+import FormPenawaran from '../../features/offer/form';
+import TabelPenawaran from '../../features/offer/table';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -20,8 +20,8 @@ import {
   useDeleteOffer,
   useUpdateActive,
 } from '../../hooks/useOffer.hook';
-import { tableAdapter } from '../../element/offer/helper';
-import { TDeletePenawaran, TUpdatePenawaran } from '@/element/offer/schema';
+import { tableAdapter } from '../../features/offer/helper';
+import { TDeletePenawaran, TUpdatePenawaran } from '@/features/offer/schema';
 import { toast } from 'react-hot-toast';
 
 type TAction = {

@@ -1,5 +1,5 @@
-import FormPekerjaan from '../../element/work/form';
-import TabelPekerjaan from '../../element/work/table';
+import FormPekerjaan from '../../features/work/form';
+import TabelPekerjaan from '../../features/work/table';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -17,7 +17,7 @@ import {
   TDeletePekerjaan,
   TAddPekerjaan,
   TUpdatePekerjaan,
-} from '@/element/work/schema';
+} from '@/features/work/schema';
 import {
   usePostWork,
   useGetWork,
@@ -25,7 +25,7 @@ import {
   useDeleteWork,
   useUpdateActive,
 } from '../../hooks/useWork.hook';
-import { tableAdapter } from '../../element/work/helper';
+import { tableAdapter } from '../../features/work/helper';
 import { toast } from 'react-hot-toast';
 
 type TAction = {

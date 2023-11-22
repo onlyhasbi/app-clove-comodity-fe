@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import TabsPengeringan from '../../element/drying/tabs';
+import TabsPengeringan from '../../features/drying/tabs';
 
 const Pengeringan = () => {
   return (

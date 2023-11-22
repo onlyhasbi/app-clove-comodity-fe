@@ -1,4 +1,4 @@
-import Overview from '../../element/overview';
+import Overview from '../../features/overview';
 import { Box } from '@chakra-ui/react';
 
 function Dashboard() {

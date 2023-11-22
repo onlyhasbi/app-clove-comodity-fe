@@ -1,4 +1,4 @@
-import TabsTransaksi from '../../element/transaction/tabs';
+import TabsTransaksi from '../../features/transaction/tabs';
 import { Box, Text } from '@chakra-ui/react';
 
 const Transaksi = () => {

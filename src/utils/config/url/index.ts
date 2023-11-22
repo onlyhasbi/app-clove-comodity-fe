@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api-clove.vercel.app';
+const BASE_URL = 'https://services/ApiClient-clove.vercel.app';
 
 export const url = {
   auth: {

@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import { queryClient } from './utils/config/query/index.ts';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallBack from './element/error/index.tsx';
+import ErrorFallBack from './error';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

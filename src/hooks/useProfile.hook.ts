@@ -1,7 +1,7 @@
-import http from '../api';
+import http from '../services/ApiClient';
 import { url } from '../utils/config/url';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { keys } from './helper';
+import { keys } from '../utils/keys';
 import { toast } from 'react-hot-toast';
 
 export function useGetProfile() {

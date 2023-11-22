@@ -1,6 +1,6 @@
 import { SkeletonText } from '@chakra-ui/react';
 import { useKabupaten } from '../../hooks/useLocation.hook';
-import { getProvince } from '../../utils';
+import { getProvince } from "../../utils/getProvince";
 
 type Props = { value: string };
 
