@@ -1,7 +1,8 @@
+import { Material } from '../../../types/Material';
 import dayjs from 'dayjs';
 
-export const tableAdapter = (payloads: GetBahan[]) => {
-  return payloads?.map((payload: GetBahan) => {
+export const tableAdapter = (payloads: Material[]) => {
+  return payloads?.map((payload: Material) => {
     const { id, berat_kg, volume_liter, dikeringkan_pada_hari, catatan } =
       payload;
     return {

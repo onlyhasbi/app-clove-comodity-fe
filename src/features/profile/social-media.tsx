@@ -9,9 +9,10 @@ import {
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import { InitialSosmedProps } from '../../types/Profile';
 
 type Props = {
-  initialValues: initialSosmedProps[];
+  initialValues: InitialSosmedProps[];
 };
 
 type SosmedList =

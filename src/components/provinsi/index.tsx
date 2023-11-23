@@ -12,7 +12,7 @@ const Provinsi = ({ value }: Props) => {
     return <SkeletonText width="full" noOfLines={1} skeletonHeight="2" />;
 
   if (getProvinsi.isSuccess)
-    return getProvinsi.data?.data?.data?.lokasi?.sub_lokasi?.find(
+    return getProvinsi.data?.data?.lokasi?.sub_lokasi?.find(
       (provinsi) => provinsi.id_lokasi === provinsiValue
     )?.nama_lokasi;
 

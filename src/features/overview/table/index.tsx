@@ -9,12 +9,12 @@ import {
 function TableInfo() {
   const getInfoBuruh = useGetInfoBuruh();
   const infoBuruh = getInfoBuruh.isSuccess
-    ? getInfoBuruh?.data?.data?.data?.lamaran
+    ? getInfoBuruh?.data?.data?.lamaran
     : [];
 
   const getInfoPenawaran = useGetInfoPenawaran();
   const infoPenawaran = getInfoPenawaran.isSuccess
-    ? getInfoPenawaran?.data?.data?.data?.penawaran
+    ? getInfoPenawaran?.data?.data?.penawaran
     : [];
 
   return (

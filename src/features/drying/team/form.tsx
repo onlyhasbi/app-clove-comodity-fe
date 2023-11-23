@@ -14,6 +14,7 @@ import { TAddTim, TUpdateTim, defaultValues, schemaTim } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useAllUserBuruh } from '../../../hooks/useUser.hook';
+import { UserBuruh } from '../../../types/User';
 
 type Props = {
   onClose: () => void;
@@ -48,7 +49,7 @@ const FormTim = ({
   }, []);
 
   const allUserBuruh = useAllUserBuruh();
-  const buruh = allUserBuruh?.data?.data?.data?.user;
+  const buruh = allUserBuruh?.data?.data?.user;
 
   const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
@@ -91,7 +92,7 @@ const FormTim = ({
             isDisabled={isLoading}
             {...register('ketua_tim')}
           >
-            {buruh?.map((item: GetBuruh) => (
+            {buruh?.map((item: UserBuruh) => (
               <option key={item.id} value={item.id}>
                 {item.nama}
               </option>

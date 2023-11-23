@@ -23,6 +23,7 @@ import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
 import { NumericFormat, NumberFormatValues } from 'react-number-format';
 import ReactDatePicker from 'react-datepicker';
 import { useAllUserAcc } from '../../../hooks/useUser.hook';
+import { UserBuruh } from '../../../types/User';
 
 type Props = {
   isLoading: boolean;
@@ -70,7 +71,7 @@ const FormPenjualan = ({
   }, []);
 
   const allUserAcc = useAllUserAcc();
-  const users = allUserAcc?.data?.data?.data?.user;
+  const users = allUserAcc?.data?.data?.user;
 
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
@@ -97,7 +98,7 @@ const FormPenjualan = ({
             isDisabled={isLoading}
             {...register('id_pembeli')}
           >
-            {users?.map((item: GetUser) => (
+            {users?.map((item: UserBuruh) => (
               <option key={item.id} value={item.id}>
                 {item.nama}
               </option>

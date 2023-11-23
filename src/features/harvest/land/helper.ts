@@ -1,3 +1,4 @@
+import { GetLahan } from '../../../types/Land';
 import { getProvince } from '../../../utils/getProvince';
 
 export const tableAdapter = (payloads: GetLahan[]) => {

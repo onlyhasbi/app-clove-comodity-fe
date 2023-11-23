@@ -1,9 +1,9 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import BahanPengeringan from './materials';
-import HasilPengeringan from './results';
-import Tim from './team';
+import DryMaterial from './materials';
+import DryResult from './results';
+import Team from './team';
 
-const TabsPengeringan = () => {
+const DryingTab = () => {
   return (
     <Tabs colorScheme="green">
       <TabList>
@@ -14,17 +14,17 @@ const TabsPengeringan = () => {
 
       <TabPanels>
         <TabPanel>
-          <Tim />
+          <Team />
         </TabPanel>
         <TabPanel>
-          <BahanPengeringan />
+          <DryMaterial />
         </TabPanel>
         <TabPanel>
-          <HasilPengeringan />
+          <DryResult />
         </TabPanel>
       </TabPanels>
     </Tabs>
   );
 };
 
-export default TabsPengeringan;
+export default DryingTab;

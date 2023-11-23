@@ -1,59 +1,58 @@
-import http from '../services/ApiClient';
-import { url } from '../utils/config/url';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+import { ApiClient } from '../services/apiClient';
+import {
+  PayloadSetoran,
+  PayloadUpdateSetoran,
+  ResponseDeposit,
+} from '../types/Deposit';
+import { TUpdateStatusPayment } from '../types/DryResult';
+import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-type PayloadSetoran = {
-  id_hasil_panen: string;
-  id_buruh: string;
-  volume_liter: number;
-  berat_kg: number;
-  upah_rp: number;
-  waktu: Date;
-  catatan: string;
-};
-
-type PayloadUpdateSetoran = PayloadSetoran & {
-  id: string;
-};
-
-export const usePostSetoran = () =>
-  useMutation({
-    mutationFn: (payload: PayloadSetoran) =>
-      http.post(url.setoran.dev, payload).then((data) => data),
+export const usePostSetoran = () => {
+  const depositApiClient = new ApiClient<PayloadSetoran>(url.setoran.dev);
+  return useMutation({
+    mutationFn: depositApiClient.post,
     onSuccess: () => toast.success('Setoran baru berhasil disimpan'),
   });
+};
 
 export const useUpdateSetoran = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: PayloadUpdateSetoran) =>
-      http.put(`${url.setoran.dev}/${id}`, restPayload).then((data) => data),
+    mutationFn: ({ id, ...restPayload }: PayloadUpdateSetoran) => {
+      const depositApiClient = new ApiClient<PayloadSetoran>(
+        `${url.setoran.dev}/${id}`
+      );
+      return depositApiClient.update(restPayload);
+    },
     onSuccess: () => toast.success('Setoran berhasil diperbarui'),
   });
 
 export const useDeleteSetoran = () =>
   useMutation({
-    mutationFn: (id: string) =>
-      http.delete(`${url.setoran.dev}/${id}`).then((data) => data),
+    mutationFn: (id: string) => {
+      const depositApiClient = new ApiClient(`${url.setoran.dev}/${id}`);
+      return depositApiClient.delete();
+    },
     onSuccess: () => toast.success(`Setoran berhasil dihapus`),
   });
 
-export const useGetSetoran = () =>
-  useQuery({
+export const useGetSetoran = () => {
+  const depositApiClient = new ApiClient<ResponseDeposit>(url.setoran.dev);
+  return useQuery({
     queryKey: keys(url.setoran.key),
-    queryFn: () => http.get(url.setoran.dev).then((data) => data),
+    queryFn: depositApiClient.getAll,
   });
+};
 
 export const useUpdateStatusSetoran = () =>
   useMutation({
-    mutationFn: ({ id, status }: TUpdateStatusPayment) =>
-      http.config({
-        method: 'put',
-        url: `${url.pembayaran_setoran.dev}/${id}`,
-        params: {
-          status,
-        },
-      }),
+    mutationFn: ({ id, status }: TUpdateStatusPayment) => {
+      const paymentApiClient = new ApiClient(
+        `${url.pembayaran_setoran.dev}/${id}?status=${status}`
+      );
+      return paymentApiClient.update({});
+    },
     onSuccess: () => toast.dismiss(),
   });

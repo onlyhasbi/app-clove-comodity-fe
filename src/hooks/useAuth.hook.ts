@@ -1,17 +1,17 @@
-import http, { setAuthToken } from '../services/ApiClient';
-import { SignInPayload } from '../features/auth/FormLogin';
-import { url } from '../utils/config/url';
 import { useMutation } from '@tanstack/react-query';
+import { SignInPayload } from '../features/auth/FormLogin';
+import { ApiClient, setAuthToken } from '../services/apiClient';
+import { url } from '../utils/config/url';
 
 type Props = {
   onSuccess: (data: any) => void;
   onError: (error: any) => void;
 };
 
+const authApiClient = new ApiClient<SignInPayload>(url.auth.dev);
 export const useAuth = ({ onSuccess, onError }: Props) =>
   useMutation({
-    mutationFn: (payload: SignInPayload) =>
-      http.post(url.auth.dev, payload).then((data) => data),
+    mutationFn: (payload: SignInPayload) => authApiClient.post(payload),
     onSuccess,
     onError,
   });

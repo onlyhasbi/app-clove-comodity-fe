@@ -22,7 +22,7 @@ import {
   useUpdateTim,
 } from '../../../hooks/useTeam.hook';
 import FormTim from './form';
-import TabelTim from './table';
+import TeamTable from './table';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import { TAddTim, TDeleteTim, TUpdateTim } from './schema';
 import { tableAdapter } from './helper';
@@ -33,7 +33,7 @@ type TAction = {
   delete?: TDeleteTim;
 };
 
-const Tim = () => {
+const Team = () => {
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -99,10 +99,10 @@ const Tim = () => {
             Tambah
           </Button>
         </Box>
-        <TabelTim
+        <TeamTable
           isLoading={getTim.isLoading}
           data={
-            getTim.isSuccess ? tableAdapter(getTim?.data?.data?.data?.tim) : []
+            getTim.isSuccess ? tableAdapter(getTim?.data?.data?.tim) : []
           }
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
@@ -173,4 +173,4 @@ const Tim = () => {
   );
 };
 
-export default Tim;
+export default Team;

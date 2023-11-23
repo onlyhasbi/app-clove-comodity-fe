@@ -7,6 +7,7 @@ import { TDeleteSetoran, TUpdateSetoran } from './schema';
 import { NumericFormat } from 'react-number-format';
 import Status from '../../../components/pembayaran';
 import { LabelBuruh } from '../../../components/user';
+import { TUpdateStatusPayment } from '../../../types/DryResult';
 
 type Props = {
   listen: {

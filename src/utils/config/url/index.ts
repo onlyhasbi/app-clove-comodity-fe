@@ -1,119 +1,119 @@
-const BASE_URL = 'https://services/ApiClient-clove.vercel.app';
+export const BASE_URL = 'https://api-clove.vercel.app';
 
 export const url = {
   auth: {
     key: 'auth',
-    dev: `${BASE_URL}/authentication-acc`,
+    dev: '/authentication-acc',
   },
   update_token: {
-    dev: `${BASE_URL}/authentication`,
+    dev: '/authentication',
   },
   profile: {
     key: 'profile',
-    dev: `${BASE_URL}/user-acc`,
+    dev: '/user-acc',
   },
   penawaran: {
     key: 'penawaran',
-    dev: `${BASE_URL}/penawaran-komoditas`,
+    dev: '/penawaran-komoditas',
   },
   pembelian: {
     key: 'pembelian',
-    dev: `${BASE_URL}/pembelian`,
+    dev: '/pembelian',
   },
   penjualan: {
     key: 'penjualan',
-    dev: `${BASE_URL}/penjualan`,
+    dev: '/penjualan',
   },
   tim: {
     key: 'tim-pengeringan',
-    dev: `${BASE_URL}/tim-pengeringan`,
+    dev: '/tim-pengeringan',
   },
   bahan: {
     key: 'bahan-pengeringan',
-    dev: `${BASE_URL}/bahan-pengeringan`,
+    dev: '/bahan-pengeringan',
   },
   update_bahan: {
     key: 'update-bahan-pengeringan',
-    dev: `${BASE_URL}/set-pengeringan`,
+    dev: '/set-pengeringan',
   },
   pengeringan: {
     key: 'hasil-pengeringan',
-    dev: `${BASE_URL}/hasil-pengeringan`,
+    dev: '/hasil-pengeringan',
   },
   pembayaran_pengeringan: {
     key: 'update-pengeringan',
-    dev: `${BASE_URL}/status-pembayaran-hasil-pengeringan`,
+    dev: '/status-pembayaran-hasil-pengeringan',
   },
   pekerjaan: {
     key: 'pekerjaan',
-    dev: `${BASE_URL}/lowongan-kerja`,
+    dev: '/lowongan-kerja',
   },
   sosmed: {
     key: 'sosmed',
-    dev: `${BASE_URL}/acc-kontak`,
+    dev: '/acc-kontak',
   },
   provinsi: {
     key: 'provinsi',
-    dev: `${BASE_URL}/lokasi/all-provinsi`,
+    dev: '/lokasi/all-provinsi',
   },
   kabupaten: {
     key: 'kabupaten',
-    dev: `${BASE_URL}/lokasi/all-kabupaten-kota`,
+    dev: '/lokasi/all-kabupaten-kota',
   },
   lahan: {
     key: 'lahan',
-    dev: `${BASE_URL}/lahan`,
+    dev: '/lahan',
   },
   hasil_panen: {
     key: 'hasil-panen',
-    dev: `${BASE_URL}/hasil-panen`,
+    dev: '/hasil-panen',
   },
   setoran: {
     key: 'setoran',
-    dev: `${BASE_URL}/setoran`,
+    dev: '/setoran',
   },
   pembayaran_setoran: {
     key: 'pembayaran_setoran',
-    dev: `${BASE_URL}/status-pembayaran-setoran`,
+    dev: '/status-pembayaran-setoran',
   },
   report_pengeringan: {
     key: 'report_pengeringan',
-    dev: `${BASE_URL}/index-pengeringan`,
+    dev: '/index-pengeringan',
   },
   report_transaksi: {
     key: 'report_transaksi',
-    dev: `${BASE_URL}/jual-beli`,
+    dev: '/jual-beli',
   },
   report_komoditas: {
     key: 'report_komoditas',
-    dev: `${BASE_URL}/komoditas-keluar-masuk`,
+    dev: '/komoditas-keluar-masuk',
   },
   report_lahan: {
     key: 'report_lahan',
-    dev: `${BASE_URL}/produktifitas-lahan`,
+    dev: '/produktifitas-lahan',
   },
   info_penawaran: {
     key: 'info_penawaran',
-    dev: `${BASE_URL}/info-penawaran-acc`,
+    dev: '/info-penawaran-acc',
   },
   info_buruh: {
     key: 'info_lamaran_kerja',
-    dev: `${BASE_URL}/info-lamaran-kerja-buruh`,
+    dev: '/info-lamaran-kerja-buruh',
   },
   update_status_penawaran: {
     key: 'update_status_penawaran',
-    dev: `${BASE_URL}/status-penawaran-komoditas`,
+    dev: '/status-penawaran-komoditas',
   },
   update_status_lowongan: {
     key: 'update_status_lowongan',
-    dev: `${BASE_URL}/status-lowongan-kerja`,
+    dev: '/status-lowongan-kerja',
   },
   all_acc: {
     key: 'all_user_acc',
-    dev: `${BASE_URL}/all-acc`,
+    dev: '/all-acc',
   },
   all_buruh: {
     key: 'all_user_buruh',
-    dev: `${BASE_URL}/all-buruh`,
+    dev: '/all-buruh',
   },
 };

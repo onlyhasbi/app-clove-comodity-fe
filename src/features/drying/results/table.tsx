@@ -8,6 +8,7 @@ import { NumericFormat } from 'react-number-format';
 import SelectBahanPengeringan from '../../../components/bahan-pengeringan';
 import Team from '../../../components/tim';
 import Status from '../../../components/pembayaran';
+import { TUpdateStatusPayment } from '../../../types/DryResult';
 
 type Props = {
   listen: {
@@ -38,7 +39,7 @@ const TabelHasilPengeringan = ({
       header: () => <Box>Tim</Box>,
       cell: ({ getValue }) => (
         <Box>
-          <Team value={getValue()} />
+          <Team id={getValue()} />
         </Box>
       ),
     }),

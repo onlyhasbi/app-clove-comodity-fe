@@ -25,6 +25,7 @@ import { selectLahanAdapter } from './helper';
 import { useGetHasil } from '../../../hooks/useResult.hook';
 import { useAllUserBuruh } from '../../../hooks/useUser.hook';
 import ReactDatePicker from 'react-datepicker';
+import { UserBuruh } from '../../../types/User';
 
 type Props = {
   onClose: () => void;
@@ -67,12 +68,10 @@ const FormSetoran = ({
   }, []);
 
   const getHasil = useGetHasil();
-  const hasil = selectLahanAdapter(
-    getHasil?.data?.data?.data?.hasil_panen || []
-  );
+  const hasil = selectLahanAdapter(getHasil?.data?.data?.hasil_panen || []);
 
   const allUserBuruh = useAllUserBuruh();
-  const buruh = allUserBuruh?.data?.data?.data?.user;
+  const buruh = allUserBuruh?.data?.data?.user;
 
   const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
@@ -99,7 +98,7 @@ const FormSetoran = ({
             isDisabled={isLoading}
             {...register('id_buruh')}
           >
-            {buruh?.map((item: GetBuruh) => (
+            {buruh?.map((item: UserBuruh) => (
               <option key={item.id} value={item.id}>
                 {item.nama}
               </option>

@@ -1,19 +1,15 @@
+import { Tim } from '../../types/Team';
 import { useGetTim } from '../../hooks/useTeam.hook';
 import { SkeletonText } from '@chakra-ui/react';
 
-type Props = { value: string };
+type Props = { id: string };
 
-const Team = ({ value }: Props) => {
-  const getTim = useGetTim();
-  const teams = getTim.data?.data?.data?.tim;
+const Team = ({ id }: Props) => {
+  const { data, isSuccess, isLoading } = useGetTim();
+  const teams = isSuccess ? data?.data?.tim : [];
 
-  if (getTim.isLoading)
-    return <SkeletonText width="full" noOfLines={1} skeletonHeight="2" />;
-
-  if (getTim.isSuccess)
-    return teams.find((team: GetTim) => team.id === value)?.nama_tim;
-
-  return undefined;
+  if (isLoading) return <SkeletonText noOfLines={1} height={2} width="2rem" />;
+  return teams?.find((team: Tim) => team.id === id)?.nama_tim;
 };
 
 export default Team;

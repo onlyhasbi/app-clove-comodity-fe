@@ -1,73 +1,74 @@
-import http from '../services/ApiClient';
-import { url } from '../utils/config/url';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+import { ApiClient } from '../services/apiClient';
+import ResponseDryResult, {
+  PayloadPengeringan,
+  PayloadUpdateBahan,
+  PayloadUpdatePengeringan,
+  TUpdateStatusPayment,
+} from '../types/DryResult';
+import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-type PayloadPengeringan = {
-  id_tim: string;
-  berat_kg: number;
-  volume_liter: number;
-  kering_pada_hari: Date;
-  catatan: string;
-  upah: number;
-};
-
-type PayloadUpdateBahan = {
-  id_bahan: string;
-  id_hasil: string;
-};
-
-type PayloadUpdatePengeringan = PayloadPengeringan & {
-  id: string;
-};
-
-export const usePostPengeringan = () =>
-  useMutation({
-    mutationFn: (payload: PayloadPengeringan) =>
-      http.post(url.pengeringan.dev, payload).then((data) => data),
+export const usePostPengeringan = () => {
+  const dryResultApiClient = new ApiClient<PayloadPengeringan>(
+    url.pengeringan.dev
+  );
+  return useMutation({
+    mutationFn: dryResultApiClient.post,
     onSuccess: () => toast.success('Hasil Pengeringan baru berhasil disimpan'),
   });
+};
 
-export const useUpdatePengeringan = () =>
-  useMutation({
-    mutationFn: ({ id, ...restPayload }: PayloadUpdatePengeringan) =>
-      http
-        .put(`${url.pengeringan.dev}/${id}`, restPayload)
-        .then((data) => data),
+export const useUpdatePengeringan = () => {
+  return useMutation({
+    mutationFn: ({ id, ...restPayload }: PayloadUpdatePengeringan) => {
+      const dryResultApiClient = new ApiClient<PayloadPengeringan>(
+        `${url.pengeringan.dev}/${id}`
+      );
+      return dryResultApiClient.update(restPayload);
+    },
     onSuccess: () => toast.success('Hasil Pengeringan berhasil diperbarui'),
   });
+};
 
 export const useDeletePengeringan = () =>
   useMutation({
-    mutationFn: (id: string) =>
-      http.delete(`${url.pengeringan.dev}/${id}`).then((data) => data),
+    mutationFn: (id: string) => {
+      const dryResultApiClient = new ApiClient(`${url.pengeringan.dev}/${id}`);
+      return dryResultApiClient.delete();
+    },
     onSuccess: () => toast.success(`Pengeringan berhasil dihapus`),
   });
 
-export const useGetPengeringan = () =>
-  useQuery({
+export const useGetPengeringan = () => {
+  const dryResultApiClient = new ApiClient<ResponseDryResult>(
+    url.pengeringan.dev
+  );
+  return useQuery({
     queryKey: keys(url.pengeringan.key),
-    queryFn: () => http.get(url.pengeringan.dev).then((data) => data),
+    queryFn: dryResultApiClient.getAll,
   });
+};
 
-export const useUpdateBahan = () =>
-  useMutation({
-    mutationFn: ({ id_bahan, id_hasil }: PayloadUpdateBahan) =>
-      http
-        .put(`${url.update_bahan.dev}/${id_bahan}/${id_hasil}`)
-        .then((data) => data),
+export const useUpdateBahan = () => {
+  return useMutation({
+    mutationFn: ({ id_bahan, id_hasil }: PayloadUpdateBahan) => {
+      const materialApiClient = new ApiClient(
+        `${url.update_bahan.dev}/${id_bahan}/${id_hasil}`
+      );
+      return materialApiClient.update({});
+    },
   });
+};
 
 export const useUpdatePembayaran = () =>
   useMutation({
-    mutationFn: ({ id, status }: TUpdateStatusPayment) =>
-      http.config({
-        method: 'put',
-        url: `${url.pembayaran_pengeringan.dev}/${id}`,
-        params: {
-          status,
-        },
-      }),
+    mutationFn: ({ id, status }: TUpdateStatusPayment) => {
+      const paymentApiClient = new ApiClient(
+        `${url.pembayaran_pengeringan.dev}/${id}?status=${status}`
+      );
+      return paymentApiClient.update({});
+    },
     onSuccess: () => toast.dismiss(),
   });

@@ -4,7 +4,7 @@ import SignUp from './pages/register';
 import Dashboard from './pages/dashboard';
 import Layout from './layout';
 import Panen from './pages/harvest';
-import Pengeringan from './pages/drying';
+import Drying from './pages/drying';
 import Transaksi from './pages/transaction';
 import Profile from './pages/profile';
 import Penawaran from './pages/offer';
@@ -24,7 +24,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/harvest" element={<Panen />} />
-        <Route path="/dry" element={<Pengeringan />} />
+        <Route path="/dry" element={<Drying />} />
         <Route path="/transaction" element={<Transaksi />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/offer" element={<Penawaran />} />

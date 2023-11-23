@@ -1,24 +1,22 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  VStack,
-  Box,
   AlertDialog,
   AlertDialogBody,
+  AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogContent,
   AlertDialogOverlay,
+  Box,
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  VStack,
 } from '@chakra-ui/react';
-import FormLahan from './form';
-import TableLahan from './table';
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { TAddLahan, TUpdateLahan, TDeleteLahan } from './schema';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   useDeleteLahan,
   useGetLahan,
@@ -26,8 +24,10 @@ import {
   useUpdateLahan,
 } from '../../../hooks/useLand.hook';
 import { url } from '../../../utils/config/url';
+import FormLahan from './form';
 import { tableAdapter } from './helper';
-import { useQueryClient } from '@tanstack/react-query';
+import { TAddLahan, TDeleteLahan, TUpdateLahan } from './schema';
+import TableLahan from './table';
 
 type TAction = {
   add?: boolean;
@@ -58,6 +58,10 @@ const Lahan = () => {
   const postLahan = usePostLahan();
   const deleteLahan = useDeleteLahan();
   const updateLahan = useUpdateLahan();
+
+  const lahan = getLahan.isSuccess
+    ? tableAdapter(getLahan?.data?.data?.lahan)
+    : [];
 
   const handleReset = useCallback(() => setAction(null), []);
 
@@ -109,11 +113,7 @@ const Lahan = () => {
         </Box>
         <TableLahan
           isLoading={getLahan.isLoading}
-          data={
-            getLahan.isSuccess
-              ? tableAdapter(getLahan?.data?.data?.data?.lahan)
-              : []
-          }
+          data={lahan}
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />

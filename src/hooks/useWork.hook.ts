@@ -1,56 +1,52 @@
-import http from '../services/ApiClient';
-import { url } from '../utils/config/url';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+import { ApiClient } from '../services/apiClient';
+import ResponseWork, { PayloadUpdateWork, PayloadWork } from '../types/Work';
+import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-type PayloadWork = {
-  jenis_pekerjaan: string;
-  upah_rp: number;
-  indikator_ukur: string;
-  catatan: string;
-};
-
-type payloadUpdateWork = PayloadWork & {
-  id: string;
-};
-
-export const usePostWork = () =>
-  useMutation({
-    mutationFn: (payload: PayloadWork) =>
-      http.post(url.pekerjaan.dev, payload).then((data) => data),
+export const usePostWork = () => {
+  const workApiClient = new ApiClient<PayloadWork>(url.pekerjaan.dev);
+  return useMutation({
+    mutationFn: workApiClient.post,
     onSuccess: () => toast.success('Pekerjaan baru berhasil disimpan'),
   });
+};
 
 export const useUpdateWork = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: payloadUpdateWork) =>
-      http.put(`${url.pekerjaan.dev}/${id}`, restPayload).then((data) => data),
+    mutationFn: ({ id, ...restPayload }: PayloadUpdateWork) => {
+      const workApiClient = new ApiClient<PayloadWork>(
+        `${url.pekerjaan.dev}/${id}`
+      );
+      return workApiClient.update(restPayload);
+    },
     onSuccess: () => toast.success('Pekerjaan berhasil diperbarui'),
   });
 
 export const useDeleteWork = () =>
   useMutation({
-    mutationFn: (id: string) =>
-      http.delete(`${url.pekerjaan.dev}/${id}`).then((data) => data),
+    mutationFn: (id: string) => {
+      const workApiClient = new ApiClient(`${url.pekerjaan.dev}/${id}`);
+      return workApiClient.delete();
+    },
     onSuccess: () => toast.success(`Pekerjaan berhasil dihapus`),
   });
 
-export const useGetWork = () =>
-  useQuery({
+export const useGetWork = () => {
+  const workApiClient = new ApiClient<ResponseWork>(url.pekerjaan.dev);
+  return useQuery({
     queryKey: keys(url.pekerjaan.key),
-    queryFn: () => http.get(url.pekerjaan.dev).then((data) => data),
+    queryFn: workApiClient.getAll,
   });
+};
 
-
-  export const useUpdateActive = () =>
+export const useUpdateActive = () =>
   useMutation({
-    mutationFn: ({ id, value }: UpdateStatus) =>
-      http.config({
-        method: 'put',
-        url: `${url.update_status_lowongan.dev}/${id}`,
-        params: {
-          status: value,
-        },
-      }),
+    mutationFn: ({ id, value }: UpdateStatus) => {
+      const workApiClient = new ApiClient(
+        `${url.update_status_lowongan.dev}/${id}?status=${value}`
+      );
+      return workApiClient.update({});
+    },
   });

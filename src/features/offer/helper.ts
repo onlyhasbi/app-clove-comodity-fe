@@ -1,5 +1,7 @@
-export const tableAdapter = (payloads: GetPenawaran[]) => {
-  return payloads?.map((payload: GetPenawaran) => {
+import { Offer } from '../../types/Offer';
+
+export const tableAdapter = (payloads: Offer[]) => {
+  return payloads?.map((payload: Offer) => {
     const {
       id,
       jenis_penawaran,

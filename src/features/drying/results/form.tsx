@@ -1,23 +1,23 @@
 import {
+  Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Input,
   Select,
-  Button,
-  VStack,
-  HStack,
   Textarea,
+  VStack,
 } from '@chakra-ui/react';
 
-import { useForm, FieldValues, Controller } from 'react-hook-form';
-import { defaultValues, schemaHasilPengeringan } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { TAddPengeringan, TUpdatePengeringan } from './schema';
-import { NumericFormat, NumberFormatValues } from 'react-number-format';
 import ReactDatePicker from 'react-datepicker';
+import { Controller, FieldValues, useForm } from 'react-hook-form';
+import { NumberFormatValues, NumericFormat } from 'react-number-format';
 import { useGetTim } from '../../../hooks/useTeam.hook';
+import { Tim } from '../../../types/Team';
+import { TAddPengeringan, TUpdatePengeringan, defaultValues, schemaHasilPengeringan } from './schema';
 
 type Props = {
   onClose: () => void;
@@ -45,7 +45,7 @@ const FormHasilPengeringan = ({
   });
 
   const getTim = useGetTim();
-  const teams = getTim.data?.data?.data?.tim;
+  const teams = getTim.data?.data?.tim;
 
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {
@@ -79,7 +79,7 @@ const FormHasilPengeringan = ({
             Tim
           </FormLabel>
           <Select id="tim" isDisabled={isLoading} placeholder="Pilih Tim" {...register('tim')}>
-            {teams?.map((team: GetTim) => (
+            {teams?.map((team: Tim) => (
               <option key={team.id} value={team.id}>
                 {team.nama_tim}
               </option>

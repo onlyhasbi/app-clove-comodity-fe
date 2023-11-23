@@ -35,6 +35,7 @@ import { tableAdapter } from './helper';
 import { toast } from 'react-hot-toast';
 import { url } from '../../../utils/config/url';
 import { useQueryClient } from '@tanstack/react-query';
+import { TUpdateStatusPayment } from '../../../types/DryResult';
 
 type TAction = {
   add?: boolean;
@@ -42,7 +43,7 @@ type TAction = {
   delete?: TDeletePengeringan;
 };
 
-const HasilPengeringan = () => {
+const DryResult = () => {
   const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
@@ -113,7 +114,7 @@ const HasilPengeringan = () => {
   const tableListener = {
     isLoading: getPengeringan.isLoading,
     data: getPengeringan.isSuccess
-      ? tableAdapter(getPengeringan?.data?.data?.data?.hasil)
+      ? tableAdapter(getPengeringan?.data?.data?.hasil)
       : [],
     onUpdateMaterial: handleUpdateBahan,
     onUpdatePayment: handleUpdatePembayaran,
@@ -234,4 +235,4 @@ const HasilPengeringan = () => {
   );
 };
 
-export default HasilPengeringan;
+export default DryResult;

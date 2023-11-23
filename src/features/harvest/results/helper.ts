@@ -1,7 +1,9 @@
+import { HarvestResult } from '../../../types/HarvestResult';
+import { GetLahan } from '../../../types/Land';
 import dayjs from 'dayjs';
 
-export const tableAdapter = (payloads: GetResult[]) => {
-  return payloads?.map((payload: GetResult) => {
+export const tableAdapter = (payloads: HarvestResult[]) => {
+  return payloads?.map((payload: HarvestResult) => {
     const {
       berat_pengukuran_kg,
       catatan,

@@ -127,7 +127,7 @@ const Penjualan = () => {
         <TabelPenjualan
           data={
             getPenjualan.isSuccess
-              ? tableAdapter(getPenjualan?.data?.data?.data?.penjualan)
+              ? tableAdapter(getPenjualan?.data?.data?.penjualan)
               : []
           }
           isLoading={getPenjualan.isLoading}

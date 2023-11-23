@@ -11,12 +11,12 @@ function SignIn() {
   const isAuthSuccess = isAuthenticated(import.meta.env.VITE_TOKEN_NAME);
 
   const onSuccess = useCallback((data: any) => {
-    const token = data?.data?.data;
+    const token = data?.data;
     setToken(import.meta.env.VITE_TOKEN_NAME, JSON.stringify(token));
   }, []);
 
   const onError = useCallback((error: any) => {
-    console.log(error)
+    // console.log(error)
     const errorMessage =
       error?.response?.data?.statusCode == 400
         ? 'Nomor telepon dan sandi salah'

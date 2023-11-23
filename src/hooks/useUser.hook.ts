@@ -1,17 +1,21 @@
-import http from '../services/ApiClient';
-import { url } from '../utils/config/url';
 import { useQuery } from '@tanstack/react-query';
-
+import { ApiClient } from '../services/apiClient';
+import { url } from '../utils/config/url';
+import { ResponseUserBuruh } from '../types/User';
 import { keys } from '../utils/keys';
 
-export const useAllUserAcc = () =>
-  useQuery({
+export const useAllUserAcc = () => {
+  const userApiClient = new ApiClient<any>(url.all_acc.dev);
+  return useQuery({
     queryKey: keys(url.all_acc.key),
-    queryFn: () => http.get(url.all_acc.dev).then((data) => data),
+    queryFn: userApiClient.getAll,
   });
+};
 
-export const useAllUserBuruh = () =>
-  useQuery({
+export const useAllUserBuruh = () => {
+  const userApiClient = new ApiClient<ResponseUserBuruh>(url.all_buruh.dev);
+  return useQuery({
     queryKey: keys(url.all_buruh.key),
-    queryFn: () => http.get(url.all_buruh.dev).then((data) => data),
+    queryFn: userApiClient.getAll,
   });
+};

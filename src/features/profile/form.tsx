@@ -15,10 +15,12 @@ import { TAddProfile, defaultValues, schemaProfile } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useProvinsi, useKabupaten } from '../../hooks/useLocation.hook';
 import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
-import { getProvince } from "../../utils/getProvince";
+import { getProvince } from '../../utils/getProvince';
+import { Profile } from '../../types/Profile';
+import { LocationProps } from '../../types/Location';
 
 type Props = {
-  initialValues: initialProfileProps;
+  initialValues: Profile | null;
   isLoading: boolean;
   onSave: (payload: TAddProfile) => void;
 };
@@ -38,19 +40,22 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
   const getProvinsi = useProvinsi();
   const getKabupaten = useKabupaten(watch('provinsi').trim());
 
-  const provinsi = getProvinsi.data?.data?.data?.lokasi?.sub_lokasi ?? [];
-  const kabupaten = getKabupaten?.data?.data?.data?.lokasi?.sub_lokasi ?? [];
+  const provinsi = getProvinsi.data?.data?.lokasi?.sub_lokasi ?? [];
+  const kabupaten = getKabupaten?.data?.data?.lokasi?.sub_lokasi ?? [];
 
   const onSubmit = (data: FieldValues) => {
     onSave(data as TAddProfile);
   };
 
   useEffect(() => {
-    const provinsi = initialValues.alamat && getProvince(initialValues.alamat);
-    setValue('jenis_pengguna', initialValues.jenis_pengguna);
-    setValue('nama', initialValues.nama);
-    provinsi && setValue('provinsi', provinsi);
-    setValue('telepon', initialValues.nomor_telpon);
+    if (initialValues) {
+      const provinsi =
+        initialValues.alamat && getProvince(initialValues.alamat);
+      setValue('jenis_pengguna', initialValues.jenis_pengguna);
+      setValue('nama', initialValues.nama);
+      provinsi && setValue('provinsi', provinsi);
+      setValue('telepon', initialValues.nomor_telpon);
+    }
   }, [initialValues, provinsi]);
 
   useEffect(() => {
@@ -58,6 +63,8 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
       getKabupaten.isSuccess && setValue('kabupaten', initialValues.alamat);
     }
   }, [getProvinsi.isSuccess, getKabupaten.isSuccess]);
+
+  if (!initialValues) return null;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

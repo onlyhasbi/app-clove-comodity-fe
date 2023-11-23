@@ -22,6 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useProvinsi, useKabupaten } from '../../../hooks/useLocation.hook';
 import { STATUS_LAHAN } from '../../../model/status-lahan.model';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
+import { LocationProps } from '../../../types/Location';
 
 type Props = {
   onClose: () => void;
@@ -52,8 +53,8 @@ const FormLahan = ({
   const getProvinsi = useProvinsi();
   const getKabupaten = useKabupaten(watch('provinsi').trim());
 
-  const provinsi = getProvinsi.data?.data?.data?.lokasi?.sub_lokasi ?? [];
-  const kabupaten = getKabupaten?.data?.data?.data?.lokasi?.sub_lokasi ?? [];
+  const provinsi = getProvinsi.data?.data?.lokasi?.sub_lokasi ?? [];
+  const kabupaten = getKabupaten?.data?.data?.lokasi?.sub_lokasi ?? [];
 
   useEffect(() => {
     if (initialValues && typeof initialValues === 'object') {

@@ -36,7 +36,7 @@ const Header = () => {
 
   const profile = useGetProfile();
   const profileName =
-    profile.isSuccess && capitalize(profile?.data?.data?.data?.user?.nama);
+    profile.isSuccess && capitalize(profile?.data?.data?.user?.nama);
 
   return (
     <Flex

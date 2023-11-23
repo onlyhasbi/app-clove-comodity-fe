@@ -36,7 +36,7 @@ type TAction = {
   delete?: TDeleteBahan;
 };
 
-const BahanPengeringan = () => {
+const DryMaterial = () => {
   const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
@@ -45,6 +45,10 @@ const BahanPengeringan = () => {
   const postMaterial = usePostMaterial();
   const deleteMaterial = useDeleteMaterial();
   const updateMaterial = useUpdateMaterial();
+
+  const materials = getMaterial.isSuccess
+    ? tableAdapter(getMaterial?.data?.data?.bahan)
+    : [];
 
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
@@ -118,11 +122,7 @@ const BahanPengeringan = () => {
         </Box>
         <TabelBahan
           isLoading={getMaterial.isLoading}
-          data={
-            getMaterial.isSuccess
-              ? tableAdapter(getMaterial?.data?.data?.data?.bahan)
-              : []
-          }
+          data={materials}
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -192,4 +192,4 @@ const BahanPengeringan = () => {
   );
 };
 
-export default BahanPengeringan;
+export default DryMaterial;

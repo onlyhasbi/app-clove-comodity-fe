@@ -61,7 +61,7 @@ const FormHasil = ({
   }, []);
 
   const getLahan = useGetLahan();
-  const lahan = selectLahanAdapter(getLahan?.data?.data?.data?.lahan || []);
+  const lahan = selectLahanAdapter(getLahan?.data?.data?.lahan || []);
 
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {

@@ -29,6 +29,7 @@ import { TDeleteSetoran, TAddSetoran, TUpdateSetoran } from './schema';
 import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
 import { toast } from 'react-hot-toast';
+import { TUpdateStatusPayment } from '../../../types/DryResult';
 
 type TAction = {
   add?: boolean;
@@ -91,7 +92,7 @@ const Setoran = () => {
   const tableListener = {
     statusSetoran: getSetoran.status,
     data: getSetoran.isSuccess
-      ? tableAdapter(getSetoran?.data?.data?.data?.setoran)
+      ? tableAdapter(getSetoran?.data?.data?.setoran)
       : [],
     onUpdatePayment: handleUpdatePembayaran,
     onUpdate: handleOpenModalUpdate,

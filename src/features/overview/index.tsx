@@ -19,33 +19,33 @@ function Overview() {
   const jumlahPengeringan = getPengeringan.isLoading ? (
     <Spinner size="sm" />
   ) : (
-    getPengeringan?.data?.data?.data?.jumlah_data
+    getPengeringan?.data?.data?.jumlah_data
   );
   const jumlahKomoditas = getKomoditas.isLoading ? (
     <Spinner size="sm" />
   ) : (
-    getKomoditas?.data?.data?.data?.jumlah_data
+    getKomoditas?.data?.data?.jumlah_data
   );
   const jumlahTransaksi = getTransaksi.isLoading ? (
     <Spinner size="sm" />
   ) : (
-    getTransaksi?.data?.data?.data?.jumlah_data
+    getTransaksi?.data?.data?.jumlah_data
   );
   const jumlahLahan = getLahan.isLoading ? (
     <Spinner size="sm" />
   ) : (
-    getLahan?.data?.data?.data?.jumlah_data
+    getLahan?.data?.data?.jumlah_data
   );
 
   const dataUpah = getKomoditas.isSuccess
-    ? getKomoditas?.data?.data?.data?.data?.map((item: any) => ({
+    ? getKomoditas?.data?.data?.data?.map((item: any) => ({
         upah: item.harga_rp,
         tanggal: dayjs(item.waktu).format('DD/MM/YYYY'),
       }))
     : [];
 
   const dataCengkeh = getKomoditas.isSuccess
-    ? getKomoditas?.data?.data?.data?.data?.map((item: any) => ({
+    ? getKomoditas?.data?.data?.data?.map((item: any) => ({
         cengkeh_basah: item.cengkeh_basah,
         cengkeh_kering: item.cengkeh_kering,
         tanggal: dayjs(item.waktu).format('DD/MM/YYYY'),

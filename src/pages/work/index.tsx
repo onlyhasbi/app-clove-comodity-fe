@@ -143,7 +143,7 @@ const Pekerjaan = () => {
           <TabelPekerjaan
             data={
               getWork.isSuccess
-                ? tableAdapter(getWork?.data?.data?.data?.lowongan)
+                ? tableAdapter(getWork?.data?.data?.lowongan)
                 : []
             }
             isLoading={getWork.isLoading}

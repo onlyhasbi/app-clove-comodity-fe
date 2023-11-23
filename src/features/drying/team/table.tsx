@@ -13,7 +13,7 @@ type Props = {
   onUpdate: (data: TUpdateTim) => void;
 };
 
-const TabelTim = ({
+const TeamTable = ({
   isLoading,
   data,
   onUpdate: handleUpdate,
@@ -68,4 +68,4 @@ const TabelTim = ({
   return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
-export default TabelTim;
+export default TeamTable;

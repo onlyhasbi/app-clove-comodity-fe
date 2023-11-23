@@ -1,33 +1,33 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  VStack,
-  Box,
   AlertDialog,
   AlertDialogBody,
+  AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogContent,
   AlertDialogOverlay,
+  Box,
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  VStack,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState, useEffect } from 'react';
-import FormHasil from './form';
-import TableHasil from './table';
-import { TAddPanen, TDeletePanen, TUpdatePanen } from './schema';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   useDeleteHasil,
   useGetHasil,
   usePostHasil,
   useUpdateHasil,
 } from '../../../hooks/useResult.hook';
-import { tableAdapter } from './helper';
-import { useQueryClient } from '@tanstack/react-query';
 import { url } from '../../../utils/config/url';
+import FormHasil from './form';
+import { tableAdapter } from './helper';
+import { TAddPanen, TDeletePanen, TUpdatePanen } from './schema';
+import TableHasil from './table';
 
 type TAction = {
   add?: boolean;
@@ -59,6 +59,10 @@ const Hasil = () => {
   const postHasil = usePostHasil();
   const deleteHasil = useDeleteHasil();
   const updateHasil = useUpdateHasil();
+
+  const hasilPanen = getHasil.isSuccess
+    ? tableAdapter(getHasil?.data?.data?.hasil_panen)
+    : [];
 
   const handleReset = useCallback(() => setAction(null), []);
 
@@ -117,11 +121,7 @@ const Hasil = () => {
         </Box>
         <TableHasil
           isLoading={getHasil.isLoading}
-          data={
-            getHasil.isSuccess
-              ? tableAdapter(getHasil?.data?.data?.data?.hasil_panen)
-              : []
-          }
+          data={hasilPanen}
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />

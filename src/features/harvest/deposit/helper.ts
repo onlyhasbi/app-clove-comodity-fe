@@ -1,3 +1,5 @@
+import { GetDeposit } from '../../../types/Deposit';
+import { HarvestResult } from '../../../types/HarvestResult';
 import dayjs from 'dayjs';
 
 export const tableAdapter = (payloads: GetDeposit[]) => {
@@ -50,8 +52,8 @@ export const tableAdapter = (payloads: GetDeposit[]) => {
   });
 };
 
-export const selectLahanAdapter = (data: GetResult[]) => {
-  return data?.map((item: GetResult) => ({
+export const selectLahanAdapter = (data: HarvestResult[]) => {
+  return data?.map((item: HarvestResult) => ({
     label: `${item.waktu} | ${item.id}`,
     value: item.id,
   }));

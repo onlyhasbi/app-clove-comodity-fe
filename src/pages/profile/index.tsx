@@ -61,7 +61,7 @@ const Profile = () => {
           onSave={handleSave}
           isLoading={updateProfile.isLoading}
           initialValues={
-            getProfile.isSuccess ? getProfile?.data?.data?.data?.user : []
+            getProfile.isSuccess ? getProfile?.data?.data?.user : null
           }
         />
       )}
@@ -70,7 +70,7 @@ const Profile = () => {
       ) : (
         <SocialMedia
           initialValues={
-            getSosmed.isSuccess ? getSosmed?.data?.data?.data?.kontak : []
+            getSosmed.isSuccess ? getSosmed?.data?.data?.kontak : []
           }
         />
       )}

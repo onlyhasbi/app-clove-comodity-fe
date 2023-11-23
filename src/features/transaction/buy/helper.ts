@@ -1,7 +1,9 @@
+import { HarvestResult } from '../../../types/HarvestResult';
+import { Buy } from '../../../types/Buy';
 import dayjs from 'dayjs';
 
-export const tableAdapter = (payloads: GetPembelian[]) => {
-  return payloads?.map((payload: GetPembelian) => {
+export const tableAdapter = (payloads: Buy[]) => {
+  return payloads?.map((payload: Buy) => {
     const {
       id,
       id_penjual,
@@ -37,8 +39,8 @@ export const tableAdapter = (payloads: GetPembelian[]) => {
   });
 };
 
-export const selectLahanAdapter = (data: GetResult[]) => {
-  return data?.map((item: GetResult) => ({
+export const selectLahanAdapter = (data: HarvestResult[]) => {
+  return data?.map((item: HarvestResult) => ({
     label: item.waktu,
     value: item.id,
   }));

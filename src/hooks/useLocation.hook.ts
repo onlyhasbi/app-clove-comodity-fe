@@ -1,43 +1,24 @@
-import http from '../services/ApiClient';
-import { url } from '../utils/config/url';
 import { useQuery } from '@tanstack/react-query';
+import { ApiClient } from '../services/apiClient';
+import Location from '../types/Location';
+import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-type ResponseLokasi = {
-  status: string;
-  message: string;
-  data: {
-    lokasi: {
-      id_lokasi: string;
-      id_kategori: string;
-      kategori_lokasi: string;
-      nama_lokasi: string;
-      jumlah_sub_lokasi: number;
-      sub_lokasi: [
-        {
-          kategori_lokasi: string;
-          nama_lokasi: string;
-          id_kategori: string;
-          id_lokasi: string;
-        }
-      ];
-    };
-  };
-};
-
+const provinsiApiClient = new ApiClient<Location>(url.provinsi.dev);
 export const useProvinsi = () =>
   useQuery({
     queryKey: keys(url.provinsi.key),
-    queryFn: () =>
-      http.get<ResponseLokasi>(url.provinsi.dev).then((data) => data),
+    queryFn: provinsiApiClient.getAll,
   });
 
-export const useKabupaten = (id_provinsi: string) =>
-  useQuery({
+export const useKabupaten = (id_provinsi: string) => {
+  const kabupatenApiClient = new ApiClient<Location>(
+    `${url.kabupaten.dev}/${id_provinsi}`
+  );
+
+  return useQuery({
     queryKey: keys(url.kabupaten.key, id_provinsi),
-    queryFn: () =>
-      http
-        .get<ResponseLokasi>(`${url.kabupaten.dev}/${id_provinsi}`)
-        .then((data) => data),
+    queryFn: kabupatenApiClient.getAll,
     enabled: Boolean(id_provinsi),
   });
+};

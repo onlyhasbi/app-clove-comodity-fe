@@ -127,7 +127,7 @@ const Pembelian = () => {
         <TabelPembelian
           data={
             getPembelian.isSuccess
-              ? tableAdapter(getPembelian?.data?.data?.data?.pembelian)
+              ? tableAdapter(getPembelian?.data?.data?.pembelian)
               : []
           }
           isLoading={getPembelian.isLoading}

@@ -1,46 +1,52 @@
-import http from '../services/ApiClient';
-import { url } from '../utils/config/url';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+import { ApiClient } from '../services/apiClient';
+import {
+  PayloadHasil,
+  PayloadUpdateLahan,
+  ResponseHarvestResult,
+} from '../types/HarvestResult';
+import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-type PayloadHasil = {
-  id_lahan: string;
-  berat_pengukuran_kg: number;
-  volume_pengukuran_liter: number;
-  waktu: Date;
-  catatan: string;
-};
-
-type payloadUpdateLahan = PayloadHasil & {
-  id: string;
-};
-
-export const usePostHasil = () =>
-  useMutation({
-    mutationFn: (payload: PayloadHasil) =>
-      http.post(url.hasil_panen.dev, payload).then((data) => data),
+export const usePostHasil = () => {
+  const harvestResultApiClient = new ApiClient<PayloadHasil>(
+    url.hasil_panen.dev
+  );
+  return useMutation({
+    mutationFn: harvestResultApiClient.post,
     onSuccess: () => toast.success('Hasil baru berhasil disimpan'),
   });
+};
 
 export const useUpdateHasil = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: payloadUpdateLahan) =>
-      http
-        .put(`${url.hasil_panen.dev}/${id}`, restPayload)
-        .then((data) => data),
+    mutationFn: ({ id, ...restPayload }: PayloadUpdateLahan) => {
+      const harvestResultApiClient = new ApiClient<PayloadHasil>(
+        `${url.hasil_panen.dev}/${id}`
+      );
+      return harvestResultApiClient.update(restPayload);
+    },
     onSuccess: () => toast.success('Hasil panen berhasil diperbarui'),
   });
 
 export const useDeleteHasil = () =>
   useMutation({
-    mutationFn: (id: string) =>
-      http.delete(`${url.hasil_panen.dev}/${id}`).then((data) => data),
+    mutationFn: (id: string) => {
+      const harvestResultApiClient = new ApiClient(
+        `${url.hasil_panen.dev}/${id}`
+      );
+      return harvestResultApiClient.delete();
+    },
     onSuccess: () => toast.success(`Hasil panen berhasil dihapus`),
   });
 
-export const useGetHasil = () =>
-  useQuery({
+export const useGetHasil = () => {
+  const harvestResultApiClient = new ApiClient<ResponseHarvestResult>(
+    url.hasil_panen.dev
+  );
+  return useQuery({
     queryKey: keys(url.hasil_panen.key),
-    queryFn: () => http.get(url.hasil_panen.dev).then((data) => data),
+    queryFn: harvestResultApiClient.getAll,
   });
+};

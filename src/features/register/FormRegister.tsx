@@ -23,6 +23,7 @@ import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostProfile } from '../../hooks/useProfile.hook';
 import { useNavigate } from 'react-router-dom';
+import { LocationProps } from '../../types/Location';
 
 function SignUpForm() {
   const {
@@ -43,8 +44,8 @@ function SignUpForm() {
   const getProvinsi = useProvinsi();
   const getKabupaten = useKabupaten(watch('provinsi').trim());
 
-  const provinsi = getProvinsi.data?.data?.data?.lokasi?.sub_lokasi ?? [];
-  const kabupaten = getKabupaten?.data?.data?.data?.lokasi?.sub_lokasi ?? [];
+  const provinsi = getProvinsi.data?.data?.lokasi?.sub_lokasi ?? [];
+  const kabupaten = getKabupaten?.data?.data?.lokasi?.sub_lokasi ?? [];
 
   useEffect(() => {
     if (isSuccess) navigate('/signin', { replace: true });

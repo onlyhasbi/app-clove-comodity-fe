@@ -141,7 +141,7 @@ const Penawaran = () => {
           <TabelPenawaran
             data={
               getOffer.isSuccess
-                ? tableAdapter(getOffer?.data?.data?.data?.lamaran)
+                ? tableAdapter(getOffer?.data?.data?.lamaran)
                 : []
             }
             isLoading={getOffer.isLoading}

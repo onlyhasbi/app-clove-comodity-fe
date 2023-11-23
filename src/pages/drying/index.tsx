@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
 import TabsPengeringan from '../../features/drying/tabs';
 
-const Pengeringan = () => {
+const Drying = () => {
   return (
     <>
       <Box paddingX={10}>
@@ -19,4 +19,4 @@ const Pengeringan = () => {
   );
 };
 
-export default Pengeringan;
+export default Drying;

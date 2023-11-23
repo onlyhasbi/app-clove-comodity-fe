@@ -1,5 +1,7 @@
-export const tableAdapter = (payloads: GetTim[]) => {
-  return payloads?.map((payload: GetTim) => {
+import { Tim } from "../../../types/Team";
+
+export const tableAdapter = (payloads: Tim[]) => {
+  return payloads?.map((payload: Tim) => {
     const { id, nama_tim, ketua_tim } = payload;
 
     return {
