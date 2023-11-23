@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const schemaHasil = z.object({
+export const harvestResultSchema = z.object({
   lahan: z.string().nonempty({ message: 'Lahan tidak boleh kosong' }),
   berat: z.number().min(1, { message: 'Berat tidak boleh kosong' }),
   volume: z.number().min(1, { message: 'Volume tidak boleh kosong' }),
@@ -8,7 +8,7 @@ export const schemaHasil = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TAddPanen = z.infer<typeof schemaHasil>;
+export type TAddPanen = z.infer<typeof harvestResultSchema>;
 export type TUpdatePanen = { id: string } & TAddPanen;
 export type TDeletePanen = { id: string; nama: string };
 

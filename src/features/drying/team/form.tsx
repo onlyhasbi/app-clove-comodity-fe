@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues } from 'react-hook-form';
-import { TAddTim, TUpdateTim, defaultValues, schemaTim } from './schema';
+import { TAddTim, TUpdateTim, defaultValues, teamSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useAllUserBuruh } from '../../../hooks/useUser.hook';
@@ -23,7 +23,7 @@ type Props = {
   initialValues: TUpdateTim | undefined | boolean;
 };
 
-const FormTim = ({
+const TeamForm = ({
   isLoading,
   onSave: handleSave,
   onClose: handleCloseModal,
@@ -37,7 +37,7 @@ const FormTim = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaTim),
+    resolver: zodResolver(teamSchema),
   });
 
   useEffect(() => {
@@ -127,4 +127,4 @@ const FormTim = ({
   );
 };
 
-export default FormTim;
+export default TeamForm;

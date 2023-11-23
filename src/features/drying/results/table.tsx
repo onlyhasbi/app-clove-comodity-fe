@@ -5,9 +5,9 @@ import { Edit, Trash2 } from 'lucide-react';
 import { TTableHasilPengeringan } from './types';
 import { TDeletePengeringan, TUpdatePengeringan } from './schema';
 import { NumericFormat } from 'react-number-format';
-import SelectBahanPengeringan from '../../../components/bahan-pengeringan';
-import Team from '../../../components/tim';
-import Status from '../../../components/pembayaran';
+import SelectDryMaterial from '../../../components/select-dry-material';
+import Team from '../../../components/team';
+import Status from '../../../components/payment-status';
 import { TUpdateStatusPayment } from '../../../types/DryResult';
 
 type Props = {
@@ -21,7 +21,7 @@ type Props = {
   };
 };
 
-const TabelHasilPengeringan = ({
+const DryingResultTable = ({
   listen: {
     isLoading,
     data,
@@ -107,7 +107,7 @@ const TabelHasilPengeringan = ({
 
         return !nama ? (
           <Center w="7rem">
-            <SelectBahanPengeringan onSetBahan={handleGetBahan} />
+            <SelectDryMaterial onSetBahan={handleGetBahan} />
           </Center>
         ) : (
           <Center>{nama}</Center>
@@ -169,4 +169,4 @@ const TabelHasilPengeringan = ({
   return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
-export default TabelHasilPengeringan;
+export default DryingResultTable;

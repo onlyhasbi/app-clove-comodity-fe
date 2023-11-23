@@ -15,7 +15,7 @@ import {
   TAddPembelian,
   TUpdatePembelian,
   defaultValues,
-  schemaPembelian,
+  buySchema,
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -32,7 +32,7 @@ type Props = {
   initialValues: TUpdatePembelian | undefined | boolean;
 };
 
-const FormPembeli = ({
+const BuyForm = ({
   onClose: handleCloseModal,
   isLoading,
   onSave: handleSave,
@@ -47,7 +47,7 @@ const FormPembeli = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaPembelian),
+    resolver: zodResolver(buySchema),
   });
 
   const allUserAcc = useAllUserAcc();
@@ -248,4 +248,4 @@ const FormPembeli = ({
   );
 };
 
-export default FormPembeli;
+export default BuyForm;

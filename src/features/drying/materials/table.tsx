@@ -13,7 +13,7 @@ type Props = {
   onUpdate: (data: TUpdateBahan) => void;
 };
 
-const TabelBahan = ({
+const MaterialTable = ({
   isLoading,
   data,
   onUpdate: handleUpdate,
@@ -97,4 +97,4 @@ const TabelBahan = ({
   return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
-export default TabelBahan;
+export default MaterialTable;

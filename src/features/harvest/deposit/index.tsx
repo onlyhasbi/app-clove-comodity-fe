@@ -16,8 +16,8 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import FormSetoran from './form';
-import TableSetoran from './table';
+import DepositForm from './form';
+import DepositTable from './table';
 import {
   useDeleteSetoran,
   useGetSetoran,
@@ -37,7 +37,7 @@ type TAction = {
   delete?: TDeleteSetoran;
 };
 
-const Setoran = () => {
+const Deposit = () => {
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
@@ -133,7 +133,7 @@ const Setoran = () => {
             Tambah
           </Button>
         </Box>
-        <TableSetoran listen={tableListener} />
+        <DepositTable listen={tableListener} />
       </VStack>
 
       <Modal
@@ -148,7 +148,7 @@ const Setoran = () => {
           } Setoran`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormSetoran
+            <DepositForm
               initialValues={action?.update}
               isLoading={Boolean(
                 postSetoran?.isLoading || updateSetoran.isLoading
@@ -205,4 +205,4 @@ const Setoran = () => {
   );
 };
 
-export default Setoran;
+export default Deposit;

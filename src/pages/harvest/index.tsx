@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
-import TabsPanen from '../../features/harvest/tabs';
+import HarvestTab from '../../features/harvest/tabs';
 
-const Panen = () => (
+const Harvest = () => (
   <>
     <Box paddingX={10}>
       <Box marginY={5} lineHeight="1.5rem">
@@ -12,9 +12,9 @@ const Panen = () => (
           Managemen hasil panen komoditas
         </Text>
       </Box>
-      <TabsPanen />
+      <HarvestTab />
     </Box>
   </>
 );
 
-export default Panen;
+export default Harvest;

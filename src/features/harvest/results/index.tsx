@@ -24,10 +24,10 @@ import {
   useUpdateHasil,
 } from '../../../hooks/useResult.hook';
 import { url } from '../../../utils/config/url';
-import FormHasil from './form';
+import HarvestResultForm from './form';
 import { tableAdapter } from './helper';
 import { TAddPanen, TDeletePanen, TUpdatePanen } from './schema';
-import TableHasil from './table';
+import HarvestResultTable from './table';
 
 type TAction = {
   add?: boolean;
@@ -35,7 +35,7 @@ type TAction = {
   delete?: TDeletePanen;
 };
 
-const Hasil = () => {
+const HarvestResult = () => {
   const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
@@ -119,7 +119,7 @@ const Hasil = () => {
             Tambah
           </Button>
         </Box>
-        <TableHasil
+        <HarvestResultTable
           isLoading={getHasil.isLoading}
           data={hasilPanen}
           onUpdate={handleOpenModalUpdate}
@@ -138,7 +138,7 @@ const Hasil = () => {
           } Hasil Panen`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormHasil
+            <HarvestResultForm
               initialValues={action?.update}
               onClose={handleReset}
               isLoading={postHasil.isLoading || updateHasil.isLoading}
@@ -191,4 +191,4 @@ const Hasil = () => {
   );
 };
 
-export default Hasil;
+export default HarvestResult;

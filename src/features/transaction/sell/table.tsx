@@ -15,7 +15,7 @@ type Props = {
   onUpdate: (data: TUpdatePenjualan) => void;
 };
 
-const TabelPenjualan = ({
+const SellTable = ({
   isLoading,
   data,
   onUpdate: handleUpdate,
@@ -110,4 +110,4 @@ const TabelPenjualan = ({
   return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
-export default TabelPenjualan;
+export default SellTable;

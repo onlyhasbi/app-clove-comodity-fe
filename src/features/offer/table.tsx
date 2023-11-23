@@ -20,7 +20,7 @@ type Props = {
   onUpdateStatus: (data: UpdateStatus) => void;
 };
 
-const TablePenawaran = ({
+const OfferTable = ({
   data,
   isLoading,
   onUpdate: handleUpdate,
@@ -150,4 +150,4 @@ const TablePenawaran = ({
   return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
-export default TablePenawaran;
+export default OfferTable;

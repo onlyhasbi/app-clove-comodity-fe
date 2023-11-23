@@ -24,10 +24,10 @@ import {
   useUpdateLahan,
 } from '../../../hooks/useLand.hook';
 import { url } from '../../../utils/config/url';
-import FormLahan from './form';
+import LandForm from './form';
 import { tableAdapter } from './helper';
 import { TAddLahan, TDeleteLahan, TUpdateLahan } from './schema';
-import TableLahan from './table';
+import LandTable from './table';
 
 type TAction = {
   add?: boolean;
@@ -35,7 +35,7 @@ type TAction = {
   delete?: TDeleteLahan;
 };
 
-const Lahan = () => {
+const Land = () => {
   const queryClient = useQueryClient();
   const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
@@ -111,7 +111,7 @@ const Lahan = () => {
             Tambah
           </Button>
         </Box>
-        <TableLahan
+        <LandTable
           isLoading={getLahan.isLoading}
           data={lahan}
           onUpdate={handleOpenModalUpdate}
@@ -130,7 +130,7 @@ const Lahan = () => {
           } Lahan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormLahan
+            <LandForm
               initialValues={action?.update}
               isLoading={Boolean(postLahan?.isLoading || updateLahan.isLoading)}
               onClose={handleReset}
@@ -183,4 +183,4 @@ const Lahan = () => {
   );
 };
 
-export default Lahan;
+export default Land;

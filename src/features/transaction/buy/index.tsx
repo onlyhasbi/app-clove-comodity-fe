@@ -16,8 +16,8 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import FormPembelian from './form';
-import TabelPembelian from './table';
+import BuyForm from './form';
+import BuyTable from './table';
 import {
   usePostPembelian,
   useGetPembelian,
@@ -124,7 +124,7 @@ const Pembelian = () => {
             Tambah
           </Button>
         </Box>
-        <TabelPembelian
+        <BuyTable
           data={
             getPembelian.isSuccess
               ? tableAdapter(getPembelian?.data?.data?.pembelian)
@@ -147,7 +147,7 @@ const Pembelian = () => {
           } Pembelian`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormPembelian
+            <BuyForm
               isLoading={postPembelian.isLoading || updatePembelian.isLoading}
               onSave={handleSave}
               initialValues={action?.update}

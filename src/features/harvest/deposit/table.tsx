@@ -5,7 +5,7 @@ import { Edit, Trash2 } from 'lucide-react';
 import { TTableSetoran } from './types';
 import { TDeleteSetoran, TUpdateSetoran } from './schema';
 import { NumericFormat } from 'react-number-format';
-import Status from '../../../components/pembayaran';
+import Status from '../../../components/payment-status';
 import { LabelBuruh } from '../../../components/user';
 import { TUpdateStatusPayment } from '../../../types/DryResult';
 
@@ -19,7 +19,7 @@ type Props = {
   };
 };
 
-const TableSetoran = ({
+const DepositTable = ({
   listen: {
     statusSetoran,
     data,
@@ -161,4 +161,4 @@ const TableSetoran = ({
   );
 };
 
-export default TableSetoran;
+export default DepositTable;

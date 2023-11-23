@@ -1,14 +1,13 @@
-import Table from '../../../components/table';
 import { Box, Center, HStack, Text } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TTableLahan } from './types';
-import StatusLahan from '../../../components/status-lahan';
-import Provinsi from '../../../components/provinsi';
-import Kabupaten from '../../../components/kabupaten';
-import { TDeleteLahan, TUpdateLahan } from './schema';
 import { NumericFormat } from 'react-number-format';
-
+import District from '../../../components/district';
+import LandStatus from '../../../components/land-status';
+import Province from '../../../components/province';
+import Table from '../../../components/table';
+import { TDeleteLahan, TUpdateLahan } from './schema';
+import { TTableLahan } from './types';
 
 type Props = {
   data: any[];
@@ -17,7 +16,7 @@ type Props = {
   onUpdate: (data: TUpdateLahan) => void;
 };
 
-const TableLahan = ({
+const LandTable = ({
   data,
   isLoading,
   onUpdate: handleUpdate,
@@ -35,7 +34,7 @@ const TableLahan = ({
       header: () => <Center>Provinsi</Center>,
       cell: ({ getValue }) => (
         <Center>
-          <Provinsi value={getValue()} />
+          <Province value={getValue()} />
         </Center>
       ),
     }),
@@ -44,7 +43,7 @@ const TableLahan = ({
       header: () => <Center>Kabupaten</Center>,
       cell: ({ getValue }) => (
         <Center>
-          <Kabupaten value={getValue()} />
+          <District value={getValue()} />
         </Center>
       ),
     }),
@@ -53,7 +52,7 @@ const TableLahan = ({
       header: () => <Center>Status</Center>,
       cell: ({ getValue }) => (
         <Center>
-          <StatusLahan value={getValue()} />
+          <LandStatus value={getValue()} />
         </Center>
       ),
     }),
@@ -135,4 +134,4 @@ const TableLahan = ({
   return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
-export default TableLahan;
+export default LandTable;

@@ -1,5 +1,5 @@
-import FormPenawaran from '../../features/offer/form';
-import TabelPenawaran from '../../features/offer/table';
+import OfferForm from '../../features/offer/form';
+import OfferTable from '../../features/offer/table';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -131,14 +131,14 @@ const Penawaran = () => {
             Tingkatkan profit dengan menawarkan komoditasmu
           </Text>
         </Box>
-        <FormPenawaran
+        <OfferForm
           isLoading={postOffer.isLoading || updateOffer.isLoading}
           onSave={handleSave}
           onReset={handleReset}
           initialValues={action?.update}
         />
         <Box marginTop={6}>
-          <TabelPenawaran
+          <OfferTable
             data={
               getOffer.isSuccess
                 ? tableAdapter(getOffer?.data?.data?.lamaran)

@@ -16,8 +16,8 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import FormBahan from './form';
-import TabelBahan from './table';
+import MaterialForm from './form';
+import MaterialTable from './table';
 import { TAddBahan, TDeleteBahan, TUpdateBahan } from './schema';
 import {
   useDeleteMaterial,
@@ -120,7 +120,7 @@ const DryMaterial = () => {
             Tambah
           </Button>
         </Box>
-        <TabelBahan
+        <MaterialTable
           isLoading={getMaterial.isLoading}
           data={materials}
           onUpdate={handleOpenModalUpdate}
@@ -139,7 +139,7 @@ const DryMaterial = () => {
           } Bahan Pengeringan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormBahan
+            <MaterialForm
               isLoading={postMaterial.isLoading || updateMaterial.isLoading}
               onSave={handleSave}
               initialValues={action?.update}

@@ -16,7 +16,7 @@ import {
   TAddPenawaran,
   TUpdatePenawaran,
   defaultValues,
-  schemaPenawaran,
+  offerSchema,
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -34,7 +34,7 @@ type Props = {
   onSave: (payload: TAddPenawaran | TUpdatePenawaran) => void;
 };
 
-const FormPenawaran = ({
+const OfferForm = ({
   isLoading,
   onReset: handleReset,
   onSave,
@@ -49,7 +49,7 @@ const FormPenawaran = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaPenawaran),
+    resolver: zodResolver(offerSchema),
   });
 
   useEffect(() => {
@@ -283,4 +283,4 @@ const FormPenawaran = ({
   );
 };
 
-export default FormPenawaran;
+export default OfferForm;

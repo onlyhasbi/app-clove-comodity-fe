@@ -22,7 +22,7 @@ export const setAuthToken = (token: string) => {
   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export class ApiClient<T> {
+class ApiClient<T> {
   endpoint = '';
   constructor(endpoint: string) {
     this.endpoint = endpoint;
@@ -44,3 +44,5 @@ export class ApiClient<T> {
 
   delete = () => axiosInstance.delete(this.endpoint).then((res) => res.data);
 }
+
+export default ApiClient;

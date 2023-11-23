@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const schemaHasilPengeringan = z.object({
+export const dryResultSchema = z.object({
   tim: z.string().nonempty({ message: 'Tim tidak boleh kosong' }),
   berat: z.number().min(1, { message: 'Berat tidak boleh kosong' }),
   volume: z.number().min(1, { message: 'Volume tidak boleh kosong' }),
@@ -9,7 +9,7 @@ export const schemaHasilPengeringan = z.object({
   upah: z.number().min(1, { message: 'Upah tidak boleh kosong' }),
 });
 
-export type TAddPengeringan = z.infer<typeof schemaHasilPengeringan>;
+export type TAddPengeringan = z.infer<typeof dryResultSchema>;
 export type TUpdatePengeringan = TAddPengeringan & { id: string };
 export type TDeletePengeringan = { id: string };
 

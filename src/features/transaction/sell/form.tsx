@@ -15,7 +15,7 @@ import {
   TAddPenjualan,
   TUpdatePenjualan,
   defaultValues,
-  schemaPenjualan,
+  sellSchema,
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -32,7 +32,7 @@ type Props = {
   initialValues: TUpdatePenjualan | undefined | boolean;
 };
 
-const FormPenjualan = ({
+const SellForm = ({
   isLoading,
   onClose: handleCloseModal,
   onSave: handleSave,
@@ -47,7 +47,7 @@ const FormPenjualan = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaPenjualan),
+    resolver: zodResolver(sellSchema),
   });
 
   useEffect(() => {
@@ -248,4 +248,4 @@ const FormPenjualan = ({
   );
 };
 
-export default FormPenjualan;
+export default SellForm;

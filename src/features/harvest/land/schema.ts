@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const schemaLahan = z.object({
+export const landSchema = z.object({
   nama: z.string().nonempty({ message: 'Nama tidak boleh kosong' }),
   provinsi: z.string().nonempty({ message: 'Provinsi tidak boleh kosong' }),
   kabupaten: z.string().nonempty({ message: 'Kabupaten tidak boleh kosong' }),
@@ -10,7 +10,7 @@ export const schemaLahan = z.object({
   luas_lahan: z.number().min(1,{ message: 'Luas lahan tidak boleh kosong' }),
 });
 
-export type TAddLahan = z.infer<typeof schemaLahan>;
+export type TAddLahan = z.infer<typeof landSchema>;
 export type TUpdateLahan = TAddLahan & {
   id: string;
   hasil_panen: string;

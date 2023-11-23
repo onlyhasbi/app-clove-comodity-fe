@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
-import { defaultValues, schemaBahan } from './schema';
+import { defaultValues, materialSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { TAddBahan, TUpdateBahan } from './schema';
@@ -24,7 +24,7 @@ type Props = {
   initialValues: TUpdateBahan | undefined | boolean;
 };
 
-const FormBahan = ({
+const MaterialForm = ({
   isLoading,
   onSave: handleSave,
   onClose: handleCloseModal,
@@ -39,7 +39,7 @@ const FormBahan = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaBahan),
+    resolver: zodResolver(materialSchema),
   });
 
   useEffect(() => {
@@ -186,4 +186,4 @@ const FormBahan = ({
   );
 };
 
-export default FormBahan;
+export default MaterialForm;

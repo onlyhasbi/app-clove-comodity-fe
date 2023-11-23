@@ -1,5 +1,5 @@
-import FormPekerjaan from '../../features/work/form';
-import TabelPekerjaan from '../../features/work/table';
+import WorkForm from '../../features/work/form';
+import WorkTable from '../../features/work/table';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -133,14 +133,14 @@ const Pekerjaan = () => {
             Dapatkan buruh dengan menambah pekerjaan baru
           </Text>
         </Box>
-        <FormPekerjaan
+        <WorkForm
           isLoading={postWork.isLoading || updateWork.isLoading}
           onSave={handleSave}
           onReset={handleReset}
           initialValues={action?.update}
         />
         <Box marginTop={6}>
-          <TabelPekerjaan
+          <WorkTable
             data={
               getWork.isSuccess
                 ? tableAdapter(getWork?.data?.data?.lowongan)

@@ -15,7 +15,7 @@ type Props = {
   onUpdate: (data: TUpdatePembelian) => void;
 };
 
-const TabelPembelian = ({
+const BuyTable = ({
   isLoading,
   data,
   onUpdate: handleUpdate,
@@ -110,4 +110,4 @@ const TabelPembelian = ({
   return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
-export default TabelPembelian;
+export default BuyTable;

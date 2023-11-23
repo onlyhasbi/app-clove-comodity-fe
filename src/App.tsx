@@ -3,7 +3,7 @@ import SignIn from './pages/auth';
 import SignUp from './pages/register';
 import Dashboard from './pages/dashboard';
 import Layout from './layout';
-import Panen from './pages/harvest';
+import Harvest from './pages/harvest';
 import Drying from './pages/drying';
 import Transaksi from './pages/transaction';
 import Profile from './pages/profile';
@@ -23,7 +23,7 @@ function App() {
       <Route path="*" element={<NotFound />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/harvest" element={<Panen />} />
+        <Route path="/harvest" element={<Harvest />} />
         <Route path="/dry" element={<Drying />} />
         <Route path="/transaction" element={<Transaksi />} />
         <Route path="/profile" element={<Profile />} />

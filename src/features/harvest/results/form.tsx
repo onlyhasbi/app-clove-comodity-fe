@@ -16,7 +16,7 @@ import {
   TAddPanen,
   TUpdatePanen,
   defaultValues,
-  schemaHasil,
+  harvestResultSchema,
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -31,7 +31,7 @@ type Props = {
   initialValues: TUpdatePanen | undefined | boolean;
 };
 
-const FormHasil = ({
+const HarvestResultForm = ({
   onClose: handleCloseModal,
   isLoading,
   onSave: handleSave,
@@ -46,7 +46,7 @@ const FormHasil = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaHasil),
+    resolver: zodResolver(harvestResultSchema),
   });
 
   useEffect(() => {
@@ -220,4 +220,4 @@ const FormHasil = ({
   );
 };
 
-export default FormHasil;
+export default HarvestResultForm;

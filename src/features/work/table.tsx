@@ -16,7 +16,7 @@ type Props = {
   onUpdateStatus: (data: UpdateStatus) => void;
 };
 
-const TablePenawaran = ({
+const WorkTable = ({
   isLoading,
   data,
   onUpdate: handleUpdate,
@@ -105,4 +105,4 @@ const TablePenawaran = ({
   return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
-export default TablePenawaran;
+export default WorkTable;

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const schemaRegister = z.object({
+export const registerSchema = z.object({
   nama: z.string().nonempty({ message: 'Nama tidak boleh kosong' }),
   jenis_pengguna: z
     .string()
@@ -11,7 +11,7 @@ export const schemaRegister = z.object({
   sandi: z.string().nonempty({ message: 'Sandi tidak boleh kosong' }),
 });
 
-export type TSchemaRegister = z.infer<typeof schemaRegister>;
+export type TSchemaRegister = z.infer<typeof registerSchema>;
 
 export const defaultValues = {
   nama: '',

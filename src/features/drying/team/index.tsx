@@ -21,7 +21,7 @@ import {
   usePostTim,
   useUpdateTim,
 } from '../../../hooks/useTeam.hook';
-import FormTim from './form';
+import TeamForm from './form';
 import TeamTable from './table';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import { TAddTim, TDeleteTim, TUpdateTim } from './schema';
@@ -120,7 +120,7 @@ const Team = () => {
           } Tim Pengeringan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormTim
+            <TeamForm
               onSave={handleSave}
               isLoading={postTim.isLoading || updateTim.isLoading}
               initialValues={action?.update}

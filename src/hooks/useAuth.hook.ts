@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { SignInPayload } from '../features/auth/FormLogin';
-import { ApiClient, setAuthToken } from '../services/apiClient';
+import ApiClient, { setAuthToken } from '../services/apiClient';
 import { url } from '../utils/config/url';
 
 type Props = {

@@ -4,7 +4,7 @@ import { getProvince } from "../../utils/getProvince";
 
 type Props = { value: string };
 
-const Provinsi = ({ value }: Props) => {
+const Province = ({ value }: Props) => {
   const provinsiValue = getProvince(value);
   const getProvinsi = useProvinsi();
 
@@ -19,4 +19,4 @@ const Provinsi = ({ value }: Props) => {
   return undefined;
 };
 
-export default Provinsi;
+export default Province;

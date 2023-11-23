@@ -16,8 +16,8 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import FormHasilPengeringan from './form';
-import TabelHasilPengeringan from './table';
+import DryingResultForm from './form';
+import DryingResultTable from './table';
 import {
   TAddPengeringan,
   TDeletePengeringan,
@@ -166,7 +166,7 @@ const DryResult = () => {
             Tambah
           </Button>
         </Box>
-        <TabelHasilPengeringan listen={tableListener} />
+        <DryingResultTable listen={tableListener} />
       </VStack>
 
       <Modal
@@ -180,7 +180,7 @@ const DryResult = () => {
           } Hasil Pengeringan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormHasilPengeringan
+            <DryingResultForm
               isLoading={
                 postPengeringan.isLoading || updatePengeringan.isLoading
               }

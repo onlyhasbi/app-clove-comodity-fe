@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-export const schemaBahan = z.object({
+export const materialSchema = z.object({
   berat_kg: z.number().min(1, { message: 'Berat tidak boleh kosong' }),
   volume_liter: z.number().min(1, { message: 'Volume tidak boleh kosong' }),
   waktu_mulai: z.coerce.date(),
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TAddBahan = z.infer<typeof schemaBahan>;
+export type TAddBahan = z.infer<typeof materialSchema>;
 export type TUpdateBahan = TAddBahan & { id: string };
 export type TDeleteBahan = { id: string };
 

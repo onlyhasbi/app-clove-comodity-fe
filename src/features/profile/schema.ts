@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const schemaProfile = z.object({
+export const profileSchema = z.object({
   jenis_pengguna: z
     .string()
     .nonempty({ message: 'Jenis pengguna tidak boleh kosong' }),
@@ -10,7 +10,7 @@ export const schemaProfile = z.object({
   telepon: z.string().nonempty({ message: 'No telepon tidak boleh kosong' }),
 });
 
-export type TAddProfile = z.infer<typeof schemaProfile>;
+export type TAddProfile = z.infer<typeof profileSchema>;
 export type TUpdateProfile = TAddProfile & { id: string };
 
 export const defaultValues = {

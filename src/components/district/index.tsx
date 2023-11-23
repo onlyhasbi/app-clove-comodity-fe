@@ -4,7 +4,7 @@ import { getProvince } from '../../utils/getProvince';
 
 type Props = { value: string };
 
-const Kabupaten = ({ value }: Props) => {
+const District = ({ value }: Props) => {
   const provinsiValue = getProvince(value);
   const getKabupaten = useKabupaten(provinsiValue);
 
@@ -19,4 +19,4 @@ const Kabupaten = ({ value }: Props) => {
   return undefined;
 };
 
-export default Kabupaten;
+export default District;

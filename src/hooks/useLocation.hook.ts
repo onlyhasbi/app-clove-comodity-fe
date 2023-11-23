@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ApiClient } from '../services/apiClient';
+import ApiClient from '../services/apiClient';
 import Location from '../types/Location';
 import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';

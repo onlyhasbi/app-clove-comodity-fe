@@ -4,7 +4,7 @@ import { Select } from '@chakra-ui/react';
 
 type Props = { onSetBahan: (value: string) => void };
 
-const SelectBahanPengeringan = ({ onSetBahan }: Props) => {
+const SelectDryMaterial = ({ onSetBahan }: Props) => {
   const getBahanPengeringan = useGetMaterial();
   const bahanPengeringan = getBahanPengeringan?.data?.data?.bahan;
 
@@ -23,4 +23,4 @@ const SelectBahanPengeringan = ({ onSetBahan }: Props) => {
   );
 };
 
-export default SelectBahanPengeringan;
+export default SelectDryMaterial;

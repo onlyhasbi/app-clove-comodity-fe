@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
-import { ApiClient } from '../services/apiClient';
+import ApiClient from '../services/apiClient';
 import { PayloadLahan, PayloadUpdateLahan, ResponseLahan } from '../types/Land';
 import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';

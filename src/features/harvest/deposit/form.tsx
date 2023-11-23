@@ -16,7 +16,7 @@ import {
   TAddSetoran,
   TUpdateSetoran,
   defaultValues,
-  schemaSetoran,
+  depositSchema,
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -34,7 +34,7 @@ type Props = {
   initialValues: TUpdateSetoran | undefined | boolean;
 };
 
-const FormSetoran = ({
+const DepositForm = ({
   onClose: handleCloseModal,
   isLoading,
   onSave: handleSave,
@@ -49,7 +49,7 @@ const FormSetoran = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaSetoran),
+    resolver: zodResolver(depositSchema),
   });
 
   useEffect(() => {
@@ -283,4 +283,4 @@ const FormSetoran = ({
   );
 };
 
-export default FormSetoran;
+export default DepositForm;

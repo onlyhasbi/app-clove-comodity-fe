@@ -16,7 +16,7 @@ import {
   TAddPekerjaan,
   TUpdatePekerjaan,
   defaultValues,
-  schemaPekerjaan,
+  workSchema,
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
@@ -30,7 +30,7 @@ type Props = {
   onSave: (payload: TAddPekerjaan | TUpdatePekerjaan) => void;
 };
 
-const FormPenawaran = ({
+const FormTable = ({
   isLoading,
   onSave,
   onReset: handleReset,
@@ -45,7 +45,7 @@ const FormPenawaran = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaPekerjaan),
+    resolver: zodResolver(workSchema),
   });
 
   useEffect(() => {
@@ -185,4 +185,4 @@ const FormPenawaran = ({
   );
 };
 
-export default FormPenawaran;
+export default FormTable;

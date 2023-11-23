@@ -11,7 +11,7 @@ import {
 
 import { useEffect } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
-import { TAddProfile, defaultValues, schemaProfile } from './schema';
+import { TAddProfile, defaultValues, profileSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useProvinsi, useKabupaten } from '../../hooks/useLocation.hook';
 import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
@@ -34,7 +34,7 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
     watch,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaProfile),
+    resolver: zodResolver(profileSchema),
   });
 
   const getProvinsi = useProvinsi();

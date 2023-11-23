@@ -16,8 +16,8 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import FormPenjualan from './form';
-import TabelPenjualan from './table';
+import SellForm from './form';
+import SellTable from './table';
 import {
   usePostPenjualan,
   useGetPenjualan,
@@ -124,7 +124,7 @@ const Penjualan = () => {
             Tambah
           </Button>
         </Box>
-        <TabelPenjualan
+        <SellTable
           data={
             getPenjualan.isSuccess
               ? tableAdapter(getPenjualan?.data?.data?.penjualan)
@@ -147,7 +147,7 @@ const Penjualan = () => {
           } Penjualan`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
-            <FormPenjualan
+            <SellForm
               isLoading={postPenjualan.isLoading || updatePenjualan.isLoading}
               onSave={handleSave}
               initialValues={action?.update}

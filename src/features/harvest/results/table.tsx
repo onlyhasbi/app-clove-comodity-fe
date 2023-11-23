@@ -13,7 +13,7 @@ type Props = {
   onUpdate: (data: TUpdatePanen) => void;
 };
 
-const TableHasil = ({
+const HarvestResultTable = ({
   data,
   isLoading,
   onUpdate: handleUpdate,
@@ -102,4 +102,4 @@ const TableHasil = ({
   return <Table data={data} isLoading={isLoading} columns={columns} />;
 };
 
-export default TableHasil;
+export default HarvestResultTable;

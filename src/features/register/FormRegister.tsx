@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useReducer } from 'react';
 import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
-import { TSchemaRegister, defaultValues, schemaRegister } from './schema';
+import { TSchemaRegister, defaultValues, registerSchema } from './schema';
 import { useForm, FieldValues } from 'react-hook-form';
 import { useProvinsi, useKabupaten } from '../../hooks/useLocation.hook';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
@@ -33,7 +33,7 @@ function SignUpForm() {
     formState: { errors },
   } = useForm<TSchemaRegister>({
     defaultValues,
-    resolver: zodResolver(schemaRegister),
+    resolver: zodResolver(registerSchema),
   });
   const [show, toggle] = useReducer((prev) => !prev, false);
   const navigate = useNavigate();

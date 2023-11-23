@@ -4,8 +4,8 @@ type Props = {
   value: string;
 };
 
-const StatusLahan = ({ value }: Props) => {
+const LandStatus = ({ value }: Props) => {
   return STATUS_LAHAN.find((item) => item.value === value)?.label;
 };
 
-export default StatusLahan;
+export default LandStatus;

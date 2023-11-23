@@ -16,7 +16,7 @@ import {
   TAddLahan,
   TUpdateLahan,
   defaultValues,
-  schemaLahan,
+  landSchema,
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useProvinsi, useKabupaten } from '../../../hooks/useLocation.hook';
@@ -31,7 +31,7 @@ type Props = {
   initialValues: TUpdateLahan | undefined | boolean;
 };
 
-const FormLahan = ({
+const LandForm = ({
   onClose: handleCloseModal,
   isLoading,
   onSave: handleSave,
@@ -47,7 +47,7 @@ const FormLahan = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaLahan),
+    resolver: zodResolver(landSchema),
   });
 
   const getProvinsi = useProvinsi();
@@ -221,4 +221,4 @@ const FormLahan = ({
   );
 };
 
-export default FormLahan;
+export default LandForm;

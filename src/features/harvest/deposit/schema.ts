@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const schemaSetoran = z.object({
+export const depositSchema = z.object({
   tanggal_panen: z
     .string()
     .nonempty({ message: 'Tanggal Panen tidak boleh kosong' }),
@@ -14,7 +14,7 @@ export const schemaSetoran = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TAddSetoran = z.infer<typeof schemaSetoran>;
+export type TAddSetoran = z.infer<typeof depositSchema>;
 export type TUpdateSetoran = TAddSetoran & {
   id: string;
   komplaint: string;

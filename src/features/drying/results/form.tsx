@@ -17,7 +17,7 @@ import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
 import { useGetTim } from '../../../hooks/useTeam.hook';
 import { Tim } from '../../../types/Team';
-import { TAddPengeringan, TUpdatePengeringan, defaultValues, schemaHasilPengeringan } from './schema';
+import { TAddPengeringan, TUpdatePengeringan, defaultValues, dryResultSchema } from './schema';
 
 type Props = {
   onClose: () => void;
@@ -26,7 +26,7 @@ type Props = {
   initialValues: TUpdatePengeringan | undefined | boolean;
 };
 
-const FormHasilPengeringan = ({
+const DryingResultForm = ({
   isLoading,
   onSave: handleSave,
   onClose: handleCloseModal,
@@ -41,7 +41,7 @@ const FormHasilPengeringan = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(schemaHasilPengeringan),
+    resolver: zodResolver(dryResultSchema),
   });
 
   const getTim = useGetTim();
@@ -238,4 +238,4 @@ const FormHasilPengeringan = ({
   );
 };
 
-export default FormHasilPengeringan;
+export default DryingResultForm;

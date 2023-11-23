@@ -1,9 +1,9 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import Lahan from './land';
-import Setoran from './deposit';
-import Hasil from './results';
+import Land from './land';
+import Deposit from './deposit';
+import HarvestResult from './results';
 
-const TabsPanen = () => {
+const HarvestTab = () => {
   return (
     <Tabs colorScheme="green">
       <TabList>
@@ -14,17 +14,17 @@ const TabsPanen = () => {
 
       <TabPanels>
         <TabPanel>
-          <Lahan />
+          <Land />
         </TabPanel>
         <TabPanel>
-          <Hasil />
+          <HarvestResult />
         </TabPanel>
         <TabPanel>
-          <Setoran />
+          <Deposit />
         </TabPanel>
       </TabPanels>
     </Tabs>
   );
 };
 
-export default TabsPanen;
+export default HarvestTab;
