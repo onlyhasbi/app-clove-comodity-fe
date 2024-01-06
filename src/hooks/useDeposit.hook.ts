@@ -2,16 +2,16 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import ApiClient from '../services/apiClient';
 import {
-  PayloadSetoran,
-  PayloadUpdateSetoran,
+  PayloadDeposit,
+  PayloadUpdateDeposit,
   ResponseDeposit,
 } from '../types/Deposit';
-import { TUpdateStatusPayment } from '../types/DryResult';
+import { UpdateStatusPayment } from '../types/DryResult';
 import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
 export const usePostSetoran = () => {
-  const depositApiClient = new ApiClient<PayloadSetoran>(url.setoran.dev);
+  const depositApiClient = new ApiClient<PayloadDeposit>(url.setoran.dev);
   return useMutation({
     mutationFn: depositApiClient.post,
     onSuccess: () => toast.success('Setoran baru berhasil disimpan'),
@@ -20,8 +20,8 @@ export const usePostSetoran = () => {
 
 export const useUpdateSetoran = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: PayloadUpdateSetoran) => {
-      const depositApiClient = new ApiClient<PayloadSetoran>(
+    mutationFn: ({ id, ...restPayload }: PayloadUpdateDeposit) => {
+      const depositApiClient = new ApiClient<PayloadDeposit>(
         `${url.setoran.dev}/${id}`
       );
       return depositApiClient.update(restPayload);
@@ -48,7 +48,7 @@ export const useGetSetoran = () => {
 
 export const useUpdateStatusSetoran = () =>
   useMutation({
-    mutationFn: ({ id, status }: TUpdateStatusPayment) => {
+    mutationFn: ({ id, status }: UpdateStatusPayment) => {
       const paymentApiClient = new ApiClient(
         `${url.pembayaran_setoran.dev}/${id}?status=${status}`
       );

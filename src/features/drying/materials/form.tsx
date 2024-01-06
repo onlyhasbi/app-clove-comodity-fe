@@ -13,15 +13,15 @@ import { useForm, FieldValues, Controller } from 'react-hook-form';
 import { defaultValues, materialSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { TAddBahan, TUpdateBahan } from './schema';
+import { AddMaterial, UpdateMaterial } from '../../../types/Material';
 import { NumericFormat, NumberFormatValues } from 'react-number-format';
 import ReactDatePicker from 'react-datepicker';
 
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TAddBahan | TUpdateBahan) => void;
-  initialValues: TUpdateBahan | undefined | boolean;
+  onSave: (payload: AddMaterial | UpdateMaterial) => void;
+  initialValues: UpdateMaterial | undefined | boolean;
 };
 
 const MaterialForm = ({
@@ -55,11 +55,11 @@ const MaterialForm = ({
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TUpdateBahan).id,
+        id: (initialValues as UpdateMaterial).id,
         ...data,
-      } as TUpdateBahan);
+      } as UpdateMaterial);
     } else {
-      handleSave(data as TAddBahan);
+      handleSave(data as AddMaterial);
       reset();
     }
   };

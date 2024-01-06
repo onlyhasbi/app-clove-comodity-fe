@@ -10,17 +10,18 @@ import {
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues } from 'react-hook-form';
-import { TAddTim, TUpdateTim, defaultValues, teamSchema } from './schema';
+import { defaultValues, teamSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useAllUserBuruh } from '../../../hooks/useUser.hook';
 import { UserBuruh } from '../../../types/User';
+import { AddTeam, UpdateTeam } from '../../../types/Team';
 
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TAddTim | TUpdateTim) => void;
-  initialValues: TUpdateTim | undefined | boolean;
+  onSave: (payload: AddTeam | UpdateTeam) => void;
+  initialValues: UpdateTeam | undefined | boolean;
 };
 
 const TeamForm = ({
@@ -54,11 +55,11 @@ const TeamForm = ({
   const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TUpdateTim).id,
+        id: (initialValues as UpdateTeam).id,
         ...payload,
-      } as TUpdateTim);
+      } as UpdateTeam);
     } else {
-      handleSave(payload as TAddTim);
+      handleSave(payload as AddTeam);
       reset();
     }
   };

@@ -19,7 +19,7 @@ import {
 } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
+import { COMODITY_TYPE } from '../../../model/offer.model';
 import { NumericFormat, NumberFormatValues } from 'react-number-format';
 import ReactDatePicker from 'react-datepicker';
 import { useAllUserAcc } from '../../../hooks/useUser.hook';
@@ -119,7 +119,7 @@ const BuyForm = ({
             isDisabled={isLoading}
             {...register('jenis_komoditas')}
           >
-            {JENIS_KOMODITAS.map((item) => (
+            {COMODITY_TYPE.map((item) => (
               <option key={item.value} value={item.value}>
                 {item.label}
               </option>

@@ -7,7 +7,7 @@ import {
   useGetSosmed,
 } from '../../hooks/useProfile.hook';
 
-const Profile = () => {
+const ProfilePage = () => {
   const getProfile = useGetProfile();
   const getSosmed = useGetSosmed();
   const updateProfile = useUpdateProfile();
@@ -78,4 +78,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfilePage;

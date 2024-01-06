@@ -1,8 +1,8 @@
-import Table from '../../../../components/table';
-import { Box, VStack, Text, Center } from '@chakra-ui/react';
+import { Box, Center, Text, VStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
+import Table from '../../../../components/table';
+import { JOBS, UNITS } from '../../../../model/offer.model';
 import { tableAdapter } from './helper';
-import { PEKERJAAN, SATUAN } from '../../../../model/penawaran.model';
 
 type TLabor = {
   nama: string;
@@ -30,7 +30,7 @@ const TabelBuruh = ({ isLoading, data }: Props) => {
       header: () => <Center>Jenis</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {PEKERJAAN?.find((item) => item.value === getValue())?.label}
+          {JOBS?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),
@@ -44,7 +44,7 @@ const TabelBuruh = ({ isLoading, data }: Props) => {
       header: () => <Center>Satuan</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {SATUAN?.find((item) => item.value === getValue())?.label}
+          {UNITS?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),

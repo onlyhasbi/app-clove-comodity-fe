@@ -15,15 +15,16 @@ import { useEffect } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
-import { useGetTim } from '../../../hooks/useTeam.hook';
-import { Tim } from '../../../types/Team';
-import { TAddPengeringan, TUpdatePengeringan, defaultValues, dryResultSchema } from './schema';
+import { useGetTeam } from '../../../hooks/useTeam.hook';
+import { AddDryResult, UpdateDryResult } from '../../../types/DryResult';
+import { Team } from '../../../types/Team';
+import { defaultValues, dryResultSchema } from './schema';
 
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TAddPengeringan | TUpdatePengeringan) => void;
-  initialValues: TUpdatePengeringan | undefined | boolean;
+  onSave: (payload: AddDryResult | UpdateDryResult) => void;
+  initialValues: UpdateDryResult | undefined | boolean;
 };
 
 const DryingResultForm = ({
@@ -44,7 +45,7 @@ const DryingResultForm = ({
     resolver: zodResolver(dryResultSchema),
   });
 
-  const getTim = useGetTim();
+  const getTim = useGetTeam();
   const teams = getTim.data?.data?.tim;
 
   useEffect(() => {
@@ -62,11 +63,11 @@ const DryingResultForm = ({
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TUpdatePengeringan).id,
+        id: (initialValues as UpdateDryResult).id,
         ...data,
-      } as TUpdatePengeringan);
+      } as UpdateDryResult);
     } else {
-      handleSave(data as TAddPengeringan);
+      handleSave(data as AddDryResult);
       reset();
     }
   };
@@ -78,8 +79,13 @@ const DryingResultForm = ({
           <FormLabel fontSize="sm" htmlFor="tim">
             Tim
           </FormLabel>
-          <Select id="tim" isDisabled={isLoading} placeholder="Pilih Tim" {...register('tim')}>
-            {teams?.map((team: Tim) => (
+          <Select
+            id="tim"
+            isDisabled={isLoading}
+            placeholder="Pilih Tim"
+            {...register('tim')}
+          >
+            {teams?.map((team: Team) => (
               <option key={team.id} value={team.id}>
                 {team.nama_tim}
               </option>
@@ -207,7 +213,7 @@ const DryingResultForm = ({
             id="catatan"
             rows={3}
             placeholder="Catatan"
-            isDisabled={isLoading} 
+            isDisabled={isLoading}
             {...register('catatan')}
           />
           <FormErrorMessage>

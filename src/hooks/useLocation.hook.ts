@@ -5,7 +5,7 @@ import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
 const provinsiApiClient = new ApiClient<Location>(url.provinsi.dev);
-export const useProvinsi = () =>
+export const useProvince = () =>
   useQuery({
     queryKey: keys(url.provinsi.key),
     queryFn: provinsiApiClient.getAll,

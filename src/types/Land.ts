@@ -1,15 +1,18 @@
-export type PayloadLahan = {
+import { landSchema } from '../features/harvest/land/schema';
+import { z } from 'zod';
+
+export type PayloadLand = {
   nama: string;
   lokasi: string;
   luas_m2: number;
   status_hak_panen: string;
 };
 
-export type PayloadUpdateLahan = PayloadLahan & {
+export type PayloadUpdateLand = PayloadLand & {
   id: string;
 };
 
-export type GetLahan = {
+export type GetLand = {
   id: string;
   nama: string;
   lokasi: string;
@@ -21,6 +24,29 @@ export type GetLahan = {
   total_volume_liter_hasil_panen_lahan: number;
 };
 
-export type ResponseLahan = {
-  lahan: GetLahan[];
+export type ResponseLand = {
+  lahan: GetLand[];
+};
+
+export type AddLand = z.infer<typeof landSchema>;
+
+export type UpdateLand = AddLand & {
+  id: string;
+  hasil_panen: string;
+};
+
+export type DeleteLand = {
+  id: string;
+  nama: string;
+  hasil_panen: string;
+};
+
+type LandActionTable = {
+  update: UpdateLand;
+  delete: DeleteLand;
+};
+
+export type LandTable = AddLand & {
+  hasil_panen: string;
+  action: LandActionTable;
 };

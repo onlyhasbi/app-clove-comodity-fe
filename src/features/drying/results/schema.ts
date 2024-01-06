@@ -9,10 +9,6 @@ export const dryResultSchema = z.object({
   upah: z.number().min(1, { message: 'Upah tidak boleh kosong' }),
 });
 
-export type TAddPengeringan = z.infer<typeof dryResultSchema>;
-export type TUpdatePengeringan = TAddPengeringan & { id: string };
-export type TDeletePengeringan = { id: string };
-
 export const defaultValues = {
   tim: '',
   berat: 0,

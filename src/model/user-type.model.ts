@@ -1,4 +1,4 @@
-export const JENIS_PENGGUNA = [
+export const USER_TYPE = [
   {
     label: 'Perorangan',
     value: 'perorangan',

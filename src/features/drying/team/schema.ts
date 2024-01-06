@@ -5,10 +5,6 @@ export const teamSchema = z.object({
   ketua_tim: z.string().nonempty({ message: 'Ketua tidak boleh kosong' }),
 });
 
-export type TAddTim = z.infer<typeof teamSchema>;
-export type TUpdateTim = TAddTim & { id: string };
-export type TDeleteTim = { id: string };
-
 export const defaultValues = {
   nama_tim: '',
   ketua_tim: '',

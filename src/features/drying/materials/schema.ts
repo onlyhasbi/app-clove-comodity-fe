@@ -7,10 +7,6 @@ export const materialSchema = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TAddBahan = z.infer<typeof materialSchema>;
-export type TUpdateBahan = TAddBahan & { id: string };
-export type TDeleteBahan = { id: string };
-
 export const defaultValues = {
   berat_kg: 0,
   volume_liter: 0,

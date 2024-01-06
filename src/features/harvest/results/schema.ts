@@ -8,10 +8,6 @@ export const harvestResultSchema = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TAddPanen = z.infer<typeof harvestResultSchema>;
-export type TUpdatePanen = { id: string } & TAddPanen;
-export type TDeletePanen = { id: string; nama: string };
-
 export const defaultValues = {
   lahan: '',
   berat: 0,

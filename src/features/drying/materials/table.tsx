@@ -1,16 +1,19 @@
+import {
+  DeleteMaterial,
+  MaterialTable as MaterialTableType,
+  UpdateMaterial,
+} from '../../../types/Material';
 import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TTableBahan } from './types';
 import { NumericFormat } from 'react-number-format';
-import { TUpdateBahan, TDeleteBahan } from './schema';
 
 type Props = {
   data: any[];
   isLoading: boolean;
-  onDelete: (data: TDeleteBahan) => void;
-  onUpdate: (data: TUpdateBahan) => void;
+  onDelete: (data: DeleteMaterial) => void;
+  onUpdate: (data: UpdateMaterial) => void;
 };
 
 const MaterialTable = ({
@@ -19,7 +22,7 @@ const MaterialTable = ({
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
-  const columnHelper = createColumnHelper<TTableBahan>();
+  const columnHelper = createColumnHelper<MaterialTableType>();
   const columns = [
     columnHelper.accessor('id', {
       id: 'id',

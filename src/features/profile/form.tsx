@@ -11,18 +11,18 @@ import {
 
 import { useEffect } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
-import { TAddProfile, defaultValues, profileSchema } from './schema';
+import { defaultValues, profileSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useProvinsi, useKabupaten } from '../../hooks/useLocation.hook';
-import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
+import { useProvince, useKabupaten } from '../../hooks/useLocation.hook';
+import { USER_TYPE } from '../../model/user-type.model';
 import { getProvince } from '../../utils/getProvince';
-import { Profile } from '../../types/Profile';
+import { AddProfile, Profile } from '../../types/Profile';
 import { LocationProps } from '../../types/Location';
 
 type Props = {
   initialValues: Profile | null;
   isLoading: boolean;
-  onSave: (payload: TAddProfile) => void;
+  onSave: (payload: AddProfile) => void;
 };
 
 const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
@@ -37,14 +37,14 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
     resolver: zodResolver(profileSchema),
   });
 
-  const getProvinsi = useProvinsi();
+  const getProvinsi = useProvince();
   const getKabupaten = useKabupaten(watch('provinsi').trim());
 
   const provinsi = getProvinsi.data?.data?.lokasi?.sub_lokasi ?? [];
   const kabupaten = getKabupaten?.data?.data?.lokasi?.sub_lokasi ?? [];
 
   const onSubmit = (data: FieldValues) => {
-    onSave(data as TAddProfile);
+    onSave(data as AddProfile);
   };
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const ProfileForm = ({ initialValues, isLoading, onSave }: Props) => {
             isDisabled={isLoading}
             {...register('jenis_pengguna')}
           >
-            {JENIS_PENGGUNA.map((item) => (
+            {USER_TYPE.map((item) => (
               <option key={item.value} value={item.value}>
                 {item.label}
               </option>

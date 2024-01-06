@@ -10,9 +10,6 @@ export const profileSchema = z.object({
   telepon: z.string().nonempty({ message: 'No telepon tidak boleh kosong' }),
 });
 
-export type TAddProfile = z.infer<typeof profileSchema>;
-export type TUpdateProfile = TAddProfile & { id: string };
-
 export const defaultValues = {
   jenis_pengguna: '',
   nama: '',

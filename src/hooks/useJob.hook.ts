@@ -1,22 +1,22 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import ApiClient from '../services/apiClient';
-import ResponseWork, { PayloadUpdateWork, PayloadWork } from '../types/Work';
+import { ResponseJob, PayloadUpdateJob, PayloadJob } from '../types/Job';
 import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-export const usePostWork = () => {
-  const workApiClient = new ApiClient<PayloadWork>(url.pekerjaan.dev);
+export const usePostJob = () => {
+  const workApiClient = new ApiClient<PayloadJob>(url.pekerjaan.dev);
   return useMutation({
     mutationFn: workApiClient.post,
     onSuccess: () => toast.success('Pekerjaan baru berhasil disimpan'),
   });
 };
 
-export const useUpdateWork = () =>
+export const useUpdateJob = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: PayloadUpdateWork) => {
-      const workApiClient = new ApiClient<PayloadWork>(
+    mutationFn: ({ id, ...restPayload }: PayloadUpdateJob) => {
+      const workApiClient = new ApiClient<PayloadJob>(
         `${url.pekerjaan.dev}/${id}`
       );
       return workApiClient.update(restPayload);
@@ -24,7 +24,7 @@ export const useUpdateWork = () =>
     onSuccess: () => toast.success('Pekerjaan berhasil diperbarui'),
   });
 
-export const useDeleteWork = () =>
+export const useDeleteJob = () =>
   useMutation({
     mutationFn: (id: string) => {
       const workApiClient = new ApiClient(`${url.pekerjaan.dev}/${id}`);
@@ -33,8 +33,8 @@ export const useDeleteWork = () =>
     onSuccess: () => toast.success(`Pekerjaan berhasil dihapus`),
   });
 
-export const useGetWork = () => {
-  const workApiClient = new ApiClient<ResponseWork>(url.pekerjaan.dev);
+export const useGetJob = () => {
+  const workApiClient = new ApiClient<ResponseJob>(url.pekerjaan.dev);
   return useQuery({
     queryKey: keys(url.pekerjaan.key),
     queryFn: workApiClient.getAll,

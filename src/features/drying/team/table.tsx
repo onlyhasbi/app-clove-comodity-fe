@@ -2,15 +2,18 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TTableTim } from './types';
-import { TDeleteTim, TUpdateTim } from './schema';
+import {
+  DeleteTeam,
+  UpdateTeam,
+  TeamTable as TeamTableType,
+} from '../../../types/Team';
 import { LabelBuruh } from '../../../components/user';
 
 type Props = {
   isLoading?: boolean;
   data: any[];
-  onDelete: (data: TDeleteTim) => void;
-  onUpdate: (data: TUpdateTim) => void;
+  onDelete: (data: DeleteTeam) => void;
+  onUpdate: (data: UpdateTeam) => void;
 };
 
 const TeamTable = ({
@@ -19,7 +22,7 @@ const TeamTable = ({
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
-  const columnHelper = createColumnHelper<TTableTim>();
+  const columnHelper = createColumnHelper<TeamTableType>();
   const columns = [
     columnHelper.accessor('nama_tim', {
       id: 'nama_tim',

@@ -1,7 +1,8 @@
 import { Box, Text } from '@chakra-ui/react';
 import HarvestTab from '../../features/harvest/tabs';
+import { Outlet } from 'react-router-dom';
 
-const Harvest = () => (
+const HarvestPage = () => (
   <>
     <Box paddingX={10}>
       <Box marginY={5} lineHeight="1.5rem">
@@ -14,7 +15,8 @@ const Harvest = () => (
       </Box>
       <HarvestTab />
     </Box>
+    <Outlet />
   </>
 );
 
-export default Harvest;
+export default HarvestPage;

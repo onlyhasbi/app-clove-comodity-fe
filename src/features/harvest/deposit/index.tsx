@@ -25,16 +25,20 @@ import {
   useUpdateSetoran,
   useUpdateStatusSetoran,
 } from '../../../hooks/useDeposit.hook';
-import { TDeleteSetoran, TAddSetoran, TUpdateSetoran } from './schema';
+import {
+  DeleteDeposit,
+  AddDeposit,
+  UpdateDeposit,
+} from '../../../types/Deposit';
 import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
 import { toast } from 'react-hot-toast';
-import { TUpdateStatusPayment } from '../../../types/DryResult';
+import { UpdateStatusPayment } from '../../../types/DryResult';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdateSetoran;
-  delete?: TDeleteSetoran;
+  update?: UpdateDeposit;
+  delete?: DeleteDeposit;
 };
 
 const Deposit = () => {
@@ -52,16 +56,16 @@ const Deposit = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdateSetoran) => setAction((prev) => ({ ...prev, update: data })),
+    (data: UpdateDeposit) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
   const handleOpenModalDelete = useCallback(
-    (data: TDeleteSetoran) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: DeleteDeposit) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback((payload: TAddSetoran | TUpdateSetoran) => {
+  const handleSave = useCallback((payload: AddDeposit | UpdateDeposit) => {
     const defaultPayload = {
       id_hasil_panen: payload.tanggal_panen,
       id_buruh: payload.id_buruh,
@@ -84,7 +88,7 @@ const Deposit = () => {
     []
   );
 
-  const handleUpdatePembayaran = useCallback((props: TUpdateStatusPayment) => {
+  const handleUpdatePembayaran = useCallback((props: UpdateStatusPayment) => {
     toast.loading('Memproses pembayaran...');
     updateStatusSetoran.mutate(props);
   }, []);
@@ -168,7 +172,7 @@ const Deposit = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${dayjs((action?.delete as TDeleteSetoran)?.nama).format(
+              {`Delete ${dayjs((action?.delete as DeleteDeposit)?.nama).format(
                 'DD MMMM YYYY'
               )}`}
             </AlertDialogHeader>
@@ -191,7 +195,7 @@ const Deposit = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TDeleteSetoran)?.id)
+                  handleDelete((action?.delete as DeleteDeposit)?.id)
                 }
                 ml={3}
               >

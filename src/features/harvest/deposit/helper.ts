@@ -20,13 +20,13 @@ export const tableAdapter = (payloads: GetDeposit[]) => {
 
     return {
       id_buruh,
-      tanggal_panen: dayjs(waktu_hasil_panen).format('DD MMMM YYYY'),
-      berat: berat_kg,
-      volume: volume_liter,
-      upah: upah_rp,
-      tanggal: dayjs(waktu_setoran).format('DD MMMM YYYY'),
-      komplaint: deskripsi_konplaint,
-      status_bayar: {
+      waktu_hasil_panen: dayjs(waktu_hasil_panen).format('DD MMMM YYYY'),
+      berat_kg,
+      volume_liter,
+      upah_rp,
+      waktu_setoran: dayjs(waktu_setoran).format('DD MMMM YYYY'),
+      deskripsi_konplaint,
+      status_pembayaran: {
         id_setoran: id,
         status_pembayaran,
       },

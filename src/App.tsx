@@ -1,18 +1,18 @@
-import { Routes, Route } from 'react-router-dom';
-import SignIn from './pages/auth';
-import SignUp from './pages/register';
-import Dashboard from './pages/dashboard';
-import Layout from './layout';
-import Harvest from './pages/harvest';
-import Drying from './pages/drying';
-import Transaksi from './pages/transaction';
-import Profile from './pages/profile';
-import Penawaran from './pages/offer';
-import Pekerjaan from './pages/work';
-import NotFound from './pages/notfound';
-import './app.style.css';
 import dayjs from 'dayjs';
 import * as locale from 'dayjs/locale/id';
+import { Route, Routes } from 'react-router-dom';
+import './app.style.css';
+import Layout from './layout';
+import SignIn from './pages/auth';
+import Dashboard from './pages/dashboard';
+import DryingPage from './pages/drying';
+import HarvestPage from './pages/harvest';
+import JobPage from './pages/job';
+import NotFound from './pages/notfound';
+import OfferPage from './pages/offer';
+import ProfilePage from './pages/profile';
+import SignUp from './pages/register';
+import TransactionPage from './pages/transaction';
 
 function App() {
   dayjs.locale(locale);
@@ -23,12 +23,12 @@ function App() {
       <Route path="*" element={<NotFound />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/harvest" element={<Harvest />} />
-        <Route path="/dry" element={<Drying />} />
-        <Route path="/transaction" element={<Transaksi />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/offer" element={<Penawaran />} />
-        <Route path="/work" element={<Pekerjaan />} />
+        <Route path="/harvest" element={<HarvestPage />} />
+        <Route path="/dry" element={<DryingPage />} />
+        <Route path="/transaction" element={<TransactionPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/offer" element={<OfferPage />} />
+        <Route path="/work" element={<JobPage />} />
       </Route>
     </Routes>
   );

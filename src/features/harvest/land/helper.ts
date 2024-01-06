@@ -1,8 +1,8 @@
-import { GetLahan } from '../../../types/Land';
+import { GetLand } from '../../../types/Land';
 import { getProvince } from '../../../utils/getProvince';
 
-export const tableAdapter = (payloads: GetLahan[]) => {
-  return payloads?.map((payload: GetLahan) => {
+export const tableAdapter = (payloads: GetLand[]) => {
+  return payloads?.map((payload: GetLand) => {
     const {
       id,
       nama,

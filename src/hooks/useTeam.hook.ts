@@ -1,40 +1,40 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import ApiClient from '../services/apiClient';
-import { PayloadTim, PayloadUpdateTim, ResponseTim } from '../types/Team';
+import { PayloadTeam, UpdatePayloadTeam, ResponseTeam } from '../types/Team';
 import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-export const usePostTim = () => {
-  const timApiClient = new ApiClient<PayloadTim>(url.tim.dev);
+export const usePostTeam = () => {
+  const teammApiClient = new ApiClient<PayloadTeam>(url.tim.dev);
   return useMutation({
-    mutationFn: timApiClient.post,
-    onSuccess: () => toast.success('Tim baru berhasil disimpan'),
+    mutationFn: teammApiClient.post,
+    onSuccess: () => toast.success('Team baru berhasil disimpan'),
   });
 };
 
-export const useUpdateTim = () =>
+export const useUpdateTeam = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: PayloadUpdateTim) => {
-      const timApiClient = new ApiClient<PayloadTim>(`${url.tim.dev}/${id}`);
-      return timApiClient.update(restPayload);
+    mutationFn: ({ id, ...restPayload }: UpdatePayloadTeam) => {
+      const teammApiClient = new ApiClient<PayloadTeam>(`${url.tim.dev}/${id}`);
+      return teammApiClient.update(restPayload);
     },
-    onSuccess: () => toast.success('Tim berhasil diperbarui'),
+    onSuccess: () => toast.success('Team berhasil diperbarui'),
   });
 
-export const useDeleteTim = () =>
+export const useDeleteTeam = () =>
   useMutation({
     mutationFn: (id: string) => {
-      const timApiClient = new ApiClient(`${url.tim.dev}/${id}`);
-      return timApiClient.delete();
+      const teammApiClient = new ApiClient(`${url.tim.dev}/${id}`);
+      return teammApiClient.delete();
     },
-    onSuccess: () => toast.success(`Tim berhasil dihapus`),
+    onSuccess: () => toast.success(`Team berhasil dihapus`),
   });
 
-export const useGetTim = () => {
-  const timApiClient = new ApiClient<ResponseTim>(url.tim.dev);
+export const useGetTeam = () => {
+  const teammApiClient = new ApiClient<ResponseTeam>(url.tim.dev);
   return useQuery({
     queryKey: keys(url.tim.key),
-    queryFn: timApiClient.getAll,
+    queryFn: teammApiClient.getAll,
   });
 };

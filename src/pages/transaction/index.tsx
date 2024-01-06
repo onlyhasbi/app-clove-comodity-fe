@@ -1,7 +1,7 @@
 import TabsTransaksi from '../../features/transaction/tabs';
 import { Box, Text } from '@chakra-ui/react';
 
-const Transaksi = () => {
+const TransactionPage = () => {
   return (
     <>
       <Box paddingX={10}>
@@ -19,4 +19,4 @@ const Transaksi = () => {
   );
 };
 
-export default Transaksi;
+export default TransactionPage;

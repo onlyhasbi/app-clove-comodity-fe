@@ -4,9 +4,9 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { tableAdapter } from './helper';
 import { NumericFormat } from 'react-number-format';
 import {
-  JENIS_KOMODITAS,
-  JENIS_PENAWARAN,
-} from '../../../../model/penawaran.model';
+  COMODITY_TYPE,
+  OFFER_TYPE,
+} from '../../../../model/offer.model';
 
 type TOffer = {
   nama: string;
@@ -36,7 +36,7 @@ const TabelPenawaran = ({ isLoading, data }: Props) => {
       header: () => <Center>Trk.</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {JENIS_PENAWARAN?.find((item) => item.value === getValue())?.label}
+          {OFFER_TYPE?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),
@@ -45,7 +45,7 @@ const TabelPenawaran = ({ isLoading, data }: Props) => {
       header: () => <Center>Komoditas</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {JENIS_KOMODITAS?.find((item) => item.value === getValue())?.label}
+          {COMODITY_TYPE?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),

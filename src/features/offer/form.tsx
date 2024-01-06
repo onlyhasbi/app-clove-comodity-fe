@@ -12,26 +12,18 @@ import {
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
-import {
-  TAddPenawaran,
-  TUpdatePenawaran,
-  defaultValues,
-  offerSchema,
-} from './schema';
+import { AddOffer, UpdateOffer } from '../../types/Offer';
+import { defaultValues, offerSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
-import {
-  JENIS_KOMODITAS,
-  JENIS_PENAWARAN,
-  SATUAN,
-} from '../../model/penawaran.model';
+import { COMODITY_TYPE, OFFER_TYPE, UNITS } from '../../model/offer.model';
 
 type Props = {
-  initialValues: TUpdatePenawaran | undefined | boolean;
+  initialValues: UpdateOffer | undefined | boolean;
   isLoading: boolean;
   onReset: () => void;
-  onSave: (payload: TAddPenawaran | TUpdatePenawaran) => void;
+  onSave: (payload: AddOffer | UpdateOffer) => void;
 };
 
 const OfferForm = ({
@@ -77,10 +69,10 @@ const OfferForm = ({
     if (initialValues && typeof initialValues === 'object') {
       onSave({
         id: initialValues.id,
-        ...(data as TAddPenawaran),
+        ...(data as AddOffer),
       });
     } else {
-      onSave(data as TAddPenawaran);
+      onSave(data as AddOffer);
     }
     reset();
   };
@@ -102,7 +94,7 @@ const OfferForm = ({
               placeholder="Pilih Jenis Penawaran"
               {...register('jenis_penawaran')}
             >
-              {JENIS_PENAWARAN.map((item) => (
+              {OFFER_TYPE.map((item) => (
                 <option key={item.value} value={item.value}>
                   {item.label}
                 </option>
@@ -122,7 +114,7 @@ const OfferForm = ({
               placeholder="Pilih Jenis Komoditas"
               {...register('komoditas')}
             >
-              {JENIS_KOMODITAS.map((item) => (
+              {COMODITY_TYPE.map((item) => (
                 <option key={item.value} value={item.value}>
                   {item.label}
                 </option>
@@ -142,7 +134,7 @@ const OfferForm = ({
               placeholder="Pilih Satuan"
               {...register('satuan')}
             >
-              {SATUAN.map((item) => (
+              {UNITS.map((item) => (
                 <option key={item.value} value={item.value}>
                   {item.label}
                 </option>

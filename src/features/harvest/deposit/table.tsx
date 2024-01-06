@@ -2,20 +2,23 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TTableSetoran } from './types';
-import { TDeleteSetoran, TUpdateSetoran } from './schema';
 import { NumericFormat } from 'react-number-format';
 import Status from '../../../components/payment-status';
 import { LabelBuruh } from '../../../components/user';
-import { TUpdateStatusPayment } from '../../../types/DryResult';
+import {
+  DeleteDeposit,
+  DepositTable as TDepositTable,
+  UpdateDeposit,
+} from '@/types/Deposit';
+import { UpdateStatusPayment } from '@/types/DryResult';
 
 type Props = {
   listen: {
     statusSetoran?: string;
     data: any[];
-    onUpdatePayment: (data: TUpdateStatusPayment) => void;
-    onDelete: (data: TDeleteSetoran) => void;
-    onUpdate: (data: TUpdateSetoran) => void;
+    onUpdatePayment: (data: UpdateStatusPayment) => void;
+    onDelete: (data: DeleteDeposit) => void;
+    onUpdate: (data: UpdateDeposit) => void;
   };
 };
 
@@ -28,7 +31,7 @@ const DepositTable = ({
     onDelete: handleDelete,
   },
 }: Props) => {
-  const columnHelper = createColumnHelper<TTableSetoran>();
+  const columnHelper = createColumnHelper<TDepositTable>();
   const columns = [
     columnHelper.accessor('id_buruh', {
       id: 'id_buruh',
@@ -39,12 +42,12 @@ const DepositTable = ({
         </Box>
       ),
     }),
-    columnHelper.accessor('tanggal_panen', {
+    columnHelper.accessor('waktu_hasil_panen', {
       id: 'tanggal_panen',
       header: () => <Center textAlign="center">Tgl. Panen</Center>,
       cell: ({ getValue }) => <Center>{getValue()}</Center>,
     }),
-    columnHelper.accessor('berat', {
+    columnHelper.accessor('berat_kg', {
       id: 'berat',
       header: () => <Center textAlign="center">Berat (Kg)</Center>,
       cell: ({ getValue }) => (
@@ -58,7 +61,7 @@ const DepositTable = ({
         </Center>
       ),
     }),
-    columnHelper.accessor('volume', {
+    columnHelper.accessor('volume_liter', {
       id: 'volume',
       header: () => <Center textAlign="center">Volume (Ltr)</Center>,
       cell: ({ getValue }) => (
@@ -72,7 +75,7 @@ const DepositTable = ({
         </Center>
       ),
     }),
-    columnHelper.accessor('upah', {
+    columnHelper.accessor('upah_rp', {
       id: 'upah',
       header: () => <Center>Upah</Center>,
       cell: ({ getValue }) => (
@@ -87,7 +90,7 @@ const DepositTable = ({
       ),
     }),
 
-    columnHelper.accessor('tanggal', {
+    columnHelper.accessor('waktu_setoran', {
       id: 'tanggal',
       header: () => <Center textAlign="center">Tgl. Setor</Center>,
       cell: ({ getValue }) => <Center>{getValue()}</Center>,
@@ -97,12 +100,12 @@ const DepositTable = ({
       header: () => <Box>Catatan</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
-    columnHelper.accessor('komplaint', {
+    columnHelper.accessor('deskripsi_konplaint', {
       id: 'komplaint',
       header: () => <Center>Komplain</Center>,
       cell: ({ getValue }) => <Center>{getValue() ?? '-'}</Center>,
     }),
-    columnHelper.accessor('status_bayar', {
+    columnHelper.accessor('status_pembayaran', {
       id: 'status_bayar',
       header: () => <Center>Pembayaran</Center>,
       cell: ({ getValue }) => {

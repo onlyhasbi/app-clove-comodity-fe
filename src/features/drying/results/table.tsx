@@ -2,22 +2,26 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TTableHasilPengeringan } from './types';
-import { TDeletePengeringan, TUpdatePengeringan } from './schema';
 import { NumericFormat } from 'react-number-format';
 import SelectDryMaterial from '../../../components/select-dry-material';
 import Team from '../../../components/team';
 import Status from '../../../components/payment-status';
-import { TUpdateStatusPayment } from '../../../types/DryResult';
+import {
+  UpdateMaterialPayload,
+  UpdateStatusPayment,
+  DeleteDryResult,
+  UpdateDryResult,
+  DryResultTable,
+} from '../../../types/DryResult';
 
 type Props = {
   listen: {
     isLoading: boolean;
     data: any[];
-    onUpdatePayment: (data: TUpdateStatusPayment) => void;
-    onUpdateMaterial: (data: TUpdateMaterial) => void;
-    onDelete: (data: TDeletePengeringan) => void;
-    onUpdate: (data: TUpdatePengeringan) => void;
+    onUpdatePayment: (data: UpdateStatusPayment) => void;
+    onUpdateMaterial: (data: UpdateMaterialPayload) => void;
+    onDelete: (data: DeleteDryResult) => void;
+    onUpdate: (data: UpdateDryResult) => void;
   };
 };
 
@@ -31,7 +35,7 @@ const DryingResultTable = ({
     onDelete: handleDelete,
   },
 }: Props) => {
-  const columnHelper = createColumnHelper<TTableHasilPengeringan>();
+  const columnHelper = createColumnHelper<DryResultTable>();
 
   const columns = [
     columnHelper.accessor('tim', {

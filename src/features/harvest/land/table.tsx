@@ -1,3 +1,4 @@
+import { DeleteLand, LandTable as TLandTable, UpdateLand } from '@/types/Land';
 import { Box, Center, HStack, Text } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
@@ -6,14 +7,12 @@ import District from '../../../components/district';
 import LandStatus from '../../../components/land-status';
 import Province from '../../../components/province';
 import Table from '../../../components/table';
-import { TDeleteLahan, TUpdateLahan } from './schema';
-import { TTableLahan } from './types';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
-  onDelete: (data: TDeleteLahan) => void;
-  onUpdate: (data: TUpdateLahan) => void;
+  onDelete: (data: DeleteLand) => void;
+  onUpdate: (data: UpdateLand) => void;
 };
 
 const LandTable = ({
@@ -22,7 +21,7 @@ const LandTable = ({
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
-  const columnHelper = createColumnHelper<TTableLahan>();
+  const columnHelper = createColumnHelper<TLandTable>();
   const columns = [
     columnHelper.accessor('nama', {
       id: 'nama',

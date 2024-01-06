@@ -19,41 +19,41 @@ import { useCallback, useRef, useState, useEffect } from 'react';
 import DryingResultForm from './form';
 import DryingResultTable from './table';
 import {
-  TAddPengeringan,
-  TDeletePengeringan,
-  TUpdatePengeringan,
-} from './schema';
-import {
-  useDeletePengeringan,
-  useGetPengeringan,
-  usePostPengeringan,
-  useUpdatePengeringan,
-  useUpdatePembayaran,
-  useUpdateBahan,
+  useDeleteDryResult,
+  useGetDryResult,
+  usePostDryResult,
+  useUpdateDryResult,
+  useUpdatePayment,
+  useUpdateMaterial,
 } from '../../../hooks/useDryResult.hook';
 import { tableAdapter } from './helper';
 import { toast } from 'react-hot-toast';
 import { url } from '../../../utils/config/url';
 import { useQueryClient } from '@tanstack/react-query';
-import { TUpdateStatusPayment } from '../../../types/DryResult';
+import {
+  UpdateStatusPayment,
+  AddDryResult,
+  DeleteDryResult,
+  UpdateDryResult,
+} from '../../../types/DryResult';
 
-type TAction = {
+type ActionState = {
   add?: boolean;
-  update?: TUpdatePengeringan;
-  delete?: TDeletePengeringan;
+  update?: UpdateDryResult;
+  delete?: DeleteDryResult;
 };
 
 const DryResult = () => {
   const queryClient = useQueryClient();
-  const [action, setAction] = useState<TAction | null>(null);
+  const [action, setAction] = useState<ActionState | null>(null);
   const cancelRef = useRef(null);
 
-  const getPengeringan = useGetPengeringan();
-  const postPengeringan = usePostPengeringan();
-  const deletePengeringan = useDeletePengeringan();
-  const updatePengeringan = useUpdatePengeringan();
-  const updateStatusPembayaran = useUpdatePembayaran();
-  const updateBahan = useUpdateBahan();
+  const getDryResult = useGetDryResult();
+  const postDryResult = usePostDryResult();
+  const deleteDryResult = useDeleteDryResult();
+  const updateDryResult = useUpdateDryResult();
+  const updateStatusPayment = useUpdatePayment();
+  const updateMaterial = useUpdateMaterial();
 
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
@@ -61,76 +61,71 @@ const DryResult = () => {
   );
 
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdatePengeringan) =>
-      setAction((prev) => ({ ...prev, update: data })),
+    (data: UpdateDryResult) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDeletePengeringan) =>
-      setAction((prev) => ({ ...prev, delete: data })),
+    (data: DeleteDryResult) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback(
-    (payload: TAddPengeringan | TUpdatePengeringan) => {
-      const defaultPayload = {
-        id_tim: payload.tim,
-        berat_kg: +payload.berat,
-        volume_liter: +payload.volume,
-        kering_pada_hari: payload.tanggal,
-        catatan: payload.catatan,
-        upah: +payload.upah,
-      };
+  const handleSave = useCallback((payload: AddDryResult | UpdateDryResult) => {
+    const defaultPayload = {
+      id_tim: payload.tim,
+      berat_kg: +payload.berat,
+      volume_liter: +payload.volume,
+      kering_pada_hari: payload.tanggal,
+      catatan: payload.catatan,
+      upah: +payload.upah,
+    };
 
-      if ('id' in payload) {
-        updatePengeringan.mutate({ id: payload.id, ...defaultPayload });
-      } else {
-        postPengeringan.mutate(defaultPayload);
-      }
-    },
-    []
-  );
-
-  const handleDelete = useCallback(
-    (id: string) => deletePengeringan.mutate(id),
-    []
-  );
-
-  const handleUpdatePembayaran = useCallback((props: TUpdateStatusPayment) => {
-    toast.loading('Memproses pembayaran...');
-    updateStatusPembayaran.mutate(props);
+    if ('id' in payload) {
+      updateDryResult.mutate({ id: payload.id, ...defaultPayload });
+    } else {
+      postDryResult.mutate(defaultPayload);
+    }
   }, []);
 
-  const handleUpdateBahan = useCallback(
+  const handleDelete = useCallback(
+    (id: string) => deleteDryResult.mutate(id),
+    []
+  );
+
+  const handleUpdatePayment = useCallback((props: UpdateStatusPayment) => {
+    toast.loading('Memproses pembayaran...');
+    updateStatusPayment.mutate(props);
+  }, []);
+
+  const handleUpdateMaterial = useCallback(
     ({ id_bahan, id_hasil }: TUpdateMaterial) => {
-      updateBahan.mutate({ id_bahan, id_hasil });
+      updateMaterial.mutate({ id_bahan, id_hasil });
     },
     []
   );
 
   const tableListener = {
-    isLoading: getPengeringan.isLoading,
-    data: getPengeringan.isSuccess
-      ? tableAdapter(getPengeringan?.data?.data?.hasil)
+    isLoading: getDryResult.isLoading,
+    data: getDryResult.isSuccess
+      ? tableAdapter(getDryResult?.data?.data?.hasil)
       : [],
-    onUpdateMaterial: handleUpdateBahan,
-    onUpdatePayment: handleUpdatePembayaran,
+    onUpdateMaterial: handleUpdateMaterial,
+    onUpdatePayment: handleUpdatePayment,
     onUpdate: handleOpenModalUpdate,
     onDelete: handleOpenModalDelete,
   };
 
   useEffect(() => {
     if (
-      postPengeringan.isSuccess ||
-      updatePengeringan.isSuccess ||
-      deletePengeringan.isSuccess ||
-      updateStatusPembayaran.isSuccess ||
-      updateBahan.isSuccess
+      postDryResult.isSuccess ||
+      updateDryResult.isSuccess ||
+      deleteDryResult.isSuccess ||
+      updateStatusPayment.isSuccess ||
+      updateMaterial.isSuccess
     ) {
-      getPengeringan.refetch();
+      getDryResult.refetch();
       queryClient.refetchQueries({
         queryKey: [url.report_pengeringan.key],
         type: 'inactive',
@@ -141,18 +136,18 @@ const DryResult = () => {
       });
     }
   }, [
-    postPengeringan.isSuccess,
-    deletePengeringan.isSuccess,
-    updatePengeringan.isSuccess,
-    updateStatusPembayaran.isSuccess,
-    updateBahan.isSuccess,
+    postDryResult.isSuccess,
+    deleteDryResult.isSuccess,
+    updateDryResult.isSuccess,
+    updateStatusPayment.isSuccess,
+    updateMaterial.isSuccess,
   ]);
 
   useEffect(() => {
-    if (updatePengeringan.isSuccess || deletePengeringan.isSuccess) {
+    if (updateDryResult.isSuccess || deleteDryResult.isSuccess) {
       handleReset();
     }
-  }, [updatePengeringan.isSuccess, deletePengeringan.isSuccess, handleReset]);
+  }, [updateDryResult.isSuccess, deleteDryResult.isSuccess, handleReset]);
 
   return (
     <>
@@ -161,7 +156,7 @@ const DryResult = () => {
           <Button
             onClick={handleOpenModalAdd}
             colorScheme="green"
-            isDisabled={getPengeringan.isLoading}
+            isDisabled={getDryResult.isLoading}
           >
             Tambah
           </Button>
@@ -181,9 +176,7 @@ const DryResult = () => {
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
             <DryingResultForm
-              isLoading={
-                postPengeringan.isLoading || updatePengeringan.isLoading
-              }
+              isLoading={postDryResult.isLoading || updateDryResult.isLoading}
               onSave={handleSave}
               initialValues={action?.update}
               onClose={handleReset}
@@ -211,17 +204,17 @@ const DryResult = () => {
               <Button
                 ref={cancelRef}
                 onClick={handleReset}
-                isDisabled={deletePengeringan.isLoading}
+                isDisabled={deleteDryResult.isLoading}
               >
                 Cancel
               </Button>
               <Button
-                isLoading={deletePengeringan.isLoading}
+                isLoading={deleteDryResult.isLoading}
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TDeletePengeringan)?.id)
+                  handleDelete((action?.delete as DeleteDryResult)?.id)
                 }
                 ml={3}
               >

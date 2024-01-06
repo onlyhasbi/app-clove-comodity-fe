@@ -2,21 +2,20 @@ import Table from '../../components/table';
 import { Box, HStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Trash2, Edit } from 'lucide-react';
-import { TTablePenawaran } from './types';
 import { NumericFormat } from 'react-number-format';
+import { COMODITY_TYPE, OFFER_TYPE, UNITS } from '../../model/offer.model';
 import {
-  JENIS_KOMODITAS,
-  JENIS_PENAWARAN,
-  SATUAN,
-} from '../../model/penawaran.model';
-import { TDeletePenawaran, TUpdatePenawaran } from './schema';
+  DeleteOffer,
+  UpdateOffer,
+  OfferTable as OfferTableType,
+} from '../../types/Offer';
 import ActiveStatus from '../../components/active-status';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
-  onDelete: (data: TDeletePenawaran) => void;
-  onUpdate: (data: TUpdatePenawaran) => void;
+  onDelete: (data: DeleteOffer) => void;
+  onUpdate: (data: UpdateOffer) => void;
   onUpdateStatus: (data: UpdateStatus) => void;
 };
 
@@ -27,7 +26,7 @@ const OfferTable = ({
   onDelete: handleDelete,
   onUpdateStatus,
 }: Props) => {
-  const columnHelper = createColumnHelper<TTablePenawaran>();
+  const columnHelper = createColumnHelper<OfferTableType>();
 
   const columns = [
     columnHelper.accessor('jenis_penawaran', {
@@ -35,7 +34,7 @@ const OfferTable = ({
       header: () => <Center>Jenis Penawaran</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {JENIS_PENAWARAN?.find((item) => item.value === getValue())?.label}
+          {OFFER_TYPE?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),
@@ -44,7 +43,7 @@ const OfferTable = ({
       header: () => <Center>Komoditas</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {JENIS_KOMODITAS?.find((item) => item.value === getValue())?.label}
+          {COMODITY_TYPE?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),
@@ -53,7 +52,7 @@ const OfferTable = ({
       header: () => <Center>Satuan</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {SATUAN?.find((item) => item.value === getValue())?.label}
+          {UNITS?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),

@@ -15,10 +15,10 @@ import {
   IconButton,
 } from '@chakra-ui/react';
 import { useEffect, useReducer } from 'react';
-import { JENIS_PENGGUNA } from '../../model/jenis-pengguna.model';
+import { USER_TYPE } from '../../model/user-type.model';
 import { TSchemaRegister, defaultValues, registerSchema } from './schema';
 import { useForm, FieldValues } from 'react-hook-form';
-import { useProvinsi, useKabupaten } from '../../hooks/useLocation.hook';
+import { useProvince, useKabupaten } from '../../hooks/useLocation.hook';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostProfile } from '../../hooks/useProfile.hook';
@@ -41,7 +41,7 @@ function SignUpForm() {
   const profile = usePostProfile();
   const { isSuccess } = profile;
 
-  const getProvinsi = useProvinsi();
+  const getProvinsi = useProvince();
   const getKabupaten = useKabupaten(watch('provinsi').trim());
 
   const provinsi = getProvinsi.data?.data?.lokasi?.sub_lokasi ?? [];
@@ -99,7 +99,7 @@ function SignUpForm() {
               placeholder="Pilih Jenis Pengguna"
               {...register('jenis_pengguna')}
             >
-              {JENIS_PENGGUNA.map((item) => (
+              {USER_TYPE.map((item) => (
                 <option key={item.value} value={item.value}>
                   {item.label}
                 </option>

@@ -5,7 +5,7 @@ import { Edit, Trash2 } from 'lucide-react';
 import { TTablePembelian } from './types';
 import { TDeletePembelian, TUpdatePembelian } from './schema';
 import { NumericFormat } from 'react-number-format';
-import { JENIS_KOMODITAS } from '../../../model/penawaran.model';
+import { COMODITY_TYPE } from '../../../model/offer.model';
 import {LabelUser} from '../../../components/user';
 
 type Props = {
@@ -37,7 +37,7 @@ const BuyTable = ({
       header: () => <Center>Komoditas</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {JENIS_KOMODITAS?.find((item) => item.value === getValue())?.label}
+          {COMODITY_TYPE?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),

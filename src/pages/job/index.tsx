@@ -1,5 +1,5 @@
-import WorkForm from '../../features/work/form';
-import WorkTable from '../../features/work/table';
+import JobForm from '../../features/job/form';
+import JobTable from '../../features/job/table';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -14,50 +14,44 @@ import {
 } from '@chakra-ui/react';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import {
-  TDeletePekerjaan,
-  TAddPekerjaan,
-  TUpdatePekerjaan,
-} from '@/features/work/schema';
-import {
-  usePostWork,
-  useGetWork,
-  useUpdateWork,
-  useDeleteWork,
+  usePostJob,
+  useGetJob,
+  useUpdateJob,
+  useDeleteJob,
   useUpdateActive,
-} from '../../hooks/useWork.hook';
-import { tableAdapter } from '../../features/work/helper';
+} from '../../hooks/useJob.hook';
+import { tableAdapter } from '../../features/job/helper';
 import { toast } from 'react-hot-toast';
+import { AddJob, UpdateJob, DeleteJob } from '../../types/Job';
 
-type TAction = {
-  update?: TUpdatePekerjaan;
-  delete?: TDeletePekerjaan;
+type ActionState = {
+  update?: UpdateJob;
+  delete?: DeleteJob;
 };
 
-const Pekerjaan = () => {
-  const [action, setAction] = useState<TAction | null>(null);
+const JobPage = () => {
+  const [action, setAction] = useState<ActionState | null>(null);
   const cancelRef = useRef(null);
 
   const handleUpdate = useCallback(
-    (data: TUpdatePekerjaan) =>
-      setAction((prev) => ({ ...prev, update: data })),
+    (data: UpdateJob) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDeletePekerjaan) =>
-      setAction((prev) => ({ ...prev, delete: data })),
+    (data: DeleteJob) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
-  const getWork = useGetWork();
-  const postWork = usePostWork();
-  const updateWork = useUpdateWork();
-  const deleteWork = useDeleteWork();
+  const getJob = useGetJob();
+  const postJob = usePostJob();
+  const updateJob = useUpdateJob();
+  const deleteJob = useDeleteJob();
   const updateActive = useUpdateActive();
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = (payload: TAddPekerjaan | TUpdatePekerjaan) => {
+  const handleSave = (payload: AddJob | UpdateJob) => {
     const defaultPayload = {
       jenis_pekerjaan: payload.nama_pekerjaan,
       upah_rp: +payload.upah,
@@ -66,14 +60,14 @@ const Pekerjaan = () => {
     };
 
     if ('id' in payload) {
-      updateWork.mutate({ id: payload.id, ...defaultPayload });
+      updateJob.mutate({ id: payload.id, ...defaultPayload });
     } else {
-      postWork.mutate(defaultPayload);
+      postJob.mutate(defaultPayload);
     }
   };
 
   const handleDelete = useCallback(
-    (id: string) => id && deleteWork.mutate(id),
+    (id: string) => id && deleteJob.mutate(id),
     []
   );
 
@@ -84,19 +78,19 @@ const Pekerjaan = () => {
 
   useEffect(() => {
     if (
-      postWork.isSuccess ||
-      updateWork.isSuccess ||
-      deleteWork.isSuccess ||
+      postJob.isSuccess ||
+      updateJob.isSuccess ||
+      deleteJob.isSuccess ||
       updateActive.isSuccess
     ) {
-      getWork.refetch();
+      getJob.refetch();
       toast.dismiss();
       handleReset();
     }
   }, [
-    postWork.isSuccess,
-    deleteWork.isSuccess,
-    updateWork.isSuccess,
+    postJob.isSuccess,
+    deleteJob.isSuccess,
+    updateJob.isSuccess,
     updateActive.isSuccess,
     handleReset,
   ]);
@@ -133,20 +127,18 @@ const Pekerjaan = () => {
             Dapatkan buruh dengan menambah pekerjaan baru
           </Text>
         </Box>
-        <WorkForm
-          isLoading={postWork.isLoading || updateWork.isLoading}
+        <JobForm
+          isLoading={postJob.isLoading || updateJob.isLoading}
           onSave={handleSave}
           onReset={handleReset}
           initialValues={action?.update}
         />
         <Box marginTop={6}>
-          <WorkTable
+          <JobTable
             data={
-              getWork.isSuccess
-                ? tableAdapter(getWork?.data?.data?.lowongan)
-                : []
+              getJob.isSuccess ? tableAdapter(getJob?.data?.data?.lowongan) : []
             }
-            isLoading={getWork.isLoading}
+            isLoading={getJob.isLoading}
             onUpdate={handleUpdate}
             onDelete={handleOpenModalDelete}
             onUpdateStatus={handleUpdateStatus}
@@ -172,18 +164,16 @@ const Pekerjaan = () => {
               <Button
                 ref={cancelRef}
                 onClick={handleReset}
-                isDisabled={deleteWork.isLoading}
+                isDisabled={deleteJob.isLoading}
               >
                 Cancel
               </Button>
               <Button
-                isLoading={deleteWork.isLoading}
+                isLoading={deleteJob.isLoading}
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() =>
-                  handleDelete((action?.delete as TDeletePekerjaan)?.id)
-                }
+                onClick={() => handleDelete((action?.delete as DeleteJob)?.id)}
                 ml={3}
               >
                 Delete
@@ -196,4 +186,4 @@ const Pekerjaan = () => {
   );
 };
 
-export default Pekerjaan;
+export default JobPage;

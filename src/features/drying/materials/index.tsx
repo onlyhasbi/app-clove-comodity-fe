@@ -18,7 +18,11 @@ import {
 import { useCallback, useRef, useState, useEffect } from 'react';
 import MaterialForm from './form';
 import MaterialTable from './table';
-import { TAddBahan, TDeleteBahan, TUpdateBahan } from './schema';
+import {
+  AddMaterial,
+  DeleteMaterial,
+  UpdateMaterial,
+} from '../../../types/Material';
 import {
   useDeleteMaterial,
   useGetMaterial,
@@ -30,15 +34,15 @@ import { tableAdapter } from './helper';
 import { useQueryClient } from '@tanstack/react-query';
 import { url } from '../../../utils/config/url';
 
-type TAction = {
+type ActionState = {
   add?: boolean;
-  update?: TUpdateBahan;
-  delete?: TDeleteBahan;
+  update?: UpdateMaterial;
+  delete?: DeleteMaterial;
 };
 
 const DryMaterial = () => {
   const queryClient = useQueryClient();
-  const [action, setAction] = useState<TAction | null>(null);
+  const [action, setAction] = useState<ActionState | null>(null);
   const cancelRef = useRef(null);
 
   const getMaterial = useGetMaterial();
@@ -55,16 +59,16 @@ const DryMaterial = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdateBahan) => setAction((prev) => ({ ...prev, update: data })),
+    (data: UpdateMaterial) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
   const handleOpenModalDelete = useCallback(
-    (data: TDeleteBahan) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: DeleteMaterial) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback((payload: TAddBahan | TUpdateBahan) => {
+  const handleSave = useCallback((payload: AddMaterial | UpdateMaterial) => {
     const defaultPayload = {
       berat_kg: payload.berat_kg,
       volume_liter: payload.volume_liter,
@@ -178,7 +182,7 @@ const DryMaterial = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TDeleteBahan)?.id)
+                  handleDelete((action?.delete as DeleteMaterial)?.id)
                 }
                 ml={3}
               >

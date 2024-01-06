@@ -13,8 +13,6 @@ import {
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
 import {
-  TAddSetoran,
-  TUpdateSetoran,
   defaultValues,
   depositSchema,
 } from './schema';
@@ -26,12 +24,13 @@ import { useGetHasil } from '../../../hooks/useResult.hook';
 import { useAllUserBuruh } from '../../../hooks/useUser.hook';
 import ReactDatePicker from 'react-datepicker';
 import { UserBuruh } from '../../../types/User';
+import { AddDeposit, UpdateDeposit } from '@/types/Deposit';
 
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TAddSetoran | TUpdateSetoran) => void;
-  initialValues: TUpdateSetoran | undefined | boolean;
+  onSave: (payload: AddDeposit | UpdateDeposit) => void;
+  initialValues: UpdateDeposit | undefined | boolean;
 };
 
 const DepositForm = ({
@@ -76,11 +75,11 @@ const DepositForm = ({
   const onSubmit = (payload: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TUpdateSetoran).id,
+        id: (initialValues as UpdateDeposit).id,
         ...payload,
-      } as TUpdateSetoran);
+      } as UpdateDeposit);
     } else {
-      handleSave(payload as TAddSetoran);
+      handleSave(payload as AddDeposit);
       reset();
     }
   };

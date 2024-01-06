@@ -2,34 +2,33 @@ import Table from '../../components/table';
 import { Box, HStack, Center } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Trash2, Edit } from 'lucide-react';
-import { TTablePekerjaan } from './types';
-import { TDeletePekerjaan, TUpdatePekerjaan } from './schema';
 import { NumericFormat } from 'react-number-format';
-import { PEKERJAAN, SATUAN } from '../../model/penawaran.model';
+import { JOBS, UNITS } from '../../model/offer.model';
 import ActiveStatus from '../../components/active-status';
+import { DeleteJob, UpdateJob, JobTable as JobTableType } from '../../types/Job';
 
 type Props = {
-  data: any[];
+  data: JobTableType[];
   isLoading?: boolean;
-  onDelete: (data: TDeletePekerjaan) => void;
-  onUpdate: (data: TUpdatePekerjaan) => void;
+  onDelete: (data: DeleteJob) => void;
+  onUpdate: (data: UpdateJob) => void;
   onUpdateStatus: (data: UpdateStatus) => void;
 };
 
-const WorkTable = ({
+const JobTable = ({
   isLoading,
   data,
   onUpdate: handleUpdate,
   onDelete: handleDelete,
   onUpdateStatus,
 }: Props) => {
-  const columnHelper = createColumnHelper<TTablePekerjaan>();
+  const columnHelper = createColumnHelper<JobTableType>();
   const columns = [
     columnHelper.accessor('nama_pekerjaan', {
       id: 'nama_pekerjaan',
       header: () => <Box>Nama Pekerjaan</Box>,
       cell: ({ getValue }) => (
-        <Box>{PEKERJAAN?.find((item) => item.value === getValue())?.label}</Box>
+        <Box>{JOBS?.find((item) => item.value === getValue())?.label}</Box>
       ),
     }),
     columnHelper.accessor('upah', {
@@ -51,7 +50,7 @@ const WorkTable = ({
       header: () => <Center>Satuan</Center>,
       cell: ({ getValue }) => (
         <Center>
-          {SATUAN?.find((item) => item.value === getValue())?.label}
+          {UNITS?.find((item) => item.value === getValue())?.label}
         </Center>
       ),
     }),
@@ -105,4 +104,4 @@ const WorkTable = ({
   return <Table isLoading={isLoading} data={data} columns={columns} />;
 };
 
-export default WorkTable;
+export default JobTable;

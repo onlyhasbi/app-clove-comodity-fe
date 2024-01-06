@@ -1,40 +1,40 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import ApiClient from '../services/apiClient';
-import { PayloadLahan, PayloadUpdateLahan, ResponseLahan } from '../types/Land';
+import { PayloadLand, PayloadUpdateLand, ResponseLand } from '../types/Land';
 import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-export const usePostLahan = () => {
-  const lahanApiClient = new ApiClient<PayloadLahan>(url.lahan.dev);
+export const usePostLand = () => {
+  const lahanApiClient = new ApiClient<PayloadLand>(url.lahan.dev);
   return useMutation({
     mutationFn: lahanApiClient.post,
-    onSuccess: () => toast.success('Lahan baru berhasil disimpan'),
+    onSuccess: () => toast.success('Land baru berhasil disimpan'),
   });
 };
 
-export const useUpdateLahan = () =>
+export const useUpdateLand = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: PayloadUpdateLahan) => {
-      const lahanApiClient = new ApiClient<PayloadLahan>(
+    mutationFn: ({ id, ...restPayload }: PayloadUpdateLand) => {
+      const lahanApiClient = new ApiClient<PayloadLand>(
         `${url.lahan.dev}/${id}`
       );
       return lahanApiClient.update(restPayload);
     },
-    onSuccess: () => toast.success('Lahan berhasil diperbarui'),
+    onSuccess: () => toast.success('Land berhasil diperbarui'),
   });
 
-export const useDeleteLahan = () =>
+export const useDeleteLand = () =>
   useMutation({
     mutationFn: (id: string) => {
       const lahanApiClient = new ApiClient(`${url.lahan.dev}/${id}`);
       return lahanApiClient.delete();
     },
-    onSuccess: () => toast.success(`Lahan berhasil dihapus`),
+    onSuccess: () => toast.success(`Land berhasil dihapus`),
   });
 
-export const useGetLahan = () => {
-  const lahanApiClient = new ApiClient<ResponseLahan>(url.lahan.dev);
+export const useGetLands = () => {
+  const lahanApiClient = new ApiClient<ResponseLand>(url.lahan.dev);
   return useQuery({
     queryKey: keys(url.lahan.key),
     queryFn: lahanApiClient.getAll,

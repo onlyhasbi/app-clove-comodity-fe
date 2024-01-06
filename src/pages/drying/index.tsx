@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
-import TabsPengeringan from '../../features/drying/tabs';
+import DryingTab from '../../features/drying/tabs';
 
-const Drying = () => {
+const DryingPage = () => {
   return (
     <>
       <Box paddingX={10}>
@@ -13,10 +13,10 @@ const Drying = () => {
             Managemen hasil pengeringan komoditas
           </Text>
         </Box>
-        <TabsPengeringan />
+        <DryingTab />
       </Box>
     </>
   );
 };
 
-export default Drying;
+export default DryingPage;

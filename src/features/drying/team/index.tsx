@@ -16,31 +16,31 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react';
 import {
-  useDeleteTim,
-  useGetTim,
-  usePostTim,
-  useUpdateTim,
+  useDeleteTeam,
+  useGetTeam,
+  usePostTeam,
+  useUpdateTeam,
 } from '../../../hooks/useTeam.hook';
 import TeamForm from './form';
 import TeamTable from './table';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import { TAddTim, TDeleteTim, TUpdateTim } from './schema';
+import { AddTeam, DeleteTeam, UpdateTeam } from '../../../types/Team';
 import { tableAdapter } from './helper';
 
-type TAction = {
+type ActionState = {
   add?: boolean;
-  update?: TUpdateTim;
-  delete?: TDeleteTim;
+  update?: UpdateTeam;
+  delete?: DeleteTeam;
 };
 
 const Team = () => {
-  const [action, setAction] = useState<TAction | null>(null);
+  const [action, setAction] = useState<ActionState | null>(null);
   const cancelRef = useRef(null);
 
-  const getTim = useGetTim();
-  const postTim = usePostTim();
-  const deleteTim = useDeleteTim();
-  const updateTim = useUpdateTim();
+  const getTeam = useGetTeam();
+  const postTeam = usePostTeam();
+  const deleteTeam = useDeleteTeam();
+  const updateTeam = useUpdateTeam();
 
   const handleOpenModalAdd = useCallback(
     () => setAction((prev) => ({ ...prev, add: true })),
@@ -48,51 +48,49 @@ const Team = () => {
   );
 
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdateTim) =>
-      setAction((prev) => ({ ...prev, update: data })),
+    (data: UpdateTeam) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDeleteTim) =>
-      setAction((prev) => ({ ...prev, delete: data })),
+    (data: DeleteTeam) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback((payload: TAddTim | TUpdateTim) => {
+  const handleSave = useCallback((payload: AddTeam | UpdateTeam) => {
     if ('id' in payload) {
-      updateTim.mutate(payload);
+      updateTeam.mutate(payload);
     } else {
-      postTim.mutate(payload);
+      postTeam.mutate(payload);
     }
   }, []);
 
   const handleDelete = useCallback((id: string) => {
     if (id) {
-      deleteTim.mutate(id);
+      deleteTeam.mutate(id);
     }
   }, []);
 
   useEffect(() => {
-    if (postTim.isSuccess || updateTim.isSuccess || deleteTim.isSuccess) {
-      getTim.refetch();
+    if (postTeam.isSuccess || updateTeam.isSuccess || deleteTeam.isSuccess) {
+      getTeam.refetch();
     }
-  }, [postTim.isSuccess, deleteTim.isSuccess, updateTim.isSuccess]);
+  }, [postTeam.isSuccess, deleteTeam.isSuccess, updateTeam.isSuccess]);
 
   useEffect(() => {
-    if (updateTim.isSuccess || deleteTim.isSuccess) {
+    if (updateTeam.isSuccess || deleteTeam.isSuccess) {
       handleReset();
     }
-  }, [updateTim.isSuccess, deleteTim.isSuccess, handleReset]);
+  }, [updateTeam.isSuccess, deleteTeam.isSuccess, handleReset]);
 
   return (
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
           <Button
-            isDisabled={getTim.isLoading}
+            isDisabled={getTeam.isLoading}
             onClick={handleOpenModalAdd}
             colorScheme="green"
           >
@@ -100,10 +98,8 @@ const Team = () => {
           </Button>
         </Box>
         <TeamTable
-          isLoading={getTim.isLoading}
-          data={
-            getTim.isSuccess ? tableAdapter(getTim?.data?.data?.tim) : []
-          }
+          isLoading={getTeam.isLoading}
+          data={getTeam.isSuccess ? tableAdapter(getTeam?.data?.data?.tim) : []}
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
         />
@@ -122,7 +118,7 @@ const Team = () => {
           <ModalBody marginBottom={5}>
             <TeamForm
               onSave={handleSave}
-              isLoading={postTim.isLoading || updateTim.isLoading}
+              isLoading={postTeam.isLoading || updateTeam.isLoading}
               initialValues={action?.update}
               onClose={handleReset}
             />
@@ -149,18 +145,16 @@ const Team = () => {
               <Button
                 ref={cancelRef}
                 onClick={handleReset}
-                isDisabled={deleteTim.isLoading}
+                isDisabled={deleteTeam.isLoading}
               >
                 Cancel
               </Button>
               <Button
-                isLoading={deleteTim.isLoading}
+                isLoading={deleteTeam.isLoading}
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() =>
-                  handleDelete((action?.delete as TDeleteTim).id)
-                }
+                onClick={() => handleDelete((action?.delete as DeleteTeam).id)}
                 ml={3}
               >
                 Delete

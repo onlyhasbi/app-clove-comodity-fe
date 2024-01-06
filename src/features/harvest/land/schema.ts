@@ -10,17 +10,6 @@ export const landSchema = z.object({
   luas_lahan: z.number().min(1,{ message: 'Luas lahan tidak boleh kosong' }),
 });
 
-export type TAddLahan = z.infer<typeof landSchema>;
-export type TUpdateLahan = TAddLahan & {
-  id: string;
-  hasil_panen: string;
-};
-export type TDeleteLahan = {
-  id: string;
-  nama: string;
-  hasil_panen: string;
-};
-
 export const defaultValues = {
   nama: '',
   provinsi: '',

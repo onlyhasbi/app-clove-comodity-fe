@@ -14,14 +14,6 @@ export const depositSchema = z.object({
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
 
-export type TAddSetoran = z.infer<typeof depositSchema>;
-export type TUpdateSetoran = TAddSetoran & {
-  id: string;
-  komplaint: string;
-  status_bayar: boolean;
-};
-export type TDeleteSetoran = { id: string; nama: string };
-
 export const defaultValues = {
   tanggal_panen: '',
   id_buruh: '',

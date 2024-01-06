@@ -26,13 +26,17 @@ import {
 import { url } from '../../../utils/config/url';
 import HarvestResultForm from './form';
 import { tableAdapter } from './helper';
-import { TAddPanen, TDeletePanen, TUpdatePanen } from './schema';
+import {
+  AddHarvestResult,
+  DeleteHarvestResult,
+  UpdateHarvestResult,
+} from '../../../types/HarvestResult';
 import HarvestResultTable from './table';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdatePanen;
-  delete?: TDeletePanen;
+  update?: UpdateHarvestResult;
+  delete?: DeleteHarvestResult;
 };
 
 const HarvestResult = () => {
@@ -46,12 +50,14 @@ const HarvestResult = () => {
   );
 
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdatePanen) => setAction((prev) => ({ ...prev, update: data })),
+    (data: UpdateHarvestResult) =>
+      setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDeletePanen) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: DeleteHarvestResult) =>
+      setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
@@ -66,21 +72,24 @@ const HarvestResult = () => {
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback((payload: TAddPanen | TUpdatePanen) => {
-    const defaultPayload = {
-      id_lahan: payload.lahan,
-      berat_pengukuran_kg: payload.berat,
-      volume_pengukuran_liter: payload.volume,
-      waktu: payload.tanggal,
-      catatan: payload.catatan,
-    };
+  const handleSave = useCallback(
+    (payload: AddHarvestResult | UpdateHarvestResult) => {
+      const defaultPayload = {
+        id_lahan: payload.lahan,
+        berat_pengukuran_kg: payload.berat,
+        volume_pengukuran_liter: payload.volume,
+        waktu: payload.tanggal,
+        catatan: payload.catatan,
+      };
 
-    if ('id' in payload) {
-      updateHasil.mutate({ id: payload.id, ...defaultPayload });
-    } else {
-      postHasil.mutate(defaultPayload);
-    }
-  }, []);
+      if ('id' in payload) {
+        updateHasil.mutate({ id: payload.id, ...defaultPayload });
+      } else {
+        postHasil.mutate(defaultPayload);
+      }
+    },
+    []
+  );
 
   const handleDelete = useCallback(
     (id: string) => id && deleteHasil.mutate(id),
@@ -156,7 +165,7 @@ const HarvestResult = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDeletePanen)?.nama}`}
+              {`Delete ${(action?.delete as DeleteHarvestResult)?.nama}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -177,7 +186,7 @@ const HarvestResult = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TDeletePanen)?.id)
+                  handleDelete((action?.delete as DeleteHarvestResult)?.id)
                 }
                 ml={3}
               >

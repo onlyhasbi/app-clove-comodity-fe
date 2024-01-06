@@ -12,25 +12,21 @@ import {
 } from '@chakra-ui/react';
 
 import { useForm, FieldValues, Controller } from 'react-hook-form';
-import {
-  TAddPekerjaan,
-  TUpdatePekerjaan,
-  defaultValues,
-  workSchema,
-} from './schema';
+import { defaultValues, jobSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { SATUAN, PEKERJAAN } from '../../model/penawaran.model';
+import { UNITS, JOBS } from '../../model/offer.model';
 import { NumericFormat, NumberFormatValues } from 'react-number-format';
+import { UpdateJob, AddJob } from '../../types/Job';
 
 type Props = {
   isLoading: boolean;
-  initialValues: TUpdatePekerjaan | undefined | boolean;
+  initialValues: UpdateJob | undefined | boolean;
   onReset: () => void;
-  onSave: (payload: TAddPekerjaan | TUpdatePekerjaan) => void;
+  onSave: (payload: AddJob | UpdateJob) => void;
 };
 
-const FormTable = ({
+const JobTable = ({
   isLoading,
   onSave,
   onReset: handleReset,
@@ -45,7 +41,7 @@ const FormTable = ({
     reset,
   } = useForm({
     defaultValues,
-    resolver: zodResolver(workSchema),
+    resolver: zodResolver(jobSchema),
   });
 
   useEffect(() => {
@@ -60,9 +56,9 @@ const FormTable = ({
 
   const onSubmit = (payload: FieldValues) => {
     if (initialValues && typeof initialValues === 'object') {
-      onSave({ id: initialValues.id, ...(payload as TAddPekerjaan) });
+      onSave({ id: initialValues.id, ...(payload as AddJob) });
     } else {
-      onSave(payload as TAddPekerjaan);
+      onSave(payload as AddJob);
     }
     reset();
   };
@@ -84,7 +80,7 @@ const FormTable = ({
               isDisabled={isLoading}
               {...register('nama_pekerjaan')}
             >
-              {PEKERJAAN.map((item) => (
+              {JOBS.map((item) => (
                 <option key={item.value} value={item.value}>
                   {item.label}
                 </option>
@@ -132,7 +128,7 @@ const FormTable = ({
               isDisabled={isLoading}
               {...register('satuan')}
             >
-              {SATUAN.map((item) => (
+              {UNITS.map((item) => (
                 <option key={item.value} value={item.value}>
                   {item.label}
                 </option>
@@ -185,4 +181,4 @@ const FormTable = ({
   );
 };
 
-export default FormTable;
+export default JobTable;

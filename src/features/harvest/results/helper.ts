@@ -1,5 +1,5 @@
 import { HarvestResult } from '../../../types/HarvestResult';
-import { GetLahan } from '../../../types/Land';
+import { GetLand } from '../../../types/Land';
 import dayjs from 'dayjs';
 
 export const tableAdapter = (payloads: HarvestResult[]) => {
@@ -17,9 +17,9 @@ export const tableAdapter = (payloads: HarvestResult[]) => {
     return {
       id,
       lahan,
-      berat: berat_pengukuran_kg,
-      volume: volume_pengukuran_liter,
-      tanggal: dayjs(waktu).format('DD MMMM YYYY'),
+      berat_pengukuran_kg,
+      volume_pengukuran_liter,
+      waktu: dayjs(waktu).format('DD MMMM YYYY'),
       catatan: catatan,
       action: {
         update: {
@@ -39,6 +39,6 @@ export const tableAdapter = (payloads: HarvestResult[]) => {
   });
 };
 
-export const selectLahanAdapter = (data: GetLahan[]) => {
-  return data?.map((item: GetLahan) => ({ label: item.nama, value: item.id }));
+export const selectLahanAdapter = (data: GetLand[]) => {
+  return data?.map((item: GetLand) => ({ label: item.nama, value: item.id }));
 };

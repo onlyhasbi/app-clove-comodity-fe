@@ -2,15 +2,18 @@ import Table from '../../../components/table';
 import { Box, Center, HStack } from '@chakra-ui/react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Edit, Trash2 } from 'lucide-react';
-import { TTableHasil } from './types';
-import { TDeletePanen, TUpdatePanen } from './schema';
+import {
+  DeleteHarvestResult,
+  UpdateHarvestResult,
+  HarvestResultTable as THarvestResultTabel,
+} from '../../../types/HarvestResult';
 import { NumericFormat } from 'react-number-format';
 
 type Props = {
   data: any[];
   isLoading?: boolean;
-  onDelete: (data: TDeletePanen) => void;
-  onUpdate: (data: TUpdatePanen) => void;
+  onDelete: (data: DeleteHarvestResult) => void;
+  onUpdate: (data: UpdateHarvestResult) => void;
 };
 
 const HarvestResultTable = ({
@@ -19,7 +22,7 @@ const HarvestResultTable = ({
   onUpdate: handleUpdate,
   onDelete: handleDelete,
 }: Props) => {
-  const columnHelper = createColumnHelper<TTableHasil>();
+  const columnHelper = createColumnHelper<THarvestResultTabel>();
   const columns = [
     columnHelper.accessor('id', {
       id: 'id',
@@ -31,7 +34,7 @@ const HarvestResultTable = ({
       header: () => <Box>Lahan</Box>,
       cell: ({ getValue }) => <Box>{getValue()}</Box>,
     }),
-    columnHelper.accessor('berat', {
+    columnHelper.accessor('berat_pengukuran_kg', {
       id: 'berat',
       header: () => <Center>Berat (Kg)</Center>,
       cell: ({ getValue }) => (
@@ -45,7 +48,7 @@ const HarvestResultTable = ({
         </Center>
       ),
     }),
-    columnHelper.accessor('volume', {
+    columnHelper.accessor('volume_pengukuran_liter', {
       id: 'volume',
       header: () => <Center>Volume (Ltr)</Center>,
       cell: ({ getValue }) => (
@@ -59,7 +62,7 @@ const HarvestResultTable = ({
         </Center>
       ),
     }),
-    columnHelper.accessor('tanggal', {
+    columnHelper.accessor('waktu', {
       id: 'tanggal',
       header: () => <Center>Tanggal</Center>,
       cell: ({ getValue }) => <Center>{getValue()}</Center>,

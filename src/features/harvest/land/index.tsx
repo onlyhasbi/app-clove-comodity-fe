@@ -18,21 +18,21 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  useDeleteLahan,
-  useGetLahan,
-  usePostLahan,
-  useUpdateLahan,
+  useDeleteLand,
+  useGetLands,
+  usePostLand,
+  useUpdateLand,
 } from '../../../hooks/useLand.hook';
+import { AddLand, DeleteLand, UpdateLand } from '../../../types/Land';
 import { url } from '../../../utils/config/url';
 import LandForm from './form';
 import { tableAdapter } from './helper';
-import { TAddLahan, TDeleteLahan, TUpdateLahan } from './schema';
 import LandTable from './table';
 
 type TAction = {
   add?: boolean;
-  update?: TUpdateLahan;
-  delete?: TDeleteLahan;
+  update?: UpdateLand;
+  delete?: DeleteLand;
 };
 
 const Land = () => {
@@ -45,27 +45,27 @@ const Land = () => {
     []
   );
   const handleOpenModalUpdate = useCallback(
-    (data: TUpdateLahan) => setAction((prev) => ({ ...prev, update: data })),
+    (data: UpdateLand) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDeleteLahan) => setAction((prev) => ({ ...prev, delete: data })),
+    (data: DeleteLand) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
-  const getLahan = useGetLahan();
-  const postLahan = usePostLahan();
-  const deleteLahan = useDeleteLahan();
-  const updateLahan = useUpdateLahan();
+  const getLand = useGetLands();
+  const postLand = usePostLand();
+  const deleteLand = useDeleteLand();
+  const updateLand = useUpdateLand();
 
-  const lahan = getLahan.isSuccess
-    ? tableAdapter(getLahan?.data?.data?.lahan)
+  const lahan = getLand.isSuccess
+    ? tableAdapter(getLand?.data?.data?.lahan)
     : [];
 
   const handleReset = useCallback(() => setAction(null), []);
 
-  const handleSave = useCallback((payload: TAddLahan | TUpdateLahan) => {
+  const handleSave = useCallback((payload: AddLand | UpdateLand) => {
     const defaultPayload = {
       nama: payload.nama,
       lokasi: payload.kabupaten,
@@ -74,45 +74,45 @@ const Land = () => {
     };
 
     if ('id' in payload) {
-      updateLahan.mutate({ id: payload.id, ...defaultPayload });
+      updateLand.mutate({ id: payload.id, ...defaultPayload });
     } else {
-      postLahan.mutate(defaultPayload);
+      postLand.mutate(defaultPayload);
     }
   }, []);
 
   const handleDelete = useCallback(
-    (id: string) => id && deleteLahan.mutate(id),
+    (id: string) => id && deleteLand.mutate(id),
     []
   );
 
   useEffect(() => {
-    if (postLahan.isSuccess || updateLahan.isSuccess || deleteLahan.isSuccess) {
-      getLahan.refetch();
+    if (postLand.isSuccess || updateLand.isSuccess || deleteLand.isSuccess) {
+      getLand.refetch();
       queryClient.refetchQueries({
         queryKey: [url.report_lahan.key],
         type: 'inactive',
       });
     }
-  }, [postLahan.isSuccess, deleteLahan.isSuccess, updateLahan.isSuccess]);
+  }, [postLand.isSuccess, deleteLand.isSuccess, updateLand.isSuccess]);
 
   useEffect(() => {
-    if (updateLahan.isSuccess || deleteLahan.isSuccess) handleReset();
-  }, [updateLahan.isSuccess, deleteLahan.isSuccess, handleReset]);
+    if (updateLand.isSuccess || deleteLand.isSuccess) handleReset();
+  }, [updateLand.isSuccess, deleteLand.isSuccess, handleReset]);
 
   return (
     <>
       <VStack direction="column">
         <Box width="100%" marginY={3}>
           <Button
-            onClick={handleOpenModalAdd}
             colorScheme="green"
-            isDisabled={getLahan.isLoading}
+            isDisabled={getLand.isLoading}
+            onClick={handleOpenModalAdd}
           >
             Tambah
           </Button>
         </Box>
         <LandTable
-          isLoading={getLahan.isLoading}
+          isLoading={getLand.isLoading}
           data={lahan}
           onUpdate={handleOpenModalUpdate}
           onDelete={handleOpenModalDelete}
@@ -127,12 +127,12 @@ const Land = () => {
         <ModalContent>
           <ModalHeader>{`${
             action?.update ? 'Perbarui' : 'Tambah'
-          } Lahan`}</ModalHeader>
+          } Land`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody marginBottom={5}>
             <LandForm
               initialValues={action?.update}
-              isLoading={Boolean(postLahan?.isLoading || updateLahan.isLoading)}
+              isLoading={Boolean(postLand?.isLoading || updateLand.isLoading)}
               onClose={handleReset}
               onSave={handleSave}
             />
@@ -148,7 +148,7 @@ const Land = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {`Delete ${(action?.delete as TDeleteLahan)?.nama}`}
+              {`Delete ${(action?.delete as DeleteLand)?.nama}`}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -159,18 +159,16 @@ const Land = () => {
               <Button
                 ref={cancelRef}
                 onClick={handleReset}
-                isDisabled={deleteLahan.isLoading}
+                isDisabled={deleteLand.isLoading}
               >
                 Batal
               </Button>
               <Button
-                isLoading={deleteLahan.isLoading}
+                isLoading={deleteLand.isLoading}
                 loadingText="Menghapus..."
                 spinnerPlacement="start"
                 colorScheme="red"
-                onClick={() =>
-                  handleDelete((action?.delete as TDeleteLahan)?.id)
-                }
+                onClick={() => handleDelete((action?.delete as DeleteLand)?.id)}
                 ml={3}
               >
                 Hapus

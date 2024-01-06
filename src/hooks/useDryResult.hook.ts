@@ -1,17 +1,18 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import ApiClient from '../services/apiClient';
-import ResponseDryResult, {
-  PayloadPengeringan,
-  PayloadUpdateBahan,
-  PayloadUpdatePengeringan,
-  TUpdateStatusPayment,
+import {
+  ResponseDryResult,
+  DryResultPayload,
+  UpdateMaterialPayload,
+  UpdateDryResultPayload,
+  UpdateStatusPayment,
 } from '../types/DryResult';
 import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
-export const usePostPengeringan = () => {
-  const dryResultApiClient = new ApiClient<PayloadPengeringan>(
+export const usePostDryResult = () => {
+  const dryResultApiClient = new ApiClient<DryResultPayload>(
     url.pengeringan.dev
   );
   return useMutation({
@@ -20,10 +21,10 @@ export const usePostPengeringan = () => {
   });
 };
 
-export const useUpdatePengeringan = () => {
+export const useUpdateDryResult = () => {
   return useMutation({
-    mutationFn: ({ id, ...restPayload }: PayloadUpdatePengeringan) => {
-      const dryResultApiClient = new ApiClient<PayloadPengeringan>(
+    mutationFn: ({ id, ...restPayload }: UpdateDryResultPayload) => {
+      const dryResultApiClient = new ApiClient<DryResultPayload>(
         `${url.pengeringan.dev}/${id}`
       );
       return dryResultApiClient.update(restPayload);
@@ -32,7 +33,7 @@ export const useUpdatePengeringan = () => {
   });
 };
 
-export const useDeletePengeringan = () =>
+export const useDeleteDryResult = () =>
   useMutation({
     mutationFn: (id: string) => {
       const dryResultApiClient = new ApiClient(`${url.pengeringan.dev}/${id}`);
@@ -41,7 +42,7 @@ export const useDeletePengeringan = () =>
     onSuccess: () => toast.success(`Pengeringan berhasil dihapus`),
   });
 
-export const useGetPengeringan = () => {
+export const useGetDryResult = () => {
   const dryResultApiClient = new ApiClient<ResponseDryResult>(
     url.pengeringan.dev
   );
@@ -51,9 +52,9 @@ export const useGetPengeringan = () => {
   });
 };
 
-export const useUpdateBahan = () => {
+export const useUpdateMaterial = () => {
   return useMutation({
-    mutationFn: ({ id_bahan, id_hasil }: PayloadUpdateBahan) => {
+    mutationFn: ({ id_bahan, id_hasil }: UpdateMaterialPayload) => {
       const materialApiClient = new ApiClient(
         `${url.update_bahan.dev}/${id_bahan}/${id_hasil}`
       );
@@ -62,9 +63,9 @@ export const useUpdateBahan = () => {
   });
 };
 
-export const useUpdatePembayaran = () =>
+export const useUpdatePayment = () =>
   useMutation({
-    mutationFn: ({ id, status }: TUpdateStatusPayment) => {
+    mutationFn: ({ id, status }: UpdateStatusPayment) => {
       const paymentApiClient = new ApiClient(
         `${url.pembayaran_pengeringan.dev}/${id}?status=${status}`
       );

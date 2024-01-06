@@ -12,23 +12,22 @@ import {
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useForm, FieldValues, Controller } from 'react-hook-form';
-import {
-  TAddPanen,
-  TUpdatePanen,
-  defaultValues,
-  harvestResultSchema,
-} from './schema';
+import { defaultValues, harvestResultSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
-import { useGetLahan } from '../../../hooks/useLand.hook';
+import { useGetLands } from '../../../hooks/useLand.hook';
 import { selectLahanAdapter } from './helper';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
+import {
+  AddHarvestResult,
+  UpdateHarvestResult,
+} from '../../../types/HarvestResult';
 
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TAddPanen | TUpdatePanen) => void;
-  initialValues: TUpdatePanen | undefined | boolean;
+  onSave: (payload: AddHarvestResult | UpdateHarvestResult) => void;
+  initialValues: UpdateHarvestResult | undefined | boolean;
 };
 
 const HarvestResultForm = ({
@@ -60,17 +59,17 @@ const HarvestResultForm = ({
     }
   }, []);
 
-  const getLahan = useGetLahan();
+  const getLahan = useGetLands();
   const lahan = selectLahanAdapter(getLahan?.data?.data?.lahan || []);
 
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TUpdatePanen).id,
+        id: (initialValues as UpdateHarvestResult).id,
         ...data,
-      } as TUpdatePanen);
+      } as UpdateHarvestResult);
     } else {
-      handleSave(data as TAddPanen);
+      handleSave(data as AddHarvestResult);
       reset();
     }
   };

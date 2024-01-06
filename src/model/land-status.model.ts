@@ -1,4 +1,4 @@
-export const STATUS_LAHAN = [
+export const LAND_STATUS = [
   { label: 'Milik Sendiri', value: 'milik_sendiri' },
   { label: 'Milik Tergadai', value: 'milik_tergadai' },
   { label: 'Pajak', value: 'milik_dengan_pajak' },

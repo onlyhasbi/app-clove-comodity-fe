@@ -21,27 +21,25 @@ import {
   useUpdateActive,
 } from '../../hooks/useOffer.hook';
 import { tableAdapter } from '../../features/offer/helper';
-import { TDeletePenawaran, TUpdatePenawaran } from '@/features/offer/schema';
+import { DeleteOffer, UpdateOffer } from '../../types/Offer';
 import { toast } from 'react-hot-toast';
 
-type TAction = {
-  update?: TUpdatePenawaran;
-  delete?: TDeletePenawaran;
+type ActionState = {
+  update?: UpdateOffer;
+  delete?: DeleteOffer;
 };
 
-const Penawaran = () => {
-  const [action, setAction] = useState<TAction | null>(null);
+const OfferPage = () => {
+  const [action, setAction] = useState<ActionState | null>(null);
   const cancelRef = useRef(null);
 
   const handleUpdate = useCallback(
-    (data: TUpdatePenawaran) =>
-      setAction((prev) => ({ ...prev, update: data })),
+    (data: UpdateOffer) => setAction((prev) => ({ ...prev, update: data })),
     []
   );
 
   const handleOpenModalDelete = useCallback(
-    (data: TDeletePenawaran) =>
-      setAction((prev) => ({ ...prev, delete: data })),
+    (data: DeleteOffer) => setAction((prev) => ({ ...prev, delete: data })),
     []
   );
 
@@ -180,7 +178,7 @@ const Penawaran = () => {
                 spinnerPlacement="start"
                 colorScheme="red"
                 onClick={() =>
-                  handleDelete((action?.delete as TDeletePenawaran)?.id)
+                  handleDelete((action?.delete as DeleteOffer)?.id)
                 }
                 ml={3}
               >
@@ -194,4 +192,4 @@ const Penawaran = () => {
   );
 };
 
-export default Penawaran;
+export default OfferPage;

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const workSchema = z.object({
+export const jobSchema = z.object({
   nama_pekerjaan: z
     .string()
     .nonempty({ message: 'Nama pekerjaan tidak boleh kosong' }),
@@ -8,10 +8,6 @@ export const workSchema = z.object({
   satuan: z.string().nonempty({ message: 'Satuan tidak boleh kosong' }),
   catatan: z.string().nonempty({ message: 'Catatan tidak boleh kosong' }),
 });
-
-export type TAddPekerjaan = z.infer<typeof workSchema>;
-export type TUpdatePekerjaan = TAddPekerjaan & { id: string };
-export type TDeletePekerjaan = { id: string };
 
 export const defaultValues = {
   nama_pekerjaan: '',

@@ -12,23 +12,19 @@ import {
 
 import { useEffect } from 'react';
 import { useForm, FieldValues, Controller } from 'react-hook-form';
-import {
-  TAddLahan,
-  TUpdateLahan,
-  defaultValues,
-  landSchema,
-} from './schema';
+import { defaultValues, landSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useProvinsi, useKabupaten } from '../../../hooks/useLocation.hook';
-import { STATUS_LAHAN } from '../../../model/status-lahan.model';
+import { useProvince, useKabupaten } from '../../../hooks/useLocation.hook';
+import { LAND_STATUS } from '../../../model/land-status.model';
 import { NumberFormatValues, NumericFormat } from 'react-number-format';
 import { LocationProps } from '../../../types/Location';
+import { AddLand, UpdateLand } from '@/types/Land';
 
 type Props = {
   onClose: () => void;
   isLoading?: boolean;
-  onSave: (payload: TAddLahan | TUpdateLahan) => void;
-  initialValues: TUpdateLahan | undefined | boolean;
+  onSave: (payload: AddLand | UpdateLand) => void;
+  initialValues?: UpdateLand;
 };
 
 const LandForm = ({
@@ -50,7 +46,7 @@ const LandForm = ({
     resolver: zodResolver(landSchema),
   });
 
-  const getProvinsi = useProvinsi();
+  const getProvinsi = useProvince();
   const getKabupaten = useKabupaten(watch('provinsi').trim());
 
   const provinsi = getProvinsi.data?.data?.lokasi?.sub_lokasi ?? [];
@@ -75,11 +71,11 @@ const LandForm = ({
   const onSubmit = (data: FieldValues) => {
     if (initialValues) {
       handleSave({
-        id: (initialValues as TUpdateLahan).id,
+        id: (initialValues as UpdateLand).id,
         ...data,
-      } as TUpdateLahan);
+      } as UpdateLand);
     } else {
-      handleSave({ ...(data as TAddLahan) });
+      handleSave({ ...(data as AddLand) });
       reset();
     }
   };
@@ -157,7 +153,7 @@ const LandForm = ({
             isDisabled={isLoading}
             {...register('status_lahan')}
           >
-            {STATUS_LAHAN.map((lahan: OptionProps) => (
+            {LAND_STATUS.map((lahan: OptionProps) => (
               <option key={lahan.value} value={lahan.value}>
                 {lahan.label}
               </option>
