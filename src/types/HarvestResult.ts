@@ -9,7 +9,7 @@ export type PayloadResult = {
   catatan: string;
 };
 
-export type PayloadUpdateLahan = PayloadResult & {
+export type PayloadUpdateLand = PayloadResult & {
   id: string;
 };
 

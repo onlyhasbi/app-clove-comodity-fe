@@ -2,15 +2,15 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import ApiClient from '../services/apiClient';
 import {
-  PayloadHasil,
-  PayloadUpdateLahan,
+  PayloadResult,
+  PayloadUpdateLand,
   ResponseHarvestResult,
 } from '../types/HarvestResult';
 import { url } from '../utils/config/url';
 import { keys } from '../utils/keys';
 
 export const usePostHasil = () => {
-  const harvestResultApiClient = new ApiClient<PayloadHasil>(
+  const harvestResultApiClient = new ApiClient<PayloadResult>(
     url.hasil_panen.dev
   );
   return useMutation({
@@ -21,8 +21,8 @@ export const usePostHasil = () => {
 
 export const useUpdateHasil = () =>
   useMutation({
-    mutationFn: ({ id, ...restPayload }: PayloadUpdateLahan) => {
-      const harvestResultApiClient = new ApiClient<PayloadHasil>(
+    mutationFn: ({ id, ...restPayload }: PayloadUpdateLand) => {
+      const harvestResultApiClient = new ApiClient<PayloadResult>(
         `${url.hasil_panen.dev}/${id}`
       );
       return harvestResultApiClient.update(restPayload);
