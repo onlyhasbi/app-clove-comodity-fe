@@ -16,7 +16,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import {
   useDeleteLand,
   useGetLands,
@@ -28,42 +28,28 @@ import { url } from '../../../utils/config/url';
 import LandForm from './form';
 import { tableAdapter } from './helper';
 import LandTable from './table';
-
-type TAction = {
-  add?: boolean;
-  update?: UpdateLand;
-  delete?: DeleteLand;
-};
+import useAction from '../../../hooks/useAction';
 
 const Land = () => {
   const queryClient = useQueryClient();
-  const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
-
-  const handleOpenModalAdd = useCallback(
-    () => setAction((prev) => ({ ...prev, add: true })),
-    []
-  );
-  const handleOpenModalUpdate = useCallback(
-    (data: UpdateLand) => setAction((prev) => ({ ...prev, update: data })),
-    []
-  );
-
-  const handleOpenModalDelete = useCallback(
-    (data: DeleteLand) => setAction((prev) => ({ ...prev, delete: data })),
-    []
-  );
 
   const getLand = useGetLands();
   const postLand = usePostLand();
   const deleteLand = useDeleteLand();
   const updateLand = useUpdateLand();
 
+  const {
+    action,
+    handleOpenModalAdd,
+    handleOpenModalUpdate,
+    handleOpenModalDelete,
+    handleReset,
+  } = useAction<UpdateLand, DeleteLand>();
+
   const lahan = getLand.isSuccess
     ? tableAdapter(getLand?.data?.data?.lahan)
     : [];
-
-  const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback((payload: AddLand | UpdateLand) => {
     const defaultPayload = {

@@ -16,7 +16,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import {
   useDeleteHasil,
   useGetHasil,
@@ -32,45 +32,28 @@ import {
   UpdateHarvestResult,
 } from '../../../types/HarvestResult';
 import HarvestResultTable from './table';
-
-type TAction = {
-  add?: boolean;
-  update?: UpdateHarvestResult;
-  delete?: DeleteHarvestResult;
-};
+import useAction from '../../../hooks/useAction';
 
 const HarvestResult = () => {
   const queryClient = useQueryClient();
-  const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
-
-  const handleOpenModalAdd = useCallback(
-    () => setAction((prev) => ({ ...prev, add: true })),
-    []
-  );
-
-  const handleOpenModalUpdate = useCallback(
-    (data: UpdateHarvestResult) =>
-      setAction((prev) => ({ ...prev, update: data })),
-    []
-  );
-
-  const handleOpenModalDelete = useCallback(
-    (data: DeleteHarvestResult) =>
-      setAction((prev) => ({ ...prev, delete: data })),
-    []
-  );
 
   const getHasil = useGetHasil();
   const postHasil = usePostHasil();
   const deleteHasil = useDeleteHasil();
   const updateHasil = useUpdateHasil();
 
+  const {
+    action,
+    handleOpenModalAdd,
+    handleOpenModalUpdate,
+    handleOpenModalDelete,
+    handleReset,
+  } = useAction<UpdateHarvestResult, DeleteHarvestResult>();
+
   const hasilPanen = getHasil.isSuccess
     ? tableAdapter(getHasil?.data?.data?.hasil_panen)
     : [];
-
-  const handleReset = useCallback(() => setAction(null), []);
 
   const handleSave = useCallback(
     (payload: AddHarvestResult | UpdateHarvestResult) => {

@@ -15,7 +15,7 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import DryingResultForm from './form';
 import DryingResultTable from './table';
 import {
@@ -36,16 +36,10 @@ import {
   DeleteDryResult,
   UpdateDryResult,
 } from '../../../types/DryResult';
-
-type ActionState = {
-  add?: boolean;
-  update?: UpdateDryResult;
-  delete?: DeleteDryResult;
-};
+import useAction from '../../../hooks/useAction';
 
 const DryResult = () => {
   const queryClient = useQueryClient();
-  const [action, setAction] = useState<ActionState | null>(null);
   const cancelRef = useRef(null);
 
   const getDryResult = useGetDryResult();
@@ -55,22 +49,13 @@ const DryResult = () => {
   const updateStatusPayment = useUpdatePayment();
   const updateMaterial = useUpdateMaterial();
 
-  const handleOpenModalAdd = useCallback(
-    () => setAction((prev) => ({ ...prev, add: true })),
-    []
-  );
-
-  const handleOpenModalUpdate = useCallback(
-    (data: UpdateDryResult) => setAction((prev) => ({ ...prev, update: data })),
-    []
-  );
-
-  const handleOpenModalDelete = useCallback(
-    (data: DeleteDryResult) => setAction((prev) => ({ ...prev, delete: data })),
-    []
-  );
-
-  const handleReset = useCallback(() => setAction(null), []);
+  const {
+    action,
+    handleOpenModalAdd,
+    handleOpenModalUpdate,
+    handleOpenModalDelete,
+    handleReset,
+  } = useAction<UpdateDryResult, DeleteDryResult>();
 
   const handleSave = useCallback((payload: AddDryResult | UpdateDryResult) => {
     const defaultPayload = {

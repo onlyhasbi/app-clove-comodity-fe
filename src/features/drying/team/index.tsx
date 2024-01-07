@@ -23,18 +23,12 @@ import {
 } from '../../../hooks/useTeam.hook';
 import TeamForm from './form';
 import TeamTable from './table';
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import { AddTeam, DeleteTeam, UpdateTeam } from '../../../types/Team';
 import { tableAdapter } from './helper';
-
-type ActionState = {
-  add?: boolean;
-  update?: UpdateTeam;
-  delete?: DeleteTeam;
-};
+import useAction from '../../../hooks/useAction';
 
 const Team = () => {
-  const [action, setAction] = useState<ActionState | null>(null);
   const cancelRef = useRef(null);
 
   const getTeam = useGetTeam();
@@ -42,22 +36,13 @@ const Team = () => {
   const deleteTeam = useDeleteTeam();
   const updateTeam = useUpdateTeam();
 
-  const handleOpenModalAdd = useCallback(
-    () => setAction((prev) => ({ ...prev, add: true })),
-    []
-  );
-
-  const handleOpenModalUpdate = useCallback(
-    (data: UpdateTeam) => setAction((prev) => ({ ...prev, update: data })),
-    []
-  );
-
-  const handleOpenModalDelete = useCallback(
-    (data: DeleteTeam) => setAction((prev) => ({ ...prev, delete: data })),
-    []
-  );
-
-  const handleReset = useCallback(() => setAction(null), []);
+  const {
+    action,
+    handleOpenModalAdd,
+    handleOpenModalUpdate,
+    handleOpenModalDelete,
+    handleReset,
+  } = useAction<UpdateTeam, DeleteTeam>();
 
   const handleSave = useCallback((payload: AddTeam | UpdateTeam) => {
     if ('id' in payload) {

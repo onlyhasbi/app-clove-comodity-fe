@@ -34,15 +34,9 @@ import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
 import { toast } from 'react-hot-toast';
 import { UpdateStatusPayment } from '../../../types/DryResult';
-
-type TAction = {
-  add?: boolean;
-  update?: UpdateDeposit;
-  delete?: DeleteDeposit;
-};
+import useAction from '../../../hooks/useAction';
 
 const Deposit = () => {
-  const [action, setAction] = useState<TAction | null>(null);
   const cancelRef = useRef(null);
 
   const getSetoran = useGetSetoran();
@@ -51,19 +45,13 @@ const Deposit = () => {
   const updateSetoran = useUpdateSetoran();
   const updateStatusSetoran = useUpdateStatusSetoran();
 
-  const handleOpenModalAdd = useCallback(
-    () => setAction((prev) => ({ ...prev, add: true })),
-    []
-  );
-  const handleOpenModalUpdate = useCallback(
-    (data: UpdateDeposit) => setAction((prev) => ({ ...prev, update: data })),
-    []
-  );
-  const handleOpenModalDelete = useCallback(
-    (data: DeleteDeposit) => setAction((prev) => ({ ...prev, delete: data })),
-    []
-  );
-  const handleReset = useCallback(() => setAction(null), []);
+  const {
+    action,
+    handleOpenModalAdd,
+    handleOpenModalUpdate,
+    handleOpenModalDelete,
+    handleReset,
+  } = useAction<UpdateDeposit, DeleteDeposit>();
 
   const handleSave = useCallback((payload: AddDeposit | UpdateDeposit) => {
     const defaultPayload = {

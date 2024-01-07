@@ -15,7 +15,7 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import MaterialForm from './form';
 import MaterialTable from './table';
 import {
@@ -33,16 +33,10 @@ import dayjs from 'dayjs';
 import { tableAdapter } from './helper';
 import { useQueryClient } from '@tanstack/react-query';
 import { url } from '../../../utils/config/url';
-
-type ActionState = {
-  add?: boolean;
-  update?: UpdateMaterial;
-  delete?: DeleteMaterial;
-};
+import useAction from '../../../hooks/useAction';
 
 const DryMaterial = () => {
   const queryClient = useQueryClient();
-  const [action, setAction] = useState<ActionState | null>(null);
   const cancelRef = useRef(null);
 
   const getMaterial = useGetMaterial();
@@ -54,19 +48,13 @@ const DryMaterial = () => {
     ? tableAdapter(getMaterial?.data?.data?.bahan)
     : [];
 
-  const handleOpenModalAdd = useCallback(
-    () => setAction((prev) => ({ ...prev, add: true })),
-    []
-  );
-  const handleOpenModalUpdate = useCallback(
-    (data: UpdateMaterial) => setAction((prev) => ({ ...prev, update: data })),
-    []
-  );
-  const handleOpenModalDelete = useCallback(
-    (data: DeleteMaterial) => setAction((prev) => ({ ...prev, delete: data })),
-    []
-  );
-  const handleReset = useCallback(() => setAction(null), []);
+  const {
+    action,
+    handleOpenModalAdd,
+    handleOpenModalUpdate,
+    handleOpenModalDelete,
+    handleReset,
+  } = useAction<UpdateMaterial, DeleteMaterial>();
 
   const handleSave = useCallback((payload: AddMaterial | UpdateMaterial) => {
     const defaultPayload = {
