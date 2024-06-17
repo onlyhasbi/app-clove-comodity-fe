@@ -16,8 +16,8 @@ import { useReducer } from 'react';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
 const defaultValues = {
-  nomor_telpon: '',
-  sandi: '',
+  nomor_telpon: '08979901844',
+  sandi: '12345',
 };
 
 const schema = z
